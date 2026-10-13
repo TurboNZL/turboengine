@@ -1,0 +1,10 @@
+{
+  "name": "TurboEngine",
+  "emblem": null,
+  "accent": null,
+  "out": {
+    "svg": "branding/turboengine.svg",
+    "mono": "branding/turboengine-mono.svg",
+    "png": [["branding/turboengine-512.png", 512], ["branding/turboengine-128.png", 128]]
+  }
+}

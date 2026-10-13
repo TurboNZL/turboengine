@@ -16,3 +16,6 @@ A bundle, not code. If an app runs **its own server** (a library, a project stor
 | `release-pipeline` | the releases the updaters read |
 
 Add to `.turboengine.json` all four plus this name, then do the checklist: Access fields in Settings (id, secret) wired into every request path, pairing code carries them, the update card appears on a service install, the guide for installing the server exists in `docs/guides`.
+
+## Web-only apps (no desktop or Android client)
+The set above assumes clients that connect to a server from elsewhere (apps on phones and desktops). An app that is **only a web page served by its own server** (TurboKeep) takes `docker-self-host` instead of `server-install-update` and `updaters`, keeps `release-pipeline` (with the `docker`/`node-bundle` jobs), and does **not** need the Access service-token fields: the page is on the same origin as the API, so the browser's own Cloudflare Access cookie covers every request (service-token headers are only for scripts, documented in its tunnel guide). Record each of those decisions in `.turboengine.json` `notes`, and take the full set (plus `cloudflare-access`, `device-pairing`) the day a native client appears.

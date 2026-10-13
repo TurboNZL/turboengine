@@ -1,6 +1,6 @@
 {
   "engine": { "repo": "TurboNZL/turboengine", "ref": "<tag or commit this app was last aligned with>" },
-  "modules": ["release-pipeline", "updaters", "appearance", "guides-and-docs"],
+  "modules": ["release-pipeline", "updaters", "appearance", "guides-and-docs", "logos"],
   "themes": "on",
   "moved": {},
   "notes": "Anything this app does differently on purpose, so the next session does not 'fix' it."

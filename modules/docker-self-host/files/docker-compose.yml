@@ -1,0 +1,35 @@
+# TurboKeep. Start it:               docker compose up -d
+# Start it with a Cloudflare tunnel: docker compose --profile tunnel up -d     (needs TUNNEL_TOKEN in .env, see docs/guides/CLOUDFLARE_TUNNEL.md)
+services:
+  turbokeep:
+    image: ghcr.io/turbonzl/turbokeep:latest
+    # to build it yourself instead of pulling:  build: .
+    restart: unless-stopped
+    environment:
+      # Behind a tunnel or reverse proxy (the default): use X-Forwarded-Proto/Host and CF-Connecting-IP. Set to false when it faces the network directly.
+      TURBOKEEP_TRUST_PROXY: "true"
+      # Let anyone who can reach the page create an account. Off: only the first account, created on first run.
+      TURBOKEEP_ALLOW_SIGNUP: "false"
+      # Optional: skip the setup screen by creating the first account from these.
+      # TURBOKEEP_ADMIN_USER: you
+      # TURBOKEEP_ADMIN_PASSWORD: a long password
+      # Largest import in MB.
+      # TURBOKEEP_MAX_IMPORT_MB: "256"
+    volumes:
+      - turbokeep-data:/data
+    # Reachable on this machine only; the tunnel talks to it over the compose network. To use it on your LAN, change to "8080:8080".
+    ports:
+      - "127.0.0.1:8080:8080"
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    profiles: ["tunnel"]
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run
+    environment:
+      TUNNEL_TOKEN: ${TUNNEL_TOKEN:?set TUNNEL_TOKEN in .env}
+    depends_on:
+      - turbokeep
+
+volumes:
+  turbokeep-data:

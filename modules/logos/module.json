@@ -1,0 +1,16 @@
+{
+  "name": "logos",
+  "title": "Logos: one engine mark, one emblem per app",
+  "optional": false,
+  "summary": "The TurboEngine logo (ring, record, six-bladed wheel) is shared by every app; an app adds its own emblem on a plate in the centre (TurboMusic: a red note). One config file generates the SVG, one-colour icon, PNGs and Android vectors.",
+  "source": {
+    "repo": "TurboNZL/turbomusic",
+    "ref": "f258fb7"
+  },
+  "files": [
+    "scripts/gen-icons.mjs",
+    "scripts/logo/lib.mjs",
+    "scripts/logo/emblems/note.json"
+  ],
+  "examples": ["branding/logo.json"]
+}

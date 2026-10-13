@@ -68,7 +68,7 @@ This gives `bg-surface`, `text-muted`, `border-line`, `bg-accent`, `rounded-them
 
 ### 1.5 Give the user a picker
 
-Cheapest: `<turbo-themes-picker></turbo-themes-picker>` in the settings page ([PICKER.md](PICKER.md)); it already handles preview-on-hover, "matching colours", wallpaper and "check for newer themes", and it wears the look it is choosing. TurboMusic draws its own (`components/AppearanceCard.tsx`: tiles, a live preview, groups) on the headless `themes.picker()` controller, which is worth doing when the picker is a feature of the app. Either way **put it where a person will find it** and show which look is active.
+Cheapest: `<turbo-themes-picker></turbo-themes-picker>` in the settings page ([PICKER.md](PICKER.md)); it handles "matching colours", wallpaper and "check for newer themes", and it wears the look it is choosing. Know its two limits before you ship it (details in [PICKER.md](PICKER.md#known-issues-of-the-stock-turbo-themes-picker-varianttiles)): its tiles variant previews a look by restyling the **real page** on hover, which is a bad idea, and it lays the colour chips out one per line. TurboMusic draws its own (`components/AppearanceCard.tsx`: tiles, a live preview, groups) on the headless `themes.picker()` controller, which is worth doing when the picker is a feature of the app, and is the right choice whenever you want the live preview done properly: **hover must only move a mock page, never the real page** ([PICKER.md, section 2a](PICKER.md#2a-previewing-a-look-use-a-mock-page-not-the-real-page); copy `PreviewApp` and the chip grid from the `appearance` module). Either way **put it where a person will find it** and show which look is active.
 
 ## 2. The structure you owe the themes
 
