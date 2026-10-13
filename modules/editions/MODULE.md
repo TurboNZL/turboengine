@@ -2,7 +2,7 @@
 
 One Electron codebase shipped as three editions (window + library server, window only, headless server) with a server module that can be installed or removed inside the app.
 
-Optional. Reference files are in `files/` (the paths are the paths in the app); they were taken from TurboMusic at `b6d85a8`, where they are known to work.
+Optional. Reference files are in `files/` (the paths are the paths in the app); source: `TurboNZL/turbomusic` at `ea3f5ea`, where they run.
 
 ## Shape
 - **full** (`package.json` build): window + the app's own server on 127.0.0.1.

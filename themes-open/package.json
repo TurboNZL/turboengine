@@ -1,0 +1,13 @@
+{
+  "name": "turbothemes-open",
+  "version": "1.0.0",
+  "private": true,
+  "description": "The stripped-down theme pack: original looks and neutral palettes only, no third-party names, logos or brand trade dress. Built with the same engine as ../themes.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "make": "python3 make.py",
+    "build": "cd ../themes && TURBOTHEMES_SRC=../themes-open node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/build.mjs",
+    "check": "cd ../themes && TURBOTHEMES_SRC=../themes-open node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/build.mjs --check"
+  }
+}

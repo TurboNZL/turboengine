@@ -81,7 +81,7 @@ object AppUpdater {
             c.instanceFollowRedirects = false
             c.connectTimeout = 15_000; c.readTimeout = 60_000
             c.setRequestProperty("Accept", accept)
-            c.setRequestProperty("User-Agent", "music-curator-android")
+            c.setRequestProperty("User-Agent", "turbomusic-android")
             if (token.isNotEmpty() && URL(u).host.endsWith("github.com")) c.setRequestProperty("Authorization", "Bearer $token")
             val code = c.responseCode
             if (code in 300..399) { u = c.getHeaderField("Location") ?: throw IllegalStateException("Redirect without a target"); c.disconnect(); continue }

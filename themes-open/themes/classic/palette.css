@@ -1,0 +1,12 @@
+[data-theme='classic'] {
+  --bg: 240 6% 4%; --surface: 240 6% 7%; --raised: 240 4% 12%; --line: 240 4% 16%; --hover: 240 4% 16%;
+  --fg: 0 0% 98%; --muted: 240 5% 56%;
+  --accent: 217 91% 60%; --accent-fg: 0 0% 100%;
+  --good: 158 64% 52%; --warn: 48 96% 53%; --bad: 0 91% 71%; --top: 213 94% 68%;
+  --radius: 8px; --font: ui-sans-serif, system-ui, sans-serif;
+  --row-y: 0.3rem; --grid-min: 8.5rem;
+}
+/* Classic keeps the original app's loud, tight headings */
+[data-theme='classic'] h1 { font-weight: 900; text-transform: uppercase; letter-spacing: -0.025em; }
+[data-theme='classic'] h2 { font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.875rem; line-height: 1.25rem; }
+[data-theme='classic'] .card { border-radius: var(--radius); background: hsl(var(--surface) / 0.5); }

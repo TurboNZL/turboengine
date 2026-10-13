@@ -2,7 +2,9 @@
 
 electron-updater from GitHub releases (with a .deb path that works without a polkit agent) and a native Android updater, both through one Settings card.
 
-Recommended for every app. Reference files are in `files/` (the paths are the paths in the app); they were taken from TurboMusic at `b6d85a8`, where they are known to work.
+Recommended for every app. Reference files are in `files/` (the paths are the paths in the app); source: `TurboNZL/turbomusic` at `ea3f5ea`, where they run.
+
+**Mandatory** for every app that ships a desktop or Android build, and part of `self-hosted-server`: the server and the apps must update the same way, from the same releases (`release-pipeline`).
 
 ## Rules learned
 - Use the newest published release **including pre-releases**; skip drafts. `electron-updater`: `allowPrerelease = true`. Android: list `/releases?per_page=20` and take the newest with an `.apk`.

@@ -1,11 +1,11 @@
 # Appearance
 
-How Curator looks is not decided in this repository. It is decided by **turbothemes** ([github.com/TurboNZL/turbothemes](https://github.com/TurboNZL/turbothemes)), a small package that all of the owner's apps share, so they look consistent and the look can be improved without releasing an app.
+How Curator looks is not decided in this repository. It is decided by **turbothemes** (the `themes/` folder of [github.com/TurboNZL/turboengine](https://github.com/TurboNZL/turboengine)), a small package that all of the owner's apps share, so they look consistent and the look can be improved without releasing an app.
 
 | Part | Where | Changes |
 |---|---|---|
 | The **engine**: applies a look, "match this device", wallpaper, Liquid Glass lens, ripple, the updater, the generic `.btn` / `.input` / `.card` rules | the `turbothemes` npm dependency (`apps/web/package.json`, pinned to a commit in `pnpm-lock.yaml`) | rarely |
-| The **themes**: 67 colour palettes and 33 UI styles, one folder each | `themes/` in the turbothemes repository | often, and they reach the app by themselves |
+| The **themes**: 67 colour palettes and 33 UI styles, one folder each | `themes/themes/` in the turboengine repository | often, and they reach the app by themselves |
 | The **layouts** (where the pages are listed: side bar, toolbar, icon rail, top tabs, dock): app-specific, so they stay here | `apps/web/src/lib/layout.ts` (the list), `apps/web/src/layouts.css` (the CSS, injected after the themes' stylesheet), `Layout.tsx` (the markup) | with the app |
 | The glue: starts the engine with this app's options, hands it the device settings | `apps/web/src/lib/appearance.ts` | rarely |
 | The picker (Settings → Appearance) and the "Themes" update card | `apps/web/src/components/AppearanceCard.tsx`, `ThemeUpdates.tsx` | with the app |
@@ -17,7 +17,7 @@ The markup uses the hook classes (`.btn`, `.input`, `.card`, `.chip`, `.bt-windo
 ## Updating themes
 
 - Automatically: Settings → Appearance → **Themes** looks for newer themes in the background (at most every six hours) and when you press the button. The setting "Look for newer themes automatically" turns it off; the engine then only uses the themes built into the installed app.
-- Themes are fetched from the public turbothemes repository. If that repository is ever made private, paste a read-only GitHub token into the same card.
+- Themes are fetched from `themes/dist` of the public turboengine repository. If that repository is ever made private, paste a read-only GitHub token into the same card.
 - A downloaded set is kept on the device and used at the next start, until a newer engine (a new app build with a newer `turbothemes` dependency) brings newer built-in themes.
 - To take a new **engine**: `pnpm update turbothemes --filter @curator/web`, then commit the lockfile.
 
@@ -27,4 +27,4 @@ The app bundles the fonts the styles use (`apps/web/src/fonts.css`, `@fontsource
 
 ## Trying a change before pushing it
 
-Run `pnpm dev` in the turbothemes repository for its playground, or point this app at a local build: in `apps/web/package.json` use `"turbothemes": "link:../../../turbothemes"` while working (do not commit it).
+Run `pnpm dev` in the `themes/` folder of the turboengine repository for its playground, or point this app at a local checkout: in `apps/web/package.json` use `"turbothemes": "link:../../../turboengine/themes"` while working (do not commit it).

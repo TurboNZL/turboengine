@@ -1,0 +1,18 @@
+{
+  "id": "sand",
+  "label": "Sand",
+  "palettes": [
+    {
+      "id": "sand",
+      "label": "Sand",
+      "mode": "light",
+      "bg": [40, 33, 95],
+      "primary": [28, 90, 40],
+      "fg": "28 30% 12%",
+      "mutedFg": "30 14% 36%",
+      "motif": "hills",
+      "group": "colour",
+      "order": 40
+    }
+  ]
+}

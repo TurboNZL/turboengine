@@ -1,0 +1,19 @@
+{
+  "id": "gruvbox",
+  "label": "Gruvbox",
+  "palettes": [
+    {
+      "id": "gruvbox",
+      "label": "Gruvbox",
+      "mode": "dark",
+      "bg": [0, 0, 12],
+      "primary": [42, 95, 55],
+      "fg": "43 59% 81%",
+      "mutedFg": "40 20% 62%",
+      "motif": "hills",
+      "step": 1.1,
+      "group": "colour",
+      "order": 180
+    }
+  ]
+}

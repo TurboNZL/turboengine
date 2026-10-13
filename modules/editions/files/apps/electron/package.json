@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "license": "MIT",
   "private": true,
-  "description": "Music Curator desktop app: the web client plus its own server, with the library on disk",
-  "author": "Music Curator",
-  "homepage": "https://github.com/TurboNZL/Curator",
+  "description": "TurboMusic desktop app: the web client plus its own server, with the library on disk",
+  "author": "TurboMusic",
+  "homepage": "https://github.com/TurboNZL/turbomusic",
   "main": "dist/main.mjs",
   "desktopName": "music-curator.desktop",
   "type": "module",
@@ -36,7 +36,7 @@
   },
   "build": {
     "appId": "app.musiccurator.desktop",
-    "productName": "Music Curator",
+    "productName": "TurboMusic",
     "directories": {
       "output": "release",
       "buildResources": "build"
@@ -55,11 +55,11 @@
       {
         "provider": "github",
         "owner": "TurboNZL",
-        "repo": "Curator",
+        "repo": "turbomusic",
         "releaseType": "release"
       }
     ],
-    "artifactName": "music-curator-${version}-${os}-${arch}.${ext}",
+    "artifactName": "turbomusic-${version}-${os}-${arch}.${ext}",
     "linux": {
       "target": [
         "AppImage",
@@ -68,7 +68,7 @@
       "category": "Audio",
       "icon": "build/icon.png",
       "executableName": "music-curator",
-      "maintainer": "Music Curator <noreply@musiccurator.app>",
+      "maintainer": "TurboMusic <noreply@musiccurator.app>",
       "synopsis": "Personal music library and ranking",
       "desktop": {
         "entry": {
@@ -78,7 +78,7 @@
     },
     "deb": {
       "packageName": "music-curator",
-      "artifactName": "music-curator-${version}-linux-${arch}.${ext}"
+      "artifactName": "turbomusic-${version}-linux-${arch}.${ext}"
     },
     "win": {
       "target": [
@@ -94,7 +94,7 @@
       "icon": "build/icon.png"
     },
     "nsis": {
-      "artifactName": "music-curator-${version}-windows-${arch}-setup.${ext}",
+      "artifactName": "turbomusic-${version}-windows-${arch}-setup.${ext}",
       "oneClick": false,
       "allowToChangeInstallationDirectory": true
     }

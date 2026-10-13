@@ -11,6 +11,7 @@ import { DiscordPresence, findSockets, type Presence } from './discord.ts';
 import { Updates } from './updater.ts';
 import { describeGraphics, type Graphics } from './graphics.ts';
 import { activeMode, GPU_MODES, nextAutoStep } from './gpuModes.ts';
+import { userDataPath } from './appName.ts';
 
 /**
  * The desktop app runs the same server as the Raspberry Pi, inside the app, on 127.0.0.1, with the library in a folder of the
@@ -26,6 +27,8 @@ const edition: 'full' | 'app' = (() => {
   if (process.env.CURATOR_EDITION === 'app') return 'app';
   try { return (JSON.parse(readFileSync(join(app.getAppPath(), 'package.json'), 'utf8')) as { curatorEdition?: string }).curatorEdition === 'app' ? 'app' : 'full'; } catch { return 'full'; }
 })();
+// the product name changed to TurboMusic; installed apps keep their settings folder (see appName.ts)
+if (app.isPackaged) app.setPath('userData', userDataPath(app.getPath('appData'), edition));
 let win: BrowserWindow | null = null;
 const discord = new DiscordPresence();
 const updates = new Updates(app.isPackaged, (state) => win?.webContents.send('curator:update', state));
@@ -92,7 +95,7 @@ function openWindow() {
   const custom = loadDesktopConfig(userData()).customFrame;
   win = new BrowserWindow({
     frame: !custom, autoHideMenuBar: true,
-    width: 1360, height: 860, minWidth: 420, minHeight: 560, backgroundColor: '#0b0b10', show: false, title: 'Music Curator',
+    width: 1360, height: 860, minWidth: 420, minHeight: 560, backgroundColor: '#0b0b10', show: false, title: 'TurboMusic',
     icon: join(here, '../build/icon.png'),
     webPreferences: { preload: join(here, 'preload.cjs'), contextIsolation: true, nodeIntegration: false, sandbox: true, backgroundThrottling: false, spellcheck: false },
   });
@@ -232,7 +235,7 @@ app.on('window-all-closed', () => { if (process.platform !== 'darwin') app.quit(
 app.on('activate', () => { if (!win && server) openWindow(); });
 
 void app.whenReady().then(async () => {
-  try { await boot(); } catch (e) { dialog.showErrorBox('Music Curator cannot start', (e as Error).message); app.exit(1); return; }
+  try { await boot(); } catch (e) { dialog.showErrorBox('TurboMusic cannot start', (e as Error).message); app.exit(1); return; }
   Menu.setApplicationMenu(null);
   openWindow();
   const dc = loadDiscordConfig(userData());

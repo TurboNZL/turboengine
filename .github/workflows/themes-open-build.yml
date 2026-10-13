@@ -1,0 +1,30 @@
+name: themes-open-build
+# Rebuilds themes-open/dist (the stripped-down pack) whenever the main pack or this pack changes, and commits it.
+on:
+  push:
+    branches: [main]
+    paths: ['themes-open/make.py', 'themes/themes/**', 'themes/engine/**', 'themes/scripts/**']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with: { version: 10 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm, cache-dependency-path: themes/pnpm-lock.yaml }
+      - run: pnpm install --frozen-lockfile
+        working-directory: themes
+      - run: python3 make.py && pnpm build
+        working-directory: themes-open
+      - name: Commit the generated files
+        run: |
+          git config user.name "turboengine themes build"
+          git config user.email "actions@users.noreply.github.com"
+          git add themes-open
+          if git diff --cached --quiet; then echo "themes-open is current"; else git commit -m "Build themes-open [skip ci]" && git push; fi

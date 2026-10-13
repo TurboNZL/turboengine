@@ -96,8 +96,8 @@ jobs:
           TAG='${{ needs.release.outputs.tag }}'
           VERSION="${TAG#v}"
           gradle -p apps/android :app:assembleRelease -PappVersion="$VERSION"
-          cp apps/android/app/build/outputs/apk/release/app-release.apk "music-curator-$VERSION-android.apk"
-          gh release upload "$TAG" "music-curator-$VERSION-android.apk" --clobber
+          cp apps/android/app/build/outputs/apk/release/app-release.apk "turbomusic-$VERSION-android.apk"
+          gh release upload "$TAG" "turbomusic-$VERSION-android.apk" --clobber
         env: { GH_TOKEN: '${{ secrets.GITHUB_TOKEN }}' }
 
   # the server for the Android app's server module: it runs in Termux on the phone (apps/android TermuxServer.kt downloads the newest one)
@@ -119,6 +119,6 @@ jobs:
           cp apps/electron/dist/headless.mjs bundle/
           cp -r apps/web/dist/. bundle/web/
           TAG='${{ needs.release.outputs.tag }}'
-          tar -czf "music-curator-server-${TAG#v}-termux.tar.gz" -C bundle .
-          gh release upload "$TAG" "music-curator-server-${TAG#v}-termux.tar.gz" --clobber
+          tar -czf "turbomusic-server-${TAG#v}-termux.tar.gz" -C bundle .
+          gh release upload "$TAG" "turbomusic-server-${TAG#v}-termux.tar.gz" --clobber
         env: { GH_TOKEN: '${{ secrets.GITHUB_TOKEN }}' }

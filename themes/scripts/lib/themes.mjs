@@ -7,6 +7,8 @@ import { hashText } from '../../engine/src/hash.ts';
 import { API_VERSION } from '../../engine/src/types.ts';
 
 export const root = path.resolve(import.meta.dirname, '..', '..');
+/** where themes/, dist/ and docs/ are: this package, or another one that reuses this engine (TURBOTHEMES_SRC, see themes-open/) */
+export const src = process.env.TURBOTHEMES_SRC ? path.resolve(process.env.TURBOTHEMES_SRC) : root;
 const KNOWN_EFFECTS = new Set(['liquid-glass', 'ripple']);
 const MIME = { '.woff2': 'font/woff2', '.woff': 'font/woff', '.ttf': 'font/ttf', '.otf': 'font/otf', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.svg': 'image/svg+xml', '.gif': 'image/gif' };
 
@@ -39,7 +41,7 @@ function lintScope(css, attr, ids, file, errors) {
   });
 }
 
-export async function buildThemes({ minify = true, dir: base = root } = {}) {
+export async function buildThemes({ minify = true, dir: base = src } = {}) {
   const errors = [];
   const config = readJson(path.join(base, 'themes', 'config.json'));
   const palettes = [], styles = [];

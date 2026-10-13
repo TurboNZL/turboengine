@@ -5,10 +5,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { build, transform } from 'esbuild';
-import { buildThemes, root } from './lib/themes.mjs';
+import { buildThemes, root, src } from './lib/themes.mjs';
 
 const check = process.argv.includes('--check');
-const dist = path.join(root, 'dist');
+const dist = path.join(src, 'dist');
 const noMin = process.argv.includes('--no-min');
 
 let themes;
@@ -49,6 +49,8 @@ fs.writeFileSync(path.join(dist, 'tailwind.js'), tw.code);
 
 // type declarations
 execFileSync(path.join(root, 'node_modules/.bin/tsc'), ['-p', path.join(root, 'engine/tsconfig.build.json')], { stdio: 'inherit' });
+// tsc writes into this package's dist/; a pack built from another folder (TURBOTHEMES_SRC) gets a copy
+if (src !== root) fs.cpSync(path.join(root, 'dist', 'types'), path.join(dist, 'types'), { recursive: true });
 fs.writeFileSync(path.join(dist, 'types', 'virtual.d.ts'), fs.readFileSync(path.join(root, 'engine/src/virtual.d.ts'), 'utf8'));
 
 execFileSync(process.execPath, ['--experimental-strip-types', '--disable-warning=ExperimentalWarning', path.join(root, 'scripts/gen-docs.mjs')], { stdio: 'inherit' });

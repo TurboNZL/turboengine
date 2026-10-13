@@ -1,0 +1,44 @@
+{
+  "id": "terminal",
+  "label": "Green terminal",
+  "style": {
+    "description": "Green phosphor on black: one hue, square frames, glowing type, scan lines and menus that pick by inverting.",
+    "font": "VT323",
+    "matching": {
+      "light": "terminal",
+      "dark": "terminal"
+    },
+    "fonts": [
+      {
+        "package": "vt323",
+        "weights": [
+          400
+        ]
+      }
+    ],
+    "order": 200
+  },
+  "palettes": [
+    {
+      "id": "terminal",
+      "label": "Phosphor green",
+      "mode": "dark",
+      "bg": "#04150a",
+      "primary": "#35ff74",
+      "onPrimary": "141 68% 5%",
+      "fg": "#35ff74",
+      "mutedFg": "#1fb350",
+      "motif": "grid",
+      "overrides": {
+        "card": "#072214",
+        "secondary": "#0a2e1a",
+        "muted": "#0a2e1a",
+        "accent": "#0f3d22",
+        "border": "#12652f",
+        "input": "#0a2e1a"
+      },
+      "group": "inspired",
+      "order": 380
+    }
+  ]
+}

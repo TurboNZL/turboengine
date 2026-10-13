@@ -1,0 +1,217 @@
+/*
+ * turbothemes: the engine's stylesheet. This is the CONTRACT between an app and the themes.
+ *
+ *  - The app puts its colours on these CSS variables (palettes set them): --bg --surface --raised --line --hover --fg --muted
+ *    --accent --accent-fg --good --warn --bad --top, each an "h s% l%" triplet, used as hsl(var(--surface) / 0.5).
+ *  - The app marks its elements with the hook classes below (.btn .input .card .chip .bt-window .bt-menu .bt-side .bt-top
+ *    .bt-player .bt-nav .bt-tab .bt-row ...). Those rules read the style variables (--btn-*, --in-*, --card-*, --win-*, --menu-*,
+ *    --side-* ... see the first block with defaults further down) that every style sets.
+ *  - <html> carries data-theme (palette), data-mode (dark|light), data-ui (style), data-layout and data-glass; the engine sets them.
+ *
+ * Load this file BEFORE the app's own utility classes (Tailwind's utilities, say) so that an element's own classes still win.
+ * The themes themselves (themes.css) are delivered by the engine; they are not imported here.
+ */
+
+/* ---- structure the hook classes have in every style (what each style then dresses up) ---- */
+.btn { box-sizing: border-box; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.375rem 0.75rem; font-size: 0.875rem; line-height: 1.25rem; }
+.btn:disabled { opacity: 0.4; pointer-events: none; }
+.btn-accent:hover { filter: brightness(1.1); }
+.input { box-sizing: border-box; width: 100%; outline: 2px solid transparent; outline-offset: 2px; font-size: 0.875rem; line-height: 1.25rem; }
+.input::placeholder { color: hsl(var(--muted)); }
+.card { box-sizing: border-box; }
+.chip { box-sizing: border-box; white-space: nowrap; display: inline-flex; align-items: center; padding: 0.125rem 0.5rem; font-size: 0.75rem; line-height: 1rem; color: hsl(var(--muted)); background-color: hsl(var(--raised)); }
+body { margin: 0; background: hsl(var(--bg)); color: hsl(var(--fg)); font-family: var(--font); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+/* ---- the default palette (Standard v2) and the density every palette starts from ---- */
+:root {
+  --bg: 240 12% 7%; --surface: 240 10% 10%; --raised: 240 9% 14%; --line: 240 8% 20%; --hover: 240 8% 20%;
+  --fg: 240 20% 96%; --muted: 240 8% 62%;
+  --accent: 262 83% 66%; --accent-fg: 0 0% 100%;
+  --good: 152 60% 50%; --warn: 42 92% 58%; --bad: 0 78% 64%; --top: 200 95% 65%;
+  --radius: 14px; --font: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --row-y: 0.5rem; --grid-min: 11rem;
+}
+[data-theme] { --radius: 14px; --font: 'Inter', ui-sans-serif, system-ui, sans-serif; --row-y: 0.5rem; --grid-min: 11rem; }
+* { scrollbar-width: thin; scrollbar-color: hsl(var(--line)) transparent; }
+/* Wallpaper (Settings > Appearance): a fixed layer behind the page; panels turn slightly see-through */
+#bt-wallpaper { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+#bt-wallpaper .bt-wp-img, #bt-wallpaper .bt-wp-dim { position: absolute; inset: 0; }
+#bt-wallpaper .bt-wp-dim { background: #000; opacity: 0; }
+html[data-wallpaper='on'] { background: hsl(var(--bg)); }
+html[data-wallpaper='on'] body, html[data-wallpaper='on'] #root { background: transparent; }
+html[data-wallpaper='on'] :is(.card, .bt-side, .bt-player, .bt-tabbar) { background-color: hsl(var(--surface) / 0.84); backdrop-filter: blur(10px); }
+html[data-wallpaper='on'] .bt-top { background-color: hsl(var(--bg) / 0.78); }
+/* Native select: our own arrow so the control matches the theme instead of the OS */
+select.input { appearance: none; -webkit-appearance: none; padding-right: 2.1rem; cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none' stroke='%23909098' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1.5 1.75 6 6.25l4.5-4.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 0.8rem center; background-size: 0.75rem; }
+select.input option { background: hsl(var(--surface)); color: hsl(var(--fg)); }
+/* The picker inputs follow the page's light/dark */
+input[type='date'], input[type='time'], input[type='color'] { color-scheme: inherit; }
+::selection { background: hsl(var(--accent) / 0.35); }
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+.btn {
+    border-radius: var(--ctl-r); background: var(--btn-bg); border: var(--btn-border); box-shadow: var(--btn-shadow);
+    font-weight: var(--btn-weight); color: var(--btn-fg); text-shadow: var(--btn-text-shadow);
+    transition: background-color var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease), filter var(--dur) var(--ease);
+  }
+.btn:hover { background: var(--btn-hover-bg); border-color: var(--btn-hover-border); box-shadow: var(--btn-hover-shadow); }
+.btn:active { transform: var(--btn-active-transform); box-shadow: var(--btn-active-shadow); }
+.btn-accent { background: var(--btn-accent-bg); color: var(--btn-accent-fg); border: var(--btn-accent-border); box-shadow: var(--btn-accent-shadow); text-shadow: var(--btn-accent-text-shadow); }
+.btn-accent:hover { background: var(--btn-accent-hover-bg); border-color: var(--btn-accent-border-color, inherit); box-shadow: var(--btn-accent-hover-shadow); }
+.btn-ghost { background: transparent; border-color: transparent; box-shadow: none; color: inherit; text-shadow: none; }
+.btn-ghost:hover { background: var(--ghost-hover-bg); border-color: transparent; box-shadow: none; }
+.input { border-radius: var(--in-r, var(--ctl-r)); padding-inline: var(--in-px, 0.75rem); padding-block: var(--in-py, 0.375rem); background: var(--in-bg); border: var(--in-border); box-shadow: var(--in-shadow); transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease); }
+.input:hover { border-color: var(--in-hover-border); }
+.input:focus { border-color: var(--in-focus-border); box-shadow: var(--in-focus-shadow); }
+/* a multi-line box is not a single-line field: a pill radius (--in-r: 9999px in Spotify, YouTube Music...) would clip its text at the corners */
+textarea.input { border-radius: min(var(--in-r, var(--ctl-r)), 1.25rem); padding-inline: max(var(--in-px, 0.75rem), 1rem); padding-block: 0.6rem; }
+.card { border-radius: var(--card-r); background: var(--card-bg); border: var(--card-border); box-shadow: var(--card-shadow); }
+.chip { border-radius: var(--chip-r); }
+.bt-backdrop { background: var(--backdrop); }
+.bt-window { border-radius: var(--win-r); background: var(--win-bg); border: var(--win-border); box-shadow: var(--win-shadow); animation: var(--dialog-anim); }
+.bt-titlebar { background: var(--tb-bg); color: var(--tb-fg); border-bottom: var(--tb-border); padding: var(--tb-pad); justify-content: var(--tb-justify); }
+.bt-titlebar h2 { font-family: var(--title-font); font-weight: var(--tb-weight); font-size: var(--tb-size); text-shadow: var(--tb-text-shadow); }
+.bt-close { display: flex; align-items: center; justify-content: center; overflow: hidden; order: var(--close-order); margin: var(--close-margin); width: var(--close-size); height: var(--close-size); padding: var(--close-pad); color: var(--close-fg); background: var(--close-bg); border: var(--close-border); border-radius: var(--close-r); box-shadow: var(--close-shadow); }
+.bt-close:hover { background: var(--close-hover-bg); color: var(--close-hover-fg); }
+.bt-body { background: var(--body-bg); }
+.bt-footer { border-top: var(--bar-border); }
+.bt-menu { border-radius: var(--menu-r); background: var(--menu-bg); border: var(--menu-border); box-shadow: var(--pop-shadow); animation: var(--menu-anim); }
+[role='option'] { transition: background-color var(--dur) var(--ease); }
+[role='option']:hover:not(:disabled), [role='option'].bt-select-hi { background: var(--menu-hi-bg); color: var(--menu-hi-fg); outline: none; }
+[role='menuitem'] { transition: background-color var(--dur) var(--ease); }
+[role='menuitem']:hover:not(:disabled), [role='menuitem']:focus-visible { background: var(--menu-hi-bg); color: var(--menu-hi-fg); outline: none; }
+.bt-side { background: var(--side-bg); border-right: var(--bar-border); box-shadow: var(--side-shadow); }
+.bt-top { background: var(--top-bg); border-bottom: var(--bar-border); box-shadow: var(--top-shadow); }
+.bt-player { background: var(--player-bg); border-top: var(--bar-border); box-shadow: var(--player-shadow); animation: var(--player-in); }
+.bt-player[data-leaving] { animation: var(--player-out); pointer-events: none; }
+.bt-popover[data-leaving] { animation: var(--pop-out); pointer-events: none; }
+.bt-tabbar { background: var(--player-bg); border-top: var(--bar-border); }
+.bt-nav { border-radius: var(--nav-r); color: hsl(var(--muted)); transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease), box-shadow var(--dur) var(--ease); }
+.bt-nav:hover { background: var(--nav-hover-bg); color: hsl(var(--fg)); }
+.bt-nav[aria-current='page'] { background: var(--nav-active-bg); color: var(--nav-active-fg); box-shadow: var(--nav-active-shadow); }
+.bt-tab { color: hsl(var(--muted)); }
+.bt-tab[aria-current='page'] { color: hsl(var(--accent)); }
+.bt-row { transition: background-color var(--dur) var(--ease); }
+.bt-row:hover { background: var(--row-hover); color: var(--row-hover-fg); }
+.bt-row-current { background: var(--row-current); }
+.bt-panel-title { background: var(--panel-tb-bg); color: var(--panel-tb-fg); margin: var(--panel-tb-margin); padding: var(--panel-tb-pad); font-family: var(--title-font); text-shadow: var(--tb-text-shadow); }
+/* A range draws its own track only when a style asks for it (--rng-appearance: none); the fill comes from --p */
+/* a slider is easier to grab when its box is taller than the bar it draws: the track stays thin and centred, the grab area is 24 px */
+.bt-hit { height: 1.5rem; cursor: pointer; }
+.bt-range { appearance: var(--rng-appearance); -webkit-appearance: var(--rng-appearance); background: transparent; }
+.bt-range::-webkit-slider-runnable-track { height: var(--rng-h); border-radius: var(--rng-r); border: var(--rng-border); box-shadow: var(--rng-shadow); background: linear-gradient(to right, var(--rng-fill) var(--p, 0%), var(--rng-track) var(--p, 0%)); }
+.bt-range::-moz-range-track { height: var(--rng-h); border-radius: var(--rng-r); border: var(--rng-border); box-shadow: var(--rng-shadow); background: linear-gradient(to right, var(--rng-fill) var(--p, 0%), var(--rng-track) var(--p, 0%)); }
+.bt-range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: var(--rng-tw); height: var(--rng-th); margin-top: calc((var(--rng-h) - var(--rng-th)) / 2); border-radius: var(--rng-tr); border: var(--rng-tb); background: var(--rng-thumb); box-shadow: var(--rng-ts); }
+.bt-range::-moz-range-thumb { width: var(--rng-tw); height: var(--rng-th); border-radius: var(--rng-tr); border: var(--rng-tb); background: var(--rng-thumb); box-shadow: var(--rng-ts); }
+/* an upright slider (the equaliser bands): the bar runs bottom to top and is filled from the middle (0 dB) towards the knob */
+.bt-range-v::-webkit-slider-runnable-track { height: auto; width: var(--rng-h); background: linear-gradient(to top, var(--rng-track) 0 min(var(--p, 50%), var(--p0, 50%)), var(--rng-fill) 0 max(var(--p, 50%), var(--p0, 50%)), var(--rng-track) 0 100%); }
+.bt-range-v::-moz-range-track { height: auto; width: var(--rng-h); background: linear-gradient(to top, var(--rng-track) 0 min(var(--p, 50%), var(--p0, 50%)), var(--rng-fill) 0 max(var(--p, 50%), var(--p0, 50%)), var(--rng-track) 0 100%); }
+.bt-range-v::-webkit-slider-thumb { margin-top: 0; margin-left: calc((var(--rng-h) - var(--rng-tw)) / 2); }
+/* Checkboxes and radios: drawn by the UI style (--chk-*) instead of the OS, so they match every theme */
+input[type='checkbox'], input[type='radio'] {
+    appearance: none; -webkit-appearance: none; flex: none; margin: 0; cursor: pointer; position: relative; display: inline-block; vertical-align: middle;
+    width: var(--chk-size); height: var(--chk-size); border: var(--chk-border); background: var(--chk-bg); box-shadow: var(--chk-shadow); border-radius: var(--chk-r);
+    transition: background-color var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease);
+  }
+input[type='radio'] { border-radius: 9999px; }
+input[type='checkbox']::after, input[type='radio']::after { content: ''; position: absolute; transform: scale(0); transition: transform var(--dur) var(--ease); }
+input[type='checkbox']::after { inset: 0; background: var(--chk-on-fg); -webkit-mask: var(--chk-mask) center / var(--chk-mark) no-repeat; mask: var(--chk-mask) center / var(--chk-mark) no-repeat; }
+input[type='radio']::after { inset: 29%; border-radius: 9999px; background: var(--chk-dot); }
+input[type='checkbox']:hover:not(:disabled), input[type='radio']:hover:not(:disabled) { border-color: var(--chk-hover-border); }
+input[type='checkbox']:checked { background: var(--chk-on-bg); border-color: var(--chk-on-border); }
+input[type='radio']:checked { background: var(--chk-radio-on-bg); border-color: var(--chk-on-border); }
+input[type='checkbox']:checked::after, input[type='radio']:checked::after { transform: scale(1); }
+input[type='checkbox']:focus-visible, input[type='radio']:focus-visible { outline: none; box-shadow: var(--chk-focus); }
+input[type='checkbox']:disabled, input[type='radio']:disabled { opacity: 0.45; cursor: not-allowed; }
+/* a long button label wraps on a narrow screen instead of pushing the page sideways */
+.btn { max-width: 100%; }
+@media (max-width: 640px) {
+  .btn { white-space: normal; text-align: center; } }
+/* the desktop app's themed title bar (components/WindowFrame.tsx): colours, size and shape come from the UI style's dialog variables */
+.bt-wf { display: flex; align-items: center; gap: 0.5rem; flex: none; height: 2.25rem; padding: 0 0.5rem 0 0.9rem; -webkit-app-region: drag; user-select: none;
+  background: var(--tb-bg, hsl(var(--surface))); color: var(--tb-fg, inherit); border-bottom: 1px solid hsl(var(--line)); font-size: 0.8rem; font-weight: 600; z-index: 60; }
+.bt-wf-title { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--title-font, inherit); text-shadow: var(--tb-text-shadow, none); }
+.bt-wf-btns { display: flex; gap: 0.25rem; align-items: center; order: var(--wf-order, 1); -webkit-app-region: no-drag; }
+/* Minimise and maximise hover with a neutral wash of the bar's own text colour; only Close turns red (or what the style's Close looks like). Never the close button's colours on the others. */
+.bt-wf-btn { display: grid; place-items: center; width: 2rem; height: 1.6rem; border-radius: var(--wf-r, 6px); background: var(--wf-bg, transparent); border: var(--wf-border, 0); color: inherit; box-shadow: var(--wf-shadow, none); transition: background 0.12s; }
+.bt-wf-btn:is(:hover, :focus-visible) { background: var(--wf-hover, color-mix(in srgb, currentColor 16%, transparent)); box-shadow: var(--wf-shadow-hover, var(--wf-shadow, none)); }
+.bt-wf-btn:active { background: var(--wf-active, color-mix(in srgb, currentColor 26%, transparent)); }
+.bt-wf-close:is(:hover, :focus-visible) { background: var(--wf-close-hover, #e5484d); color: var(--wf-close-fg, #fff); }
+.bt-wf-close:active { background: var(--wf-close-active, var(--wf-close-hover, #c93b40)); }
+/* ---- the variable defaults every style starts from; a style (themes/<id>/style.css) sets only what differs ---- */
+:root, [data-ui] {
+  --dur: 150ms; --ease: ease;
+  --ctl-r: var(--radius); --card-r: var(--radius); --win-r: var(--radius); --menu-r: var(--radius); --nav-r: var(--radius); --chip-r: 9999px;
+  --title-font: var(--font);
+
+  --btn-bg: hsl(var(--raised)); --btn-fg: inherit; --btn-text-shadow: none; --btn-border: 0 solid transparent; --btn-shadow: none; --btn-weight: 500;
+  --btn-hover-bg: hsl(var(--hover)); --btn-hover-border: transparent; --btn-hover-shadow: var(--btn-shadow);
+  --btn-active-transform: none; --btn-active-shadow: var(--btn-shadow);
+  --btn-accent-bg: hsl(var(--accent)); --btn-accent-fg: hsl(var(--accent-fg)); --btn-accent-border: 0 solid transparent; --btn-accent-shadow: none; --btn-accent-text-shadow: none;
+  --btn-accent-hover-bg: var(--btn-accent-bg); --btn-accent-hover-shadow: var(--btn-accent-shadow);
+  --ghost-hover-bg: hsl(var(--raised));
+
+  --in-bg: hsl(var(--raised)); --in-border: 1px solid hsl(var(--line)); --in-shadow: none;
+  --in-hover-border: hsl(var(--line)); --in-focus-border: hsl(var(--accent)); --in-focus-shadow: none;
+
+  --card-bg: hsl(var(--surface)); --card-border: 1px solid hsl(var(--line)); --card-shadow: none;
+
+  --backdrop: rgb(0 0 0 / 0.6);
+  --win-bg: hsl(var(--surface)); --win-border: 1px solid hsl(var(--line)); --win-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25); --dialog-anim: none;
+  --tb-bg: transparent; --tb-fg: inherit; --tb-border: 1px solid hsl(var(--line)); --tb-pad: 0.75rem 1.25rem; --tb-weight: 600; --tb-size: 1rem; --tb-text-shadow: none;
+  --tb-justify: space-between; --close-order: 0; --close-margin: 0; --close-size: auto; --close-pad: 0.25rem;
+  --close-fg: hsl(var(--muted)); --close-bg: transparent; --close-border: 0 solid transparent; --close-r: 0.25rem; --close-shadow: none; --close-hover-bg: transparent; --close-hover-fg: hsl(var(--fg));
+  --body-bg: transparent; --bar-border: 1px solid hsl(var(--line));
+
+  --menu-bg: hsl(var(--surface)); --menu-border: 1px solid hsl(var(--line)); --pop-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25); --menu-anim: none;
+  --menu-hi-bg: hsl(var(--raised)); --menu-hi-fg: inherit;
+
+  --side-bg: hsl(var(--surface)); --side-shadow: none; --top-bg: hsl(var(--bg) / 0.9); --top-shadow: none; --player-bg: hsl(var(--surface)); --player-shadow: none;
+  --nav-hover-bg: hsl(var(--raised)); --nav-active-bg: hsl(var(--raised)); --nav-active-fg: hsl(var(--fg)); --nav-active-shadow: none;
+  --row-hover: hsl(var(--raised) / 0.6); --row-hover-fg: inherit; --row-current: hsl(var(--accent) / 0.1);
+  --panel-tb-bg: transparent; --panel-tb-fg: inherit; --panel-tb-margin: 0; --panel-tb-pad: 0;
+  /* motion of the player bar (enters when something is selected, leaves when nothing is) and of the pop-ups above it */
+  --player-in: bt-slide-in 260ms var(--ease) both; --player-out: bt-slide-out 200ms var(--ease) both; --player-ms: 200ms;
+  --pop-out: bt-fade-out 140ms ease-in both; --pop-ms: 140ms;
+  --vote-ms: 440ms;
+
+  --chk-size: 1.05rem; --chk-r: 5px; --chk-border: 1.5px solid hsl(var(--muted) / 0.75); --chk-bg: hsl(var(--raised)); --chk-shadow: none;
+  --chk-hover-border: hsl(var(--accent)); --chk-on-bg: hsl(var(--accent)); --chk-on-border: hsl(var(--accent)); --chk-on-fg: hsl(var(--accent-fg));
+  --chk-radio-on-bg: var(--chk-on-bg); --chk-dot: var(--chk-on-fg); --chk-mark: 78%; --chk-focus: 0 0 0 3px hsl(var(--accent) / 0.35);
+  --chk-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.6 8.6 6.7 11.6 12.4 4.6'/%3E%3C/svg%3E");
+
+  --rng-appearance: none; --rng-h: 0.25rem; --rng-r: 9999px; --rng-border: 0 solid transparent; --rng-shadow: none;
+  --rng-track: hsl(var(--raised)); --rng-fill: hsl(var(--accent));
+  --rng-tw: 1rem; --rng-th: 1rem; --rng-tr: 9999px; --rng-tb: 2px solid hsl(var(--bg)); --rng-thumb: hsl(var(--accent)); --rng-ts: 0 0 0 1px hsl(var(--accent)), 0 1px 3px rgb(0 0 0 / 0.35);
+}
+[data-ui] { font-family: var(--font); }
+/* the band under the floating controls spans the whole window (a sibling element in Layout), so it has no edge at the sidebar */
+.bt-scrim { display: none; }
+/* ---- small shared hooks ---- */
+.bt-ind { display: none; }
+.bt-thumb-pulse { animation: bt-thumb 420ms var(--ease); }
+.bt-cover-btn { transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease); }
+.bt-cover-btn:hover { transform: scale(1.05); }
+.bt-cover-btn:active { transform: scale(0.97); }
+/* A chosen card (release list, a previewing ranking card). An outline, not a ring: rings are box-shadows, which the styles use for bevels, glass and depth. */
+.bt-sel[data-selected] { outline: 2px solid hsl(var(--accent)); outline-offset: 0; }
+/* page transitions: the content area when you change page (a style sets --page-in) */
+.bt-page { animation: var(--page-in, none); }
+:root, [data-ui] { --page-in: bt-fade 160ms ease-out backwards; }
+.bt-ripple { position: absolute; border-radius: 50%; background: currentColor; opacity: 0.22; pointer-events: none; transform: scale(0); animation: bt-ripple 480ms cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+@media (prefers-reduced-motion: reduce) {
+  .bt-ripple { animation-duration: 1ms; } }
+@keyframes bt-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes bt-pop { from { opacity: 0; transform: scale(0.94); } to { opacity: 1; transform: none; } }
+@keyframes bt-slide-in { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes bt-drop { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+@keyframes bt-reveal { from { opacity: 0; clip-path: inset(0 0 100% 0); } to { opacity: 1; clip-path: inset(0); } }
+@keyframes bt-fade-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes bt-slide-out { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(18px); } }
+@keyframes bt-thumb { 0% { transform: scale(1); } 35% { transform: scale(1.55) rotate(-14deg); } 100% { transform: scale(1); } }
+@keyframes bt-none { from { opacity: 1; } to { opacity: 1; } }
+@keyframes bt-sheet { from { opacity: 0; transform: translateY(-22px) scale(0.985); } to { opacity: 1; transform: none; } }
+@keyframes bt-ripple { to { transform: scale(1); opacity: 0; } }

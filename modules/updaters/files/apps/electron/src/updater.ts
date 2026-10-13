@@ -13,7 +13,7 @@ import type { UpdateState } from './updateErrors.ts';
  * Self-update from the project's GitHub releases (electron-updater): checks shortly after start and every 6 hours, downloads in the
  * background and installs when the app is closed or when the user presses "Restart to update". Does nothing in development runs.
  */
-export const REPO = { owner: 'TurboNZL', repo: 'Curator' };
+export const REPO = { owner: 'TurboNZL', repo: 'TurboMusic' };
 
 export class Updates {
   state: UpdateState = { status: 'idle' };

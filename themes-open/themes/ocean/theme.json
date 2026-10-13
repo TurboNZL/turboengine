@@ -1,0 +1,16 @@
+{
+  "id": "ocean",
+  "label": "Ocean",
+  "palettes": [
+    {
+      "id": "ocean",
+      "label": "Ocean",
+      "mode": "dark",
+      "bg": [200, 60, 6],
+      "primary": [188, 85, 42],
+      "motif": "waves",
+      "group": "colour",
+      "order": 70
+    }
+  ]
+}

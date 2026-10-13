@@ -1,0 +1,66 @@
+{
+  "id": "material",
+  "label": "Material",
+  "style": {
+    "description": "Pill buttons, tonal surfaces, filled fields with an underline and rounded dialogs in Roboto.",
+    "font": "Roboto",
+    "matching": {
+      "light": "material",
+      "dark": "material-dark"
+    },
+    "fonts": [
+      {
+        "package": "roboto",
+        "weights": [
+          400,
+          500,
+          700
+        ]
+      }
+    ],
+    "order": 330
+  },
+  "palettes": [
+    {
+      "id": "material",
+      "label": "Tonal",
+      "mode": "light",
+      "bg": "#fef7ff",
+      "primary": "#6750a4",
+      "fg": "#1d1b20",
+      "mutedFg": "#49454f",
+      "motif": "dots",
+      "overrides": {
+        "card": "#f7f2fa",
+        "secondary": "#e8def8",
+        "muted": "#ece6f0",
+        "accent": "#e8def8",
+        "border": "#cac4d0",
+        "input": "#79747e"
+      },
+      "group": "colour",
+      "order": 510
+    },
+    {
+      "id": "material-dark",
+      "label": "Tonal dark",
+      "mode": "dark",
+      "bg": "#141218",
+      "primary": "#d0bcff",
+      "onPrimary": "#381e72",
+      "fg": "#e6e0e9",
+      "mutedFg": "#cac4d0",
+      "motif": "dots",
+      "overrides": {
+        "card": "#211f26",
+        "secondary": "#4a4458",
+        "muted": "#2b2930",
+        "accent": "#4a4458",
+        "border": "#49454f",
+        "input": "#938f99"
+      },
+      "group": "colour",
+      "order": 520
+    }
+  ]
+}

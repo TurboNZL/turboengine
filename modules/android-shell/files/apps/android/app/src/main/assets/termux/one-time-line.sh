@@ -1,1 +1,0 @@
-mkdir -p ~/.termux; sed -i '/^#\?[[:space:]]*allow-external-apps/d' ~/.termux/termux.properties 2>/dev/null; echo 'allow-external-apps = true' >> ~/.termux/termux.properties; termux-reload-settings; echo 'Done: Music Curator can now run the server. You can go back to the app.'

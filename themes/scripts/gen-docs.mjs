@@ -2,7 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { buildPalette, tokens } from '../engine/src/palette.ts';
-import { buildThemes, root } from './lib/themes.mjs';
+import { buildThemes, src as root } from './lib/themes.mjs';
 
 const { catalog } = await buildThemes({ minify: false });
 const hsl = (v) => { const [h, s, l] = v.split(/[ %]+/).filter(Boolean).map(Number); const a = s / 100 * Math.min(l / 100, 1 - l / 100); const f = (n) => { const k = (n + h / 30) % 12; const c = l / 100 - a * Math.max(Math.min(k - 3, 9 - k, 1), -1); return Math.round(255 * c).toString(16).padStart(2, '0'); }; return '#' + f(0) + f(8) + f(4); };

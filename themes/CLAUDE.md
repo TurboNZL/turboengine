@@ -20,6 +20,9 @@ One look for all of the owner's apps (TurboNZL, GitHub). Two halves, on purpose:
 | API version | `API_VERSION` is 2 since layouts left the catalog; engines at 1 refuse the newer bundles with `engine-too-old` (apps must update the package once). |
 | Engine vs theme | A new scripted effect, a new hook class in `base.css`, or a new theme.json field needs an engine release (and maybe an `API_VERSION` bump). Everything else is a theme change. |
 
+## The open pack
+`../themes-open/` is a generated, stripped-down copy of this package for apps that are sold (no brand names or trade dress; see its README). It is built by this package's scripts with `TURBOTHEMES_SRC=../themes-open`. A new theme here is not in the open pack unless `themes-open/make.py` lists it.
+
 ## Layout
 ```
 engine/src/        types, color, palette (spec -> variables), catalog (registry + validation), theme (apply palette), device (match this device from config rules),

@@ -2,13 +2,22 @@
 
 Every merge to main becomes a release: auto-PR for pushed branches, checks, next version vYYYY.M.N, installers and APK attached, lowercase asset names.
 
-Recommended for every app. Reference files are in `files/` (the paths are the paths in the app); they were taken from TurboMusic at `b6d85a8`, where they are known to work.
+Recommended for every app. Reference files are in `files/` (the paths are the paths in the app); source: `TurboNZL/turbomusic` at `ea3f5ea` (workflows refreshed; they run there).
 
 ## What it does
 - `auto-pr.yml`: a push of any non-main branch opens a PR (needs the repo setting *Actions > General > Allow GitHub Actions to create and approve pull requests*).
 - `check.yml`: typecheck, tests, web build and the Android compile, **on pushes to main only**.
 - `release.yml`: a push to main (docs-only changes ignored; "Run workflow" releases on demand) works out the next tag `vYYYY.M.N` (year, month, a counter that restarts each month), creates the release (`gh release create --target $GITHUB_SHA`, which also creates the tag), then builds and attaches the assets in parallel jobs.
 - A merged PR cannot take new work: the next change goes on a fresh branch from main (the AI should restart its branch from main).
+
+## Jobs in `release.yml` (drop the ones the app does not ship)
+| Job | Builds | Needs module |
+|---|---|---|
+| `release` | next tag + the GitHub release (always) | none |
+| `desktop` | Electron installers: full, app (and Linux server) editions | `editions`, `window-frame` |
+| `windows-server` | the tray server installer | `server-install-update` |
+| `android` | signed APK | `android-shell` |
+| `termux-bundle` | the server bundle the Android app installs into Termux | `termux-server` |
 
 ## Asset naming (all lowercase)
 `<app>[-<edition>]-<version>-<os>-<arch>.<ext>`: `turbomusic-2026.10.31-linux-amd64.deb`, `...-windows-x64-setup.exe`, `...-android.apk`. The updaters never look at file names (electron-updater reads `latest*.yml`, Android takes the first `.apk`), so names can change without a transition period. Set names with `artifactName` in the electron-builder config.

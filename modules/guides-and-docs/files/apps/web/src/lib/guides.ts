@@ -8,7 +8,7 @@ const readme = import.meta.glob('../../../../README.md', { query: '?raw', import
 export interface Guide { name: string; title: string; group: 'Start' | 'Apps' | 'Servers'; load: () => Promise<string> }
 
 const TITLE: Record<string, [string, Guide['group']]> = {
-  GETTING_STARTED: ['Getting started', 'Start'], README: ['About Music Curator', 'Start'],
+  GETTING_STARTED: ['Getting started', 'Start'], README: ['About TurboMusic', 'Start'],
   DESKTOP_APP: ['Desktop app', 'Apps'], ANDROID_APP: ['Android app', 'Apps'], CONNECT: ['Play on a device', 'Apps'], DISCORD: ['Discord status', 'Apps'], SPOTIFY: ['Spotify', 'Apps'],
   WINDOWS_SERVER: ['Server on Windows', 'Servers'], DEPLOY_PI: ['Server on Linux or a Raspberry Pi', 'Servers'], UPDATING: ['Updating a Linux server', 'Servers'], YTDLP_COOKIES: ['YouTube downloads and cookies', 'Servers'],
 };

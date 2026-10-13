@@ -1,26 +1,36 @@
 # turboengine
 
-A **reference point** for TurboNZL apps: working, battle-tested code and conventions that apps copy and pin to, so they share one feel (release flow, updates, naming, the theme picker, window chrome, settings layout, docs and briefing). It is not a package and not a framework. It is a template that gets better every time an app teaches it something.
+The **main framework** for TurboNZL apps: working, battle-tested code and conventions that apps copy and pin to, so they share one feel (release flow, updates, naming, the theme picker, window chrome, settings layout, docs and briefing). It is a template, not a package: apps copy from it and pin to a commit. The original concepts came from TurboMusic (the first app); the engine is now the common source, and every app, TurboMusic included, takes from it and feeds improvements back.
 
 - `CLAUDE.md`: how the AI should use and grow this repo (read it first).
 - `modules/<name>/`: one capability each, with `MODULE.md` (what, how to integrate, gotchas), `module.json` and `files/` (the real files, at the paths they have in an app).
 - `themes/`: the theme engine and every theme (the npm package `turbothemes`, formerly its own repository). **On by default**; an app can opt out (see `modules/appearance`).
+- `themes-open/`: a second, **not preferred** theme pack for apps that are sold: original looks and neutral palettes only, no third-party names or trade dress; generated from `themes/` and built by the same engine (`themes-open/README.md`).
 - `templates/`: `CLAUDE.md`, `PROJECT_BRIEF.md` and the `.turboengine.json` pin to start an app from.
 - `scripts/engine-diff.mjs`: compares an app with the modules it pins (same, changed, missing).
 
 The themes are part of this repository (`themes/`, with their own `CLAUDE.md`): apps install the package from this repo and receive theme updates at run time from `themes/dist`. The `appearance` module is how an app wires them in.
 
+**An app that runs its own server** must take the `self-hosted-server` bundle: `cloudflare-access` + `server-install-update` + `updaters` + `release-pipeline`.
+
 ## Modules
-| Module | Optional | What |
-|---|---|---|
-| [`release-pipeline`](modules/release-pipeline/MODULE.md) | no | Release pipeline and naming: Every merge to main becomes a release: auto-PR for pushed branches, checks, next version vYYYY.M.N, installers and APK attached, lowercase asset names. |
-| [`editions`](modules/editions/MODULE.md) | yes | Editions: full, app-only and server (and the server module): One Electron codebase shipped as three editions (window + library server, window only, headless server) with a server module that can be installed or removed inside the app. |
-| [`updaters`](modules/updaters/MODULE.md) | no | Self-update (desktop and Android): electron-updater from GitHub releases (with a .deb path that works without a polkit agent) and a native Android updater, both through one Settings card. |
-| [`appearance`](modules/appearance/MODULE.md) | no | Appearance: turbothemes glue, layouts and the picker: How an app starts the turbothemes engine, owns its layouts, shows the picker (colour theme, UI style, layout, wallpaper) and the theme-update card. |
-| [`window-frame`](modules/window-frame/MODULE.md) | yes | Desktop window: custom frame, preload bridge and main process: A theme-drawn title bar (traffic lights by UI style), the preload bridge `window.<app>Desktop`, the single-instance main process, GPU modes and graphics readback. |
-| [`guides-and-docs`](modules/guides-and-docs/MODULE.md) | no | Docs layout, in-app guides and the project brief: `docs/guides` = user guides bundled into Settings > Guides; `docs/development` = developer notes; `PROJECT_BRIEF.md` and `CLAUDE.md` at the root. |
-| [`settings-shell`](modules/settings-shell/MODULE.md) | yes | Settings shell and device pairing: Wrapping tab strip, card order conventions, and a pairing code (`CUR1-<base64url>`) that carries address, token and access credentials to a new device. |
-| [`android-shell`](modules/android-shell/MODULE.md) | yes | Android shell: WebView app, bridge, media service, server module: A native Kotlin app hosting the web client from http://localhost, with a JS bridge, a Media3 player (notification, Android Auto), and an optional Termux-hosted server. |
+| Module | Optional | What | Requires |
+|---|---|---|---|
+| [`android-shell`](modules/android-shell/MODULE.md) | yes | A native Kotlin app hosting the web client from http://localhost, with a JS bridge, a Media3 player (notification, Android Auto), and an optional Termux-hosted server. |  |
+| [`appearance`](modules/appearance/MODULE.md) | no | How an app starts the turbothemes engine, owns its layouts, shows the picker (colour theme, UI style, layout, wallpaper) and the theme-update card. |  |
+| [`cloudflare-access`](modules/cloudflare-access/MODULE.md) | yes | A server behind Cloudflare Access wants two headers on every request; this makes web, desktop and Android send them, including for <audio>, <img> and event streams that cannot. |  |
+| [`device-pairing`](modules/device-pairing/MODULE.md) | yes | A code that carries server address, access token and access-service credentials to a new device (`CUR1-<base64url>`). | settings-shell |
+| [`discord-presence`](modules/discord-presence/MODULE.md) | yes | Shows the playing track in Discord through the local IPC socket; needs the app's own Discord application id. | window-frame |
+| [`editions`](modules/editions/MODULE.md) | yes | One Electron codebase shipped as three editions (window + library server, window only, headless server) with a server module that can be installed or removed inside the app. |  |
+| [`gpu-modes`](modules/gpu-modes/MODULE.md) | yes | Chromium falls back to software rendering silently; this reads back what it got and tries start-up modes in turn ("Automatic"). | window-frame |
+| [`guides-and-docs`](modules/guides-and-docs/MODULE.md) | no | `docs/guides` = user guides bundled into Settings > Guides; `docs/development` = developer notes; `PROJECT_BRIEF.md` and `CLAUDE.md` at the root. |  |
+| [`release-pipeline`](modules/release-pipeline/MODULE.md) | no | Every merge to main becomes a release: auto-PR for pushed branches, checks, next version vYYYY.M.N, installers and APK attached, lowercase asset names. |  |
+| [`self-hosted-server`](modules/self-hosted-server/MODULE.md) | no | An app that runs its own server must ship these together, so every TurboNZL server is reached, installed and updated the same way. Has no files; it lists what is required. | cloudflare-access, server-install-update, updaters, release-pipeline |
+| [`server-install-update`](modules/server-install-update/MODULE.md) | yes | How a library server gets onto a machine (one-command Linux/Pi installer, Windows tray app with a setup wizard) and how it updates itself from a button in Settings. | cloudflare-access, updaters |
+| [`settings-shell`](modules/settings-shell/MODULE.md) | yes | Wrapping tab strip, card order conventions, and a pairing code (`CUR1-<base64url>`) that carries address, token and access credentials to a new device. |  |
+| [`termux-server`](modules/termux-server/MODULE.md) | yes | An Android app that can install, start and stop its own library server inside Termux (beta; never run on a real device when written). | android-shell |
+| [`updaters`](modules/updaters/MODULE.md) | no | electron-updater from GitHub releases (with a .deb path that works without a polkit agent) and a native Android updater, both through one Settings card. |  |
+| [`window-frame`](modules/window-frame/MODULE.md) | yes | A theme-drawn title bar (traffic lights by UI style), the preload bridge `window.<app>Desktop`, the single-instance main process, GPU modes and graphics readback. |  |
 
 ## Using it
 **New app:** copy `templates/` into the repo (`CLAUDE.md`, `PROJECT_BRIEF.md`, `.turboengine.json`), then add modules by copying their `files/` and following `MODULE.md`. Tell the AI: *"Read TurboNZL/turboengine (CLAUDE.md and the modules you need) and set this app up from it; pin to commit X."*

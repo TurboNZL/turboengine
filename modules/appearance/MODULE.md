@@ -2,7 +2,7 @@
 
 How an app starts the turbothemes engine, owns its layouts, shows the picker (colour theme, UI style, layout, wallpaper) and the theme-update card.
 
-Recommended for every app. Reference files are in `files/` (the paths are the paths in the app); they were taken from TurboMusic at `b6d85a8`, where they are known to work.
+Recommended for every app. Reference files are in `files/` (the paths are the paths in the app); source: `TurboNZL/turbomusic` at `ea3f5ea`, where they run.
 
 ## Themes live in this repo
 The theme package is `themes/` of this repository (name `turbothemes`; the old separate repository is retired). It has its own `CLAUDE.md`, docs (`themes/docs/`: CONTRACT, AUTHORING, INTEGRATION, PICKER ...), tests and a committed `dist/` that CI rebuilds. Apps get it two ways: **build time** as a pnpm git dependency on a subfolder, and **run time** as theme updates the app downloads from `themes/dist` on `main` (so a theme fix never needs an app release).
@@ -31,6 +31,3 @@ The theme package is `themes/` of this repository (name `turbothemes`; the old s
 - `apps/web/src/index.css`
 - `apps/web/src/fonts.css`
 - `docs/development/APPEARANCE.md`
-
-## Opting out of themes
-Themes are the default, not an obligation. To skip them: keep `import 'turbothemes/base.css'` and the tailwind preset (they give every hook class a sensible default look, no engine needed), use `files-lite/apps/web/src/lib/appearance.ts` instead of the full one, and leave out `AppearanceCard`, `ThemeUpdates`, `layouts.css` and the Appearance tab. Set `"themes": "off"` in `.turboengine.json`. Nothing else in the other modules depends on the theme engine.

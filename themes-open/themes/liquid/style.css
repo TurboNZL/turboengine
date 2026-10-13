@@ -1,0 +1,231 @@
+[data-ui="liquid"] { --wf-order: -1; }
+[data-ui="liquid"] .bt-wf { padding-left: 0.75rem; }
+[data-ui="liquid"] .bt-wf-title { text-align: center; margin-right: 3.6rem; }
+[data-ui="liquid"] .bt-wf-btns { gap: 8px; }
+[data-ui="liquid"] .bt-wf-close { order: -1; }
+[data-ui="liquid"] .bt-wf-btn { --wf-r: 9999px; position: relative; width: 12px; height: 12px; padding: 0; color: transparent; --wf-glyph: #995700; --wf-border: 0.5px solid #e1a73e; --wf-bg: #febc2e; --wf-hover: #febc2e; --wf-active: #c49a22; }
+[data-ui="liquid"] .bt-wf-btn[aria-label="Maximise"], [data-ui="liquid"] .bt-wf-btn[aria-label="Restore"] { --wf-glyph: #006500; --wf-border: 0.5px solid #2dac2f; --wf-bg: #28c840; --wf-hover: #28c840; --wf-active: #1f9a30; }
+[data-ui="liquid"] .bt-wf-close { --wf-glyph: #4d0000; --wf-border: 0.5px solid #e2463f; --wf-bg: #ff5f57; --wf-close-hover: #ff5f57; --wf-close-active: #bf4943; }
+[data-ui="liquid"] .bt-wf-btn svg { display: none; }
+[data-ui="liquid"] .bt-wf-btn::after { content: ""; position: absolute; inset: 0; margin: auto; width: 8px; height: 8px; background: var(--wf-glyph); opacity: 0; transition: opacity 0.08s; -webkit-mask: var(--glyph) center / contain no-repeat; mask: var(--glyph) center / contain no-repeat; }
+[data-ui="liquid"] .bt-wf-btns:hover .bt-wf-btn::after, [data-ui="liquid"] .bt-wf-btns:focus-within .bt-wf-btn::after { opacity: 0.85; }
+[data-ui="liquid"] .bt-wf-btn { --glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M1 4h6' stroke='%23000' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E"); }
+[data-ui="liquid"] .bt-wf-close { --glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M1.3 1.3l5.4 5.4M6.7 1.3L1.3 6.7' stroke='%23000' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E"); }
+[data-ui="liquid"] .bt-wf-btn[aria-label="Maximise"] { --glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M.8 .8h3.6L.8 4.4zM7.2 7.2H3.6l3.6-3.6z'/%3E%3C/svg%3E"); }
+[data-ui="liquid"] .bt-wf-btn[aria-label="Restore"] { --glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M1 4.2h2.8V1.4zM7 3.8H4.2v2.8z'/%3E%3C/svg%3E"); }
+/* ================== Glass lens ==================
+ * Follows the description of the material (WWDC25 "Meet Glass lens"): LENSING (light is bent, not just
+ * scattered: lib/liquidGlass.ts builds an SVG displacement map per shape and sets --lg-filter / --lg-spec),
+ * MATERIALIZATION (menus and dialogs ease their lens in instead of fading), FLUIDITY (springy press, menus and
+ * dialogs grow out of the control that opened them), ADAPTIVITY (separate dark/light recipes, a dimming layer for
+ * Clear, glass recedes when the window loses focus) and TOUCH response (a glow that starts under the pointer and
+ * spreads). Glass is only for the navigation layer that floats above the content (sidebar, bars, menus, dialogs,
+ * the controls inside them); content stays quiet. In browsers that cannot refract (everything but Chromium)
+ * the same recipe renders as frosted glass with the rim highlight.
+ * Accessibility: reduced motion removes the animation (global rule); reduced transparency makes it opaque (end).
+ */
+/* A dialog is big: blurring and refracting what is behind it on every frame of its scale-in is what made opening one stutter, so the
+ * backdrop effect only switches on when the animation ends (the dialog's own fill is nearly opaque, so the change is hardly seen). */
+[data-ui="liquid"] {
+  --radius: 22px; --ctl-r: 9999px; --card-r: 24px; --win-r: 34px; --menu-r: 24px; --nav-r: 18px; --in-r: 14px; --in-px: 0.9rem;
+  --font: "Inter", system-ui, sans-serif;
+  --dur: 180ms; --ease: cubic-bezier(0.32, 0.72, 0, 1); --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* the material (dark) */
+  --lg-fill: hsl(var(--surface) / 0.34); --lg-fill-strong: hsl(var(--surface) / 0.6);
+  --lg-sheen: linear-gradient(140deg, rgb(255 255 255 / 0.14), rgb(255 255 255 / 0.015) 44%, rgb(255 255 255 / 0.06));
+  --lg-shadow: 0 12px 38px rgb(0 0 0 / 0.36), 0 2px 8px rgb(0 0 0 / 0.24);
+  --lg-rim: inset 0 0 0 0.5px rgb(255 255 255 / 0.14);
+  --lg-blur: 14px; --lg-blur-sm: 8px; --lg-sat: 1.7; --lg-bright: 1.05; --lg-dim: transparent;
+  --lg-hover: rgb(255 255 255 / 0.12); --lg-press: rgb(255 255 255 / 0.2);
+
+  --btn-fg: inherit; --btn-weight: 600;
+  --in-bg: hsl(var(--raised) / 0.5); --in-border: 0.5px solid rgb(255 255 255 / 0.14); --in-shadow: inset 0 1px 2px rgb(0 0 0 / 0.18);
+  --in-hover-border: rgb(255 255 255 / 0.28); --in-focus-border: hsl(var(--accent)); --in-focus-shadow: 0 0 0 4px hsl(var(--accent) / 0.32);
+  --card-bg: hsl(var(--surface) / 0.46); --card-border: 0.5px solid rgb(255 255 255 / 0.1); --card-shadow: 0 6px 24px rgb(0 0 0 / 0.16);
+  --backdrop: rgb(0 0 0 / 0.34);
+  --dialog-anim: lg-open 380ms cubic-bezier(0.22, 1, 0.36, 1) both; --menu-anim: lg-menu 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  --tb-bg: transparent; --tb-border: 0 solid transparent; --tb-pad: 1.2rem 1.5rem 0.4rem; --tb-size: 1.2rem; --tb-weight: 700;
+  --close-size: 2rem; --close-pad: 0; --close-bg: rgb(255 255 255 / 0.13); --close-r: 9999px; --close-hover-bg: rgb(255 255 255 / 0.24);
+  --bar-border: 0.5px solid rgb(255 255 255 / 0.1);
+  --row-hover: rgb(255 255 255 / 0.07); --row-current: hsl(var(--accent) / 0.16);
+  --nav-hover-bg: rgb(255 255 255 / 0.08); --nav-active-fg: hsl(var(--fg));
+  --rng-appearance: none; --rng-h: 6px; --rng-track: rgb(255 255 255 / 0.2); --rng-fill: hsl(var(--accent));
+  --rng-tw: 1.75rem; --rng-th: 1.1rem; --rng-tr: 9999px; --rng-thumb: linear-gradient(#fff, #eceef4); --rng-ts: 0 2px 8px rgb(0 0 0 / 0.4), inset 0 0 0 0.5px rgb(0 0 0 / 0.1);
+  --chk-size: 1.2rem; --chk-r: 7px; --chk-border: 0.5px solid rgb(255 255 255 / 0.3); --chk-bg: linear-gradient(140deg, rgb(255 255 255 / 0.2), rgb(255 255 255 / 0.06));
+  --chk-shadow: inset 0 0.5px 0 rgb(255 255 255 / 0.4), 0 1px 3px rgb(0 0 0 / 0.25); --chk-on-bg: linear-gradient(140deg, hsl(var(--accent) / 0.95), hsl(var(--accent) / 0.7));
+  --chk-on-border: hsl(var(--accent) / 0.6); --chk-focus: 0 0 0 4px hsl(var(--accent) / 0.32);
+}
+/* the material (light): brighter, whiter glass and softer, bluer shadows */
+[data-ui="liquid"][data-mode="light"] {
+  --lg-fill: hsl(var(--surface) / 0.46); --lg-fill-strong: hsl(var(--surface) / 0.74);
+  --lg-sheen: linear-gradient(140deg, rgb(255 255 255 / 0.6), rgb(255 255 255 / 0.1) 46%, rgb(255 255 255 / 0.32));
+  --lg-shadow: 0 12px 34px rgb(40 52 90 / 0.2), 0 1px 5px rgb(40 52 90 / 0.14);
+  --lg-rim: inset 0 0 0 0.5px rgb(255 255 255 / 0.75), inset 0 0 0 1px rgb(40 52 90 / 0.07);
+  --lg-sat: 1.9; --lg-bright: 1.04; --lg-hover: rgb(255 255 255 / 0.5); --lg-press: rgb(255 255 255 / 0.75);
+  --in-bg: hsl(var(--surface) / 0.55); --in-border: 0.5px solid rgb(0 0 0 / 0.1); --in-shadow: inset 0 1px 2px rgb(40 52 90 / 0.1); --in-hover-border: rgb(0 0 0 / 0.22);
+  --card-bg: hsl(var(--surface) / 0.62); --card-border: 0.5px solid rgb(255 255 255 / 0.7); --card-shadow: 0 6px 22px rgb(40 52 90 / 0.12);
+  --backdrop: rgb(20 28 50 / 0.28);
+  --close-bg: rgb(0 0 0 / 0.07); --close-hover-bg: rgb(0 0 0 / 0.14); --bar-border: 0.5px solid rgb(0 0 0 / 0.08);
+  --row-hover: rgb(0 0 0 / 0.05); --nav-hover-bg: rgb(0 0 0 / 0.05);
+  --rng-track: rgb(0 0 0 / 0.14); --rng-thumb: linear-gradient(#fff, #f4f5f9);
+  --chk-border: 0.5px solid rgb(0 0 0 / 0.25); --chk-bg: linear-gradient(140deg, #fff, rgb(255 255 255 / 0.5));
+}
+/* Clear: far more see-through, no adaptive tint, and a dimming layer under the content so it stays legible */
+html[data-glass="clear"][data-ui="liquid"] {
+  --lg-fill: hsl(var(--surface) / 0.05); --lg-fill-strong: hsl(var(--surface) / 0.2); --lg-blur: 2px; --lg-blur-sm: 1px; --lg-sat: 1.25; --lg-bright: 1; --lg-dim: rgb(0 0 0 / 0.22);
+}
+html[data-glass="clear"][data-ui="liquid"][data-mode="light"] { --lg-dim: rgb(0 0 0 / 0.12); }
+/* the window lost focus: glass recedes (flatter, quieter) to guide attention back */
+html.lg-inactive[data-ui="liquid"] { --lg-sat: 1.05; --lg-blur: 12px; --lg-shadow: 0 6px 18px rgb(0 0 0 / 0.18); }
+html.lg-inactive[data-ui="liquid"] .bt-shell { opacity: 0.86; }
+/* an ambient backdrop, so there is something for the glass to bend (the user's wallpaper replaces it) */
+html[data-ui="liquid"]:not([data-wallpaper="on"]) body {
+  background-color: hsl(var(--bg)); background-attachment: fixed;
+  background-image:
+    radial-gradient(60rem 40rem at 6% -8%, hsl(var(--accent) / 0.40), transparent 62%),
+    radial-gradient(52rem 38rem at 98% 6%, hsl(var(--top) / 0.30), transparent 60%),
+    radial-gradient(56rem 40rem at 62% 112%, hsl(var(--bad) / 0.18), transparent 62%),
+    radial-gradient(40rem 30rem at 30% 60%, hsl(var(--good) / 0.10), transparent 60%);
+}
+html[data-ui="liquid"][data-mode="light"]:not([data-wallpaper="on"]) body {
+  background-image:
+    radial-gradient(60rem 40rem at 6% -8%, hsl(var(--accent) / 0.46), transparent 62%),
+    radial-gradient(52rem 38rem at 98% 6%, hsl(var(--top) / 0.38), transparent 60%),
+    radial-gradient(56rem 40rem at 62% 112%, hsl(var(--bad) / 0.22), transparent 62%),
+    radial-gradient(40rem 30rem at 30% 60%, hsl(var(--good) / 0.16), transparent 60%);
+}
+/* ---- glass surfaces: sidebar, player, tab bar, menus, dialogs ---- */
+:is(html, div)[data-ui="liquid"] .bt-side, :is(html, div)[data-ui="liquid"] .bt-player, :is(html, div)[data-ui="liquid"] .bt-tabbar, :is(html, div)[data-ui="liquid"] .bt-menu, :is(html, div)[data-ui="liquid"] .bt-window {
+  background: var(--lg-spec, none) center / 100% 100% no-repeat, var(--lg-sheen), var(--lg-fill);
+  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-sat));
+  backdrop-filter: blur(var(--lg-blur)) var(--lg-filter, saturate(1)) saturate(var(--lg-sat)) brightness(var(--lg-bright));
+  border: 0; box-shadow: var(--lg-shadow), var(--lg-rim), inset 0 0 0 999px var(--lg-dim);
+}
+:is(html, div)[data-ui="liquid"] .bt-window { background: var(--lg-spec, none) center / 100% 100% no-repeat, var(--lg-sheen), var(--lg-fill-strong); box-shadow: 0 30px 80px rgb(0 0 0 / 0.45), 0 4px 14px rgb(0 0 0 / 0.25), var(--lg-rim), inset 0 0 0 999px var(--lg-dim); }
+:is(html, div)[data-ui="liquid"] .bt-backdrop { animation: bt-fade 300ms ease-out both; }
+/* just a dim: a screen-sized blur was the costliest part of opening a dialog */
+:is(html, div)[data-ui="liquid"] .bt-menu { padding: 6px; background: var(--lg-spec, none) center / 100% 100% no-repeat, var(--lg-sheen), var(--lg-fill-strong); }
+:is(html, div)[data-ui="liquid"] .bt-menu [role="menuitem"] { width: 100%; border-radius: calc(var(--menu-r) - 8px); padding-inline: 0.8rem; }
+:is(html, div)[data-ui="liquid"] .bt-menu [role="menuitem"]:hover:not(:disabled), :is(html, div)[data-ui="liquid"] .bt-menu [role="menuitem"]:focus-visible {
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), var(--lg-press), var(--lg-hover) 70%); color: inherit;
+  box-shadow: inset 0 0 0 0.5px rgb(255 255 255 / 0.18);
+}
+:is(html, div)[data-ui="liquid"] .bt-window .bt-body { background: none; }
+:is(html, div)[data-ui="liquid"] .bt-footer { border-top: var(--bar-border); }
+/* the navigation layer floats above the content, inset from the edges, with corners concentric to each other */
+:is(html, div)[data-ui="liquid"] .bt-side.bt-shell { margin: 12px 0 12px 12px; border-radius: 30px; padding: 12px; animation: lg-bar-in 420ms var(--ease) both; }
+:is(html, div)[data-ui="liquid"] .bt-player.bt-shell { position: fixed; z-index: 30; left: 12px; right: 12px; bottom: 12px; border-radius: 30px; overflow: hidden; }
+:is(html, div)[data-ui="liquid"] .bt-player.bt-shell > div:last-child { padding-block: 0.4rem; }
+:is(html, div)[data-ui="liquid"] .bt-tabbar.bt-shell { position: fixed; z-index: 31; left: 12px; right: 12px; bottom: 12px; border-radius: 9999px; padding: 4px 6px; }
+:is(html, div)[data-ui="liquid"] .bt-tab { position: relative; z-index: 1; border-radius: 9999px; transition: color var(--dur) var(--ease); }
+:is(html, div)[data-ui="liquid"] .bt-tab[aria-current="page"] { background: none; }
+/* the lit pill is one element that glides to the chosen link (its position comes from Layout's useIndicator) */
+:is(html, div)[data-ui="liquid"] .bt-ind {
+  display: block; position: absolute; left: 0; top: 0; z-index: 0; pointer-events: none;
+  width: var(--ind-w, 0); height: var(--ind-h, 0); opacity: var(--ind-o, 0);
+  transform: translate3d(var(--ind-x, 0), var(--ind-y, 0), 0);
+  border-radius: var(--nav-r); background: var(--lg-sheen), rgb(255 255 255 / 0.13);
+  box-shadow: inset 0 0 0 0.5px rgb(255 255 255 / 0.24), 0 2px 10px rgb(0 0 0 / 0.14);
+  will-change: transform;
+}
+:is(html, div)[data-ui="liquid"] [data-ind-ready] > .bt-ind { transition: transform 460ms var(--spring), width 460ms var(--spring), height 460ms var(--spring), opacity 160ms ease; }
+:is(html, div)[data-ui="liquid"] .bt-tabbar .bt-ind { border-radius: 9999px; }
+[data-ui="liquid"][data-mode="light"] .bt-ind { background: var(--lg-sheen), rgb(255 255 255 / 0.75); box-shadow: inset 0 0 0 0.5px rgb(0 0 0 / 0.06), 0 2px 10px rgb(40 52 90 / 0.14); }
+@media (min-width: 768px) {
+  :is(html, div)[data-ui="liquid"] .bt-player.bt-shell { left: calc(14rem + 24px); } }
+@media (max-width: 767.98px) {
+  :is(html, div)[data-ui="liquid"] .bt-player.bt-shell { bottom: calc(12px + 3.9rem); } }
+:is(html, div)[data-ui="liquid"] main { padding-bottom: 1.5rem; }
+:is(html, div)[data-ui="liquid"] main.has-player { padding-bottom: 7.25rem; }
+@media (max-width: 767.98px) {
+  :is(html, div)[data-ui="liquid"] main { padding-bottom: 6rem; }
+  :is(html, div)[data-ui="liquid"] main.has-player { padding-bottom: 11.75rem; } }
+/* top bar: no band, the controls float; content fades out under it with a soft blur (the scroll edge effect) */
+:is(html, div)[data-ui="liquid"] .bt-top.bt-shell { background: none; border: 0; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; isolation: isolate; }
+:is(html, div)[data-ui="liquid"] .bt-scrim {
+  display: block; position: fixed; z-index: 5; left: 0; right: 0; top: 0; height: 5.25rem; pointer-events: none;
+  background: linear-gradient(hsl(var(--bg) / 0.7), hsl(var(--bg) / 0));
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  -webkit-mask-image: linear-gradient(#000 55%, transparent); mask-image: linear-gradient(#000 55%, transparent);
+}
+:is(html, div)[data-ui="liquid"][data-mode="light"] .bt-scrim, [data-mode="light"] [data-ui="liquid"] .bt-scrim { background: linear-gradient(rgb(255 255 255 / 0.5), rgb(255 255 255 / 0)); }
+:is(html, div)[data-ui="liquid"] .bt-side.bt-shell { position: relative; z-index: 6; }
+:is(html, div)[data-ui="liquid"] .bt-top .input {
+  border-radius: 9999px; border: 0; padding-block: 0.55rem;
+  background: var(--lg-spec, none) center / 100% 100% no-repeat, var(--lg-sheen), var(--lg-fill);
+  -webkit-backdrop-filter: none; backdrop-filter: none; /* the top bar floats over the scrolling page: no per-frame blur here */
+  box-shadow: var(--lg-shadow), var(--lg-rim);
+}
+:is(html, div)[data-ui="liquid"] .bt-top .input:focus { box-shadow: var(--lg-shadow), 0 0 0 4px hsl(var(--accent) / 0.32); }
+/* ---- controls: tinted glass when primary, glass on hover when plain ---- */
+:is(html, div)[data-ui="liquid"] .btn, :is(html, div)[data-ui="liquid"] .btn:hover, :is(html, div)[data-ui="liquid"] .btn:active {
+  --lg-btn-fill: var(--lg-fill);
+  background: var(--lg-spec, none) center / 100% 100% no-repeat, var(--lg-sheen), var(--lg-btn-fill);
+  border: 0; color: inherit; text-shadow: none;
+  -webkit-backdrop-filter: none; backdrop-filter: none; /* every button used to blur what is behind it: too slow with many on a page */
+  box-shadow: 0 3px 12px rgb(0 0 0 / 0.16), var(--lg-rim);
+  transition: transform 360ms var(--spring), box-shadow 240ms var(--ease);
+}
+/* the light under the pointer: an overlay that only changes opacity (the compositor does that, no repainting per frame) */
+:is(html, div)[data-ui="liquid"] .btn:not(.absolute):not(.fixed) { position: relative; isolation: isolate; }
+:is(html, div)[data-ui="liquid"] .btn::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none; opacity: 0;
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgb(255 255 255 / 0.5), rgb(255 255 255 / 0.12) 55%, transparent 80%);
+  transition: opacity 260ms var(--ease);
+}
+:is(html, div)[data-ui="liquid"] .btn:hover::before { opacity: 0.55; }
+:is(html, div)[data-ui="liquid"] .btn:active::before { opacity: 1; transition-duration: 90ms; }
+:is(html, div)[data-ui="liquid"] .btn:active { transform: scale(0.93); transition: transform 100ms ease-out, box-shadow 140ms; box-shadow: 0 1px 4px rgb(0 0 0 / 0.2), var(--lg-rim); }
+:is(html, div)[data-ui="liquid"] .btn:focus-visible { outline: none; box-shadow: 0 0 0 4px hsl(var(--accent) / 0.4), var(--lg-rim); }
+:is(html, div)[data-ui="liquid"] .btn.btn-accent, :is(html, div)[data-ui="liquid"] .btn.btn-accent:hover, :is(html, div)[data-ui="liquid"] .btn.btn-accent:active {
+  --lg-btn-fill: linear-gradient(160deg, hsl(var(--accent) / 0.92), hsl(var(--accent) / 0.66));
+  color: hsl(var(--accent-fg)); box-shadow: 0 4px 16px hsl(var(--accent) / 0.35), 0 1px 3px rgb(0 0 0 / 0.2), var(--lg-rim);
+}
+/* plain buttons are flat until you point at them, then they become glass */
+:is(html, div)[data-ui="liquid"] .btn.btn-ghost:not(:hover):not(:focus-visible):not(:active) { background: none; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: none; }
+:is(html, div)[data-ui="liquid"] .btn:disabled { opacity: 0.4; }
+:is(html, div)[data-ui="liquid"] .bt-nav, :is(html, div)[data-ui="liquid"] .bt-nav:hover { transition: background-color var(--dur) var(--ease), transform 420ms var(--spring); }
+:is(html, div)[data-ui="liquid"] .bt-nav:active { transform: scale(0.96); }
+:is(html, div)[data-ui="liquid"] .bt-nav { position: relative; z-index: 1; }
+:is(html, div)[data-ui="liquid"] .bt-nav[aria-current="page"] { background: none; box-shadow: none; }
+:is(html, div)[data-ui="liquid"] .bt-range::-webkit-slider-thumb { transition: transform 360ms var(--spring); }
+:is(html, div)[data-ui="liquid"] .bt-range:active::-webkit-slider-thumb { transform: scale(1.14); }
+:is(html, div)[data-ui="liquid"] .card {
+  background: var(--lg-sheen), var(--card-bg); border: 0;
+  box-shadow: var(--card-shadow), var(--lg-rim), inset 0 0.5px 0 rgb(255 255 255 / 0.3);
+  /* no backdrop blur on cards: hundreds of them behind a scrolling list made every frame cost 60+ ms (measured), the sheen and rim carry the glass look */
+  -webkit-backdrop-filter: none; backdrop-filter: none;
+}
+:is(html, div)[data-ui="liquid"] .card .card { background: var(--lg-sheen), hsl(var(--surface) / 0.3); -webkit-backdrop-filter: none; backdrop-filter: none; }
+:is(html, div)[data-ui="liquid"] textarea.input { border-radius: 18px; }
+:is(html, div)[data-ui="liquid"] .chip { background: rgb(255 255 255 / 0.1); box-shadow: inset 0 0 0 0.5px rgb(255 255 255 / 0.12); }
+[data-ui="liquid"][data-mode="light"] .chip { background: rgb(0 0 0 / 0.05); box-shadow: inset 0 0 0 0.5px rgb(0 0 0 / 0.06); }
+html[data-ui="liquid"] ::selection { background: hsl(var(--accent) / 0.4); }
+@media (prefers-reduced-transparency: reduce) {
+  [data-ui="liquid"] { --lg-fill: hsl(var(--surface) / 0.96); --lg-fill-strong: hsl(var(--surface)); --lg-sheen: none; --card-bg: hsl(var(--surface)); }
+  :is(html, div)[data-ui="liquid"] .bt-side, :is(html, div)[data-ui="liquid"] .bt-player, :is(html, div)[data-ui="liquid"] .bt-tabbar, :is(html, div)[data-ui="liquid"] .bt-menu, :is(html, div)[data-ui="liquid"] .bt-window, :is(html, div)[data-ui="liquid"] .btn, :is(html, div)[data-ui="liquid"] .card, :is(html, div)[data-ui="liquid"] .bt-top .input, :is(html, div)[data-ui="liquid"] .bt-backdrop { -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+[data-ui="liquid"] { --player-in: lg-bar-in 420ms var(--ease) both; --player-out: lg-bar-out 260ms cubic-bezier(0.5, 0, 0.75, 0) both; --player-ms: 260ms; --pop-out: lg-menu-out 200ms cubic-bezier(0.5, 0, 0.75, 0) both; --pop-ms: 200ms; }
+[data-ui="liquid"] { --page-in: bt-page-glass 340ms cubic-bezier(0.22, 1, 0.36, 1) backwards; }
+/* Glass lens: the round artist pictures use the side bar's corner radius (30 px, scaled down on small thumbnails) instead of a circle */
+:is(html, div)[data-ui="liquid"] .bt-cover[data-kind="artist"] { border-radius: min(30px, 28%) !important; }
+/* The Glass lens player floats at a fixed offset that assumes the 14rem side bar: other layouts have no such bar */
+@keyframes lg-open {
+  0% { opacity: 0; transform: scale(0.72); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  38% { opacity: 1; }
+  68% { transform: scale(1.018); }
+  99% { -webkit-backdrop-filter: none; backdrop-filter: none; }
+  100% { opacity: 1; transform: none; -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-sat)); backdrop-filter: blur(var(--lg-blur)) var(--lg-filter, saturate(1)) saturate(var(--lg-sat)) brightness(var(--lg-bright)); }
+}
+@keyframes lg-menu {
+  0% { opacity: 0; transform: scale(0.6); }
+  30% { opacity: 1; }
+  70% { transform: scale(1.012); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes lg-pill { 0% { transform: scale(0.82); opacity: 0.2; } 60% { transform: scale(1.04); opacity: 1; } 100% { transform: none; } }
+@keyframes lg-bar-out { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(18px) scale(0.97); } }
+@keyframes lg-bar-in { from { opacity: 0; transform: translateY(18px) scale(0.97); } to { opacity: 1; transform: none; } }
+@keyframes lg-menu-out { from { opacity: 1; transform: none; } to { opacity: 0; transform: scale(0.7); } }
+@keyframes bt-page-glass { from { opacity: 0; transform: scale(0.985) translateY(6px); } to { opacity: 1; transform: none; } }

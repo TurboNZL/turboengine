@@ -1,0 +1,16 @@
+{
+  "name": "cloudflare-access",
+  "title": "Cloudflare Access service token on every client",
+  "optional": true,
+  "summary": "A server behind Cloudflare Access wants two headers on every request; this makes web, desktop and Android send them, including for <audio>, <img> and event streams that cannot.",
+  "source": {
+    "repo": "TurboNZL/turbomusic",
+    "ref": "ea3f5eaff467673231c721e33ffa773a93719ed2"
+  },
+  "files": [
+    "apps/web/src/lib/accessMedia.ts",
+    "apps/web/src/lib/sse.ts",
+    "apps/electron/src/accessHeaders.ts",
+    "apps/android/app/src/main/kotlin/app/musiccurator/android/AccessProxy.kt"
+  ]
+}

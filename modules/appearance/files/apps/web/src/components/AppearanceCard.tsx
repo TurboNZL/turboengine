@@ -25,7 +25,7 @@ export function PreviewApp({ theme, ui }: { theme: ThemeId; ui: UiStyleId }) {
     <div data-theme={def.id} data-ui={ui} data-mode={def.dark ? 'dark' : 'light'} style={themeStyle(theme)}
       className="pointer-events-none select-none overflow-hidden rounded-theme border border-line bg-bg text-fg" role="img" aria-label="Preview of the selected colour theme and UI style">
       <div className="bt-top flex items-center gap-2 p-2.5">
-        <span className="text-sm font-bold">Curator</span>
+        <span className="text-sm font-bold">TurboMusic</span>
         <div className="relative flex-1"><Search size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-muted" /><div className="input !py-1 pl-8 text-xs text-muted">Search tracks, albums…</div></div>
         <span className="btn btn-accent !px-2.5 !py-1 text-xs">Add</span>
       </div>
@@ -102,7 +102,7 @@ export function ColourThemeSection() {
   const THEMES = listThemes();
   const tonal = (t: ThemeChoice) => tone === 'all' || t.dark === null || (tone === 'dark') === t.dark;
   const groups = [
-    { title: 'Curator', note: 'The app\'s own looks; System follows your device.', list: THEMES.filter((t) => (t.id === 'system' || t.group === 'own') && tonal(t)) },
+    { title: 'TurboMusic', note: 'The app\'s own looks; System follows your device.', list: THEMES.filter((t) => (t.id === 'system' || t.group === 'own') && tonal(t)) },
     { title: 'Colour themes', note: null, list: THEMES.filter((t) => t.id !== 'system' && (t.group === 'colour' || t.group === undefined) && tonal(t)) },
     { title: 'Games, apps & devices', note: 'Pair with the matching UI style of the same name.', list: THEMES.filter((t) => t.group === 'inspired' && tonal(t)) },
     { title: 'Platform palettes', note: 'Copied from a desktop or OS; they pair with the matching UI style.', list: THEMES.filter((t) => t.group === 'platform' && tonal(t)) },

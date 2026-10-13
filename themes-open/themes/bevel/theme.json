@@ -1,0 +1,34 @@
+{
+  "id": "bevel",
+  "label": "Classic bevel",
+  "style": {
+    "description": "Grey bevelled 3D controls, navy title bars, no animation and small bitmap-style type.",
+    "font": "system-ui",
+    "matching": {
+      "light": "bevel"
+    },
+    "order": 80
+  },
+  "palettes": [
+    {
+      "id": "bevel",
+      "label": "Classic grey",
+      "mode": "light",
+      "bg": "#008080",
+      "primary": "#000080",
+      "fg": "#000000",
+      "mutedFg": "#404040",
+      "motif": "grid",
+      "overrides": {
+        "card": "#c0c0c0",
+        "secondary": "#d4d0c8",
+        "muted": "#d4d0c8",
+        "accent": "#a6a6a6",
+        "border": "#808080",
+        "input": "#808080"
+      },
+      "group": "colour",
+      "order": 310
+    }
+  ]
+}

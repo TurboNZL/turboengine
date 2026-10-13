@@ -6,7 +6,7 @@ const { renameSync, writeFileSync, chmodSync } = require('node:fs');
 const { join } = require('node:path');
 
 const SCRIPT = `#!/bin/sh
-# Music Curator Server: runs the bundled server as plain Node. See --help.
+# TurboMusic Server: runs the bundled server as plain Node. See --help.
 DIR="$(dirname "$(readlink -f "$0")")"
 export ELECTRON_RUN_AS_NODE=1
 export CURATOR_WEB_DIR="\${CURATOR_WEB_DIR:-$DIR/resources/web}"

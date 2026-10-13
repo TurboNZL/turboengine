@@ -1,0 +1,29 @@
+{
+  "name": "server-install-update",
+  "title": "Server install and self-update",
+  "optional": true,
+  "summary": "How a library server gets onto a machine (one-command Linux/Pi installer, Windows tray app with a setup wizard) and how it updates itself from a button in Settings.",
+  "source": {
+    "repo": "TurboNZL/turbomusic",
+    "ref": "ea3f5eaff467673231c721e33ffa773a93719ed2"
+  },
+  "requires": [
+    "cloudflare-access",
+    "updaters"
+  ],
+  "files": [
+    "packages/server/src/update.ts",
+    "scripts/update.sh",
+    "scripts/install-pi.sh",
+    "apps/web/src/components/ServerUpdate.tsx",
+    "docs/guides/UPDATING.md",
+    "docs/guides/DEPLOY_PI.md",
+    "docs/guides/WINDOWS_SERVER.md",
+    "apps/electron/src/serverEdition/main.ts",
+    "apps/electron/src/serverEdition/serverConfig.ts",
+    "apps/electron/src/serverEdition/setup-preload.ts",
+    "apps/electron/src/serverEdition/setup.html",
+    "apps/electron/src/serverEdition/tools.ts",
+    "apps/electron/src/serverEdition/tunnel.ts"
+  ]
+}
