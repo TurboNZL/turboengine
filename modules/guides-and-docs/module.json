@@ -1,0 +1,16 @@
+{
+  "name": "guides-and-docs",
+  "title": "Docs layout, in-app guides and the project brief",
+  "optional": false,
+  "summary": "`docs/guides` = user guides bundled into Settings > Guides; `docs/development` = developer notes; `PROJECT_BRIEF.md` and `CLAUDE.md` at the root.",
+  "source": {
+    "repo": "TurboNZL/Curator",
+    "ref": "b6d85a8f35751b29a707b1935b19437c0175b5d9"
+  },
+  "files": [
+    "apps/web/src/lib/guides.ts",
+    "apps/web/src/lib/markdown.ts",
+    "apps/web/src/components/GuidesTab.tsx",
+    "docs/guides/GETTING_STARTED.md"
+  ]
+}

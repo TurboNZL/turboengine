@@ -1,0 +1,23 @@
+{
+  "name": "appearance",
+  "title": "Appearance: turbothemes glue, layouts and the picker",
+  "optional": false,
+  "summary": "How an app starts the turbothemes engine, owns its layouts, shows the picker (colour theme, UI style, layout, wallpaper) and the theme-update card.",
+  "source": {
+    "repo": "TurboNZL/Curator",
+    "ref": "b6d85a8f35751b29a707b1935b19437c0175b5d9"
+  },
+  "files": [
+    "apps/web/src/lib/appearance.ts",
+    "apps/web/src/lib/useCatalog.ts",
+    "apps/web/src/lib/layout.ts",
+    "apps/web/src/layouts.css",
+    "apps/web/src/components/AppearanceCard.tsx",
+    "apps/web/src/components/ThemeUpdates.tsx",
+    "apps/web/src/components/Layout.tsx",
+    "apps/web/tailwind.config.ts",
+    "apps/web/src/index.css",
+    "apps/web/src/fonts.css",
+    "docs/development/APPEARANCE.md"
+  ]
+}

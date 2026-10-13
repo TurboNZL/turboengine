@@ -1,0 +1,124 @@
+# Every merge to main builds the Android APK and the desktop installers and publishes them as a new release; the installed apps
+# update themselves from it (Electron: electron-updater; Android: apps/android AppUpdater). Nothing to tag by hand.
+# The version is the year, the month and a counter: v2026.10.0, v2026.10.1, ... (the counter restarts each month).
+# Documentation-only changes do not release. "Run workflow" in the Actions tab releases the current main on demand.
+name: Release
+on:
+  push:
+    branches: [main]
+    paths-ignore: ['**.md', 'docs/**']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: release
+  cancel-in-progress: false
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.next.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - name: Work out the next version
+        id: next
+        run: |
+          prefix="v$(date -u +%Y.%-m)."
+          last=$(git tag -l "${prefix}*" | sed "s/^${prefix}//" | sort -n | tail -1)
+          tag="${prefix}$(( ${last:--1} + 1 ))"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "Releasing $tag"
+      - name: Create the release (this also creates the tag)
+        run: gh release create "${{ steps.next.outputs.tag }}" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title "${{ steps.next.outputs.tag }}" --generate-notes
+        env: { GH_TOKEN: '${{ secrets.GITHUB_TOKEN }}' }
+
+  desktop:
+    needs: release
+    strategy:
+      fail-fast: false
+      matrix: { os: [ubuntu-latest, windows-latest] }
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with: { version: 10 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm }
+      - run: pnpm install --ignore-scripts --filter @curator/web --filter @curator/core --filter @curator/server --filter @curator/electron
+      - name: Set the version from the tag
+        shell: bash
+        run: cd apps/electron && npm pkg set version="$(echo '${{ needs.release.outputs.tag }}' | sed 's/^v//')"
+      - run: pnpm --filter @curator/electron dist:publish
+        env: { GH_TOKEN: '${{ secrets.GITHUB_TOKEN }}' }
+      - name: Build and publish the app-only edition (Windows installer; Linux .deb and .AppImage). Its own update feed (channel app)
+        run: pnpm --filter @curator/electron dist:app:publish
+        env: { GH_TOKEN: '${{ secrets.GITHUB_TOKEN }}' }
+      - name: Build and publish the headless server edition (Linux .deb as a systemd service, and .AppImage)
+        if: runner.os == 'Linux'
+        run: pnpm --filter @curator/electron dist:server:linux:publish
+        env: { GH_TOKEN: '${{ secrets.GITHUB_TOKEN }}' }
+
+  windows-server:
+    needs: release
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with: { version: 10 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm }
+      - run: pnpm install --ignore-scripts --filter @curator/web --filter @curator/core --filter @curator/server --filter @curator/electron
+      - name: Set the version from the tag
+        shell: bash
+        run: cd apps/electron && npm pkg set version="$(echo '${{ needs.release.outputs.tag }}' | sed 's/^v//')"
+      - name: Build and publish the Windows server installer (its own update feed, server.yml)
+        run: pnpm --filter @curator/electron dist:server:publish
+        env: { GH_TOKEN: '${{ secrets.GITHUB_TOKEN }}' }
+
+  android:
+    needs: release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with: { version: 10 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm }
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: 17 }
+      - uses: gradle/actions/setup-gradle@v4
+        with: { gradle-version: '8.9' }
+      - run: pnpm install --ignore-scripts --filter @curator/web --filter @curator/core
+      - run: pnpm --filter @curator/web build
+      - name: Build the APK
+        run: |
+          TAG='${{ needs.release.outputs.tag }}'
+          VERSION="${TAG#v}"
+          gradle -p apps/android :app:assembleRelease -PappVersion="$VERSION"
+          cp apps/android/app/build/outputs/apk/release/app-release.apk "music-curator-$VERSION-android.apk"
+          gh release upload "$TAG" "music-curator-$VERSION-android.apk" --clobber
+        env: { GH_TOKEN: '${{ secrets.GITHUB_TOKEN }}' }
+
+  # the server for the Android app's server module: it runs in Termux on the phone (apps/android TermuxServer.kt downloads the newest one)
+  termux-bundle:
+    needs: release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with: { version: 10 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm }
+      - run: pnpm install --ignore-scripts --filter @curator/web --filter @curator/core --filter @curator/server --filter @curator/electron
+      - run: pnpm --filter @curator/web build
+      - name: Bundle the headless server and the web client
+        run: |
+          node apps/electron/scripts/build.mjs
+          mkdir -p bundle/web
+          cp apps/electron/dist/headless.mjs bundle/
+          cp -r apps/web/dist/. bundle/web/
+          TAG='${{ needs.release.outputs.tag }}'
+          tar -czf "music-curator-server-${TAG#v}-termux.tar.gz" -C bundle .
+          gh release upload "$TAG" "music-curator-server-${TAG#v}-termux.tar.gz" --clobber
+        env: { GH_TOKEN: '${{ secrets.GITHUB_TOKEN }}' }

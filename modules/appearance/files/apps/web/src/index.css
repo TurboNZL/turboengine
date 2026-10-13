@@ -1,0 +1,56 @@
+/*
+ * The app's own CSS. Everything that decides how things LOOK (colour palettes, UI styles, layouts, the generic .btn/.input/.card/...
+ * rules) is in the turbothemes package: base.css below, the themes themselves delivered by its engine (lib/appearance.ts).
+ * Shape, type and motion come from variables the style sets (--vote-ms, --ease ...).
+ * base.css comes first so an element's own utility classes still win over the generic component rules.
+ */
+@import 'turbothemes/base.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root { height: 100%; }
+/* never scroll sideways: a stray wide element is clipped, not an extra scroll area (the app is vertical; the Android WebView otherwise pans) */
+html, body { overflow-x: hidden; overscroll-behavior-x: none; }
+/* The Rank page: the chosen card lifts and shows a tick, the other one steps back. The pace comes from the UI style (--vote-ms). */
+@keyframes bt-vote-win { 0% { transform: none; } 35% { transform: scale(1.035); box-shadow: 0 0 0 3px hsl(var(--accent)), 0 14px 40px hsl(var(--accent) / 0.35); } 100% { transform: scale(1.02); box-shadow: 0 0 0 3px hsl(var(--accent)), 0 10px 30px hsl(var(--accent) / 0.25); } }
+@keyframes bt-vote-lose { to { opacity: 0.25; transform: scale(0.94); filter: saturate(0.4); } }
+@keyframes bt-vote-equal { 50% { transform: scale(0.97); } 100% { transform: scale(0.985); box-shadow: 0 0 0 2px hsl(var(--muted)); } }
+@keyframes bt-vote-check { 0% { transform: scale(0.2) rotate(-25deg); opacity: 0; } 60% { transform: scale(1.25) rotate(4deg); opacity: 1; } 100% { transform: none; opacity: 1; } }
+.bt-vote-win { animation: bt-vote-win var(--vote-ms, 440ms) var(--ease) both; position: relative; z-index: 1; }
+.bt-vote-lose { animation: bt-vote-lose var(--vote-ms, 440ms) var(--ease) both; pointer-events: none; }
+.bt-vote-equal { animation: bt-vote-equal var(--vote-ms, 440ms) var(--ease) both; }
+.bt-vote-check { animation: bt-vote-check calc(var(--vote-ms, 440ms) * 0.9) var(--ease) both; }
+/* "Go to track" flashes the row it lands on */
+@keyframes bt-row-flash { 0%, 60% { background: hsl(var(--accent) / 0.28); } 100% { background: transparent; } }
+.bt-row-flash { animation: bt-row-flash 2.6s ease-out; }
+/* the guides in Settings (components/GuidesTab.tsx): plain readable typography under the theme's colours */
+.guide { font-size: 0.92rem; line-height: 1.65; }
+.guide h1 { font-size: 1.6rem; font-weight: 700; margin: 0 0 0.75rem; }
+.guide h2 { font-size: 1.2rem; font-weight: 700; margin: 1.6rem 0 0.5rem; padding-bottom: 0.25rem; border-bottom: 1px solid hsl(var(--line)); }
+.guide h3 { font-size: 1.02rem; font-weight: 600; margin: 1.2rem 0 0.35rem; }
+.guide h4 { font-weight: 600; margin: 1rem 0 0.25rem; }
+.guide p, .guide ul, .guide ol, .guide table, .guide pre, .guide blockquote { margin: 0.6rem 0; }
+.guide ul { list-style: disc; padding-left: 1.4rem; }
+.guide ol { list-style: decimal; padding-left: 1.5rem; }
+.guide li { margin: 0.2rem 0; }
+.guide li > ul, .guide li > ol { margin: 0.2rem 0; }
+.guide code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.84em; background: hsl(var(--raised)); padding: 0.1rem 0.3rem; border-radius: 0.3rem; overflow-wrap: anywhere; }
+.guide pre { background: hsl(var(--raised)); border: 1px solid hsl(var(--line)); border-radius: 0.5rem; padding: 0.7rem 0.85rem; overflow-x: auto; }
+.guide pre code { background: none; padding: 0; font-size: 0.82rem; overflow-wrap: normal; white-space: pre; }
+.guide a { color: hsl(var(--accent)); text-decoration: underline; text-underline-offset: 2px; }
+.guide blockquote { border-left: 3px solid hsl(var(--accent)); padding: 0.1rem 0.9rem; color: hsl(var(--muted)); }
+.guide hr { border: 0; border-top: 1px solid hsl(var(--line)); margin: 1.2rem 0; }
+.guide table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; font-size: 0.86rem; }
+.guide th, .guide td { border: 1px solid hsl(var(--line)); padding: 0.35rem 0.6rem; text-align: left; vertical-align: top; }
+.guide th { background: hsl(var(--raised)); font-weight: 600; }
+/* the now-playing screensaver: the cover drifts slowly so no pixel stays lit for long */
+@keyframes bt-drift { 0% { transform: translate(-3vmin, -2vmin) scale(1); } 50% { transform: translate(3vmin, 2vmin) scale(1.04); } 100% { transform: translate(-3vmin, -2vmin) scale(1); } }
+.bt-drift { animation: bt-drift 60s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .bt-drift { animation: none; } }
+/* the full-screen player: a click on an icon must count as a click on its button (the glyph itself was not reliably the target) */
+.bt-now button svg, .bt-now button svg * { pointer-events: none; }
+
+/* Multi-line boxes: a pill radius (Spotify, YouTube Music) would clip the text at the corners. Stopgap for TurboNZL/turbothemes#1; delete when the engine does this. */
+textarea.input { border-radius: min(var(--in-r, var(--ctl-r, 8px)), 1.25rem); padding-inline: max(var(--in-px, 0.75rem), 1rem); padding-block: 0.6rem; }

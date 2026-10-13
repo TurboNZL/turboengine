@@ -1,0 +1,23 @@
+{
+  "name": "editions",
+  "title": "Editions: full, app-only and server (and the server module)",
+  "optional": true,
+  "summary": "One Electron codebase shipped as three editions (window + library server, window only, headless server) with a server module that can be installed or removed inside the app.",
+  "source": {
+    "repo": "TurboNZL/Curator",
+    "ref": "b6d85a8f35751b29a707b1935b19437c0175b5d9"
+  },
+  "files": [
+    "apps/electron/package.json",
+    "apps/electron/electron-builder.app.json",
+    "apps/electron/electron-builder.server.json",
+    "apps/electron/electron-builder.server-linux.json",
+    "apps/electron/scripts/build.mjs",
+    "apps/electron/scripts/serverWrapper.cjs",
+    "apps/electron/src/headless.ts",
+    "packages/server/src/staticServer.ts",
+    "apps/electron/build/server-postinst.sh",
+    "apps/electron/build/server-prerm.sh",
+    "apps/electron/build/server-postrm.sh"
+  ]
+}

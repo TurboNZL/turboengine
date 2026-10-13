@@ -1,0 +1,61 @@
+/* The fonts the UI styles use (the styles themselves come from the turbothemes package). Bundled here so every style works offline in the desktop and Android apps; turbothemes is told not to load them from a CDN (lib/appearance.ts: fonts: 'none'). When a theme starts using a new font, add its @fontsource import here (and the package to package.json). */
+/* Chapter 1's menus and settings use a plain humanist sans (Noto Sans) for labels, with Burbank only for big caps (Play). */
+@import '@fontsource/noto-sans/400.css';
+@import '@fontsource/noto-sans/500.css';
+@import '@fontsource/noto-sans/600.css';
+@import '@fontsource/noto-sans/700.css';
+/* Open fonts that stand in for Fortnite's own (Burbank Big Condensed: Ch 1-3; Heading Now: Ch 4+). Only downloaded when a Fortnite style is used. */
+@import '@fontsource/barlow-condensed/400.css';
+@import '@fontsource/barlow-condensed/600.css';
+@import '@fontsource/barlow-condensed/700.css';
+@import '@fontsource/barlow-condensed/800.css';
+@import '@fontsource/barlow-condensed/900.css';
+@import '@fontsource/barlow-condensed/700-italic.css';
+@import '@fontsource/barlow-condensed/800-italic.css';
+@import '@fontsource/barlow-condensed/900-italic.css';
+@import '@fontsource/archivo/400.css';
+@import '@fontsource/archivo/600.css';
+@import '@fontsource/archivo/700.css';
+@import '@fontsource/archivo/800.css';
+@import '@fontsource/archivo/900.css';
+@import '@fontsource/archivo/700-italic.css';
+@import '@fontsource/archivo/800-italic.css';
+/* Windows 7 (Aero) stand-in for Segoe UI */
+@import '@fontsource/open-sans/400.css';
+@import '@fontsource/open-sans/600.css';
+@import '@fontsource/open-sans/700.css';
+/* LG Optimus "Marshmallow" theme: round, friendly type */
+@import '@fontsource/nunito/400.css';
+@import '@fontsource/nunito/600.css';
+@import '@fontsource/nunito/800.css';
+@import '@fontsource/fredoka/500.css';
+@import '@fontsource/fredoka/600.css';
+
+/* fonts of the game and device inspired styles (Pip-Boy, Game Boy, Block game, Zune); downloaded only when one of them is used */
+@import '@fontsource/vt323/400.css';
+@import '@fontsource/press-start-2p/400.css';
+@import '@fontsource/open-sans/300.css';
+@import '@fontsource/anton/400.css';
+
+/* Minecraft (Pixelify Sans), Spotify (Figtree), Samsung One UI (Outfit), Yaru (Ubuntu), YouTube Music (Roboto) */
+@import '@fontsource/pixelify-sans/400.css';
+@import '@fontsource/pixelify-sans/500.css';
+@import '@fontsource/pixelify-sans/700.css';
+@import '@fontsource/figtree/400.css';
+@import '@fontsource/figtree/500.css';
+@import '@fontsource/figtree/700.css';
+@import '@fontsource/figtree/800.css';
+@import '@fontsource/outfit/400.css';
+@import '@fontsource/outfit/500.css';
+@import '@fontsource/outfit/600.css';
+@import '@fontsource/ubuntu/400.css';
+@import '@fontsource/ubuntu/500.css';
+@import '@fontsource/ubuntu/700.css';
+@import '@fontsource/roboto/400.css';
+@import '@fontsource/roboto/500.css';
+@import '@fontsource/roboto/700.css';
+@import '@fontsource/albert-sans/400.css';
+@import '@fontsource/albert-sans/500.css';
+@import '@fontsource/albert-sans/600.css';
+@import '@fontsource/albert-sans/700.css';
+@import '@fontsource/albert-sans/800.css';

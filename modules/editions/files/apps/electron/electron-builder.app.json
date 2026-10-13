@@ -1,0 +1,70 @@
+{
+  "appId": "app.musiccurator.frontend",
+  "productName": "Music Curator App",
+  "directories": {
+    "output": "release/app",
+    "buildResources": "build"
+  },
+  "files": [
+    "dist/**",
+    "package.json"
+  ],
+  "extraMetadata": {
+    "name": "music-curator-app",
+    "desktopName": "music-curator-app.desktop",
+    "curatorEdition": "app",
+    "description": "Music Curator app only: the window, with the library on a server you connect"
+  },
+  "extraResources": [
+    {
+      "from": "../web/dist",
+      "to": "web"
+    }
+  ],
+  "publish": [
+    {
+      "provider": "github",
+      "owner": "TurboNZL",
+      "repo": "Curator",
+      "releaseType": "release",
+      "channel": "app"
+    }
+  ],
+  "artifactName": "music-curator-app-${version}-${os}-${arch}.${ext}",
+  "linux": {
+    "target": [
+      "AppImage",
+      "deb"
+    ],
+    "category": "Audio",
+    "icon": "build/icon.png",
+    "executableName": "music-curator-app",
+    "maintainer": "Music Curator <noreply@musiccurator.app>",
+    "synopsis": "Personal music library and ranking",
+    "desktop": {
+      "entry": {
+        "StartupWMClass": "music-curator-app"
+      }
+    }
+  },
+  "deb": {
+    "packageName": "music-curator-app",
+    "artifactName": "music-curator-app-${version}-linux-${arch}.${ext}"
+  },
+  "win": {
+    "target": [
+      {
+        "target": "nsis",
+        "arch": [
+          "x64"
+        ]
+      }
+    ],
+    "icon": "build/icon.png"
+  },
+  "nsis": {
+    "artifactName": "music-curator-app-${version}-windows-${arch}-setup.${ext}",
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true
+  }
+}

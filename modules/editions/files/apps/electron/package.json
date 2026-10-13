@@ -1,0 +1,106 @@
+{
+  "name": "@curator/electron",
+  "version": "0.1.0",
+  "license": "MIT",
+  "private": true,
+  "description": "Music Curator desktop app: the web client plus its own server, with the library on disk",
+  "author": "Music Curator",
+  "homepage": "https://github.com/TurboNZL/Curator",
+  "main": "dist/main.mjs",
+  "desktopName": "music-curator.desktop",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "start": "node scripts/build.mjs && electron .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "dist:publish": "pnpm --filter @curator/web build && node scripts/build.mjs && electron-builder --publish always",
+    "dist": "pnpm --filter @curator/web build && node scripts/build.mjs && electron-builder",
+    "dist:dir": "pnpm --filter @curator/web build && node scripts/build.mjs && electron-builder --dir",
+    "dist:server": "pnpm --filter @curator/web build && node scripts/build.mjs && electron-builder --config electron-builder.server.json --win",
+    "dist:server:publish": "pnpm --filter @curator/web build && node scripts/build.mjs && electron-builder --config electron-builder.server.json --win --publish always",
+    "start:server": "node scripts/build.mjs && electron dist/server-main.mjs",
+    "dist:app": "pnpm --filter @curator/web build && node scripts/build.mjs && electron-builder --config electron-builder.app.json",
+    "dist:app:publish": "pnpm --filter @curator/web build && node scripts/build.mjs && electron-builder --config electron-builder.app.json --publish always",
+    "dist:server:linux": "pnpm --filter @curator/web build && node scripts/build.mjs && electron-builder --config electron-builder.server-linux.json --linux",
+    "dist:server:linux:publish": "pnpm --filter @curator/web build && node scripts/build.mjs && electron-builder --config electron-builder.server-linux.json --linux --publish always",
+    "start:headless": "node scripts/build.mjs && ELECTRON_RUN_AS_NODE=1 electron dist/headless.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.5",
+    "electron": "^44.7.0",
+    "electron-builder": "^26.0.0",
+    "esbuild": "^0.28.0",
+    "typescript": "^5.5.3",
+    "vitest": "^2.1.9"
+  },
+  "build": {
+    "appId": "app.musiccurator.desktop",
+    "productName": "Music Curator",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "dist/**",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "../web/dist",
+        "to": "web"
+      }
+    ],
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "TurboNZL",
+        "repo": "Curator",
+        "releaseType": "release"
+      }
+    ],
+    "artifactName": "music-curator-${version}-${os}-${arch}.${ext}",
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Audio",
+      "icon": "build/icon.png",
+      "executableName": "music-curator",
+      "maintainer": "Music Curator <noreply@musiccurator.app>",
+      "synopsis": "Personal music library and ranking",
+      "desktop": {
+        "entry": {
+          "StartupWMClass": "music-curator"
+        }
+      }
+    },
+    "deb": {
+      "packageName": "music-curator",
+      "artifactName": "music-curator-${version}-linux-${arch}.${ext}"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "build/icon.png"
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "category": "public.app-category.music",
+      "icon": "build/icon.png"
+    },
+    "nsis": {
+      "artifactName": "music-curator-${version}-windows-${arch}-setup.${ext}",
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  },
+  "dependencies": {
+    "@xhayper/discord-rpc": "^1.5.1",
+    "electron-updater": "^6.8.9"
+  }
+}

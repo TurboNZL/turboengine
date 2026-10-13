@@ -1,0 +1,25 @@
+# Release pipeline and naming
+
+Every merge to main becomes a release: auto-PR for pushed branches, checks, next version vYYYY.M.N, installers and APK attached, lowercase asset names.
+
+Recommended for every app. Reference files are in `files/` (the paths are the paths in the app); they were taken from Curator at `b6d85a8`, where they are known to work.
+
+## What it does
+- `auto-pr.yml`: a push of any non-main branch opens a PR (needs the repo setting *Actions > General > Allow GitHub Actions to create and approve pull requests*).
+- `check.yml`: typecheck, tests, web build and the Android compile, **on pushes to main only**.
+- `release.yml`: a push to main (docs-only changes ignored; "Run workflow" releases on demand) works out the next tag `vYYYY.M.N` (year, month, a counter that restarts each month), creates the release (`gh release create --target $GITHUB_SHA`, which also creates the tag), then builds and attaches the assets in parallel jobs.
+- A merged PR cannot take new work: the next change goes on a fresh branch from main (the AI should restart its branch from main).
+
+## Asset naming (all lowercase)
+`<app>[-<edition>]-<version>-<os>-<arch>.<ext>`: `music-curator-2026.10.31-linux-amd64.deb`, `...-windows-x64-setup.exe`, `...-android.apk`. The updaters never look at file names (electron-updater reads `latest*.yml`, Android takes the first `.apk`), so names can change without a transition period. Set names with `artifactName` in the electron-builder config.
+
+## Gotchas
+- Releases the pipeline makes are visible to updaters as soon as `gh release create` runs, while assets arrive minutes later: the updater must treat "release exists, manifest not there yet" as "still being built" (see the `updaters` module).
+- electron-builder names its update manifests after the channel (`latest.yml`, `app.yml`, `server.yml`): give every edition its own `publish.channel` or they overwrite each other.
+- Pre-releases count: `/releases/latest` ignores them and 404s when every release is one. Updaters list `/releases` instead.
+- `pnpm install --ignore-scripts` in CI, with `--filter` for just what each job needs.
+
+## Files
+- `.github/workflows/release.yml`
+- `.github/workflows/auto-pr.yml`
+- `.github/workflows/check.yml`

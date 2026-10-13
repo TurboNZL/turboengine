@@ -1,0 +1,38 @@
+# Checks on every push to main only (other branches are not built): the TypeScript packages' tests and typecheck, and that the Android app compiles
+# (the app cannot be compiled in the author's sandbox, so this is where compile errors show up).
+name: Check
+on:
+  push:
+    branches: [main]
+jobs:
+  ts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with: { version: 10 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm }
+      - run: pnpm install --ignore-scripts --filter @curator/web --filter @curator/core --filter @curator/server
+      - run: pnpm --filter @curator/core test
+      - run: pnpm --filter @curator/server test
+      - run: pnpm --filter @curator/server exec tsc --noEmit
+      - run: pnpm --filter @curator/web exec tsc --noEmit
+      - run: pnpm --filter @curator/web test
+      - run: pnpm --filter @curator/web build
+
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with: { version: 10 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm }
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: 17 }
+      - uses: gradle/actions/setup-gradle@v4
+        with: { gradle-version: '8.9' }
+      - run: pnpm install --ignore-scripts --filter @curator/web --filter @curator/core
+      - run: pnpm --filter @curator/web build
+      - run: gradle -p apps/android :app:testDebugUnitTest :app:assembleDebug

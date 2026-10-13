@@ -1,0 +1,11 @@
+{
+  "appId": "app.musiccurator.server",
+  "productName": "Music Curator Server",
+  "directories": { "output": "release/server", "buildResources": "build" },
+  "files": ["dist/**", "package.json", "build/icon-256.png"],
+  "extraMetadata": { "main": "dist/server-main.mjs", "name": "music-curator-server", "description": "Music Curator Server for Windows: the library server in the system tray, with a setup wizard" },
+  "extraResources": [{ "from": "../web/dist", "to": "web" }],
+  "publish": [{ "provider": "github", "owner": "TurboNZL", "repo": "Curator", "releaseType": "release", "channel": "server" }],
+  "win": { "target": [{ "target": "nsis", "arch": ["x64"] }], "icon": "build/icon.png" },
+  "nsis": { "oneClick": false, "allowToChangeInstallationDirectory": true, "shortcutName": "Music Curator Server", "artifactName": "music-curator-server-${version}-windows-${arch}-setup.${ext}" }
+}

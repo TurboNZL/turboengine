@@ -1,0 +1,59 @@
+{
+  "appId": "app.musiccurator.server.linux",
+  "productName": "Music Curator Server",
+  "directories": {
+    "output": "release/server-linux",
+    "buildResources": "build"
+  },
+  "asar": false,
+  "files": [
+    "dist/headless.mjs",
+    "package.json"
+  ],
+  "extraMetadata": {
+    "main": "dist/headless.mjs",
+    "name": "music-curator-server",
+    "description": "Music Curator server, headless: the library server as a service or a command, no window",
+    "curatorEdition": "server"
+  },
+  "extraResources": [
+    {
+      "from": "../web/dist",
+      "to": "web"
+    }
+  ],
+  "afterPack": "scripts/serverWrapper.cjs",
+  "publish": [
+    {
+      "provider": "github",
+      "owner": "TurboNZL",
+      "repo": "Curator",
+      "releaseType": "release",
+      "channel": "server"
+    }
+  ],
+  "artifactName": "music-curator-server-${version}-${os}-${arch}.${ext}",
+  "linux": {
+    "target": [
+      "AppImage",
+      "deb"
+    ],
+    "category": "Network",
+    "icon": "build/icon.png",
+    "executableName": "music-curator-server",
+    "maintainer": "Music Curator <noreply@musiccurator.app>",
+    "synopsis": "Personal music library and ranking"
+  },
+  "deb": {
+    "packageName": "music-curator-server",
+    "artifactName": "music-curator-server-${version}-linux-${arch}.${ext}",
+    "afterInstall": "build/server-postinst.sh",
+    "afterRemove": "build/server-postrm.sh",
+    "recommends": [
+      "ffmpeg"
+    ],
+    "fpm": [
+      "--before-remove=build/server-prerm.sh"
+    ]
+  }
+}

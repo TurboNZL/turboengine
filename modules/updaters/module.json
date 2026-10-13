@@ -1,0 +1,19 @@
+{
+  "name": "updaters",
+  "title": "Self-update (desktop and Android)",
+  "optional": false,
+  "summary": "electron-updater from GitHub releases (with a .deb path that works without a polkit agent) and a native Android updater, both through one Settings card.",
+  "source": {
+    "repo": "TurboNZL/Curator",
+    "ref": "b6d85a8f35751b29a707b1935b19437c0175b5d9"
+  },
+  "files": [
+    "apps/electron/src/updater.ts",
+    "apps/electron/src/updateErrors.ts",
+    "apps/electron/src/debInstall.ts",
+    "apps/android/app/src/main/kotlin/app/musiccurator/android/update/AppUpdater.kt",
+    "apps/android/app/src/main/kotlin/app/musiccurator/android/update/Releases.kt",
+    "apps/web/src/lib/native.ts",
+    "apps/web/src/components/AppSettings.tsx"
+  ]
+}
