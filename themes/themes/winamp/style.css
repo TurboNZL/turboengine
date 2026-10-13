@@ -1,0 +1,47 @@
+[data-ui="winamp"] .bt-wf-close:is(:hover, :focus-visible) { background: color-mix(in srgb, currentColor 22%, transparent); color: inherit; }
+/* Winamp: small metal squares */
+[data-ui="winamp"] .bt-wf-btn { --wf-r: 0; --wf-bg: var(--wa-metal); --wf-shadow: var(--wa-up); width: 1.1rem; height: 1rem; }
+[data-ui="winamp"] { --page-in: none; }
+/* ================== Winamp 2 (the classic skin) ==================
+ * Bluish bevelled metal, striped title bars with a spaced caps title, a black playlist with LCD-green text and a #000080
+ * selection (those two are the skin's own playlist defaults), and a small system font. Pair it with the "Winamp Classic" colours. */
+[data-ui="winamp"] {
+  --radius: 0px; --ctl-r: 0; --card-r: 0; --win-r: 0; --menu-r: 0; --nav-r: 0; --chip-r: 0; --in-r: 0;
+  --font: Arial, "Liberation Sans", Helvetica, sans-serif; --title-font: var(--font);
+  --wa-up: inset 1px 1px 0 rgb(255 255 255 / 0.22), inset -1px -1px 0 rgb(0 0 0 / 0.75);
+  --wa-down: inset 1px 1px 0 rgb(0 0 0 / 0.75), inset -1px -1px 0 rgb(255 255 255 / 0.18);
+  --wa-metal: linear-gradient(to bottom, color-mix(in srgb, hsl(var(--raised)) 88%, white), hsl(var(--raised)) 55%, color-mix(in srgb, hsl(var(--raised)) 80%, black));
+  --wa-stripe: repeating-linear-gradient(to bottom, color-mix(in srgb, hsl(var(--raised)) 70%, white) 0 1px, color-mix(in srgb, hsl(var(--raised)) 70%, black) 1px 2px);
+  --dur: 0ms; --ease: linear; --dialog-anim: none; --menu-anim: none;
+  --btn-bg: var(--wa-metal); --btn-fg: hsl(var(--fg)); --btn-weight: 400; --btn-border: 1px solid #000; --btn-shadow: var(--wa-up);
+  --btn-hover-bg: var(--wa-metal); --btn-hover-border: #000; --btn-hover-shadow: var(--wa-up);
+  --btn-active-shadow: var(--wa-down); --btn-active-transform: none;
+  --btn-accent-bg: var(--wa-metal); --btn-accent-fg: hsl(var(--accent)); --btn-accent-border: 1px solid #000; --btn-accent-border-color: #000; --btn-accent-shadow: var(--wa-up);
+  --btn-accent-hover-bg: var(--wa-metal); --btn-accent-hover-shadow: var(--wa-up);
+  --ghost-hover-bg: color-mix(in srgb, hsl(var(--fg)) 10%, transparent);
+  --in-bg: #000; --in-border: 1px solid #000; --in-shadow: var(--wa-down); --in-hover-border: #000; --in-focus-border: hsl(var(--accent)); --in-focus-shadow: var(--wa-down);
+  --card-bg: #000; --card-border: 1px solid #000; --card-shadow: var(--wa-down);
+  --backdrop: rgb(0 0 0 / 0.55);
+  --win-bg: hsl(var(--bg)); --win-border: 1px solid #000; --win-shadow: var(--wa-up), 3px 3px 0 rgb(0 0 0 / 0.6);
+  --tb-bg: var(--wa-stripe); --tb-fg: hsl(var(--fg)); --tb-border: 1px solid #000; --tb-pad: 0.15rem 0.4rem; --tb-size: 0.7rem; --tb-weight: 700; --tb-justify: space-between;
+  --close-fg: hsl(var(--fg)); --close-bg: var(--wa-metal); --close-shadow: var(--wa-up); --close-border: 1px solid #000; --close-hover-bg: var(--wa-metal); --close-hover-fg: hsl(var(--accent)); --close-r: 0;
+  --bar-border: 1px solid #000;
+  --menu-bg: hsl(var(--bg)); --menu-border: 1px solid #000; --pop-shadow: var(--wa-up), 2px 2px 0 rgb(0 0 0 / 0.6); --menu-hi-bg: #000080; --menu-hi-fg: #fff;
+  --side-bg: #000; --side-shadow: var(--wa-down); --top-bg: hsl(var(--bg)); --top-shadow: var(--wa-up); --player-bg: hsl(var(--bg)); --player-shadow: var(--wa-up);
+  --nav-hover-bg: transparent; --nav-active-bg: #000080; --nav-active-fg: #fff;
+  --row-hover: #000080; --row-hover-fg: #fff; --row-current: #000080;
+  --panel-tb-bg: var(--wa-stripe); --panel-tb-fg: hsl(var(--fg)); --panel-tb-margin: -1.25rem -1.25rem 0.5rem; --panel-tb-pad: 0.15rem 0.5rem;
+  --chk-size: 0.85rem; --chk-r: 0; --chk-border: 1px solid #000; --chk-bg: #000; --chk-shadow: var(--wa-down); --chk-hover-border: #000; --chk-on-bg: #000; --chk-on-border: #000; --chk-on-fg: hsl(var(--accent)); --chk-radio-on-bg: #000; --chk-dot: hsl(var(--accent)); --chk-focus: 0 0 0 1px hsl(var(--accent));
+  --rng-appearance: none; --rng-h: 6px; --rng-r: 0; --rng-shadow: var(--wa-down); --rng-track: #000; --rng-fill: hsl(var(--accent));
+  --rng-tw: 0.7rem; --rng-th: 0.8rem; --rng-tr: 0; --rng-thumb: var(--wa-metal); --rng-ts: var(--wa-up); --rng-tb: 1px solid #000;
+  --vote-ms: 0ms; --player-in: none; --player-out: none; --player-ms: 0ms; --pop-out: none; --pop-ms: 0ms;
+}
+html[data-ui="winamp"] { font-size: 13px; }
+[data-ui="winamp"] *, [data-ui="winamp"] ::before, [data-ui="winamp"] ::after { transition-duration: 0s !important; border-radius: 0 !important; }
+[data-ui="winamp"] .bt-titlebar h2, [data-ui="winamp"] .bt-panel-title { text-transform: uppercase; letter-spacing: 0.22em; font-size: 0.68rem; }
+[data-ui="winamp"] .bt-titlebar svg { display: none; }
+[data-ui="winamp"] .bt-row, [data-ui="winamp"] .card .text-muted { color: hsl(var(--accent)); }
+[data-ui="winamp"] .bt-row:hover, [data-ui="winamp"] .bt-row:hover * { color: #fff; }
+[data-ui="winamp"] .card:not(.bt-panel):not([class*=" p-"]):not([class*=" px-"]):not([class*=" py-"]) { padding: 2px; }
+[data-ui="winamp"] .bt-player [role="slider"], [data-ui="winamp"] .bt-player .tabular-nums { color: hsl(var(--accent)); font-family: ui-monospace, "DejaVu Sans Mono", monospace; }
+html[data-ui="winamp"] ::selection { background: #000080; color: #fff; }

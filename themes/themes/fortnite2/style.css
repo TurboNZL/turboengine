@@ -1,0 +1,74 @@
+[data-ui="fortnite2"] {
+  --dur: 120ms; --ease: cubic-bezier(0.2, 0.9, 0.3, 1);
+  --btn-weight: 800; --btn-border: 0 solid transparent;
+  --ghost-hover-bg: hsl(var(--fg) / 0.14);
+  --in-focus-shadow: none;
+  --tb-border: 0 solid transparent; --tb-pad: 0.6rem 1.25rem; --tb-size: 1.35rem; --tb-weight: 900; --tb-justify: space-between;
+  --close-hover-bg: rgb(0 0 0 / 0.18);
+  --panel-tb-margin: 0 0 0.5rem; --panel-tb-pad: 0;
+  --chk-size: 1.2rem; --vote-ms: 380ms;
+  --rng-appearance: none; --rng-h: 8px; --rng-tw: 1rem; --rng-th: 1rem;
+}
+/* condensed type reads small: nudge the whole UI up in the two condensed eras */
+html[data-ui="fortnite2"] { font-size: 17px; }
+[data-ui="fortnite2"] { text-transform: uppercase; letter-spacing: 0.02em; font-weight: 700; }
+[data-ui="fortnite2"] :is(button, .btn, select, [role="menuitem"], [role="option"], h1, h2, h3, label, summary) { text-transform: inherit; letter-spacing: inherit; }
+[data-ui="fortnite2"] :is(.input, input, textarea, code, pre, p, .font-mono, [contenteditable]) { text-transform: none; letter-spacing: 0; }
+[data-ui="fortnite2"] :is(h1, h2, h3, .bt-titlebar h2) { font-family: var(--title-font); font-weight: 800; }
+[data-ui="fortnite2"] .btn { font-weight: 800; letter-spacing: 0.04em; }
+[data-ui="fortnite2"] .btn:hover:not(:disabled) { transform: translateY(-1px); }
+[data-ui="fortnite2"] .btn:active:not(:disabled) { transform: translateY(1px); }
+[data-ui="fortnite2"] .btn-accent { font-style: italic; }
+[data-ui="fortnite2"] .bt-titlebar svg { display: none; }
+[data-ui="fortnite2"] .btn.btn-accent { font-size: 1rem; }
+[data-ui="fortnite2"] { --fn-weight: 700; }
+[data-ui="fortnite2"] { --fn-weight: 900; font-weight: 900; }
+[data-ui="fortnite2"] :is(.font-light, .font-normal, .font-medium, .font-semibold, .bt-nav, .bt-tab, .chip, th, label, [role="menuitem"], [role="option"], .btn) { font-weight: var(--fn-weight); }
+[data-ui="fortnite2"] :is(.font-bold, .font-extrabold, h1, h2, h3, .bt-titlebar h2) { font-weight: 900; }
+[data-ui="fortnite2"] :is(.btn, .bt-nav, .bt-tab) { letter-spacing: 0.05em; }
+/* ---- Chapter 2-3 (2019-23): saturated blue, slanted tabs and buttons with cyan outlines, lime-yellow Start ---- */
+[data-ui="fortnite2"] {
+  --radius: 0px; --ctl-r: 0; --card-r: 0; --win-r: 0; --menu-r: 0; --nav-r: 0; --chip-r: 0; --in-r: 0;
+  --font: "Burbank Big Condensed", "Barlow Condensed", Oswald, "Arial Narrow", sans-serif; --title-font: var(--font);
+  --btn-bg: #1685e0; --btn-fg: #fff; --btn-shadow: inset 0 0 0 2px #5fd0ff; --btn-hover-bg: #2b9bf5; --btn-hover-shadow: inset 0 0 0 2px #b4ecff;
+  --btn-active-shadow: inset 0 0 0 2px #fff; --btn-active-transform: none;
+  --btn-accent-bg: #e8f03b; --btn-accent-fg: #262a00; --btn-accent-shadow: inset 0 0 0 3px rgb(255 255 255 / 0.55); --btn-accent-hover-bg: #f3fa6a; --btn-accent-hover-shadow: inset 0 0 0 3px rgb(255 255 255 / 0.8);
+  --in-bg: #0a4a9a; --in-border: 2px solid #22b6ff; --in-hover-border: #7ee0ff; --in-focus-border: #e8f03b;
+  --card-bg: rgb(10 74 154 / 0.78); --card-border: 0 solid transparent; --card-shadow: none;
+  --win-bg: #0a58b0; --win-border: 0 solid transparent; --win-shadow: 0 20px 50px rgb(0 20 70 / 0.6); --dialog-anim: bt-pop 140ms cubic-bezier(0.2, 0.9, 0.3, 1);
+  --tb-bg: #0a4a9a; --tb-fg: #cfeaff; --close-fg: #cfeaff; --close-hover-fg: #fff;
+  --bar-border: 0 solid transparent;
+  --menu-bg: #0a4a9a; --menu-border: 2px solid #22b6ff; --pop-shadow: 0 12px 30px rgb(0 20 70 / 0.55); --menu-anim: bt-pop 120ms cubic-bezier(0.2, 0.9, 0.3, 1);
+  --menu-hi-bg: #19b0f2; --menu-hi-fg: #fff;
+  --side-bg: linear-gradient(to bottom, #0a62c0, #0a85dc); --top-bg: #0a56b0; --player-bg: #0a4a9a; --player-shadow: inset 0 2px 0 #22b6ff;
+  --nav-hover-bg: rgb(34 182 255 / 0.3); --nav-active-bg: #19b0f2; --nav-active-fg: #fff; --nav-active-shadow: inset 0 0 0 2px #fff;
+  --row-hover: rgb(34 182 255 / 0.22); --row-current: rgb(232 240 59 / 0.2);
+  --panel-tb-fg: #9ee3ff;
+  --chk-border: 2px solid #22c4ff; --chk-on-fg: #262a00;
+  --rng-track: #0a4a9a; --rng-fill: #19b0f2; --rng-thumb: #e8f03b; --rng-ts: none;
+}
+[data-ui="fortnite2"] .chip { clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%); }
+[data-ui="fortnite2"] .bt-titlebar { clip-path: polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%); }
+[data-ui="fortnite2"] .btn { padding-inline: 1.2rem; font-size: 1.05rem; }
+/* ---- Slanted shapes (Chapters 2-3 and 4) ----
+ * clip-path cut the outline off along the slanted sides, so the shape is drawn on a skewed ::before behind the label instead: the fill, the outline
+ * (an inset shadow or a border on that pseudo-element) and the hover state all follow the slant, and the text stays upright. */
+[data-ui="fortnite2"] { --slant: -14deg; }
+[data-ui="fortnite2"] :is(.btn:not(.btn-ghost), .bt-nav) { isolation: isolate; background: transparent; border-color: transparent; box-shadow: none; transform-style: flat; }
+[data-ui="fortnite2"] :is(.btn:not(.btn-ghost):not(.absolute), .bt-nav) { position: relative; }
+[data-ui="fortnite2"] .btn:not(.btn-ghost):is(:hover, :active) { background: transparent; border-color: transparent; box-shadow: none; }
+[data-ui="fortnite2"] .bt-nav:is(:hover, [aria-current="page"]) { background: transparent; box-shadow: none; }
+[data-ui="fortnite2"] :is(.btn:not(.btn-ghost), .bt-nav)::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; transform: skewX(var(--slant)); border-radius: var(--ctl-r);
+  transition: background-color var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+[data-ui="fortnite2"] .btn:not(.btn-ghost)::before { background: var(--btn-bg); border: var(--btn-border); box-shadow: var(--btn-shadow); }
+[data-ui="fortnite2"] .btn:not(.btn-ghost):hover:not(:disabled)::before { background: var(--btn-hover-bg); border-color: var(--btn-hover-border); box-shadow: var(--btn-hover-shadow); }
+[data-ui="fortnite2"] .btn:not(.btn-ghost):active:not(:disabled)::before { box-shadow: var(--btn-active-shadow); }
+[data-ui="fortnite2"] .btn.btn-accent::before { background: var(--btn-accent-bg); border: var(--btn-accent-border); box-shadow: var(--btn-accent-shadow); }
+[data-ui="fortnite2"] .btn.btn-accent:hover:not(:disabled)::before { background: var(--btn-accent-hover-bg); border-color: var(--btn-accent-border-color, transparent); box-shadow: var(--btn-accent-hover-shadow); }
+[data-ui="fortnite2"] .bt-nav::before { background: transparent; border: 0; box-shadow: none; }
+[data-ui="fortnite2"] .bt-nav:hover::before { background: var(--nav-hover-bg); }
+[data-ui="fortnite2"] .bt-nav[aria-current="page"]::before { background: var(--nav-active-bg); box-shadow: var(--nav-active-shadow); }
+/* the slant widens each button by half the skew at its corners: leave room */
+[data-ui="fortnite2"] .btn:not(.btn-ghost) { padding-inline: 1.2rem; }

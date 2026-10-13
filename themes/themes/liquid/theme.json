@@ -1,0 +1,17 @@
+{
+  "id": "liquid",
+  "label": "macOS Liquid Glass",
+  "style": {
+    "description": "Apple's Liquid Glass: translucent floating bars that bend the light behind them, rim highlights, springy press and morphing menus.",
+    "font": "SF Pro",
+    "matching": {
+      "light": "macos",
+      "dark": "macos-dark"
+    },
+    "effects": [
+      "liquid-glass"
+    ],
+    "order": 120
+  },
+  "palettes": []
+}

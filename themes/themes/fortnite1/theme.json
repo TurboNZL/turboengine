@@ -1,0 +1,48 @@
+{
+  "id": "fortnite1",
+  "label": "Fortnite Chapter 1 (2017-19)",
+  "style": {
+    "description": "Slanted buttons and panels, hard drop shadows, a yellow Play button and condensed capitals on bright blue.",
+    "font": "Burbank Big Condensed",
+    "matching": {
+      "light": "fortnite-1",
+      "dark": "fortnite-1"
+    },
+    "fonts": [
+      {
+        "package": "noto-sans",
+        "weights": [400, 500, 600, 700]
+      },
+      {
+        "package": "barlow-condensed",
+        "weights": [400, 600, 700, 800, 900],
+        "italic": [700, 800, 900]
+      }
+    ],
+    "order": 160
+  },
+  "palettes": [
+    {
+      "id": "fortnite-1",
+      "label": "Fortnite Ch 1",
+      "mode": "dark",
+      "bg": "#41589a",
+      "primary": "#f2e53c",
+      "onPrimary": "230 40% 18%",
+      "fg": "#ffffff",
+      "mutedFg": "#c7d3f2",
+      "motif": "waves",
+      "overrides": {
+        "card": "#4c66a8",
+        "secondary": "#5d77b8",
+        "muted": "#36508f",
+        "accent": "#fbf6c8",
+        "border": "#2d4078",
+        "input": "#5f7bab"
+      },
+      "group": "platform",
+      "order": 460,
+      "source": "Read off screenshots (Epic does not publish its UI colours). Ch 1: muted slate blue with WHITE type, a dark navy top bar, pale lavender buttons with dark labels, cream \"selected\" and a soft yellow edge"
+    }
+  ]
+}

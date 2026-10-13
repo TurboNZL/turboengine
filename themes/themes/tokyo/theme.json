@@ -1,0 +1,19 @@
+{
+  "id": "tokyo",
+  "label": "Tokyo Night",
+  "palettes": [
+    {
+      "id": "tokyo",
+      "label": "Tokyo Night",
+      "mode": "dark",
+      "bg": [235, 22, 9],
+      "primary": [222, 89, 70],
+      "fg": "229 35% 82%",
+      "mutedFg": "229 20% 62%",
+      "motif": "stars",
+      "step": 1.1,
+      "group": "colour",
+      "order": 170
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "name": "appearance",
-  "title": "Appearance: turbothemes glue, layouts and the picker",
+  "title": "Appearance: themes, layouts and the picker",
   "optional": false,
   "summary": "How an app starts the turbothemes engine, owns its layouts, shows the picker (colour theme, UI style, layout, wallpaper) and the theme-update card.",
   "source": {
@@ -19,5 +19,6 @@
     "apps/web/src/index.css",
     "apps/web/src/fonts.css",
     "docs/development/APPEARANCE.md"
-  ]
+  ],
+  "themes": "on by default; opt out with files-lite/ (see MODULE.md)"
 }

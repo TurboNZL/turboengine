@@ -1,0 +1,57 @@
+{
+  "id": "genius",
+  "label": "Genius",
+  "style": {
+    "description": "White pages, black type and the yellow highlighter: flat square controls with black outlines, yellow hover and selection, bold headings.",
+    "font": "Helvetica Neue",
+    "matching": {
+      "light": "genius",
+      "dark": "genius-dark"
+    },
+    "order": 270
+  },
+  "palettes": [
+    {
+      "id": "genius",
+      "label": "Genius",
+      "mode": "light",
+      "bg": "#ffffff",
+      "primary": "#ffff64",
+      "onPrimary": "0 0% 0%",
+      "fg": "#000000",
+      "mutedFg": "#6b6b6b",
+      "motif": "dots",
+      "overrides": {
+        "card": "#ffffff",
+        "secondary": "#f5f5f5",
+        "muted": "#f5f5f5",
+        "accent": "#ffff64",
+        "border": "#e0e0e0",
+        "input": "#000000"
+      },
+      "group": "inspired",
+      "order": 530
+    },
+    {
+      "id": "genius-dark",
+      "label": "Genius Night",
+      "mode": "dark",
+      "bg": "#0a0a0a",
+      "primary": "#ffff64",
+      "onPrimary": "0 0% 0%",
+      "fg": "#ffffff",
+      "mutedFg": "#a0a0a0",
+      "motif": "dots",
+      "overrides": {
+        "card": "#141414",
+        "secondary": "#1e1e1e",
+        "muted": "#1e1e1e",
+        "accent": "#2a2a2a",
+        "border": "#2c2c2c",
+        "input": "#ffffff"
+      },
+      "group": "inspired",
+      "order": 540
+    }
+  ]
+}

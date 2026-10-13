@@ -1,0 +1,84 @@
+{
+  "id": "discord",
+  "label": "Discord",
+  "style": {
+    "description": "Layered slate panels, 4 px corners, blurple buttons, a recessed dark search field, rounded hover bars and a bold channel-list sidebar.",
+    "font": "Noto Sans",
+    "matching": {
+      "light": "discord-light",
+      "dark": "discord-onyx"
+    },
+    "fonts": [
+      {
+        "package": "noto-sans",
+        "weights": [400, 500, 600, 700]
+      }
+    ],
+    "order": 300
+  },
+  "palettes": [
+    {
+      "id": "discord",
+      "label": "Discord",
+      "mode": "dark",
+      "bg": "#313338",
+      "primary": "#5865f2",
+      "onPrimary": "0 0% 100%",
+      "fg": "#f2f3f5",
+      "mutedFg": "#949ba4",
+      "motif": "dots",
+      "overrides": {
+        "card": "#2b2d31",
+        "secondary": "#383a40",
+        "muted": "#2b2d31",
+        "accent": "#404249",
+        "border": "#1e1f22",
+        "input": "#1e1f22"
+      },
+      "group": "inspired",
+      "order": 570
+    },
+    {
+      "id": "discord-onyx",
+      "label": "Discord Onyx",
+      "mode": "dark",
+      "bg": "#000000",
+      "primary": "#5865f2",
+      "onPrimary": "0 0% 100%",
+      "fg": "#f2f3f5",
+      "mutedFg": "#80848e",
+      "motif": "dots",
+      "overrides": {
+        "card": "#0a0a0b",
+        "secondary": "#1e1e20",
+        "muted": "#0a0a0b",
+        "accent": "#1e1e20",
+        "border": "#17171a",
+        "input": "#000000"
+      },
+      "group": "inspired",
+      "order": 580
+    },
+    {
+      "id": "discord-light",
+      "label": "Discord Light",
+      "mode": "light",
+      "bg": "#ffffff",
+      "primary": "#5865f2",
+      "onPrimary": "0 0% 100%",
+      "fg": "#313338",
+      "mutedFg": "#5c5e66",
+      "motif": "dots",
+      "overrides": {
+        "card": "#f2f3f5",
+        "secondary": "#e3e5e8",
+        "muted": "#f2f3f5",
+        "accent": "#d7d9dd",
+        "border": "#e3e5e8",
+        "input": "#e3e5e8"
+      },
+      "group": "inspired",
+      "order": 590
+    }
+  ]
+}

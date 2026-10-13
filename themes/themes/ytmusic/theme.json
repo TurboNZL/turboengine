@@ -1,0 +1,42 @@
+{
+  "id": "ytmusic",
+  "label": "YouTube Music",
+  "style": {
+    "description": "Flat near-black pages, pill chips and search, rounded thumbnails, a rounded grey highlight on the current page and a red progress bar.",
+    "font": "Roboto",
+    "matching": {
+      "light": "ytmusic",
+      "dark": "ytmusic"
+    },
+    "fonts": [
+      {
+        "package": "roboto",
+        "weights": [400, 500, 700]
+      }
+    ],
+    "order": 290
+  },
+  "palettes": [
+    {
+      "id": "ytmusic",
+      "label": "YouTube Music",
+      "mode": "dark",
+      "bg": "#0f0f0f",
+      "primary": "#ff0033",
+      "onPrimary": "0 0% 100%",
+      "fg": "#f1f1f1",
+      "mutedFg": "#aaaaaa",
+      "motif": "rays",
+      "overrides": {
+        "card": "#0f0f0f",
+        "secondary": "#272727",
+        "muted": "#272727",
+        "accent": "#3f3f3f",
+        "border": "#303030",
+        "input": "#121212"
+      },
+      "group": "inspired",
+      "order": 560
+    }
+  ]
+}

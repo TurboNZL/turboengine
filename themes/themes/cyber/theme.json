@@ -1,0 +1,43 @@
+{
+  "id": "cyber",
+  "label": "Cyberpunk 2077",
+  "style": {
+    "description": "Near-black with caution-tape yellow and cyan glints, chamfered corners, condensed capitals and solid yellow selection bars.",
+    "font": "Barlow Condensed",
+    "matching": {
+      "light": "cyber",
+      "dark": "cyber"
+    },
+    "fonts": [
+      {
+        "package": "barlow-condensed",
+        "weights": [400, 600, 700, 800, 900],
+        "italic": [700, 800, 900]
+      }
+    ],
+    "order": 240
+  },
+  "palettes": [
+    {
+      "id": "cyber",
+      "label": "Night City",
+      "mode": "dark",
+      "bg": "#0a0a10",
+      "primary": "#fcee0a",
+      "onPrimary": "0 0% 0%",
+      "fg": "#f2f2f2",
+      "mutedFg": "#8c8c99",
+      "motif": "grid",
+      "overrides": {
+        "card": "#12121a",
+        "secondary": "#1c1c26",
+        "muted": "#1c1c26",
+        "accent": "#2b2b10",
+        "border": "#4a4a1c",
+        "input": "#181822"
+      },
+      "group": "inspired",
+      "order": 420
+    }
+  ]
+}

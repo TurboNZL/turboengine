@@ -1,0 +1,86 @@
+/* ================== Fortnite, by chapter ==================
+ * What each era looks like was read off screenshots of the settings and lobby screens, plus the patch notes: the lobby kept its slanted
+ * rectangles until Fortnitemares 2023 (Chapter 4 S4), when the curved-edge redesign moved the options to the left; Chapter 5 moved to the
+ * Heading Now typeface and dropped the per-chapter colours for neutral glass with three button weights (regular = light grey, loud = yellow,
+ * quiet = text only, the names Epic uses for UEFN's button styles). Epic's fonts (Burbank, Heading Now) are not shipped: stand-ins are used.
+ * Pair each style with the "Fortnite Ch N" colour theme. Colours are approximations. */
+[data-ui="fortnite1"] {
+  --dur: 120ms; --ease: cubic-bezier(0.2, 0.9, 0.3, 1);
+  --btn-weight: 800; --btn-border: 0 solid transparent;
+  --ghost-hover-bg: hsl(var(--fg) / 0.14);
+  --in-focus-shadow: none;
+  --tb-border: 0 solid transparent; --tb-pad: 0.6rem 1.25rem; --tb-size: 1.35rem; --tb-weight: 900; --tb-justify: space-between;
+  --close-hover-bg: rgb(0 0 0 / 0.18);
+  --panel-tb-margin: 0 0 0.5rem; --panel-tb-pad: 0;
+  --chk-size: 1.2rem; --vote-ms: 380ms;
+  --rng-appearance: none; --rng-h: 8px; --rng-tw: 1rem; --rng-th: 1rem;
+}
+html[data-ui="fortnite1"] { font-size: 15px; }
+/* Almost everything is capitals, as in the game; paragraphs, typed text and code keep their case so they stay readable */
+[data-ui="fortnite1"] { text-transform: uppercase; letter-spacing: 0.02em; font-weight: 700; }
+[data-ui="fortnite1"] :is(button, .btn, select, [role="menuitem"], [role="option"], h1, h2, h3, label, summary) { text-transform: inherit; letter-spacing: inherit; }
+[data-ui="fortnite1"] :is(.input, input, textarea, code, pre, p, .font-mono, [contenteditable]) { text-transform: none; letter-spacing: 0; }
+[data-ui="fortnite1"] :is(h1, h2, h3, .bt-titlebar h2) { font-family: var(--title-font); font-weight: 800; }
+[data-ui="fortnite1"] .btn { font-weight: 800; letter-spacing: 0.04em; }
+[data-ui="fortnite1"] .btn:hover:not(:disabled) { transform: translateY(-1px); }
+[data-ui="fortnite1"] .btn:active:not(:disabled) { transform: translateY(1px); }
+[data-ui="fortnite1"] .btn-accent { font-style: italic; }
+[data-ui="fortnite1"] .bt-titlebar svg { display: none; }
+[data-ui="fortnite1"] .btn.btn-accent { font-size: 1rem; }
+/* Weight: Tailwind's font-medium/semibold/normal/light on nav items, labels and cells (specificity 0,1,0) used to beat the style's base weight, which left
+ * the condensed stand-in at 500 and far thinner than Burbank. Burbank Big Condensed is a heavy face (Black is its top weight), so every Fortnite style forces a
+ * heavy weight on those utilities; the two condensed eras go to 900. */
+[data-ui="fortnite1"] { --fn-weight: 700; }
+[data-ui="fortnite1"] :is(.font-light, .font-normal, .font-medium, .font-semibold, .bt-nav, .bt-tab, .chip, th, label, [role="menuitem"], [role="option"], .btn) { font-weight: var(--fn-weight); }
+[data-ui="fortnite1"] :is(.font-bold, .font-extrabold, h1, h2, h3, .bt-titlebar h2) { font-weight: 900; }
+/* ---- Chapter 1 (2017-19): pale sky-blue pages, a dark navy bar with a lighter active tab, light grey-lavender buttons with a hard shadow,
+ * mid-blue value fields with white bold text, a yellow frame on the hovered/focused control. Text is Noto Sans in normal case (read off the
+ * settings screenshot); the condensed capitals are only for the Play button and the logo. ---- */
+[data-ui="fortnite1"] {
+  --radius: 2px; --ctl-r: 2px; --card-r: 2px; --win-r: 2px; --menu-r: 2px; --nav-r: 2px; --chip-r: 2px; --in-r: 2px;
+  --display: "Burbank Big Condensed", "Barlow Condensed", Oswald, "Arial Narrow", sans-serif;
+  --font: "Noto Sans", "Burbank Small", "Open Sans", "Segoe UI", system-ui, sans-serif; --title-font: var(--font);
+  --btn-weight: 600; --tb-weight: 400; --tb-size: 1.5rem;
+  --btn-bg: #d4dbea; --btn-fg: #121830; --btn-shadow: inset 0 1px 0 #fff, 0 3px 0 rgb(40 52 96 / 0.45);
+  --btn-hover-bg: #e3e8f4; --btn-hover-shadow: inset 0 1px 0 #fff, 0 3px 0 rgb(40 52 96 / 0.45);
+  --btn-active-shadow: inset 0 2px 0 rgb(24 34 70 / 0.25); --btn-active-transform: translateY(2px);
+  --btn-accent-bg: #fbf6c8; --btn-accent-fg: #1b2342; --btn-accent-shadow: inset 0 -3px 0 #f0e02c, 0 3px 0 rgb(40 52 96 / 0.45);
+  --btn-accent-hover-bg: #fffbe3; --btn-accent-hover-shadow: inset 0 -3px 0 #f0e02c, 0 3px 0 rgb(40 52 96 / 0.45);
+  --in-bg: #5f7bab; --in-border: 0 solid transparent; --in-shadow: inset 0 2px 0 rgb(10 20 60 / 0.25); --in-hover-border: transparent; --in-focus-border: transparent;
+  --card-bg: #4c66a8; --card-border: 0 solid transparent; --card-shadow: 0 2px 0 rgb(20 30 70 / 0.45);
+  --win-bg: #3c5391; --win-border: 0 solid transparent; --win-shadow: 0 18px 40px rgb(10 16 40 / 0.5); --dialog-anim: bt-pop 160ms cubic-bezier(0.2, 0.9, 0.3, 1);
+  --tb-bg: #222c4e; --tb-fg: #fff; --close-fg: #fff; --close-hover-fg: #fff;
+  --bar-border: 0 solid transparent;
+  --menu-bg: #36508f; --menu-border: 0 solid transparent; --pop-shadow: 0 6px 0 rgb(20 30 70 / 0.45), 0 16px 30px rgb(10 16 40 / 0.5); --menu-anim: bt-pop 120ms cubic-bezier(0.2, 0.9, 0.3, 1);
+  --menu-hi-bg: #5f7bab; --menu-hi-fg: #fff;
+  --side-bg: #222c4e; --top-bg: #222c4e; --player-bg: #222c4e; --player-shadow: none;
+  --nav-hover-bg: rgb(255 255 255 / 0.08); --nav-active-bg: #8b9cc6; --nav-active-fg: #fff; --nav-active-shadow: none;
+  --row-hover: rgb(255 255 255 / 0.12); --row-current: rgb(251 246 200 / 0.22);
+  --panel-tb-fg: #fff;
+  --chk-border: 2px solid #fff; --chk-on-fg: #1b2342;
+  --rng-track: #1d2646; --rng-fill: #1aa0ff; --rng-thumb: #d4dbea; --rng-ts: 0 2px 0 rgb(24 34 70 / 0.4);
+}
+/* Noto Sans, normal case: the sentence-case look of the settings screens */
+[data-ui="fortnite1"] { text-transform: none; letter-spacing: 0; font-weight: 500; --fn-weight: 600; }
+[data-ui="fortnite1"] :is(h1, h2, h3, .bt-titlebar h2) { font-weight: 400; font-style: normal; letter-spacing: 0; }
+[data-ui="fortnite1"] :is(.btn, .bt-nav, .bt-tab, .chip, th, [role="menuitem"], [role="option"]) { letter-spacing: 0; }
+[data-ui="fortnite1"] .btn { font-weight: 600; letter-spacing: 0; }
+/* the big yellow-ish call to action keeps Burbank-style capitals */
+[data-ui="fortnite1"] .btn.btn-accent { font-family: var(--display); font-weight: 900; font-style: italic; text-transform: uppercase; letter-spacing: 0.04em; font-size: 1.2rem; }
+[data-ui="fortnite1"] .bt-side .mb-3 { font-family: var(--display); font-weight: 900; text-transform: uppercase; letter-spacing: 0.04em; }
+/* the dark chrome (side bar, top bar, player, dialog title bars) takes white type; the active tab is the lighter slate */
+[data-ui="fortnite1"] :is(.bt-side, .bt-top, .bt-player, .bt-tabbar, .bt-titlebar) { --fg: 0 0% 100%; --muted: 222 30% 82%; color: #fff; }
+[data-ui="fortnite1"] .bt-nav { font-weight: 500; }
+[data-ui="fortnite1"] .bt-nav[aria-current="page"] { font-weight: 600; }
+/* value-style fields: white bold text on mid blue */
+[data-ui="fortnite1"] .input { color: #fff; font-weight: 600; }
+[data-ui="fortnite1"] .input::placeholder { color: rgb(255 255 255 / 0.72); font-weight: 500; }
+[data-ui="fortnite1"] .bt-top .input { background: #36427a; }
+[data-ui="fortnite1"] .bt-top .btn:not(.btn-accent), [data-ui="fortnite1"] .bt-player .btn:not(.btn-accent) { background: #36427a; color: #fff; box-shadow: inset 0 -3px 0 rgb(255 255 255 / 0.18); }
+/* selection: a yellow frame (drawn as an outline so nothing moves) */
+[data-ui="fortnite1"] :is(.btn, .bt-nav, .bt-tab, .chip, .bt-row, .input, .bt-close, [role="menuitem"], [role="option"], a.card, button.card) { outline: 3px solid transparent; outline-offset: 0; transition: outline-color var(--dur) var(--ease), background-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease); }
+[data-ui="fortnite1"] :is(.btn, .bt-nav, .bt-tab, .chip, .bt-row, .input, .bt-close, a.card, button.card):is(:hover, :focus-visible):not(:disabled) { outline-color: #f6ee2a; }
+[data-ui="fortnite1"] :is([role="menuitem"], [role="option"]):is(:hover, :focus-visible) { outline: 3px solid #f6ee2a; outline-offset: -3px; }
+[data-ui="fortnite1"] .bt-row:is(:hover, :focus-visible) { outline-offset: -3px; }
+[data-ui="fortnite1"] .btn:hover:not(:disabled) { transform: none; }
+[data-ui="fortnite1"] .btn:active:not(:disabled) { transform: translateY(2px); }

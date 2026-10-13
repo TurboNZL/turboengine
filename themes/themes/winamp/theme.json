@@ -1,0 +1,36 @@
+{
+  "id": "winamp",
+  "label": "Winamp 2 (classic skin)",
+  "style": {
+    "description": "The 1998 media player: dark bevelled metal, striped title bars, a black playlist with green LCD text and a navy selection, in tiny Arial.",
+    "font": "Arial",
+    "matching": {
+      "light": "winamp"
+    },
+    "order": 140
+  },
+  "palettes": [
+    {
+      "id": "winamp",
+      "label": "Winamp Classic",
+      "mode": "dark",
+      "bg": "#1c1c2a",
+      "primary": "#00e800",
+      "onPrimary": "0 0% 0%",
+      "fg": "#d8dbe6",
+      "mutedFg": "#8e96a8",
+      "motif": "grid",
+      "overrides": {
+        "card": "#000000",
+        "secondary": "#34344a",
+        "muted": "#2a2a3c",
+        "accent": "#000080",
+        "border": "#46465e",
+        "input": "#5a5a72"
+      },
+      "group": "platform",
+      "order": 370,
+      "source": "Winamp 2.x: bluish metal chrome, a black playlist with #00ff00 text and #000080 selection (the skin's pledit.txt defaults)"
+    }
+  ]
+}

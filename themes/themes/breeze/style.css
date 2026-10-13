@@ -1,0 +1,52 @@
+[data-ui="breeze"] { --wf-close-hover: #da4453; }
+/* ================== KDE Breeze ================== */
+/*
+ * Plasma 6 Breeze: 5 px corners on every control, frame and menu (Breeze's "slightly rounder elements" change, was 3 px), a window-grey
+ * page with lighter "view" panels, flat toolbars, buttons with a thin outline and a faint face that gains an accent frame on hover and
+ * focus, list and menu selections in a solid accent with its contrast colour, and a light title bar. Colours come from the colour
+ * theme (Breeze / Breeze Dark are its matching palettes).
+ */
+[data-ui="breeze"] {
+  --chk-size: 1rem; --chk-r: 4px; --chk-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 40%, transparent); --chk-bg: color-mix(in srgb, hsl(var(--surface)) 94%, hsl(var(--fg))); --chk-on-border: color-mix(in srgb, hsl(var(--accent)) 75%, black); --chk-focus: 0 0 0 2px color-mix(in srgb, hsl(var(--accent)) 40%, transparent);
+  --radius: 5px; --ctl-r: 5px; --card-r: 5px; --win-r: 5px; --menu-r: 5px; --nav-r: 5px; --chip-r: 5px;
+  --font: "Noto Sans", "Open Sans", "Oxygen", system-ui, sans-serif;
+  --dur: 120ms; --ease: ease-in-out;
+  --btn-bg: color-mix(in srgb, hsl(var(--surface)) 90%, hsl(var(--bg)));
+  --btn-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 24%, transparent); --btn-weight: 400;
+  --btn-hover-bg: color-mix(in srgb, hsl(var(--surface)) 96%, hsl(var(--accent))); --btn-hover-border: hsl(var(--accent)); --btn-hover-shadow: inset 0 0 0 1px hsl(var(--accent) / 0.55);
+  --btn-active-shadow: inset 0 0 0 1px hsl(var(--accent)), inset 0 1px 3px rgb(0 0 0 / 0.18);
+  --btn-accent-bg: hsl(var(--accent)); --btn-accent-border: 1px solid color-mix(in srgb, hsl(var(--accent)) 70%, black); --btn-accent-hover-bg: color-mix(in srgb, hsl(var(--accent)) 90%, white); --btn-accent-hover-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.25);
+  --ghost-hover-bg: color-mix(in srgb, hsl(var(--fg)) 8%, transparent);
+  --in-bg: hsl(var(--surface)); --in-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 26%, transparent); --in-hover-border: hsl(var(--accent) / 0.7);
+  --in-focus-border: hsl(var(--accent)); --in-focus-shadow: inset 0 0 0 1px hsl(var(--accent));
+  --card-bg: hsl(var(--surface)); --card-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 16%, transparent);
+  --win-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 25%, transparent); --win-shadow: 0 6px 20px rgb(0 0 0 / 0.35), 0 1px 3px rgb(0 0 0 / 0.2); --dialog-anim: bt-fade 140ms ease-in-out;
+  --tb-bg: color-mix(in srgb, hsl(var(--fg)) 8%, hsl(var(--surface))); --tb-fg: hsl(var(--fg)); --tb-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 14%, transparent); --tb-pad: 0.5rem 0.9rem; --tb-size: 0.95rem; --tb-weight: 600;
+  --close-fg: hsl(var(--fg)); --close-r: 9999px; --close-hover-bg: #da4453; --close-hover-fg: #fff;
+  --bar-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 16%, transparent);
+  --menu-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 22%, transparent); --pop-shadow: 0 3px 10px rgb(0 0 0 / 0.3); --menu-anim: bt-drop 110ms ease-in-out;
+  --menu-hi-bg: hsl(var(--accent)); --menu-hi-fg: hsl(var(--accent-fg));
+  /* toolbar and side bar are the window colour; the content panels (cards, lists) are the lighter "view" colour */
+  --side-bg: hsl(var(--bg)); --top-bg: hsl(var(--bg)); --player-bg: hsl(var(--bg));
+  --nav-hover-bg: color-mix(in srgb, hsl(var(--accent)) 16%, transparent); --nav-active-bg: hsl(var(--accent)); --nav-active-fg: hsl(var(--accent-fg)); --nav-active-shadow: none;
+  --row-hover: color-mix(in srgb, hsl(var(--accent)) 12%, transparent); --row-current: color-mix(in srgb, hsl(var(--accent)) 22%, transparent);
+  --rng-appearance: none; --rng-h: 0.3rem; --rng-r: 3px; --rng-track: color-mix(in srgb, hsl(var(--fg)) 20%, transparent);
+  --rng-tw: 1.1rem; --rng-th: 1.1rem; --rng-thumb: color-mix(in srgb, hsl(var(--surface)) 94%, hsl(var(--bg))); --rng-tb: 1px solid color-mix(in srgb, hsl(var(--fg)) 38%, transparent); --rng-ts: 0 1px 2px rgb(0 0 0 / 0.25);
+}
+html[data-ui="breeze"] { font-size: 14px; }
+/* Noto Sans 10 pt, Breeze's default size */
+[data-ui="breeze"] .bt-titlebar svg { color: hsl(var(--fg)); }
+[data-ui="breeze"] .bt-nav { font-weight: 400; color: hsl(var(--fg)); }
+[data-ui="breeze"] .bt-nav[aria-current="page"] svg { color: inherit; }
+[data-ui="breeze"] .bt-shell { backdrop-filter: none; -webkit-backdrop-filter: none; }
+[data-ui="breeze"] .bt-brand { font-weight: 600; }
+/* Kirigami headings are regular weight; Plasma 6 dropped framed views for 1 px separators and lists use the scheme's alternate row colour; focus is an encircling accent ring */
+[data-ui="breeze"] :is(h1, h2) { font-weight: 400; }
+[data-ui="breeze"] h1 { font-size: 1.6rem; }
+[data-ui="breeze"] .card { box-shadow: none; --card-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 12%, transparent); }
+[data-ui="breeze"] .card .bt-row:nth-child(even):not(:hover):not(.bt-row-current) { background: color-mix(in srgb, hsl(var(--fg)) 3.5%, transparent); }
+[data-ui="breeze"] .card .divide-y > :not([hidden]) ~ :not([hidden]) { border-color: color-mix(in srgb, hsl(var(--fg)) 9%, transparent); }
+[data-ui="breeze"] :is(.btn, .input, .bt-nav, .bt-tab, .chip):focus-visible { outline: 2px solid hsl(var(--accent)); outline-offset: 1px; }
+[data-ui="breeze"] .bt-nav[aria-current="page"] { font-weight: 400; }
+[data-ui="breeze"] { --player-in: bt-fade 160ms ease-in-out both; --player-out: bt-fade-out 140ms ease-in-out both; --player-ms: 140ms; --pop-out: bt-fade-out 120ms ease-in-out both; --pop-ms: 120ms; }
+[data-ui="breeze"] { --page-in: bt-fade 120ms linear backwards; }

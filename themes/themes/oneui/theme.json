@@ -1,0 +1,63 @@
+{
+  "id": "oneui",
+  "label": "Samsung One UI",
+  "style": {
+    "description": "Big rounded squircle panels, frosted translucent tiles, round pill controls and thick pill sliders with a white fill. It has no colours of its own beyond the Samsung blue: the lilac in screenshots is the wallpaper, so choose a picture under Wallpaper.",
+    "font": "Outfit",
+    "matching": {
+      "light": "oneui",
+      "dark": "oneui-dark"
+    },
+    "fonts": [
+      {
+        "package": "outfit",
+        "weights": [400, 500, 600]
+      }
+    ],
+    "order": 260
+  },
+  "palettes": [
+    {
+      "id": "oneui",
+      "label": "One UI",
+      "mode": "light",
+      "bg": "#f2f2f4",
+      "primary": "#3e91ff",
+      "onPrimary": "0 0% 100%",
+      "fg": "#1a1a1c",
+      "mutedFg": "#6b6b72",
+      "motif": "waves",
+      "overrides": {
+        "card": "#ffffff",
+        "secondary": "#e8e8ec",
+        "muted": "#ececf0",
+        "accent": "#dcdce2",
+        "border": "#e0e0e6",
+        "input": "#e8e8ec"
+      },
+      "group": "inspired",
+      "order": 600
+    },
+    {
+      "id": "oneui-dark",
+      "label": "One UI Dark",
+      "mode": "dark",
+      "bg": "#000000",
+      "primary": "#3e91ff",
+      "onPrimary": "0 0% 100%",
+      "fg": "#f4f4f6",
+      "mutedFg": "#a0a0a8",
+      "motif": "waves",
+      "overrides": {
+        "card": "#1c1c1f",
+        "secondary": "#2a2a2e",
+        "muted": "#242427",
+        "accent": "#38383d",
+        "border": "#2a2a2e",
+        "input": "#2a2a2e"
+      },
+      "group": "inspired",
+      "order": 610
+    }
+  ]
+}

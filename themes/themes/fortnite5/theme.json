@@ -1,0 +1,44 @@
+{
+  "id": "fortnite5",
+  "label": "Fortnite Chapter 5-6 (2024-)",
+  "style": {
+    "description": "Rift UI refined: less rounding and blue instead of purple.",
+    "font": "Heading Now",
+    "matching": {
+      "light": "fortnite-5",
+      "dark": "fortnite-5"
+    },
+    "fonts": [
+      {
+        "package": "archivo",
+        "weights": [400, 600, 700, 800, 900],
+        "italic": [700, 800]
+      }
+    ],
+    "order": 190
+  },
+  "palettes": [
+    {
+      "id": "fortnite-5",
+      "label": "Fortnite Ch 5-6",
+      "mode": "dark",
+      "bg": "#12151d",
+      "primary": "#ffee00",
+      "onPrimary": "0 0% 0%",
+      "fg": "0 0% 100%",
+      "mutedFg": "#a8aebb",
+      "motif": "stars",
+      "overrides": {
+        "card": "#1b1f2b",
+        "secondary": "#2a2f3d",
+        "muted": "#262b38",
+        "accent": "#e6e9ef",
+        "border": "#363c4b",
+        "input": "#222733"
+      },
+      "group": "platform",
+      "order": 490,
+      "source": "Ch 5-6: neutral dark glass, light grey \"regular\" buttons, a yellow \"loud\" button; no chapter colour any more"
+    }
+  ]
+}

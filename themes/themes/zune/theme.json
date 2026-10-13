@@ -1,0 +1,42 @@
+{
+  "id": "zune",
+  "label": "Zune HD (Metro)",
+  "style": {
+    "description": "Black with huge light lowercase titles, boxless content, white outlined controls and one orange accent that marks where you are.",
+    "font": "Segoe UI Light",
+    "matching": {
+      "light": "zune",
+      "dark": "zune"
+    },
+    "fonts": [
+      {
+        "package": "open-sans",
+        "weights": [300]
+      }
+    ],
+    "order": 230
+  },
+  "palettes": [
+    {
+      "id": "zune",
+      "label": "Zune Orange",
+      "mode": "dark",
+      "bg": "#000000",
+      "primary": "#ee4d22",
+      "onPrimary": "0 0% 100%",
+      "fg": "#ffffff",
+      "mutedFg": "#9a9a9a",
+      "motif": "waves",
+      "overrides": {
+        "card": "#0f0f0f",
+        "secondary": "#1a1a1a",
+        "muted": "#1a1a1a",
+        "accent": "#2a2a2a",
+        "border": "#262626",
+        "input": "#1d1d1d"
+      },
+      "group": "inspired",
+      "order": 410
+    }
+  ]
+}

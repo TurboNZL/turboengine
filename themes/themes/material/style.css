@@ -1,0 +1,34 @@
+[data-ui="material"] .bt-wf-close:is(:hover, :focus-visible) { background: color-mix(in srgb, currentColor 22%, transparent); color: inherit; }
+[data-ui="material"] .bt-wf-btn { --wf-r: 9999px; width: 1.7rem; height: 1.7rem; }
+/* ================== Material 3 ================== */
+[data-ui="material"] {
+  --radius: 16px; --ctl-r: 9999px; --card-r: 20px; --win-r: 28px; --menu-r: 4px; --nav-r: 9999px;
+  --font: Roboto, "Noto Sans", "Open Sans", system-ui, sans-serif;
+  --dur: 200ms; --ease: cubic-bezier(0.2, 0, 0, 1);
+  --btn-bg: transparent; --btn-border: 1px solid hsl(var(--line)); --btn-fg: hsl(var(--accent)); --btn-weight: 500;
+  --btn-hover-bg: color-mix(in srgb, hsl(var(--accent)) 8%, transparent); --btn-hover-border: hsl(var(--line)); --btn-active-transform: scale(0.98);
+  --btn-accent-bg: hsl(var(--accent)); --btn-accent-border: 0 solid transparent; --btn-accent-hover-shadow: 0 1px 3px 1px rgb(0 0 0 / 0.2);
+  --ghost-hover-bg: color-mix(in srgb, hsl(var(--fg)) 8%, transparent);
+  --in-bg: color-mix(in srgb, hsl(var(--accent)) 7%, hsl(var(--surface))); --in-border: 0 solid transparent; --in-shadow: inset 0 -1px 0 hsl(var(--line));
+  --in-hover-border: transparent; --in-focus-border: transparent; --in-focus-shadow: inset 0 -2px 0 hsl(var(--accent));
+  /* M3 filled text field: 4 px top corners only, 16 px side padding and 56 px-ish height, so the text never touches the edge */
+  --in-r: 4px 4px 0 0; --in-px: 1rem; --in-py: 0.8rem;
+  --chk-size: 1.15rem; --chk-r: 2px; --chk-border: 2px solid hsl(var(--muted)); --chk-bg: transparent; --chk-hover-border: hsl(var(--fg));
+  --card-bg: color-mix(in srgb, hsl(var(--accent)) 5%, hsl(var(--surface))); --card-border: 0 solid transparent; --card-shadow: 0 1px 2px rgb(0 0 0 / 0.15);
+  --win-bg: color-mix(in srgb, hsl(var(--accent)) 7%, hsl(var(--surface))); --win-border: 0 solid transparent; --win-shadow: 0 6px 18px 4px rgb(0 0 0 / 0.25); --dialog-anim: bt-pop 300ms cubic-bezier(0.05, 0.7, 0.1, 1);
+  --tb-border: 0 solid transparent; --tb-pad: 1.5rem 1.5rem 0.5rem; --tb-size: 1.5rem; --tb-weight: 400;
+  --close-r: 9999px; --close-hover-bg: color-mix(in srgb, hsl(var(--fg)) 10%, transparent);
+  --bar-border: 0 solid transparent;
+  --menu-bg: color-mix(in srgb, hsl(var(--accent)) 6%, hsl(var(--surface))); --menu-border: 0 solid transparent; --pop-shadow: 0 2px 6px 2px rgb(0 0 0 / 0.18), 0 1px 2px rgb(0 0 0 / 0.3); --menu-anim: bt-reveal 200ms cubic-bezier(0.05, 0.7, 0.1, 1);
+  --menu-hi-bg: color-mix(in srgb, hsl(var(--accent)) 14%, transparent);
+  --side-bg: color-mix(in srgb, hsl(var(--accent)) 5%, hsl(var(--surface))); --top-bg: color-mix(in srgb, hsl(var(--accent)) 8%, hsl(var(--bg))); --top-shadow: 0 1px 3px rgb(0 0 0 / 0.12);
+  --player-bg: color-mix(in srgb, hsl(var(--accent)) 8%, hsl(var(--surface)));
+  --nav-hover-bg: color-mix(in srgb, hsl(var(--fg)) 6%, transparent); --nav-active-bg: color-mix(in srgb, hsl(var(--accent)) 22%, hsl(var(--surface)));
+  --row-hover: color-mix(in srgb, hsl(var(--accent)) 10%, transparent);
+  --rng-appearance: none; --rng-h: 0.5rem; --rng-track: color-mix(in srgb, hsl(var(--accent)) 24%, hsl(var(--surface)));
+  --rng-tw: 1.25rem; --rng-th: 1.25rem; --rng-thumb: hsl(var(--accent)); --rng-ts: 0 1px 3px rgb(0 0 0 / 0.3);
+}
+[data-ui="material"] .btn.btn-accent { padding-inline: 1.25rem; }
+[data-ui="material"] { --player-in: bt-slide-in 420ms cubic-bezier(0.05, 0.7, 0.1, 1) both; --player-out: bt-slide-out 200ms cubic-bezier(0.3, 0, 0.8, 0.15) both; --player-ms: 200ms; --pop-out: bt-fade-out 150ms cubic-bezier(0.3, 0, 0.8, 0.15) both; --pop-ms: 150ms; }
+[data-ui="material"] { --page-in: bt-fade-through 260ms cubic-bezier(0.2, 0, 0, 1) backwards; }
+@keyframes bt-fade-through { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: none; } }

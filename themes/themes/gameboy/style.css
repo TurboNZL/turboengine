@@ -1,0 +1,39 @@
+/* ================== Game Boy (DMG-01) ==================
+ * The four greens of the original LCD: everything is drawn in them, with 2 px square frames, a hard 3 px shadow under things that
+ * press, a pick shown inverted (palest on darkest) and Press Start 2P for the type. Pair it with the "DMG" colours. */
+[data-ui="gameboy"] {
+  --radius: 0px; --ctl-r: 0px; --card-r: 0px; --win-r: 0px; --menu-r: 0px; --nav-r: 0px; --chip-r: 0px; --in-r: 0px;
+  --font: "Press Start 2P", "VT323", ui-monospace, monospace; --title-font: var(--font);
+  --dur: 0ms; --ease: steps(2);
+  --btn-bg: hsl(var(--surface)); --btn-fg: hsl(var(--fg)); --btn-weight: 400; --btn-border: 2px solid hsl(var(--fg)); --btn-shadow: 3px 3px 0 hsl(var(--accent));
+  --btn-hover-bg: hsl(var(--fg)); --btn-hover-border: hsl(var(--fg)); --btn-hover-shadow: 3px 3px 0 hsl(var(--accent));
+  --btn-active-shadow: none; --btn-active-transform: translate(3px, 3px);
+  --btn-accent-bg: hsl(var(--fg)); --btn-accent-fg: hsl(var(--bg)); --btn-accent-border: 2px solid hsl(var(--fg)); --btn-accent-border-color: hsl(var(--fg)); --btn-accent-shadow: 3px 3px 0 hsl(var(--accent));
+  --btn-accent-hover-bg: hsl(var(--accent)); --btn-accent-hover-shadow: 3px 3px 0 hsl(var(--fg)); --btn-accent-text-shadow: none;
+  --ghost-hover-bg: color-mix(in srgb, hsl(var(--fg)) 15%, transparent);
+  --in-bg: hsl(var(--bg)); --in-border: 2px solid hsl(var(--fg)); --in-shadow: none; --in-hover-border: hsl(var(--fg)); --in-focus-border: hsl(var(--fg)); --in-focus-shadow: 3px 3px 0 hsl(var(--accent)); --in-px: 0.75rem;
+  --card-bg: hsl(var(--surface)); --card-border: 2px solid hsl(var(--fg)); --card-shadow: 3px 3px 0 hsl(var(--accent));
+  --backdrop: color-mix(in srgb, hsl(var(--fg)) 55%, transparent);
+  --win-bg: hsl(var(--bg)); --win-border: 3px solid hsl(var(--fg)); --win-shadow: 6px 6px 0 hsl(var(--accent)); --dialog-anim: none;
+  --tb-bg: hsl(var(--fg)); --tb-fg: hsl(var(--bg)); --tb-border: 0 solid transparent; --tb-pad: 0.6rem 0.9rem; --tb-size: 0.75rem; --tb-weight: 400; --tb-justify: space-between; --tb-text-shadow: none;
+  --close-fg: hsl(var(--bg)); --close-hover-bg: hsl(var(--bg)); --close-hover-fg: hsl(var(--fg)); --close-r: 0;
+  --bar-border: 2px solid hsl(var(--fg));
+  --menu-bg: hsl(var(--bg)); --menu-border: 2px solid hsl(var(--fg)); --pop-shadow: 4px 4px 0 hsl(var(--accent)); --menu-anim: none; --menu-hi-bg: hsl(var(--fg)); --menu-hi-fg: hsl(var(--bg));
+  --side-bg: hsl(var(--surface)); --side-shadow: none; --top-bg: hsl(var(--surface)); --top-shadow: none; --player-bg: hsl(var(--surface)); --player-shadow: none;
+  --nav-hover-bg: color-mix(in srgb, hsl(var(--fg)) 12%, transparent); --nav-active-bg: hsl(var(--fg)); --nav-active-fg: hsl(var(--bg)); --nav-active-shadow: none;
+  --row-hover: color-mix(in srgb, hsl(var(--fg)) 16%, transparent); --row-current: color-mix(in srgb, hsl(var(--fg)) 30%, transparent);
+  --panel-tb-fg: hsl(var(--fg)); --panel-tb-margin: 0 0 0.5rem; --panel-tb-pad: 0;
+  --chk-size: 1.1rem; --chk-r: 0; --chk-border: 2px solid hsl(var(--fg)); --chk-bg: hsl(var(--bg)); --chk-hover-border: hsl(var(--accent)); --chk-focus: 0 0 0 2px color-mix(in srgb, hsl(var(--accent)) 40%, transparent);
+  --chk-on-bg: hsl(var(--fg)); --chk-on-border: hsl(var(--fg)); --chk-on-fg: hsl(var(--bg)); --chk-radio-on-bg: hsl(var(--fg)); --chk-dot: hsl(var(--bg));
+  --rng-appearance: none; --rng-h: 6px; --rng-r: 0; --rng-track: color-mix(in srgb, hsl(var(--fg)) 25%, transparent); --rng-fill: hsl(var(--fg));
+  --rng-tw: 0.9rem; --rng-th: 0.9rem; --rng-tr: 0; --rng-thumb: hsl(var(--fg)); --rng-tb: 2px solid hsl(var(--bg)); --rng-ts: none;
+}
+html[data-ui="gameboy"] { font-size: 10px; line-height: 1.7; }
+[data-ui="gameboy"] :is(h1, h2, h3, .bt-brand) { font-weight: 400; line-height: 1.5; }
+[data-ui="gameboy"] h1 { font-size: 1.5rem; }
+[data-ui="gameboy"] .bt-row:hover, [data-ui="gameboy"] .bt-row:hover *, [data-ui="gameboy"] .bt-nav[aria-current="page"], [data-ui="gameboy"] .bt-nav[aria-current="page"] *, [data-ui="gameboy"] .btn:hover:not(:disabled), [data-ui="gameboy"] .btn:hover:not(:disabled) * { color: hsl(var(--bg)); }
+[data-ui="gameboy"] .text-muted, [data-ui="gameboy"] .chip { color: hsl(var(--accent)); }
+[data-ui="gameboy"] .chip { border: 2px solid hsl(var(--accent)); background: transparent; }
+[data-ui="gameboy"] :is(img, canvas, .bt-cover) { image-rendering: pixelated; filter: grayscale(1) contrast(1.15) sepia(0.7) hue-rotate(40deg) saturate(1.6); }
+[data-ui="gameboy"] { --page-in: none; --vote-ms: 0ms; --player-in: none; --player-out: none; --player-ms: 0ms; --pop-out: none; --pop-ms: 0ms; }
+[data-ui="gameboy"] * { scroll-behavior: auto !important; }

@@ -1,0 +1,68 @@
+/* macOS, Aqua, Liquid Glass: three traffic lights on the left, Close first; their glyphs show while the pointer is over the group */
+[data-ui="macos"] { --wf-order: -1; }
+[data-ui="macos"] .bt-wf { padding-left: 0.75rem; }
+[data-ui="macos"] .bt-wf-title { text-align: center; margin-right: 3.6rem; }
+/* the dialogs of these styles paint yellow and green dots into their title bars (--tb-bg), because there the real buttons are drawn on top; the window frame has real buttons of its own, so it takes only the bar's colour */
+[data-ui="macos"] .bt-wf { background: color-mix(in srgb, hsl(var(--fg)) 3%, hsl(var(--surface))); }
+[data-ui="macos"] .bt-wf-btns { gap: 8px; }
+[data-ui="macos"] .bt-wf-close { order: -1; }
+[data-ui="macos"] .bt-wf-btn { --wf-r: 9999px; position: relative; width: 12px; height: 12px; padding: 0; color: transparent; --wf-glyph: #995700; --wf-border: 0.5px solid #e1a73e; --wf-bg: #febc2e; --wf-hover: #febc2e; --wf-active: #c49a22; }
+[data-ui="macos"] .bt-wf-btn[aria-label="Maximise"], [data-ui="macos"] .bt-wf-btn[aria-label="Restore"] { --wf-glyph: #006500; --wf-border: 0.5px solid #2dac2f; --wf-bg: #28c840; --wf-hover: #28c840; --wf-active: #1f9a30; }
+[data-ui="macos"] .bt-wf-close { --wf-glyph: #4d0000; --wf-border: 0.5px solid #e2463f; --wf-bg: #ff5f57; --wf-close-hover: #ff5f57; --wf-close-active: #bf4943; }
+/* Sequoia draws its own glyphs, shown while the pointer is over the group of three: x, minus, and for the green one two arrowheads (full screen) */
+[data-ui="macos"] .bt-wf-btn svg { display: none; }
+[data-ui="macos"] .bt-wf-btn::after { content: ""; position: absolute; inset: 0; margin: auto; width: 8px; height: 8px; background: var(--wf-glyph); opacity: 0; transition: opacity 0.08s; -webkit-mask: var(--glyph) center / contain no-repeat; mask: var(--glyph) center / contain no-repeat; }
+[data-ui="macos"] .bt-wf-btns:hover .bt-wf-btn::after, [data-ui="macos"] .bt-wf-btns:focus-within .bt-wf-btn::after { opacity: 0.85; }
+[data-ui="macos"] .bt-wf-btn { --glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M1 4h6' stroke='%23000' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E"); }
+[data-ui="macos"] .bt-wf-close { --glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M1.3 1.3l5.4 5.4M6.7 1.3L1.3 6.7' stroke='%23000' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E"); }
+[data-ui="macos"] .bt-wf-btn[aria-label="Maximise"] { --glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M.8 .8h3.6L.8 4.4zM7.2 7.2H3.6l3.6-3.6z'/%3E%3C/svg%3E"); }
+[data-ui="macos"] .bt-wf-btn[aria-label="Restore"] { --glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M1 4.2h2.8V1.4zM7 3.8H4.2v2.8z'/%3E%3C/svg%3E"); }
+/* ================== macOS ================== */
+[data-ui="macos"] {
+  --chk-size: 1rem; --chk-r: 4px; --chk-border: 0.5px solid color-mix(in srgb, hsl(var(--fg)) 32%, transparent); --chk-bg: hsl(var(--surface)); --chk-shadow: 0 0.5px 1px rgb(0 0 0 / 0.2); --chk-on-bg: linear-gradient(to bottom, color-mix(in srgb, hsl(var(--accent)) 82%, white), hsl(var(--accent))); --chk-on-border: color-mix(in srgb, hsl(var(--accent)) 70%, black); --chk-focus: 0 0 0 3.5px color-mix(in srgb, hsl(var(--accent)) 40%, transparent);
+  --radius: 10px; --ctl-r: 6px; --card-r: 12px; --win-r: 12px; --menu-r: 10px; --nav-r: 6px;
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", "Inter", system-ui, sans-serif;
+  --dur: 180ms; --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --btn-bg: color-mix(in srgb, hsl(var(--surface)) 94%, white); --btn-border: 0.5px solid color-mix(in srgb, hsl(var(--fg)) 14%, transparent); --btn-shadow: 0 0.5px 1px rgb(0 0 0 / 0.18);
+  --btn-hover-bg: color-mix(in srgb, hsl(var(--fg)) 5%, hsl(var(--surface))); --btn-hover-border: color-mix(in srgb, hsl(var(--fg)) 14%, transparent);
+  --btn-accent-bg: linear-gradient(to bottom, color-mix(in srgb, hsl(var(--accent)) 82%, white), hsl(var(--accent))); --btn-accent-border: 0.5px solid color-mix(in srgb, hsl(var(--accent)) 70%, black); --btn-accent-shadow: 0 0.5px 1px rgb(0 0 0 / 0.18);
+  --ghost-hover-bg: color-mix(in srgb, hsl(var(--fg)) 7%, transparent);
+  --in-bg: hsl(var(--surface)); --in-border: 0.5px solid color-mix(in srgb, hsl(var(--fg)) 16%, transparent); --in-shadow: 0 0.5px 1px rgb(0 0 0 / 0.08);
+  --in-hover-border: color-mix(in srgb, hsl(var(--fg)) 25%, transparent); --in-focus-border: hsl(var(--accent)); --in-focus-shadow: 0 0 0 3.5px color-mix(in srgb, hsl(var(--accent)) 40%, transparent);
+  --card-border: 0.5px solid color-mix(in srgb, hsl(var(--fg)) 12%, transparent); --card-shadow: 0 1px 3px rgb(0 0 0 / 0.08);
+  --win-border: 0.5px solid color-mix(in srgb, hsl(var(--fg)) 22%, transparent); --win-shadow: 0 22px 60px rgb(0 0 0 / 0.4), 0 0 0 0.5px rgb(0 0 0 / 0.3); --dialog-anim: bt-pop-spring 320ms cubic-bezier(0.2, 0.9, 0.3, 1);
+  --tb-bg: radial-gradient(circle 6px at 40px 50%, #febc2e 96%, transparent) no-repeat, radial-gradient(circle 6px at 60px 50%, #28c840 96%, transparent) no-repeat, color-mix(in srgb, hsl(var(--fg)) 3%, hsl(var(--surface)));
+  --tb-border: 0.5px solid color-mix(in srgb, hsl(var(--fg)) 14%, transparent); --tb-pad: 0.8rem 1rem 0.7rem 5rem; --tb-size: 0.9rem; --tb-weight: 600;
+  --tb-justify: flex-start; --close-margin: 0; --close-size: 13px; --close-pad: 0; --close-bg: #ff5f57; --close-fg: transparent; --close-hover-bg: #ff5f57; --close-hover-fg: rgb(0 0 0 / 0.65); --close-r: 9999px;
+  --close-border: 0.5px solid rgb(0 0 0 / 0.2);
+  --bar-border: 0.5px solid color-mix(in srgb, hsl(var(--fg)) 14%, transparent);
+  --menu-bg: color-mix(in srgb, hsl(var(--surface)) 92%, transparent); --menu-border: 0.5px solid color-mix(in srgb, hsl(var(--fg)) 16%, transparent); --pop-shadow: 0 10px 30px rgb(0 0 0 / 0.28); --menu-anim: bt-fade 130ms ease-out;
+  --menu-hi-bg: hsl(var(--accent)); --menu-hi-fg: hsl(var(--accent-fg));
+  --top-bg: hsl(var(--bg) / 0.72);
+  --nav-hover-bg: color-mix(in srgb, hsl(var(--fg)) 6%, transparent); --nav-active-bg: color-mix(in srgb, hsl(var(--accent)) 22%, transparent); --nav-active-fg: hsl(var(--fg));
+  --row-hover: color-mix(in srgb, hsl(var(--accent)) 12%, transparent);
+  --rng-appearance: none; --rng-h: 0.25rem; --rng-track: color-mix(in srgb, hsl(var(--fg)) 18%, transparent);
+  --rng-tw: 1.1rem; --rng-th: 1.1rem; --rng-thumb: #fff; --rng-tb: 0.5px solid rgb(0 0 0 / 0.2); --rng-ts: 0 1px 3px rgb(0 0 0 / 0.35);
+}
+[data-ui="macos"] .bt-top { backdrop-filter: saturate(180%) blur(20px); }
+[data-ui="macos"] .bt-titlebar svg { display: none; }
+[data-ui="macos"] { --player-in: bt-slide-in 380ms cubic-bezier(0.2, 0.9, 0.3, 1) both; --player-out: bt-slide-out 240ms ease-in both; --player-ms: 240ms; --pop-out: bt-fade-out 160ms ease-in both; --pop-ms: 160ms; }
+[data-ui="macos"] { --page-in: bt-fade 220ms ease-out backwards; }
+/* ================== macOS, refined: Big Sur to Sequoia (2020-24) ==================
+ * Flat. The glossy gradients of the Mojave era live in "Aqua" now. 10 px windows and cards, 6 px controls, a flat blue
+ * default button, a translucent sidebar and toolbar, and dialogs that drop in like sheets. */
+[data-ui="macos"] {
+  --radius: 10px; --ctl-r: 6px; --card-r: 10px; --win-r: 10px; --menu-r: 8px; --nav-r: 6px;
+  --btn-accent-bg: hsl(var(--accent)); --btn-accent-border: 0.5px solid color-mix(in srgb, hsl(var(--accent)) 75%, black); --btn-accent-shadow: 0 0.5px 1px rgb(0 0 0 / 0.2);
+  --btn-accent-hover-bg: color-mix(in srgb, hsl(var(--accent)) 92%, white);
+  --btn-bg: color-mix(in srgb, hsl(var(--fg)) 4%, hsl(var(--surface))); --btn-active-transform: none;
+  --side-bg: color-mix(in srgb, hsl(var(--surface)) 55%, transparent); --top-bg: color-mix(in srgb, hsl(var(--bg)) 70%, transparent);
+  --nav-active-bg: color-mix(in srgb, hsl(var(--fg)) 11%, transparent); --nav-active-fg: hsl(var(--fg)); --nav-hover-bg: color-mix(in srgb, hsl(var(--fg)) 5%, transparent);
+  --menu-bg: color-mix(in srgb, hsl(var(--surface)) 80%, transparent); --menu-hi-bg: hsl(var(--accent)); --menu-hi-fg: hsl(var(--accent-fg));
+  --dialog-anim: bt-sheet 300ms cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+[data-ui="macos"] .bt-side { -webkit-backdrop-filter: saturate(180%) blur(30px); backdrop-filter: saturate(180%) blur(30px); }
+[data-ui="macos"] .bt-menu { padding: 5px; -webkit-backdrop-filter: saturate(180%) blur(24px); backdrop-filter: saturate(180%) blur(24px); }
+[data-ui="macos"] .bt-menu [role="menuitem"], [data-ui="macos"] .bt-menu [role="option"] { border-radius: 5px; }
+[data-ui="macos"] .btn:focus-visible, [data-ui="macos"] .input:focus { outline: none; box-shadow: 0 0 0 3.5px color-mix(in srgb, hsl(var(--accent)) 45%, transparent); }
+@keyframes bt-pop-spring { 0% { opacity: 0; transform: scale(0.88); } 60% { opacity: 1; transform: scale(1.015); } 100% { opacity: 1; transform: none; } }

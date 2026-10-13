@@ -1,0 +1,41 @@
+{
+  "id": "toolbar",
+  "label": "Standard v1",
+  "style": {
+    "description": "The first version's look: bordered cover tiles, uppercase black headings, a wordmark and a three-column player. Pairs with the Standard v1 colours; its toolbar arrangement is the Standard v1 layout, which any look can use.",
+    "font": "system-ui",
+    "matching": {
+      "light": "zinc",
+      "dark": "zinc"
+    },
+    "order": 110
+  },
+  "palettes": [
+    {
+      "id": "zinc",
+      "label": "Standard v1",
+      "mode": "dark",
+      "bg": "#09090b",
+      "primary": "#2563eb",
+      "onPrimary": "0 0% 100%",
+      "fg": "#fafafa",
+      "mutedFg": "#71717a",
+      "motif": "grid",
+      "overrides": {
+        "card": "#101012",
+        "secondary": "#18181b",
+        "muted": "#18181b",
+        "accent": "#27272a",
+        "border": "#27272a",
+        "input": "#27272a"
+      },
+      "vars": {
+        "positive": "#10b981",
+        "negative": "#ef4444"
+      },
+      "group": "platform",
+      "order": 500,
+      "source": "The first version of the app: Tailwind zinc on near-black (zinc-950 page, zinc-900 fields, zinc-800 borders, zinc-500 captions), blue-600 buttons"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "name": "turbothemes",
+  "version": "1.0.0",
+  "description": "A theming engine that rarely changes, and a folder of themes that can be updated without touching the app that uses them.",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/engine.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "default": "./dist/engine.js"
+    },
+    "./base.css": "./dist/base.css",
+    "./themes.css": "./dist/themes.css",
+    "./themes.json": "./dist/themes.json",
+    "./manifest.json": "./dist/manifest.json",
+    "./tailwind": {
+      "types": "./dist/types/tailwind.d.ts",
+      "default": "./dist/tailwind.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "turbothemes": "./bin/turbothemes.mjs"
+  },
+  "files": [
+    "dist",
+    "bin",
+    "README.md",
+    "LICENSE",
+    "docs"
+  ],
+  "scripts": {
+    "build": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/build.mjs",
+    "check": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/build.mjs --check",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "dev": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/dev.mjs",
+    "fmt": "node scripts/fmt.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "esbuild": "^0.25.0",
+    "happy-dom": "^21.0.1",
+    "postcss": "^8.4.49",
+    "typescript": "^5.7.2",
+    "vitest": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=22.6"
+  }
+}

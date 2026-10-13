@@ -1,0 +1,79 @@
+{
+  "id": "lgux",
+  "label": "LG Optimus: Marshmallow theme",
+  "style": {
+    "description": "The pink Marshmallow home-screen theme of LG Optimus UI 3.0 (2012-13), redone from its screenshot: flat pastel pink, thin rose frames, translucent white panels, a dark status bar and a rose page indicator.",
+    "font": "Nunito",
+    "matching": {
+      "light": "lg-marshmallow",
+      "dark": "lg-marshmallow-dark"
+    },
+    "fonts": [
+      {
+        "package": "nunito",
+        "weights": [400, 600, 800]
+      },
+      {
+        "package": "fredoka",
+        "weights": [500, 600]
+      }
+    ],
+    "effects": [
+      "ripple"
+    ],
+    "order": 150
+  },
+  "palettes": [
+    {
+      "id": "lg-marshmallow",
+      "label": "Marshmallow",
+      "mode": "light",
+      "bg": "#f1e5df",
+      "primary": "#0b8fc0",
+      "onPrimary": "0 0% 100%",
+      "fg": "#4f3a3f",
+      "mutedFg": "#917178",
+      "motif": "hills",
+      "overrides": {
+        "card": "#fbf4f2",
+        "secondary": "#f4dcdd",
+        "muted": "#efdcd8",
+        "accent": "#0b8fc0",
+        "border": "#e3b3b9",
+        "input": "#d99aa5"
+      },
+      "group": "platform",
+      "order": 440,
+      "wallpaper": {
+        "bg": [340, 75, 91],
+        "primary": [338, 78, 62]
+      },
+      "source": "LG Optimus \"Marshmallow\" theme: pastel pink, cream and rose, read off a screenshot of its home screen (LG published no palette)"
+    },
+    {
+      "id": "lg-marshmallow-dark",
+      "label": "Marshmallow Night",
+      "mode": "dark",
+      "bg": "#2b1224",
+      "primary": "#33b5e5",
+      "onPrimary": "0 0% 6%",
+      "fg": "#ffe9f3",
+      "mutedFg": "#d79ab8",
+      "motif": "dots",
+      "overrides": {
+        "card": "#3b1b31",
+        "secondary": "#4a2540",
+        "muted": "#40213a",
+        "accent": "#33b5e5",
+        "border": "#5a2a49",
+        "input": "#b45c8c"
+      },
+      "group": "platform",
+      "order": 450,
+      "wallpaper": {
+        "bg": [326, 52, 14],
+        "primary": [326, 72, 54]
+      }
+    }
+  ]
+}

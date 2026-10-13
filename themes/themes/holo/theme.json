@@ -1,0 +1,64 @@
+{
+  "id": "holo",
+  "label": "Android Holo (4.x, 2011-13)",
+  "style": {
+    "description": "Ice Cream Sandwich to KitKat: black and cyan, square flat controls, an action bar with a blue rule, underlined tabs and fields, blue-titled dialogs in Roboto.",
+    "font": "Roboto",
+    "matching": {
+      "light": "holo-light",
+      "dark": "holo-dark"
+    },
+    "fonts": [
+      {
+        "package": "roboto",
+        "weights": [400, 500, 700]
+      }
+    ],
+    "order": 130
+  },
+  "palettes": [
+    {
+      "id": "holo-dark",
+      "label": "Android Holo Dark",
+      "mode": "dark",
+      "bg": "#000000",
+      "primary": "#33b5e5",
+      "onPrimary": "0 0% 0%",
+      "fg": "#ffffff",
+      "mutedFg": "#a6a6a6",
+      "motif": "grid",
+      "overrides": {
+        "card": "#121212",
+        "secondary": "#2a2a2a",
+        "muted": "#222222",
+        "accent": "#1f3b47",
+        "border": "#2e2e2e",
+        "input": "#4d4d4d"
+      },
+      "group": "platform",
+      "order": 350,
+      "source": "Holo: the Android 4 palette. Blue #33b5e5 / #0099cc, black \"background_dark\", greys #1a1a1a / #333"
+    },
+    {
+      "id": "holo-light",
+      "label": "Android Holo Light",
+      "mode": "light",
+      "bg": "#ffffff",
+      "primary": "#0099cc",
+      "onPrimary": "0 0% 100%",
+      "fg": "#333333",
+      "mutedFg": "#737373",
+      "motif": "grid",
+      "overrides": {
+        "card": "#f3f3f3",
+        "secondary": "#e5e5e5",
+        "muted": "#ececec",
+        "accent": "#cfeaf5",
+        "border": "#d0d0d0",
+        "input": "#a8a8a8"
+      },
+      "group": "platform",
+      "order": 360
+    }
+  ]
+}

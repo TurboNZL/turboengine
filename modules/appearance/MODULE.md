@@ -1,11 +1,14 @@
-# Appearance: turbothemes glue, layouts and the picker
+# Appearance: themes, layouts and the picker
 
 How an app starts the turbothemes engine, owns its layouts, shows the picker (colour theme, UI style, layout, wallpaper) and the theme-update card.
 
 Recommended for every app. Reference files are in `files/` (the paths are the paths in the app); they were taken from Curator at `b6d85a8`, where they are known to work.
 
+## Themes live in this repo
+The theme package is `themes/` of this repository (name `turbothemes`; the old separate repository is retired). It has its own `CLAUDE.md`, docs (`themes/docs/`: CONTRACT, AUTHORING, INTEGRATION, PICKER ...), tests and a committed `dist/` that CI rebuilds. Apps get it two ways: **build time** as a pnpm git dependency on a subfolder, and **run time** as theme updates the app downloads from `themes/dist` on `main` (so a theme fix never needs an app release).
+
 ## Integration
-1. `"turbothemes": "github:TurboNZL/turbothemes"` in the web app; `presets: [turbothemes]` in `tailwind.config.ts`; `@import 'turbothemes/base.css'` **first** in `index.css` so Tailwind utilities still beat the generic component rules.
+1. `"turbothemes": "github:TurboNZL/turboengine#path:/themes"` in the web app (pnpm; npm cannot install a repository subfolder). Under CI keep it resolvable by the lockfile (`git+https://github.com/TurboNZL/turboengine.git#path:/themes` is the form CI can clone); `presets: [turbothemes]` in `tailwind.config.ts`; `@import 'turbothemes/base.css'` **first** in `index.css` so Tailwind utilities still beat the generic component rules.
 2. `appearance.ts` starts the engine once (`storagePrefix`, bundled `fonts`, `lens` off where refraction is unsafe, `host.desktopEnv`, `autoUpdate`, GitHub token source) and applies the device settings; it injects `layouts.css` after the themes' stylesheet.
 3. The app marks its markup with the hook classes the themes style: `.btn .input .card .chip .bt-window .bt-menu .bt-side .bt-top .bt-player .bt-nav .bt-tab .bt-tabbar .bt-row .bt-tile .bt-cap ...` (see `Layout.tsx`). Layouts are the **app's** (where pages are listed), not the themes'.
 4. Device settings: `theme`, `ui`, `layout`, `glass`, `wallpaper*`, `themeUpdates`, `themesToken`. `'auto'` for theme/ui = match this device.
@@ -28,3 +31,6 @@ Recommended for every app. Reference files are in `files/` (the paths are the pa
 - `apps/web/src/index.css`
 - `apps/web/src/fonts.css`
 - `docs/development/APPEARANCE.md`
+
+## Opting out of themes
+Themes are the default, not an obligation. To skip them: keep `import 'turbothemes/base.css'` and the tailwind preset (they give every hook class a sensible default look, no engine needed), use `files-lite/apps/web/src/lib/appearance.ts` instead of the full one, and leave out `AppearanceCard`, `ThemeUpdates`, `layouts.css` and the Appearance tab. Set `"themes": "off"` in `.turboengine.json`. Nothing else in the other modules depends on the theme engine.

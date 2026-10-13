@@ -1,0 +1,40 @@
+[data-ui="holo"] .bt-wf-close:is(:hover, :focus-visible) { background: color-mix(in srgb, currentColor 22%, transparent); color: inherit; }
+[data-ui="holo"] .bt-wf-btn { --wf-r: 9999px; width: 1.7rem; height: 1.7rem; }
+[data-ui="holo"] { --page-in: bt-fade 120ms linear backwards; }
+/* ================== Android Holo (4.0 to 4.4) ==================
+ * Holo is flat and sharp: black (or white) surfaces, 2 px corners, a cyan #33b5e5 / #0099cc accent, an action bar with a
+ * 2 px blue rule, tabs and text fields that are underlined rather than boxed, and dialogs whose title and divider are blue.
+ * (Android's design guide names blue as the standard accent, with #33b5e5 and its darker complement #0099cc.) */
+[data-ui="holo"] {
+  --radius: 2px; --ctl-r: 2px; --card-r: 2px; --win-r: 2px; --menu-r: 2px; --nav-r: 0; --chip-r: 2px; --in-r: 0;
+  --font: Roboto, "Noto Sans", "Droid Sans", "Segoe UI", system-ui, sans-serif; --title-font: var(--font);
+  --dur: 150ms; --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --btn-bg: color-mix(in srgb, hsl(var(--fg)) 14%, hsl(var(--surface))); --btn-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 14%, transparent); --btn-weight: 400;
+  --btn-hover-bg: color-mix(in srgb, hsl(var(--fg)) 20%, hsl(var(--surface))); --btn-hover-border: color-mix(in srgb, hsl(var(--fg)) 14%, transparent);
+  --btn-accent-bg: color-mix(in srgb, hsl(var(--fg)) 14%, hsl(var(--surface))); --btn-accent-fg: hsl(var(--fg)); --btn-accent-border: 1px solid hsl(var(--accent)); --btn-accent-border-color: hsl(var(--accent));
+  --btn-accent-hover-bg: color-mix(in srgb, hsl(var(--accent)) 25%, hsl(var(--surface)));
+  --ghost-hover-bg: color-mix(in srgb, hsl(var(--fg)) 12%, transparent);
+  --in-bg: transparent; --in-border: 0 solid transparent; --in-shadow: inset 0 -1px 0 color-mix(in srgb, hsl(var(--fg)) 45%, transparent);
+  --in-hover-border: transparent; --in-focus-border: transparent; --in-focus-shadow: inset 0 -2px 0 hsl(var(--accent)), 0 1px 0 hsl(var(--accent) / 0.5);
+  --in-px: 0.25rem;
+  --card-bg: hsl(var(--surface)); --card-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 12%, transparent);
+  --backdrop: rgb(0 0 0 / 0.6);
+  --win-bg: hsl(var(--surface)); --win-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 14%, transparent); --win-shadow: 0 6px 24px rgb(0 0 0 / 0.6); --dialog-anim: bt-pop 160ms cubic-bezier(0.4, 0, 0.2, 1);
+  --tb-bg: transparent; --tb-fg: hsl(var(--accent)); --tb-border: 2px solid hsl(var(--accent)); --tb-pad: 0.9rem 1.1rem 0.45rem; --tb-size: 1.35rem; --tb-weight: 300; --tb-justify: flex-start;
+  --close-fg: hsl(var(--muted)); --close-hover-bg: color-mix(in srgb, hsl(var(--fg)) 12%, transparent); --close-r: 2px; --close-margin: 0 0 0 auto;
+  --bar-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 10%, transparent);
+  --menu-bg: hsl(var(--surface)); --menu-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 16%, transparent); --pop-shadow: 0 4px 12px rgb(0 0 0 / 0.55); --menu-anim: bt-fade 120ms linear;
+  --menu-hi-bg: color-mix(in srgb, hsl(var(--accent)) 35%, transparent); --menu-hi-fg: inherit;
+  --side-bg: hsl(var(--bg)); --top-bg: hsl(var(--surface)); --top-shadow: inset 0 -2px 0 hsl(var(--accent)); --player-bg: hsl(var(--surface)); --player-shadow: inset 0 2px 0 hsl(var(--accent));
+  --nav-hover-bg: color-mix(in srgb, hsl(var(--fg)) 8%, transparent); --nav-active-bg: color-mix(in srgb, hsl(var(--accent)) 14%, transparent); --nav-active-fg: hsl(var(--accent)); --nav-active-shadow: inset 3px 0 0 hsl(var(--accent));
+  --row-hover: color-mix(in srgb, hsl(var(--accent)) 16%, transparent); --row-current: color-mix(in srgb, hsl(var(--accent)) 24%, transparent);
+  --panel-tb-fg: hsl(var(--accent)); --panel-tb-margin: 0 0 0.5rem; --panel-tb-pad: 0 0 0.4rem; --panel-tb-bg: transparent;
+  --chk-size: 1.2rem; --chk-r: 2px; --chk-border: 2px solid color-mix(in srgb, hsl(var(--fg)) 55%, transparent); --chk-bg: transparent; --chk-hover-border: hsl(var(--accent));
+  --chk-on-bg: transparent; --chk-on-border: hsl(var(--accent)); --chk-on-fg: hsl(var(--accent)); --chk-radio-on-bg: transparent; --chk-dot: hsl(var(--accent)); --chk-focus: 0 0 0 3px hsl(var(--accent) / 0.3);
+  --rng-appearance: none; --rng-h: 2px; --rng-r: 0; --rng-track: color-mix(in srgb, hsl(var(--fg)) 28%, transparent); --rng-fill: hsl(var(--accent));
+  --rng-tw: 0.9rem; --rng-th: 0.9rem; --rng-tr: 9999px; --rng-thumb: hsl(var(--accent)); --rng-ts: 0 0 0 6px hsl(var(--accent) / 0.25);
+}
+[data-ui="holo"] .btn:active:not(:disabled) { background: hsl(var(--accent)); color: hsl(var(--accent-fg)); }
+[data-ui="holo"] .bt-titlebar svg { display: none; }
+[data-ui="holo"] .bt-tab[aria-current="page"] { box-shadow: inset 0 -3px 0 hsl(var(--accent)); }
+[data-ui="holo"] .bt-top .input { box-shadow: inset 0 -1px 0 color-mix(in srgb, hsl(var(--fg)) 45%, transparent); }

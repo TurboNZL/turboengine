@@ -1,0 +1,47 @@
+{
+  "id": "persona",
+  "label": "Persona 5",
+  "style": {
+    "description": "Black, red and white with hard offset shadows, italic capitals, solid red selection and white edges.",
+    "font": "Anton",
+    "matching": {
+      "light": "persona",
+      "dark": "persona"
+    },
+    "fonts": [
+      {
+        "package": "anton",
+        "weights": [400]
+      },
+      {
+        "package": "barlow-condensed",
+        "weights": [400, 600, 700, 800, 900],
+        "italic": [700, 800, 900]
+      }
+    ],
+    "order": 210
+  },
+  "palettes": [
+    {
+      "id": "persona",
+      "label": "Persona Red",
+      "mode": "dark",
+      "bg": "#0b0b0c",
+      "primary": "#e60012",
+      "onPrimary": "0 0% 100%",
+      "fg": "#ffffff",
+      "mutedFg": "#b9b9be",
+      "motif": "rays",
+      "overrides": {
+        "card": "#131315",
+        "secondary": "#1d1d20",
+        "muted": "#1d1d20",
+        "accent": "#4a0a10",
+        "border": "#3a3a3e",
+        "input": "#1d1d20"
+      },
+      "group": "inspired",
+      "order": 390
+    }
+  ]
+}

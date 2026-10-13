@@ -1,0 +1,44 @@
+{
+  "id": "fortnite4",
+  "label": "Fortnite Chapter 4 Rift UI (2023)",
+  "style": {
+    "description": "The lobby redesign: rounded shapes on purple, options down the left side, in Heading Now.",
+    "font": "Heading Now",
+    "matching": {
+      "light": "fortnite-4",
+      "dark": "fortnite-4"
+    },
+    "fonts": [
+      {
+        "package": "archivo",
+        "weights": [400, 600, 700, 800, 900],
+        "italic": [700, 800]
+      }
+    ],
+    "order": 180
+  },
+  "palettes": [
+    {
+      "id": "fortnite-4",
+      "label": "Fortnite Ch 4",
+      "mode": "dark",
+      "bg": "#0b3bb0",
+      "primary": "#ffe500",
+      "onPrimary": "0 0% 0%",
+      "fg": "0 0% 100%",
+      "mutedFg": "#b6c7f2",
+      "motif": "stars",
+      "overrides": {
+        "card": "#0a2f94",
+        "secondary": "#3a4254",
+        "muted": "#2a3350",
+        "accent": "#ffffff",
+        "border": "#5a78d8",
+        "input": "#161d3e"
+      },
+      "group": "platform",
+      "order": 480,
+      "source": "Ch 4: blue again (not purple) with charcoal buttons, white outlines and a white selected row"
+    }
+  ]
+}

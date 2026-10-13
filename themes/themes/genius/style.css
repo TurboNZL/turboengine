@@ -1,0 +1,34 @@
+/* ================== Genius ==================
+ * Genius's site: white pages, black type, the yellow highlighter for what is selected or hovered, flat square controls with black outlines. */
+[data-ui="genius"] {
+  --radius: 2px; --ctl-r: 2px; --card-r: 2px; --win-r: 2px; --menu-r: 2px; --nav-r: 2px; --chip-r: 2px; --in-r: 2px;
+  --font: "Programme", "Helvetica Neue", Helvetica, Arial, sans-serif; --title-font: var(--font);
+  --dur: 120ms; --ease: ease-out;
+  --btn-bg: transparent; --btn-fg: hsl(var(--fg)); --btn-weight: 700; --btn-border: 1px solid hsl(var(--fg)); --btn-shadow: none;
+  --btn-hover-bg: #ffff64; --btn-hover-border: hsl(var(--fg)); --btn-active-transform: none;
+  --btn-accent-bg: #ffff64; --btn-accent-fg: #000; --btn-accent-border: 1px solid #000; --btn-accent-hover-bg: #fff; --btn-accent-hover-fg: #000;
+  --ghost-hover-bg: #ffff64;
+  --in-bg: hsl(var(--bg)); --in-border: 1px solid hsl(var(--fg)); --in-hover-border: hsl(var(--fg)); --in-focus-border: hsl(var(--fg)); --in-focus-shadow: 0 0 0 3px #ffff64;
+  --card-bg: hsl(var(--surface)); --card-border: 1px solid hsl(var(--line)); --card-shadow: none;
+  --backdrop: rgb(0 0 0 / 0.55);
+  --win-bg: hsl(var(--bg)); --win-border: 2px solid hsl(var(--fg)); --win-shadow: 6px 6px 0 rgb(0 0 0 / 0.85); --dialog-anim: bt-fade 120ms ease-out;
+  --tb-bg: #ffff64; --tb-border: 0 solid transparent; --tb-pad: 0.9rem 1.25rem; --tb-size: 1.1rem; --tb-weight: 800; --tb-justify: space-between;
+  --close-r: 2px; --close-hover-bg: #000;
+  --bar-border: 1px solid hsl(var(--line));
+  --menu-bg: hsl(var(--bg)); --menu-border: 1px solid hsl(var(--fg)); --pop-shadow: 4px 4px 0 rgb(0 0 0 / 0.85); --menu-anim: bt-fade 100ms ease-out; --menu-hi-bg: #ffff64; --menu-hi-fg: #000;
+  --side-bg: hsl(var(--bg)); --side-shadow: none; --top-bg: hsl(var(--bg)); --top-shadow: none; --player-bg: hsl(var(--bg)); --player-shadow: none;
+  --nav-hover-bg: #ffff64; --nav-active-bg: #ffff64; --nav-active-fg: #000;
+  --row-hover: color-mix(in srgb, #ffff64 40%, transparent); --row-current: #ffff64;
+  --chk-size: 1.1rem; --chk-r: 2px; --chk-border: 2px solid hsl(var(--fg)); --chk-bg: transparent; --chk-hover-border: hsl(var(--fg)); --chk-focus: 0 0 0 3px #ffff64;
+  --chk-on-bg: #ffff64; --chk-on-border: hsl(var(--fg)); --chk-on-fg: #000; --chk-radio-on-bg: #ffff64; --chk-dot: #000;
+  --rng-appearance: none; --rng-h: 4px; --rng-r: 0; --rng-border: 0 solid transparent; --rng-track: color-mix(in srgb, hsl(var(--fg)) 25%, transparent); --rng-fill: hsl(var(--fg));
+  --rng-tw: 12px; --rng-th: 12px; --rng-tr: 0; --rng-thumb: #ffff64; --rng-tb: 2px solid hsl(var(--fg)); --rng-ts: none;
+}
+[data-ui="genius"] .btn:is(:hover, :focus-visible):not(.btn-accent):not(.btn-ghost) { color: #000; }
+[data-ui="genius"] main h1 { font-weight: 800; font-size: 2.1rem; letter-spacing: -0.01em; }
+[data-ui="genius"] .bt-nav { font-weight: 700; }
+[data-ui="genius"] .bt-nav:hover, [data-ui="genius"] .bt-nav[aria-current="page"] { color: #000; }
+[data-ui="genius"] .bt-brand { font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; }
+[data-ui="genius"] .chip { background: transparent; border: 1px solid hsl(var(--fg)); font-weight: 600; }
+[data-ui="genius"] .bt-cover, [data-ui="genius"] .bt-cover[data-kind="artist"] { border-radius: 2px; }
+[data-ui="genius"] .bt-tile:hover .bt-cap-t { background: #ffff64; color: #000; }

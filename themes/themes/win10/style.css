@@ -1,0 +1,29 @@
+/* Windows 10 and 11: full-height rectangles; Close is the system red */
+[data-ui="win10"] .bt-wf { padding-right: 0; }
+[data-ui="win10"] .bt-wf-btns { gap: 0; align-self: stretch; }
+[data-ui="win10"] .bt-wf-btn { --wf-r: 0; width: 2.9rem; height: auto; align-self: stretch; }
+[data-ui="win10"] { --wf-close-hover: #e81123; }
+/* ================== Windows 10 ================== */
+[data-ui="win10"] {
+  --chk-size: 1.05rem; --chk-r: 0; --chk-border: 2px solid hsl(var(--fg)); --chk-bg: transparent; --chk-hover-border: hsl(var(--accent));
+  --radius: 0px; --ctl-r: 0; --card-r: 0; --win-r: 0; --menu-r: 0; --nav-r: 0; --chip-r: 0;
+  --font: "Segoe UI", "Open Sans", system-ui, sans-serif;
+  --dur: 100ms; --ease: linear;
+  --btn-bg: color-mix(in srgb, hsl(var(--fg)) 12%, hsl(var(--surface))); --btn-border: 2px solid transparent;
+  --btn-hover-bg: color-mix(in srgb, hsl(var(--fg)) 16%, hsl(var(--surface))); --btn-hover-border: color-mix(in srgb, hsl(var(--fg)) 40%, transparent);
+  --btn-accent-border: 2px solid transparent; --btn-accent-border-color: transparent;
+  --ghost-hover-bg: color-mix(in srgb, hsl(var(--fg)) 14%, transparent);
+  --in-bg: hsl(var(--surface)); --in-border: 2px solid color-mix(in srgb, hsl(var(--fg)) 35%, transparent); --in-hover-border: color-mix(in srgb, hsl(var(--fg)) 60%, transparent); --in-focus-border: hsl(var(--accent));
+  --card-border: 2px solid color-mix(in srgb, hsl(var(--fg)) 12%, transparent);
+  --win-border: 1px solid hsl(var(--accent)); --win-shadow: 0 8px 24px rgb(0 0 0 / 0.4); --dialog-anim: bt-pop 180ms cubic-bezier(0.1, 0.9, 0.2, 1);
+  --tb-border: 0 solid transparent; --tb-weight: 400; --tb-size: 1.3rem;
+  --close-r: 0; --close-hover-bg: #e81123; --close-hover-fg: #fff;
+  --menu-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 25%, transparent); --pop-shadow: 0 4px 10px rgb(0 0 0 / 0.4); --menu-anim: bt-reveal 150ms cubic-bezier(0.1, 0.9, 0.2, 1);
+  --menu-hi-bg: color-mix(in srgb, hsl(var(--fg)) 14%, transparent);
+  --nav-hover-bg: color-mix(in srgb, hsl(var(--fg)) 10%, transparent); --nav-active-bg: color-mix(in srgb, hsl(var(--fg)) 14%, transparent); --nav-active-shadow: inset 4px 0 0 hsl(var(--accent));
+  --row-hover: color-mix(in srgb, hsl(var(--fg)) 10%, transparent);
+  --rng-appearance: none; --rng-h: 0.25rem; --rng-r: 0; --rng-track: color-mix(in srgb, hsl(var(--fg)) 30%, transparent);
+  --rng-tw: 0.5rem; --rng-th: 1.5rem; --rng-tr: 0; --rng-thumb: hsl(var(--accent));
+}
+[data-ui="win10"] { --player-in: bt-fade 140ms linear both; --player-out: bt-fade-out 110ms linear both; --player-ms: 110ms; --pop-out: bt-fade-out 90ms linear both; --pop-ms: 90ms; }
+[data-ui="win10"] { --page-in: bt-fade 120ms linear backwards; }

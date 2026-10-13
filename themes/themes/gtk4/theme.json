@@ -1,0 +1,56 @@
+{
+  "id": "gtk4",
+  "label": "GTK 4 (Adwaita)",
+  "style": {
+    "description": "libadwaita: a flush grey sidebar and flat header bar, 6 px grey buttons and entries, 12 px outlined cards and popovers, grey sidebar highlight, white round slider knobs, in Cantarell.",
+    "font": "Cantarell",
+    "matching": {
+      "light": "adwaita",
+      "dark": "adwaita-dark"
+    },
+    "order": 20
+  },
+  "palettes": [
+    {
+      "id": "adwaita",
+      "label": "Adwaita",
+      "mode": "light",
+      "bg": "#fafafb",
+      "primary": "#3584e4",
+      "fg": "#2e3436",
+      "mutedFg": "#5e5c64",
+      "motif": "hills",
+      "overrides": {
+        "card": "#ffffff",
+        "secondary": "#ebebed",
+        "muted": "#ebebed",
+        "accent": "#e1e1e4",
+        "border": "#d8d8dc",
+        "input": "#cfcfd4"
+      },
+      "group": "platform",
+      "order": 200
+    },
+    {
+      "id": "adwaita-dark",
+      "label": "Adwaita Dark",
+      "mode": "dark",
+      "bg": "#222226",
+      "primary": "#3584e4",
+      "onPrimary": "0 0% 100%",
+      "fg": "0 0% 100%",
+      "mutedFg": "#c0bfbc",
+      "motif": "hills",
+      "overrides": {
+        "card": "#303030",
+        "secondary": "#3a3a3a",
+        "muted": "#383838",
+        "accent": "#464646",
+        "border": "#3d3d3d",
+        "input": "#4a4a4a"
+      },
+      "group": "platform",
+      "order": 210
+    }
+  ]
+}

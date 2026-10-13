@@ -1,0 +1,63 @@
+{
+  "id": "breeze",
+  "label": "KDE Breeze",
+  "style": {
+    "description": "Plasma 6 Breeze: 5 px corners, a window-grey page with lighter panels, outlined buttons that take an accent frame on hover, solid accent selections and a light title bar in Noto Sans.",
+    "font": "Noto Sans",
+    "matching": {
+      "light": "breeze",
+      "dark": "breeze-dark"
+    },
+    "fonts": [
+      {
+        "package": "noto-sans",
+        "weights": [400, 500, 600, 700]
+      }
+    ],
+    "order": 30
+  },
+  "palettes": [
+    {
+      "id": "breeze",
+      "label": "Breeze",
+      "mode": "light",
+      "bg": "#eff0f1",
+      "primary": "#3daee9",
+      "onPrimary": "#ffffff",
+      "fg": "#31363b",
+      "mutedFg": "#6f7479",
+      "motif": "waves",
+      "overrides": {
+        "card": "#fcfcfc",
+        "secondary": "#e3e5e7",
+        "muted": "#e3e5e7",
+        "accent": "#d6e9f5",
+        "border": "#bcc0c4",
+        "input": "#bcc0c4"
+      },
+      "group": "platform",
+      "order": 220
+    },
+    {
+      "id": "breeze-dark",
+      "label": "Breeze Dark",
+      "mode": "dark",
+      "bg": "#31363b",
+      "primary": "#3daee9",
+      "onPrimary": "#1b1e20",
+      "fg": "#eff0f1",
+      "mutedFg": "#a1a9b1",
+      "motif": "waves",
+      "overrides": {
+        "card": "#232629",
+        "secondary": "#3b4045",
+        "muted": "#3b4045",
+        "accent": "#2f5e7a",
+        "border": "#4d5359",
+        "input": "#4d5359"
+      },
+      "group": "platform",
+      "order": 230
+    }
+  ]
+}

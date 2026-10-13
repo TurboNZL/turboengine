@@ -1,0 +1,43 @@
+{
+  "id": "blocky",
+  "label": "Minecraft (Bedrock)",
+  "style": {
+    "description": "The game’s dark settings screens: slate panels with black outlines, a light header bar, light grey buttons, two-part green on/off switches, green sliders and pixel type.",
+    "font": "VT323",
+    "matching": {
+      "light": "inventory",
+      "dark": "inventory"
+    },
+    "fonts": [
+      {
+        "package": "pixelify-sans",
+        "weights": [400, 500, 700]
+      }
+    ],
+    "order": 250
+  },
+  "palettes": [
+    {
+      "id": "inventory",
+      "label": "Bedrock",
+      "mode": "dark",
+      "bg": "#484a4b",
+      "primary": "#3c8527",
+      "onPrimary": "0 0% 100%",
+      "fg": "#ffffff",
+      "mutedFg": "#c1c2c5",
+      "motif": "peaks",
+      "overrides": {
+        "card": "#3d3f40",
+        "secondary": "#58585a",
+        "muted": "#3d3f40",
+        "accent": "#5a5b5c",
+        "border": "#323435",
+        "input": "#1e1e1f"
+      },
+      "group": "inspired",
+      "order": 430,
+      "source": "Minecraft Bedrock's dark settings screens (read off screenshots): slate panels, near-black outlines, grass-green switches and sliders"
+    }
+  ]
+}

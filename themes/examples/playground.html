@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>turbothemes playground</title>
+  <link rel="stylesheet" href="../dist/base.css" />
+  <style>
+    /* the only CSS this page has of its own: spacing for the demo. Colours, shapes and motion all come from the themes. */
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body { display: grid; grid-template-rows: auto 1fr; }
+    .pg-controls { display: flex; flex-wrap: wrap; gap: .75rem 1rem; align-items: end; padding: .75rem 1rem; }
+    .pg-controls label { display: grid; gap: .2rem; font-size: .75rem; color: hsl(var(--muted)); }
+    .pg-stage { display: grid; grid-template-columns: 11rem minmax(0, 1fr); min-height: 0; }
+    .pg-side { display: flex; flex-direction: column; gap: .15rem; padding: .6rem; }
+    .pg-nav { display: block; padding: .4rem .6rem; font-size: .85rem; font-weight: 500; text-decoration: none; }
+    .pg-main { padding: 1rem 1.25rem; overflow: auto; display: grid; gap: 1rem; align-content: start; }
+    .pg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr)); gap: .75rem; }
+    .pg-cover { aspect-ratio: 1; border-radius: var(--radius); }
+    .pg-row { display: flex; align-items: center; gap: .75rem; padding: .5rem .75rem; }
+    .pg-row b { flex: 1; font-size: .85rem; }
+    .pg-line { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+    .pg-window { max-width: 26rem; }
+    .pg-title { display: flex; align-items: center; justify-content: space-between; }
+    .pg-title h2 { margin: 0; }
+    .pg-body { padding: .75rem 1rem; font-size: .85rem; }
+    h1 { margin: 0; font-size: 1.1rem; }
+    .pg-status { margin-left: auto; font-size: .75rem; color: hsl(var(--muted)); }
+  </style>
+</head>
+<body>
+  <div class="pg-controls bt-top">
+    <h1>turbothemes</h1>
+    <label>Colours <select id="theme" class="input"></select></label>
+    <label>UI style <select id="ui" class="input"></select></label>
+    <label><span>Wallpaper</span><input type="checkbox" id="wallpaper" /></label>
+    <button class="btn" id="check">Check for newer themes</button>
+    <span class="pg-status" id="status"></span>
+  </div>
+  <div class="pg-stage">
+    <nav class="pg-side bt-side">
+      <a class="pg-nav bt-nav" href="#" aria-current="page">Albums</a>
+      <a class="pg-nav bt-nav" href="#">Tracks</a>
+      <a class="pg-nav bt-nav" href="#">Rank</a>
+    </nav>
+    <main class="pg-main">
+      <div class="pg-grid">
+        <div><div class="pg-cover" style="background:linear-gradient(135deg,#6d28d9,#0e7490)"></div><small>Night Drive</small></div>
+        <div><div class="pg-cover" style="background:linear-gradient(135deg,#0e7490,#b45309)"></div><small>Blue Hour</small></div>
+        <div><div class="pg-cover" style="background:linear-gradient(135deg,#b45309,#6d28d9)"></div><small>Slow Burn</small></div>
+      </div>
+      <div class="card">
+        <div class="pg-row bt-row bt-row-current"><b>Midnight City</b><span class="chip">Synth</span><span>9.4</span></div>
+        <div class="pg-row bt-row"><b>Nightcall</b><span class="chip">Synth</span><span>8.7</span></div>
+        <div class="pg-row bt-row"><b>Resonance</b><span class="chip">Ambient</span><span>8.1</span></div>
+      </div>
+      <div class="pg-line">
+        <input class="input" style="max-width:14rem" placeholder="Title" />
+        <button class="btn">Cancel</button><button class="btn btn-accent">Save</button><button class="btn btn-ghost">Ghost</button><button class="btn" disabled>Disabled</button>
+        <label class="pg-line"><input type="checkbox" checked /> Checkbox</label>
+        <label class="pg-line"><input type="radio" name="r" checked /> Radio</label>
+      </div>
+      <input type="range" class="bt-range" style="--p:62%;max-width:20rem" value="62" min="0" max="100" />
+      <div class="bt-window pg-window">
+        <div class="bt-titlebar pg-title"><h2>Edit track</h2><span class="bt-close">×</span></div>
+        <div class="bt-body pg-body">Dialogs and menus follow the style too.</div>
+      </div>
+      <div class="bt-menu" role="menu" style="width:11rem"><div role="menuitem" style="padding:.35rem .75rem">Play</div><div role="menuitem" style="padding:.35rem .75rem">Add to playlist</div></div>
+    </main>
+  </div>
+
+  <script type="module">
+    import { start, listThemes, listStyles, urlSource, githubSource } from '../dist/engine.js';
+
+    const params = new URLSearchParams(location.search);
+    // ?source=local reads the themes from ../dist through the real updater, so a rebuilt theme shows up by itself (pnpm dev)
+    const source = params.get('source') === 'local' ? urlSource(new URL('../dist', location.href).href) : githubSource();
+    const saved = JSON.parse(localStorage.getItem('turbothemes.playground') || '{}');
+    const state = { theme: 'auto', ui: 'auto', wallpaper: false, ...saved };
+    const engine = start({ appearance: state, source, autoUpdate: false, host: {} });
+
+    const fill = (el, items, value) => { el.innerHTML = ''; for (const i of items) el.add(new Option(i.label, i.id, false, i.id === value)); };
+    const refresh = () => { fill(theme, listThemes(), state.theme); fill(ui, listStyles(), state.ui); };
+    const $ = (id) => document.getElementById(id);
+    const theme = $('theme'), ui = $('ui'), wallpaper = $('wallpaper'), status = $('status');
+    wallpaper.checked = state.wallpaper;
+    refresh();
+
+    const change = () => { Object.assign(state, { theme: theme.value, ui: ui.value, wallpaper: wallpaper.checked }); localStorage.setItem('turbothemes.playground', JSON.stringify(state)); engine.apply(state); };
+    for (const el of [theme, ui, wallpaper]) el.addEventListener('change', change);
+    const check = async () => { const r = await engine.update(); status.textContent = r.message; refresh(); };
+    $('check').addEventListener('click', check);
+    if (params.get('source') === 'local') setInterval(async () => { const before = engine.version().hash; const r = await engine.update(); if (r.status === 'updated' || engine.version().hash !== before) { status.textContent = 'reloaded'; refresh(); } }, 1000);
+    const v = engine.version(); status.textContent = `${v.origin} themes ${v.hash}`;
+  </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+{
+  "id": "spotify",
+  "label": "Spotify",
+  "style": {
+    "description": "Black canvas with floating rounded dark panels, bold muted navigation, green pill buttons, tiles that lighten on hover and a white round play button.",
+    "font": "Figtree",
+    "matching": {
+      "light": "spotify",
+      "dark": "spotify"
+    },
+    "fonts": [
+      {
+        "package": "albert-sans",
+        "weights": [400, 500, 600, 700, 800]
+      }
+    ],
+    "order": 280
+  },
+  "palettes": [
+    {
+      "id": "spotify",
+      "label": "Spotify",
+      "mode": "dark",
+      "bg": "#000000",
+      "primary": "#1ed760",
+      "onPrimary": "0 0% 0%",
+      "fg": "#ffffff",
+      "mutedFg": "#b3b3b3",
+      "motif": "waves",
+      "overrides": {
+        "card": "#121212",
+        "secondary": "#1f1f1f",
+        "muted": "#1f1f1f",
+        "accent": "#2a2a2a",
+        "border": "#2a2a2a",
+        "input": "#242424"
+      },
+      "group": "inspired",
+      "order": 550
+    }
+  ]
+}

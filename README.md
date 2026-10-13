@@ -4,10 +4,11 @@ A **reference point** for TurboNZL apps: working, battle-tested code and convent
 
 - `CLAUDE.md`: how the AI should use and grow this repo (read it first).
 - `modules/<name>/`: one capability each, with `MODULE.md` (what, how to integrate, gotchas), `module.json` and `files/` (the real files, at the paths they have in an app).
+- `themes/`: the theme engine and every theme (the npm package `turbothemes`, formerly its own repository). **On by default**; an app can opt out (see `modules/appearance`).
 - `templates/`: `CLAUDE.md`, `PROJECT_BRIEF.md` and the `.turboengine.json` pin to start an app from.
 - `scripts/engine-diff.mjs`: compares an app with the modules it pins (same, changed, missing).
 
-Related: [turbothemes](https://github.com/TurboNZL/turbothemes) is a separate package (themes update at run time); the `appearance` module is how an app wires it in.
+The themes are part of this repository (`themes/`, with their own `CLAUDE.md`): apps install the package from this repo and receive theme updates at run time from `themes/dist`. The `appearance` module is how an app wires them in.
 
 ## Modules
 | Module | Optional | What |

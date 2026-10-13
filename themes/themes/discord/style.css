@@ -1,0 +1,47 @@
+/* ================== Discord ==================
+ * Read off a screenshot of Discord's settings window in its darkest ("Onyx") theme: true-black panels, 1 px near-black rules, a selected
+ * list item as a rounded #1e1e20 bar, black fields with a thin grey outline and 8 px corners, blurple (#5865f2) buttons, radios that are a
+ * hollow ring (a blurple disc with a white dot when chosen), a grey slider track with a blurple fill and a big white knob, small muted section
+ * labels. Discord's face is gg sans; Noto Sans is the closest open one. Works with the Ash (#313338) palette too. */
+[data-ui="discord"] {
+  --radius: 8px; --ctl-r: 8px; --card-r: 8px; --win-r: 12px; --menu-r: 8px; --nav-r: 8px; --chip-r: 8px; --in-r: 8px;
+  --font: "Noto Sans", "gg sans", "Helvetica Neue", Helvetica, Arial, sans-serif; --title-font: var(--font);
+  --dis-edge: color-mix(in srgb, hsl(var(--fg)) 15%, hsl(var(--bg)));
+  --dur: 100ms; --ease: ease-out;
+  --btn-bg: hsl(var(--raised)); --btn-fg: hsl(var(--fg)); --btn-weight: 500; --btn-border: 0 solid transparent; --btn-shadow: none;
+  --btn-hover-bg: hsl(var(--hover)); --btn-active-transform: none;
+  --btn-accent-bg: hsl(var(--accent)); --btn-accent-fg: hsl(var(--accent-fg)); --btn-accent-border: 0 solid transparent; --btn-accent-hover-bg: color-mix(in srgb, hsl(var(--accent)) 82%, black);
+  --ghost-hover-bg: hsl(var(--hover));
+  --in-bg: hsl(var(--bg)); --in-border: 1px solid var(--dis-edge); --in-hover-border: color-mix(in srgb, hsl(var(--fg)) 28%, hsl(var(--bg))); --in-focus-border: hsl(var(--accent)); --in-focus-shadow: none; --in-px: 0.9rem; --in-py: 0.65rem;
+  --card-bg: hsl(var(--surface)); --card-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 8%, transparent); --card-shadow: none;
+  --backdrop: rgb(0 0 0 / 0.7);
+  --win-bg: hsl(var(--bg)); --win-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 10%, transparent); --win-shadow: 0 0 0 1px rgb(0 0 0 / 0.4), 0 16px 48px rgb(0 0 0 / 0.5); --dialog-anim: bt-pop 160ms ease-out;
+  --tb-bg: transparent; --tb-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 7%, transparent); --tb-pad: 1.1rem 1.25rem; --tb-size: 1.1rem; --tb-weight: 500; --tb-justify: space-between;
+  --close-r: 8px; --close-hover-bg: hsl(var(--hover));
+  --bar-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 7%, transparent);
+  --menu-bg: hsl(var(--surface)); --menu-border: 1px solid var(--dis-edge); --pop-shadow: 0 8px 20px rgb(0 0 0 / 0.5); --menu-anim: bt-pop 90ms ease-out; --menu-hi-bg: hsl(var(--hover)); --menu-hi-fg: hsl(var(--fg));
+  --side-bg: hsl(var(--bg)); --side-shadow: none; --top-bg: hsl(var(--bg)); --top-shadow: none; --player-bg: hsl(var(--bg)); --player-shadow: none;
+  --nav-hover-bg: color-mix(in srgb, hsl(var(--hover)) 60%, transparent); --nav-active-bg: hsl(var(--hover)); --nav-active-fg: hsl(var(--fg));
+  --row-hover: color-mix(in srgb, hsl(var(--hover)) 55%, transparent); --row-current: hsl(var(--hover));
+  --chk-size: 1.25rem; --chk-r: 4px; --chk-border: 2px solid color-mix(in srgb, hsl(var(--fg)) 62%, transparent); --chk-bg: transparent; --chk-hover-border: hsl(var(--fg)); --chk-focus: 0 0 0 2px hsl(var(--accent));
+  --chk-on-bg: hsl(var(--accent)); --chk-on-border: hsl(var(--accent)); --chk-on-fg: #fff; --chk-radio-on-bg: hsl(var(--accent)); --chk-dot: #fff;
+  --rng-appearance: none; --rng-h: 8px; --rng-r: 4px; --rng-border: 0 solid transparent; --rng-track: color-mix(in srgb, hsl(var(--fg)) 22%, hsl(var(--bg))); --rng-fill: hsl(var(--accent));
+  --rng-tw: 22px; --rng-th: 22px; --rng-tr: 9999px; --rng-thumb: #fff; --rng-tb: 0 solid transparent; --rng-ts: 0 2px 6px rgb(0 0 0 / 0.5);
+}
+[data-ui="discord"] .bt-shell { -webkit-backdrop-filter: none; backdrop-filter: none; }
+[data-ui="discord"] .bt-side { border-right: 1px solid color-mix(in srgb, hsl(var(--fg)) 7%, transparent); }
+[data-ui="discord"] .bt-top { border-bottom: 1px solid color-mix(in srgb, hsl(var(--fg)) 7%, transparent); }
+[data-ui="discord"] .bt-nav { font-weight: 500; color: hsl(var(--muted)); padding-block: 0.6rem; font-size: 1rem; }
+[data-ui="discord"] .bt-nav:hover { color: hsl(var(--fg)); }
+[data-ui="discord"] .bt-nav[aria-current="page"] { color: hsl(var(--fg)); }
+[data-ui="discord"] .bt-brand { font-weight: 600; font-size: 1.05rem; padding-bottom: 0.9rem; margin-bottom: 0.4rem; border-bottom: 1px solid color-mix(in srgb, hsl(var(--fg)) 7%, transparent); }
+[data-ui="discord"] main h1 { font-size: 1.6rem; font-weight: 500; }
+[data-ui="discord"] main h2:not([class*="text-2xl"]) { font-weight: 500; }
+[data-ui="discord"] .bt-label { font-size: 0.9rem; font-weight: 500; color: hsl(var(--fg)); }
+[data-ui="discord"] .btn { padding-block: 0.6rem; padding-inline: 1.1rem; }
+[data-ui="discord"] .btn-ghost { background: transparent; }
+[data-ui="discord"] .bt-cover { border-radius: 8px; }
+[data-ui="discord"] .bt-cover[data-kind="artist"] { border-radius: 9999px; }
+[data-ui="discord"] hr, [data-ui="discord"] .divide-y > :not([hidden]) ~ :not([hidden]) { border-color: color-mix(in srgb, hsl(var(--fg)) 7%, transparent); }
+[data-ui="discord"] ::selection { background: hsl(var(--accent) / 0.6); }
+[data-ui="discord"] :is(p, li, .bt-body, .prose) a:not(.btn) { color: #00a8fc; }

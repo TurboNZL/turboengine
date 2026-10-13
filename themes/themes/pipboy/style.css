@@ -1,0 +1,45 @@
+/* ================== Pip-Boy 3000 (Fallout) ==================
+ * The wrist computer's green phosphor screen: one hue, square frames, a glow on the type, faint scan lines, a pick shown inverted
+ * (dark on bright green) the way the Pip-Boy's menus do. VT323 stands in for the game's Monofonto. */
+[data-ui="pipboy"] {
+  --radius: 0px; --ctl-r: 0px; --card-r: 0px; --win-r: 0px; --menu-r: 0px; --nav-r: 0px; --chip-r: 0px; --in-r: 0px;
+  --font: "VT323", "Share Tech Mono", ui-monospace, monospace; --title-font: var(--font);
+  --dur: 0ms; --ease: steps(2);
+  --btn-bg: transparent; --btn-fg: hsl(var(--accent)); --btn-weight: 400; --btn-border: 1px solid color-mix(in srgb, hsl(var(--accent)) 60%, transparent); --btn-shadow: none;
+  --btn-hover-bg: hsl(var(--accent)); --btn-hover-border: hsl(var(--accent)); --btn-hover-shadow: none;
+  --btn-active-shadow: inset 0 0 0 2px hsl(var(--bg)); --btn-active-transform: none;
+  --btn-accent-bg: hsl(var(--accent)); --btn-accent-fg: hsl(var(--bg)); --btn-accent-border: 1px solid hsl(var(--accent)); --btn-accent-border-color: hsl(var(--accent)); --btn-accent-shadow: none;
+  --btn-accent-hover-bg: color-mix(in srgb, hsl(var(--accent)) 80%, white); --btn-accent-hover-shadow: none; --btn-accent-text-shadow: none;
+  --ghost-hover-bg: color-mix(in srgb, hsl(var(--accent)) 16%, transparent);
+  --in-bg: transparent; --in-border: 1px solid color-mix(in srgb, hsl(var(--accent)) 60%, transparent); --in-shadow: none; --in-hover-border: hsl(var(--accent)); --in-focus-border: hsl(var(--accent)); --in-focus-shadow: 0 0 6px color-mix(in srgb, hsl(var(--accent)) 70%, transparent); --in-px: 0.75rem;
+  --card-bg: color-mix(in srgb, hsl(var(--accent)) 5%, hsl(var(--bg))); --card-border: 1px solid color-mix(in srgb, hsl(var(--accent)) 45%, transparent); --card-shadow: none;
+  --backdrop: rgb(0 0 0 / 0.55);
+  --win-bg: hsl(var(--bg)); --win-border: 2px solid hsl(var(--accent)); --win-shadow: 0 0 24px color-mix(in srgb, hsl(var(--accent)) 35%, transparent); --dialog-anim: bt-fade 120ms steps(3);
+  --tb-bg: hsl(var(--accent)); --tb-fg: hsl(var(--bg)); --tb-border: 0 solid transparent; --tb-pad: 0.6rem 1rem; --tb-size: 1.15rem; --tb-weight: 400; --tb-justify: space-between; --tb-text-shadow: none;
+  --close-fg: hsl(var(--bg)); --close-hover-bg: hsl(var(--bg)); --close-hover-fg: hsl(var(--accent)); --close-r: 0;
+  --bar-border: 1px solid color-mix(in srgb, hsl(var(--accent)) 45%, transparent);
+  --menu-bg: hsl(var(--bg)); --menu-border: 1px solid hsl(var(--accent)); --pop-shadow: 0 0 14px color-mix(in srgb, hsl(var(--accent)) 35%, transparent); --menu-anim: bt-fade 100ms ease-out; --menu-hi-bg: hsl(var(--accent)); --menu-hi-fg: hsl(var(--bg));
+  --side-bg: hsl(var(--bg)); --side-shadow: none; --top-bg: hsl(var(--bg)); --top-shadow: none; --player-bg: hsl(var(--bg)); --player-shadow: none;
+  --nav-hover-bg: color-mix(in srgb, hsl(var(--accent)) 14%, transparent); --nav-active-bg: hsl(var(--accent)); --nav-active-fg: hsl(var(--bg)); --nav-active-shadow: none;
+  --row-hover: color-mix(in srgb, hsl(var(--accent)) 16%, transparent); --row-current: color-mix(in srgb, hsl(var(--accent)) 30%, transparent);
+  --panel-tb-fg: hsl(var(--accent)); --panel-tb-margin: 0 0 0.5rem; --panel-tb-pad: 0;
+  --chk-size: 1.1rem; --chk-r: 0; --chk-border: 2px solid hsl(var(--accent)); --chk-bg: transparent; --chk-hover-border: hsl(var(--accent)); --chk-focus: 0 0 0 2px color-mix(in srgb, hsl(var(--accent)) 40%, transparent);
+  --chk-on-bg: hsl(var(--accent)); --chk-on-border: hsl(var(--accent)); --chk-on-fg: hsl(var(--accent-fg)); --chk-radio-on-bg: hsl(var(--accent)); --chk-dot: hsl(var(--accent-fg));
+  --rng-appearance: none; --rng-h: 6px; --rng-r: 0; --rng-track: color-mix(in srgb, hsl(var(--accent)) 25%, transparent); --rng-fill: hsl(var(--accent));
+  --rng-tw: 0.9rem; --rng-th: 0.9rem; --rng-tr: 0; --rng-thumb: hsl(var(--accent)); --rng-tb: 1px solid hsl(var(--accent)); --rng-ts: 0 0 6px color-mix(in srgb, hsl(var(--accent)) 70%, transparent);
+}
+html[data-ui="pipboy"] { font-size: 17px; }
+[data-ui="pipboy"] { text-shadow: 0 0 5px hsl(var(--accent) / 0.55); text-transform: uppercase; letter-spacing: 0.02em; }
+[data-ui="pipboy"] :is(input, textarea, code, pre) { text-transform: none; }
+[data-ui="pipboy"] .bt-row:hover, [data-ui="pipboy"] .bt-row:hover *, [data-ui="pipboy"] .bt-nav[aria-current="page"], [data-ui="pipboy"] .bt-nav[aria-current="page"] *, [data-ui="pipboy"] .btn:hover:not(:disabled), [data-ui="pipboy"] .btn:hover:not(:disabled) *, [data-ui="pipboy"] .btn-accent, [data-ui="pipboy"] .btn-accent * { color: hsl(var(--bg)); text-shadow: none; }
+[data-ui="pipboy"] .bt-titlebar, [data-ui="pipboy"] .bt-titlebar * { text-shadow: none; }
+[data-ui="pipboy"] .bt-menu [role="menuitem"]:hover, [data-ui="pipboy"] .bt-menu [role="option"]:hover { text-shadow: none; }
+[data-ui="pipboy"] .chip { border: 1px solid hsl(var(--accent) / 0.5); background: transparent; color: hsl(var(--accent)); }
+/* scan lines and a faint vignette over the whole screen (never intercepts the pointer) */
+html[data-ui="pipboy"]::after { content: ""; position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+  background: repeating-linear-gradient(to bottom, rgb(0 0 0 / 0.0) 0 2px, rgb(0 0 0 / 0.16) 2px 3px), radial-gradient(ellipse at center, transparent 55%, rgb(0 0 0 / 0.45) 100%); mix-blend-mode: multiply; }
+@media (prefers-reduced-motion: reduce) {
+  html[data-ui="pipboy"]::after { background: none; } }
+/* instant styles: no page transition, no vote animation */
+[data-ui="pipboy"] { --page-in: none; --vote-ms: 0ms; --player-in: none; --player-out: none; --player-ms: 0ms; --pop-out: none; --pop-ms: 0ms; }
+[data-ui="pipboy"] * { scroll-behavior: auto !important; }

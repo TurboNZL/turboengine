@@ -1,0 +1,19 @@
+{
+  "id": "dracula",
+  "label": "Dracula",
+  "palettes": [
+    {
+      "id": "dracula",
+      "label": "Dracula",
+      "mode": "dark",
+      "bg": [231, 15, 15],
+      "primary": [265, 89, 72],
+      "fg": "60 30% 96%",
+      "mutedFg": "225 20% 72%",
+      "motif": "dots",
+      "step": 1.1,
+      "group": "colour",
+      "order": 150
+    }
+  ]
+}

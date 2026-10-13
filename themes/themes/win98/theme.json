@@ -1,0 +1,35 @@
+{
+  "id": "win98",
+  "label": "Windows 98",
+  "style": {
+    "description": "Classic: grey bevelled 3D controls, navy title bars, no animation and MS Sans Serif style type.",
+    "font": "Tahoma",
+    "matching": {
+      "light": "win98"
+    },
+    "order": 80
+  },
+  "palettes": [
+    {
+      "id": "win98",
+      "label": "Windows 98",
+      "mode": "light",
+      "bg": "#008080",
+      "primary": "#000080",
+      "fg": "#000000",
+      "mutedFg": "#404040",
+      "motif": "grid",
+      "overrides": {
+        "card": "#c0c0c0",
+        "secondary": "#d4d0c8",
+        "muted": "#d4d0c8",
+        "accent": "#a6a6a6",
+        "border": "#808080",
+        "input": "#808080"
+      },
+      "group": "platform",
+      "order": 310,
+      "source": "Classic: teal desktop, #c0c0c0 windows, navy title bars"
+    }
+  ]
+}

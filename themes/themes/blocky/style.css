@@ -1,0 +1,67 @@
+[data-ui="blocky"] { --page-in: none; --vote-ms: 0ms; --player-in: none; --player-out: none; --player-ms: 0ms; --pop-out: none; --pop-ms: 0ms; }
+[data-ui="blocky"] * { scroll-behavior: auto !important; }
+/* "Minecraft" (FontStruct, by Pwnage_Block, 2011), CC BY-SA 3.0: https://fontstruct.com/fontstructions/show/432966 . A fan-made lookalike of the game's own typeface, bundled for the Minecraft style. */
+/* More UI styles: Minecraft (Bedrock), Samsung One UI, Spotify, YouTube Music, Discord, Ado, Yaru, and the Marshmallow app icons.
+ * Same rules as ui-styles.css: styles set variables and a few hooks, never colours of their own (the colour theme provides those). */
+/* ================== Minecraft (Bedrock settings screens) ==================
+ * Read off screenshots of the game's settings: slate panels (#48494a) on a darker page, 2 px near-black outlines, a LIGHT header bar with
+ * black bold pixel type, light grey buttons with black type and a dark lower edge, dark grey "slot" buttons, green (#3c8527) two-part
+ * switches (a green "I" half or a grey "O" half beside a light knob) and sliders with a green fill and a light square knob. */
+[data-ui="blocky"] {
+  --radius: 0px; --ctl-r: 0px; --card-r: 0px; --win-r: 0px; --menu-r: 0px; --nav-r: 0px; --chip-r: 0px; --in-r: 0px;
+  --font: "Minecraft", "Pixelify Sans", ui-monospace, monospace; --title-font: var(--font);
+  --dur: 0ms; --ease: steps(1);
+  --mc-light: #d0d1d4; --mc-edge: #1e1e1f; --mc-low: #58585a; --mc-green: #3c8527;
+  --btn-bg: var(--mc-light); --btn-fg: #1e1e1f; --btn-weight: 500; --btn-border: 2px solid var(--mc-edge); --btn-shadow: inset 0 -4px 0 #8c8d90;
+  --btn-hover-bg: #e6e7ea; --btn-hover-border: var(--mc-edge); --btn-hover-shadow: inset 0 -4px 0 #9a9b9e;
+  --btn-active-shadow: inset 0 4px 0 #8c8d90; --btn-active-transform: none;
+  --btn-accent-bg: var(--mc-green); --btn-accent-fg: #fff; --btn-accent-border: 2px solid var(--mc-edge); --btn-accent-border-color: var(--mc-edge); --btn-accent-shadow: inset 0 -4px 0 #1d4d12, inset 0 3px 0 rgb(255 255 255 / 0.28); --btn-accent-hover-bg: #4a9a33; --btn-accent-hover-shadow: inset 0 -4px 0 #1d4d12, inset 0 3px 0 rgb(255 255 255 / 0.35); --btn-accent-text-shadow: 2px 2px 0 #1d4d12;
+  --ghost-hover-bg: rgb(255 255 255 / 0.1);
+  --in-bg: #1e1e1f; --in-border: 2px solid #8c8d90; --in-shadow: none; --in-hover-border: #fff; --in-focus-border: #fff; --in-focus-shadow: none; --in-px: 0.75rem;
+  --card-bg: hsl(var(--surface)); --card-border: 2px solid var(--mc-edge); --card-shadow: none;
+  --backdrop: rgb(0 0 0 / 0.6);
+  --win-bg: hsl(var(--surface)); --win-border: 2px solid var(--mc-edge); --win-shadow: 6px 6px 0 rgb(0 0 0 / 0.45); --dialog-anim: none;
+  --tb-bg: #e6e8eb; --tb-fg: #1e1e1f; --tb-border: 0 solid transparent; --tb-pad: 0.6rem 1rem; --tb-size: 1.15rem; --tb-weight: 700; --tb-justify: space-between; --tb-text-shadow: none;
+  --close-fg: #1e1e1f; --close-hover-bg: #c4c6c9; --close-hover-fg: #000; --close-r: 0;
+  --bar-border: 2px solid var(--mc-edge);
+  --menu-bg: hsl(var(--surface)); --menu-border: 2px solid var(--mc-edge); --pop-shadow: 4px 4px 0 rgb(0 0 0 / 0.45); --menu-anim: none; --menu-hi-bg: hsl(var(--accent)); --menu-hi-fg: #fff;
+  --side-bg: #323435; --side-shadow: none; --top-bg: #e6e8eb; --top-shadow: inset 0 -3px 0 #b3b5b8; --player-bg: #323435; --player-shadow: inset 0 3px 0 #1e1e1f;
+  --nav-hover-bg: #3d3f40; --nav-active-bg: #484a4b; --nav-active-fg: #fff; --nav-active-shadow: inset 0 0 0 2px #1e1e1f;
+  --row-hover: rgb(255 255 255 / 0.07); --row-current: rgb(60 133 39 / 0.35);
+  --panel-tb-fg: #fff; --panel-tb-margin: 0 0 0.5rem; --panel-tb-pad: 0;
+  --chk-size: 1.1rem; --chk-r: 0; --chk-border: 2px solid var(--mc-edge); --chk-bg: #8c8d90; --chk-hover-border: #fff; --chk-focus: 0 0 0 2px #fff;
+  --chk-on-bg: var(--mc-green); --chk-on-border: var(--mc-edge); --chk-on-fg: #fff; --chk-radio-on-bg: var(--mc-green); --chk-dot: #fff;
+  --rng-appearance: none; --rng-h: 8px; --rng-r: 0; --rng-track: #8c8d90; --rng-fill: var(--mc-green); --rng-border: 2px solid var(--mc-edge);
+  --rng-tw: 1rem; --rng-th: 1.5rem; --rng-tr: 0; --rng-thumb: var(--mc-light); --rng-tb: 2px solid var(--mc-edge); --rng-ts: inset 0 -3px 0 #8c8d90;
+}
+html[data-ui="blocky"] { font-size: 16px; -webkit-font-smoothing: none; font-smooth: never; text-rendering: optimizeSpeed; }
+[data-ui="blocky"] :is(h1, h2, h3, .bt-brand, .bt-panel-title, b, strong, .font-semibold, .font-bold) { -webkit-text-stroke: 0.4px currentColor; }
+[data-ui="blocky"] :is(h1, h2, h3, .bt-brand, .bt-panel-title) { font-weight: 700; letter-spacing: 0.02em; }
+[data-ui="blocky"] main h1 { text-transform: uppercase; }
+[data-ui="blocky"] .btn-ghost { background: transparent; color: hsl(var(--fg)); box-shadow: none; border-color: transparent; }
+[data-ui="blocky"] .btn-ghost:hover:not(:disabled) { background: rgb(255 255 255 / 0.1); }
+[data-ui="blocky"] .bt-top { color: #1e1e1f; --fg: 0 0% 12%; --muted: 0 0% 32%; }
+[data-ui="blocky"] .bt-top .input { background: #fff; color: #1e1e1f; border-color: #1e1e1f; }
+[data-ui="blocky"] .bt-top .input::placeholder { color: #6b6c6e; }
+[data-ui="blocky"] .bt-top .btn-ghost { color: #1e1e1f; }
+[data-ui="blocky"] .bt-side .bt-nav { color: #e8e9eb; }
+[data-ui="blocky"] .bt-side .bt-nav svg { image-rendering: pixelated; }
+[data-ui="blocky"] .bt-brand { color: #fff; }
+[data-ui="blocky"] .card.overflow-hidden > div + div, [data-ui="blocky"] .divide-y > :not([hidden]) ~ :not([hidden]) { border-color: #313233; border-top-width: 2px; }
+[data-ui="blocky"] .chip { background: #313233; color: #fff; border: 2px solid var(--mc-edge); box-shadow: none; }
+[data-ui="blocky"] :is(img, .bt-cover) { image-rendering: pixelated; }
+[data-ui="blocky"] .bt-cover { box-shadow: 0 0 0 2px var(--mc-edge); border-radius: 0; }
+[data-ui="blocky"] ::selection { background: var(--mc-green); color: #fff; }
+/* the two-part switch: a green "I" half and a light knob when on, a light knob and a grey "O" half when off */
+[data-ui="blocky"] input[type="checkbox"] { width: 2.7rem; height: 1.35rem; position: relative; overflow: hidden; background: #6b6c6e; box-shadow: inset 0 -3px 0 rgb(0 0 0 / 0.3); transition: background-color 0.18s steps(3, end); }
+[data-ui="blocky"] input[type="checkbox"]:checked { background: #3c8527; }
+/* the light half is a thumb that slides across with a bounce (overshoots, then settles), and squashes while it moves */
+[data-ui="blocky"] input[type="checkbox"]::before { content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 50%; background: #d0d1d4; box-shadow: inset 0 -3px 0 rgb(0 0 0 / 0.18); transform: translateX(0); transition: transform 0.42s cubic-bezier(0.3, 1.9, 0.5, 1); }
+[data-ui="blocky"] input[type="checkbox"]:checked::before { transform: translateX(100%); }
+@media (prefers-reduced-motion: reduce) {
+  [data-ui="blocky"] input[type="checkbox"]::before { transition: none; } }
+[data-ui="blocky"] input[type="checkbox"]::after, [data-ui="blocky"] input[type="checkbox"]:checked::after { -webkit-mask: none; mask: none; background: none; transform: none; inset: 0; display: grid; place-items: center; font-size: 0.7rem; font-weight: 700; line-height: 1; }
+[data-ui="blocky"] input[type="checkbox"]::after { content: "O"; color: #1e1e1f; padding-left: 50%; }
+[data-ui="blocky"] input[type="checkbox"]:checked::after { content: "I"; color: #fff; padding-left: 0; padding-right: 50%; }
+[data-ui="blocky"] .bt-titlebar svg { display: none; }
+@font-face { font-family: "Minecraft"; src: url("./minecraft.woff2") format("woff2"); font-display: swap; }

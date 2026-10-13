@@ -1,0 +1,36 @@
+{
+  "id": "aqua",
+  "label": "Mac OS X Aqua (2001-09)",
+  "style": {
+    "description": "Cheetah to Snow Leopard: pinstriped windows, glossy gel capsule buttons with a pulsing default, jewel traffic lights and a blue source list in Lucida Grande.",
+    "font": "Lucida Grande",
+    "matching": {
+      "light": "aqua"
+    },
+    "order": 100
+  },
+  "palettes": [
+    {
+      "id": "aqua",
+      "label": "Mac OS X Aqua",
+      "mode": "light",
+      "bg": "#ececec",
+      "primary": "#3875d7",
+      "onPrimary": "0 0% 100%",
+      "fg": "#000000",
+      "mutedFg": "#5a5a5a",
+      "motif": "waves",
+      "overrides": {
+        "card": "#ffffff",
+        "secondary": "#dcdcdc",
+        "muted": "#e2e2e2",
+        "accent": "#c7d7ee",
+        "border": "#a5a5a5",
+        "input": "#7f7f7f"
+      },
+      "group": "platform",
+      "order": 340,
+      "source": "Aqua: #ececec chrome, white content, #3875d7 selection (the classic Mac OS X list highlight)"
+    }
+  ]
+}

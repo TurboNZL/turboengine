@@ -1,0 +1,44 @@
+{
+  "id": "fortnite2",
+  "label": "Fortnite Chapter 2-3 (2019-23)",
+  "style": {
+    "description": "The same slant on deep navy with see-through blue panels and a glowing Play button.",
+    "font": "Burbank Big Condensed",
+    "matching": {
+      "light": "fortnite-2",
+      "dark": "fortnite-2"
+    },
+    "fonts": [
+      {
+        "package": "barlow-condensed",
+        "weights": [400, 600, 700, 800, 900],
+        "italic": [700, 800, 900]
+      }
+    ],
+    "order": 170
+  },
+  "palettes": [
+    {
+      "id": "fortnite-2",
+      "label": "Fortnite Ch 2-3",
+      "mode": "dark",
+      "bg": "#0a5db6",
+      "primary": "#e8f03b",
+      "onPrimary": "60 100% 6%",
+      "fg": "#d9eeff",
+      "mutedFg": "#9ccbf3",
+      "motif": "grid",
+      "overrides": {
+        "card": "#0a4a9a",
+        "secondary": "#0d6bcb",
+        "muted": "#0a55a8",
+        "accent": "#19b0f2",
+        "border": "#22b6ff",
+        "input": "#0b4a9a"
+      },
+      "group": "platform",
+      "order": 470,
+      "source": "Ch 2-3: saturated royal blue, cyan outlines and selection, lime-yellow Start button, pale blue type"
+    }
+  ]
+}

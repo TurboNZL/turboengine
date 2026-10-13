@@ -1,0 +1,64 @@
+{
+  "id": "win7",
+  "label": "Windows 7",
+  "style": {
+    "description": "Aero: glass window frames, grey gel buttons with a blue glow and a red close button in Segoe UI.",
+    "font": "Segoe UI",
+    "matching": {
+      "light": "win7",
+      "dark": "win7-dark"
+    },
+    "fonts": [
+      {
+        "package": "open-sans",
+        "weights": [400, 600, 700]
+      }
+    ],
+    "order": 60
+  },
+  "palettes": [
+    {
+      "id": "win7",
+      "label": "Windows 7",
+      "mode": "light",
+      "bg": "#d4e3f5",
+      "primary": "#2f6db5",
+      "fg": "#1a2a3d",
+      "mutedFg": "#566a82",
+      "motif": "waves",
+      "overrides": {
+        "card": "#f0f4fa",
+        "secondary": "#e3ebf5",
+        "muted": "#e3ebf5",
+        "accent": "#cfe2f7",
+        "border": "#8fa9c8",
+        "input": "#7b8da3"
+      },
+      "group": "platform",
+      "order": 280,
+      "source": "Aero: pale glass blue desktop, #f0f0f0 control surfaces, #3399ff selection, #707070 control borders"
+    },
+    {
+      "id": "win7-dark",
+      "label": "Windows 7 Dark",
+      "mode": "dark",
+      "bg": "#0d1521",
+      "primary": "#4a90d9",
+      "onPrimary": "0 0% 100%",
+      "fg": "#e3edf9",
+      "mutedFg": "#8fa6c2",
+      "motif": "waves",
+      "overrides": {
+        "card": "#17222f",
+        "secondary": "#1f2d3e",
+        "muted": "#1c2939",
+        "accent": "#27425f",
+        "border": "#33506f",
+        "input": "#3d5a7b"
+      },
+      "group": "platform",
+      "order": 290,
+      "source": "A darkened Aero: smoked-glass navy with the same blue highlights"
+    }
+  ]
+}

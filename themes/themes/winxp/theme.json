@@ -1,0 +1,35 @@
+{
+  "id": "winxp",
+  "label": "Windows XP",
+  "style": {
+    "description": "Luna: bevelled buttons, blue title bars, orange hover rings, instant menus and Tahoma.",
+    "font": "Tahoma",
+    "matching": {
+      "light": "winxp"
+    },
+    "order": 70
+  },
+  "palettes": [
+    {
+      "id": "winxp",
+      "label": "Windows XP",
+      "mode": "light",
+      "bg": "#ece9d8",
+      "primary": "#245edb",
+      "fg": "#000000",
+      "mutedFg": "#595959",
+      "motif": "hills",
+      "overrides": {
+        "card": "#ffffff",
+        "secondary": "#e2dfcd",
+        "muted": "#e2dfcd",
+        "accent": "#c1d2ee",
+        "border": "#aca899",
+        "input": "#7f9db9"
+      },
+      "group": "platform",
+      "order": 300,
+      "source": "Luna (blue): #ece9d8 dialogs, white inputs, #0054e3 title bars"
+    }
+  ]
+}

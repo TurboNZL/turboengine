@@ -1,0 +1,191 @@
+{
+  "defaults": {
+    "theme": "default",
+    "ui": "default"
+  },
+  "system": {
+    "dark": "default",
+    "light": "light"
+  },
+  "choices": {
+    "theme": [
+      {
+        "id": "auto",
+        "label": "Match this device",
+        "note": "The palette of your device's own look, light or dark by its setting"
+      },
+      {
+        "id": "system",
+        "label": "System",
+        "note": "Follows your device"
+      }
+    ],
+    "ui": [
+      {
+        "id": "auto",
+        "label": "Match this device",
+        "description": "Picks the look of the device you are on: Windows 11, macOS, Material (Android, Chromebooks), One UI (Samsung), the iOS palette on iPhones and iPads, GNOME/Yaru, or KDE Breeze on Linux. Follows the device's light or dark setting.",
+        "font": "system-ui"
+      }
+    ]
+  },
+  "fallbackDevice": {
+    "name": "Standard v2",
+    "ui": "default",
+    "light": "light",
+    "dark": "default"
+  },
+  "devices": [
+    {
+      "name": "iOS",
+      "when": {
+        "any": [
+          {
+            "ua": "iPhone|iPad|iPod"
+          },
+          {
+            "all": [
+              {
+                "platform": "Mac"
+              },
+              {
+                "minTouchPoints": 2
+              }
+            ]
+          }
+        ]
+      },
+      "ui": "macos",
+      "light": "ios",
+      "dark": "ios-dark"
+    },
+    {
+      "name": "Samsung One UI",
+      "when": {
+        "all": [
+          {
+            "ua": "Android"
+          },
+          {
+            "ua": "SM-|SAMSUNG|Galaxy"
+          }
+        ]
+      },
+      "ui": "oneui",
+      "light": "oneui",
+      "dark": "oneui-dark"
+    },
+    {
+      "name": "Material You",
+      "when": {
+        "ua": "Android"
+      },
+      "ui": "material",
+      "light": "material",
+      "dark": "material-dark"
+    },
+    {
+      "name": "ChromeOS (Material)",
+      "when": {
+        "ua": "CrOS"
+      },
+      "ui": "material",
+      "light": "material",
+      "dark": "material-dark"
+    },
+    {
+      "name": "Windows 11",
+      "when": {
+        "any": [
+          {
+            "ua": "Windows"
+          },
+          {
+            "platform": "^Win"
+          }
+        ]
+      },
+      "ui": "win11",
+      "light": "win11",
+      "dark": "win11-dark"
+    },
+    {
+      "name": "macOS",
+      "when": {
+        "any": [
+          {
+            "platform": "Mac"
+          },
+          {
+            "ua": "Macintosh"
+          }
+        ]
+      },
+      "ui": "macos",
+      "light": "macos",
+      "dark": "macos-dark"
+    },
+    {
+      "name": "KDE Breeze",
+      "when": {
+        "all": [
+          {
+            "any": [
+              {
+                "ua": "Linux|X11"
+              },
+              {
+                "platform": "Linux"
+              }
+            ]
+          },
+          {
+            "env": "kde|plasma"
+          }
+        ]
+      },
+      "ui": "breeze",
+      "light": "breeze",
+      "dark": "breeze-dark"
+    },
+    {
+      "name": "Yaru (Ubuntu)",
+      "when": {
+        "all": [
+          {
+            "any": [
+              {
+                "ua": "Linux|X11"
+              },
+              {
+                "platform": "Linux"
+              }
+            ]
+          },
+          {
+            "env": "ubuntu"
+          }
+        ]
+      },
+      "ui": "yaru",
+      "light": "yaru",
+      "dark": "yaru-dark"
+    },
+    {
+      "name": "GNOME (Adwaita)",
+      "when": {
+        "any": [
+          {
+            "ua": "Linux|X11"
+          },
+          {
+            "platform": "Linux"
+          }
+        ]
+      },
+      "ui": "gtk4",
+      "light": "adwaita",
+      "dark": "adwaita-dark"
+    }
+  ]
+}

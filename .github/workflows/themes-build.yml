@@ -1,0 +1,34 @@
+name: themes-build
+# Push to main: test, rebuild themes/dist and themes/docs/THEMES.md, and commit them if they changed. Apps download themes/dist (raw.githubusercontent.com)
+# at run time, and `pnpm add "github:TurboNZL/turboengine#path:/themes"` installs from the committed dist.
+on:
+  push:
+    branches: [main]
+    paths: ['themes/themes/**', 'themes/engine/**', 'themes/scripts/**', 'themes/test/**', 'themes/package.json']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: themes
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with: { version: 10 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm, cache-dependency-path: themes/pnpm-lock.yaml }
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm build
+      - name: Commit the built files
+        run: |
+          git config user.name "turboengine themes build"
+          git config user.email "actions@users.noreply.github.com"
+          git add dist docs/THEMES.md
+          if git diff --cached --quiet; then echo "dist/ is current"; else git commit -m "Build themes/dist [skip ci]" && git push; fi

@@ -1,0 +1,84 @@
+/* ================== Toolbar: the first version of the app (docs/appearance/TOOLBAR.md) ==================
+ * Read off the original Tailwind markup: rounded-md controls, zinc-800 borders, a 16rem side bar with a
+ * "CURATOR" wordmark, a full-width toolbar of text links with a pill search, a 6rem three-column player,
+ * 3xl black uppercase page titles, 10px black uppercase captions and bordered zinc-900/40 cover tiles.
+ * The layout half (which pages are links in the toolbar) is in Layout.tsx (UiStyleDef.nav = "toolbar").
+ * Colours are not set here: pair it with the Zinc colour theme (lib/theme.ts) for the exact zinc/blue values.
+ */
+[data-ui="toolbar"] {
+  --radius: 8px; --ctl-r: 6px; --card-r: 8px; --win-r: 8px; --menu-r: 6px; --nav-r: 6px; --in-r: 8px;
+  --font: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --dur: 150ms; --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --row-y: 0.75rem; --grid-min: 10rem;
+
+  --btn-bg: hsl(var(--raised) / 0.5); --btn-border: 1px solid hsl(var(--line)); --btn-weight: 700; --btn-hover-bg: hsl(var(--hover));
+  --btn-accent-bg: hsl(var(--accent)); --btn-accent-border: 0 solid transparent; --btn-accent-weight: 700;
+  --btn-accent-hover-bg: color-mix(in srgb, hsl(var(--accent)) 76%, hsl(var(--top)));
+  --ghost-hover-bg: hsl(var(--hover));
+  --in-bg: hsl(var(--raised) / 0.5); --in-border: 1px solid hsl(var(--line)); --in-hover-border: hsl(var(--line));
+  --in-focus-border: hsl(var(--accent)); --in-focus-shadow: none; --in-py: 0.5rem;
+  --card-bg: hsl(var(--raised) / 0.4); --card-border: 1px solid hsl(var(--line));
+
+  --backdrop: rgb(0 0 0 / 0.8);
+  --win-bg: hsl(var(--bg)); --win-border: 1px solid hsl(var(--line)); --win-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4); --dialog-anim: bt-pop 200ms var(--ease);
+  --tb-bg: transparent; --tb-border: 0 solid transparent; --tb-pad: 1.5rem 3rem 0.25rem 1.5rem; --tb-weight: 900; --tb-size: 1.25rem; --tb-justify: flex-start;
+  --close-fg: hsl(var(--fg)); --close-r: 2px;
+  --menu-bg: hsl(var(--bg)); --menu-border: 1px solid hsl(var(--line)); --pop-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4); --menu-anim: bt-pop 120ms var(--ease);
+  --menu-hi-bg: hsl(var(--hover));
+
+  --side-bg: hsl(var(--bg)); --top-bg: hsl(var(--bg)); --player-bg: hsl(var(--bg));
+  --nav-hover-bg: hsl(var(--raised) / 0.5); --nav-active-bg: hsl(var(--raised)); --nav-active-fg: hsl(var(--fg));
+  --row-hover: hsl(var(--raised) / 0.3); --row-current: hsl(var(--accent) / 0.1);
+  --player-in: none; --player-out: none; --player-ms: 0ms; --pop-out: none; --pop-ms: 0ms;
+
+  --rng-appearance: none; --rng-h: 0.5rem; --rng-r: 9999px; --rng-border: 1px solid hsl(var(--line) / 0.5);
+  --rng-track: hsl(var(--line)); --rng-fill: hsl(var(--raised));
+  --rng-tw: 1rem; --rng-th: 1rem; --rng-thumb: hsl(var(--bg)); --rng-tb: 2px solid hsl(var(--muted)); --rng-ts: none;
+}
+/* Buttons: outline buttons are 12px bold, primary actions bold capitals with wide tracking */
+[data-ui="toolbar"] .btn { font-size: 0.75rem; }
+[data-ui="toolbar"] .btn-accent { font-weight: var(--btn-accent-weight); text-transform: uppercase; letter-spacing: 0.05em; }
+[data-ui="toolbar"] .btn-ghost { font-weight: 500; }
+[data-ui="toolbar"] .input:focus-visible, [data-ui="toolbar"] .input:focus { box-shadow: 0 0 0 1px hsl(var(--accent)); }
+[data-ui="toolbar"] .bt-brand { padding: 1.5rem 0.5rem; margin-bottom: 0; font-size: 1.25rem; line-height: 1.75rem; font-weight: 700; letter-spacing: -0.05em; text-transform: uppercase; }
+[data-ui="toolbar"] .bt-brand img { display: none; }
+[data-ui="toolbar"] .bt-side .bt-nav { color: color-mix(in srgb, hsl(var(--fg)) 63%, hsl(var(--bg))); }
+[data-ui="toolbar"] .bt-side .bt-nav:hover, [data-ui="toolbar"] .bt-side .bt-nav[aria-current="page"] { color: hsl(var(--fg)); }
+[data-ui="toolbar"] .bt-tabbar .bt-tab { font-weight: 700; }
+/* Page titles, section titles and form captions */
+[data-ui="toolbar"] main h1 { font-size: 1.875rem; line-height: 2.25rem; font-weight: 900; letter-spacing: -0.025em; text-transform: uppercase; }
+[data-ui="toolbar"] main h1 > span { font-size: 0.875rem; letter-spacing: 0; }
+[data-ui="toolbar"] main h2:not([class*="text-2xl"]) { font-size: 0.875rem; line-height: 1.25rem; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase; }
+[data-ui="toolbar"] main .card h2:not([class*="text-2xl"]) { font-size: 0.75rem; }
+[data-ui="toolbar"] .bt-label { font-size: 10px; line-height: 1rem; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase; }
+/* Dialogs: no title bar, a black-weight capital title, the X in the corner */
+[data-ui="toolbar"] .bt-titlebar { position: relative; }
+[data-ui="toolbar"] .bt-titlebar h2 { text-transform: uppercase; letter-spacing: -0.025em; }
+[data-ui="toolbar"] .bt-titlebar .bt-close { position: absolute; right: 1rem; top: 1rem; opacity: 0.7; padding: 0.15rem; }
+[data-ui="toolbar"] .bt-titlebar .bt-close:hover { opacity: 1; }
+[data-ui="toolbar"] .bt-window .bt-body { padding: 1.25rem 1.5rem 1.5rem; }
+[data-ui="toolbar"] .bt-footer { border-top: 0; justify-content: flex-end; padding: 0 1.5rem 1.5rem; }
+[data-ui="toolbar"] .bt-menu [role="menuitem"], [data-ui="toolbar"] .bt-menu [role="option"] { font-size: 0.75rem; font-weight: 700; }
+/* Cover tiles: a bordered zinc-900/40 card, a square picture that zooms on hover, captions padded inside */
+[data-ui="toolbar"] .bt-tile { background: hsl(var(--raised) / 0.4); border: 1px solid hsl(var(--line)); border-radius: var(--card-r); overflow: hidden; padding-bottom: 0.75rem; text-align: left; transition: border-color var(--dur) var(--ease); }
+[data-ui="toolbar"] .bt-tile:hover { border-color: color-mix(in srgb, hsl(var(--line)) 88%, hsl(var(--fg))); }
+[data-ui="toolbar"] .bt-tile .bt-cover { border-radius: 0; transition-duration: 500ms; }
+[data-ui="toolbar"] .bt-tile:hover .bt-cover { transform: scale(1.05); }
+[data-ui="toolbar"] .bt-cap-t, [data-ui="toolbar"] .bt-cap { padding-inline: 0.75rem; }
+[data-ui="toolbar"] .bt-cap-t { margin-top: 0; padding-top: 0.75rem; font-weight: 700; }
+[data-ui="toolbar"] .bt-cap { padding-top: 0.125rem; }
+[data-ui="toolbar"] .bt-tile .bt-cover[data-kind="artist"] img { filter: grayscale(1); transition: filter 500ms var(--ease); }
+[data-ui="toolbar"] .bt-tile:hover .bt-cover[data-kind="artist"] img { filter: none; }
+[data-ui="toolbar"] .bt-tile .bt-cover[data-kind="artist"]::after { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0.6; background: linear-gradient(to top, rgb(0 0 0 / 0.8), transparent); }
+/* Lists: tables sat in a rounded-2xl zinc-900/20 frame with faint dividers */
+[data-ui="toolbar"] .card.overflow-hidden { border-radius: 1rem; border-color: hsl(var(--raised)); background: hsl(var(--raised) / 0.2); }
+[data-ui="toolbar"] .divide-y > :not([hidden]) ~ :not([hidden]) { border-color: hsl(var(--raised) / 0.5); }
+/* Player: 6rem tall, cover 3.5rem with a border, capital title and caption, a white round play button, mono times */
+@media (min-width: 768px) {
+  [data-ui="toolbar"] .bt-pbar { min-height: 6rem; padding: 0 1.5rem; gap: 1.5rem; } }
+[data-ui="toolbar"] .bt-cover-btn .bt-cover { width: 3.5rem; height: 3.5rem; border-radius: 0.5rem; border: 1px solid hsl(var(--line)); box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.4); }
+[data-ui="toolbar"] .bt-ptitle { font-weight: 900; letter-spacing: -0.025em; text-transform: uppercase; }
+[data-ui="toolbar"] .bt-partist { font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem; }
+[data-ui="toolbar"] .bt-player .btn-accent { background: hsl(var(--fg)); color: hsl(var(--bg)); }
+[data-ui="toolbar"] .bt-player .btn-accent:hover { background: color-mix(in srgb, hsl(var(--fg)) 84%, hsl(var(--bg))); }
+[data-ui="toolbar"] .bt-times { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }

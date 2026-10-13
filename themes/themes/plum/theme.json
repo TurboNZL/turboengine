@@ -1,0 +1,16 @@
+{
+  "id": "plum",
+  "label": "Plum",
+  "palettes": [
+    {
+      "id": "plum",
+      "label": "Plum",
+      "mode": "dark",
+      "bg": [285, 35, 6],
+      "primary": [322, 75, 52],
+      "motif": "dots",
+      "group": "colour",
+      "order": 90
+    }
+  ]
+}

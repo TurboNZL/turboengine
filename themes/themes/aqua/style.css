@@ -1,0 +1,83 @@
+[data-ui="aqua"] { --wf-order: -1; }
+[data-ui="aqua"] .bt-wf { padding-left: 0.75rem; }
+[data-ui="aqua"] .bt-wf-title { text-align: center; margin-right: 3.6rem; }
+[data-ui="aqua"] .bt-wf { background: linear-gradient(to bottom, color-mix(in srgb, hsl(var(--bg)) 40%, white), color-mix(in srgb, hsl(var(--bg)) 85%, black)); }
+[data-ui="aqua"] .bt-wf-btns { gap: 8px; }
+[data-ui="aqua"] .bt-wf-close { order: -1; }
+[data-ui="aqua"] .bt-wf-btn { --wf-r: 9999px; position: relative; width: 12px; height: 12px; padding: 0; color: transparent; --wf-glyph: #995700; --wf-border: 0.5px solid #e1a73e; --wf-bg: #febc2e; --wf-hover: #febc2e; --wf-active: #c49a22; }
+[data-ui="aqua"] .bt-wf-btn[aria-label="Maximise"], [data-ui="aqua"] .bt-wf-btn[aria-label="Restore"] { --wf-glyph: #006500; --wf-border: 0.5px solid #2dac2f; --wf-bg: #28c840; --wf-hover: #28c840; --wf-active: #1f9a30; }
+[data-ui="aqua"] .bt-wf-close { --wf-glyph: #4d0000; --wf-border: 0.5px solid #e2463f; --wf-bg: #ff5f57; --wf-close-hover: #ff5f57; --wf-close-active: #bf4943; }
+[data-ui="aqua"] .bt-wf-btn svg { display: none; }
+[data-ui="aqua"] .bt-wf-btn::after { content: ""; position: absolute; inset: 0; margin: auto; width: 8px; height: 8px; background: var(--wf-glyph); opacity: 0; transition: opacity 0.08s; -webkit-mask: var(--glyph) center / contain no-repeat; mask: var(--glyph) center / contain no-repeat; }
+[data-ui="aqua"] .bt-wf-btns:hover .bt-wf-btn::after, [data-ui="aqua"] .bt-wf-btns:focus-within .bt-wf-btn::after { opacity: 0.85; }
+[data-ui="aqua"] .bt-wf-btn { --glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M1 4h6' stroke='%23000' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E"); }
+[data-ui="aqua"] .bt-wf-close { --glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M1.3 1.3l5.4 5.4M6.7 1.3L1.3 6.7' stroke='%23000' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E"); }
+[data-ui="aqua"] .bt-wf-btn[aria-label="Maximise"] { --glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M.8 .8h3.6L.8 4.4zM7.2 7.2H3.6l3.6-3.6z'/%3E%3C/svg%3E"); }
+[data-ui="aqua"] .bt-wf-btn[aria-label="Restore"] { --glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M1 4.2h2.8V1.4zM7 3.8H4.2v2.8z'/%3E%3C/svg%3E"); }
+/* Aqua's green button shows a plus */
+[data-ui="aqua"] .bt-wf-btn[aria-label="Maximise"], [data-ui="aqua"] .bt-wf-btn[aria-label="Restore"] { --glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M1 4h6M4 1v6' stroke='%23000' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E"); }
+[data-ui="aqua"] .bt-wf-btn { --wf-bg: radial-gradient(circle at 50% 18%, #fff0b8 0, #f7c23c 40%, #c98c10 100%); --wf-hover: radial-gradient(circle at 50% 18%, #fff0b8 0, #f7c23c 40%, #c98c10 100%); --wf-border: 1px solid #8a6310; --wf-shadow: inset 0 1px 1px rgb(255 255 255 / 0.6); }
+[data-ui="aqua"] .bt-wf-btn[aria-label="Maximise"], [data-ui="aqua"] .bt-wf-btn[aria-label="Restore"] { --wf-bg: radial-gradient(circle at 50% 18%, #d6ffc9 0, #55d246 40%, #1e8a1a 100%); --wf-hover: radial-gradient(circle at 50% 18%, #d6ffc9 0, #55d246 40%, #1e8a1a 100%); --wf-border: 1px solid #1a6a17; }
+[data-ui="aqua"] .bt-wf-close { --wf-bg: radial-gradient(circle at 50% 18%, #ffd0cc 0, #ff6b63 35%, #cf2a22 100%); --wf-close-hover: radial-gradient(circle at 50% 18%, #ffd0cc 0, #ff6b63 35%, #cf2a22 100%); --wf-border: 1px solid #8e1e19; }
+[data-ui="aqua"] { --page-in: none; }
+/* ================== Mac OS X Aqua (10.0 to 10.6) ==================
+ * Sources of the look: Wikipedia "Aqua (user interface)": blue, white and grey; "glass" or "gel" on most controls up to
+ * Yosemite; pinstripes in the early releases (toned down in Jaguar, gone from the menu bar in Tiger); gel traffic lights. */
+[data-ui="aqua"] {
+  --radius: 6px; --ctl-r: 9999px; --card-r: 6px; --win-r: 7px 7px 3px 3px; --menu-r: 0 0 6px 6px; --nav-r: 4px; --chip-r: 9999px; --in-r: 4px;
+  --font: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "Segoe UI", "DejaVu Sans", system-ui, sans-serif; --title-font: var(--font);
+  --dur: 180ms; --ease: ease-out;
+  --aq-gel: linear-gradient(to bottom, color-mix(in srgb, hsl(var(--raised)) 40%, white) 0%, color-mix(in srgb, hsl(var(--raised)) 78%, white) 49%, color-mix(in srgb, hsl(var(--raised)) 94%, black) 51%, color-mix(in srgb, hsl(var(--raised)) 70%, white) 100%);
+  --aq-blue: linear-gradient(to bottom, color-mix(in srgb, hsl(var(--accent)) 55%, white) 0%, color-mix(in srgb, hsl(var(--accent)) 90%, white) 49%, color-mix(in srgb, hsl(var(--accent)) 86%, black) 51%, color-mix(in srgb, hsl(var(--accent)) 60%, white) 100%);
+  --btn-bg: var(--aq-gel); --btn-fg: hsl(var(--fg)); --btn-weight: 400;
+  --btn-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 45%, transparent);
+  --btn-shadow: inset 0 1px 0 rgb(255 255 255 / 0.85), 0 1px 2px rgb(0 0 0 / 0.3);
+  --btn-hover-bg: var(--aq-gel); --btn-hover-border: color-mix(in srgb, hsl(var(--fg)) 60%, transparent); --btn-hover-shadow: inset 0 1px 0 rgb(255 255 255 / 0.85), 0 1px 3px rgb(0 0 0 / 0.4);
+  --btn-active-shadow: inset 0 2px 4px rgb(0 0 0 / 0.35); --btn-active-transform: none;
+  --btn-accent-bg: var(--aq-blue); --btn-accent-fg: #fff; --btn-accent-text-shadow: 0 -1px 0 rgb(0 0 0 / 0.3);
+  --btn-accent-border: 1px solid color-mix(in srgb, hsl(var(--accent)) 60%, black); --btn-accent-border-color: color-mix(in srgb, hsl(var(--accent)) 60%, black);
+  --btn-accent-shadow: inset 0 1px 0 rgb(255 255 255 / 0.55), 0 1px 3px rgb(0 0 0 / 0.4); --btn-accent-hover-bg: var(--aq-blue); --btn-accent-hover-shadow: inset 0 1px 0 rgb(255 255 255 / 0.55), 0 1px 4px rgb(0 0 0 / 0.5);
+  --ghost-hover-bg: color-mix(in srgb, hsl(var(--fg)) 10%, transparent);
+  --in-bg: hsl(var(--surface)); --in-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 50%, transparent); --in-shadow: inset 0 1px 3px rgb(0 0 0 / 0.35);
+  --in-hover-border: color-mix(in srgb, hsl(var(--fg)) 50%, transparent); --in-focus-border: color-mix(in srgb, hsl(var(--accent)) 70%, black);
+  --in-focus-shadow: inset 0 1px 3px rgb(0 0 0 / 0.35), 0 0 0 3px color-mix(in srgb, hsl(var(--accent)) 55%, transparent), 0 0 6px 3px color-mix(in srgb, hsl(var(--accent)) 40%, transparent);
+  --card-bg: hsl(var(--surface)); --card-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 38%, transparent); --card-shadow: 0 1px 2px rgb(0 0 0 / 0.25);
+  --backdrop: rgb(0 0 0 / 0.3);
+  --win-bg: repeating-linear-gradient(to bottom, hsl(var(--bg)) 0 2px, color-mix(in srgb, hsl(var(--bg)) 95%, black) 2px 4px);
+  --win-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 55%, transparent); --win-shadow: 0 10px 28px rgb(0 0 0 / 0.5), 0 0 0 0.5px rgb(0 0 0 / 0.4); --dialog-anim: bt-sheet 260ms ease-out;
+  --tb-bg:
+    radial-gradient(circle 6.5px at 40px 50%, #f4bc32 0 94%, transparent 100%) no-repeat,
+    radial-gradient(circle 6.5px at 60px 50%, #4fd24a 0 94%, transparent 100%) no-repeat,
+    linear-gradient(to bottom, color-mix(in srgb, hsl(var(--bg)) 40%, white), color-mix(in srgb, hsl(var(--bg)) 85%, black));
+  --tb-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 45%, transparent); --tb-pad: 0.45rem 1rem 0.45rem 5rem; --tb-size: 0.9rem; --tb-weight: 400; --tb-justify: flex-start;
+  --tb-text-shadow: 0 1px 0 rgb(255 255 255 / 0.7);
+  --close-margin: 0; --close-size: 13px; --close-pad: 0; --close-r: 9999px; --close-fg: transparent; --close-hover-fg: rgb(0 0 0 / 0.6);
+  --close-bg: radial-gradient(circle at 50% 18%, #ffd0cc 0, #ff6b63 35%, #cf2a22 100%); --close-hover-bg: radial-gradient(circle at 50% 18%, #ffd0cc 0, #ff6b63 35%, #cf2a22 100%);
+  --close-border: 1px solid #8e1e19; --close-shadow: inset 0 1px 1px rgb(255 255 255 / 0.6);
+  --bar-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 45%, transparent);
+  --menu-bg: color-mix(in srgb, hsl(var(--surface)) 94%, transparent); --menu-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 40%, transparent);
+  --pop-shadow: 2px 4px 8px rgb(0 0 0 / 0.4); --menu-anim: bt-fade 110ms linear;
+  --menu-hi-bg: linear-gradient(to bottom, color-mix(in srgb, hsl(var(--accent)) 60%, white), hsl(var(--accent))); --menu-hi-fg: #fff;
+  --side-bg: color-mix(in srgb, hsl(var(--accent)) 7%, hsl(var(--bg))); --side-shadow: inset -1px 0 0 rgb(255 255 255 / 0.6);
+  --top-bg: linear-gradient(to bottom, color-mix(in srgb, hsl(var(--bg)) 35%, white), color-mix(in srgb, hsl(var(--bg)) 82%, black));
+  --top-shadow: inset 0 1px 0 rgb(255 255 255 / 0.8);
+  --player-bg: linear-gradient(to bottom, color-mix(in srgb, hsl(var(--bg)) 35%, white), color-mix(in srgb, hsl(var(--bg)) 82%, black)); --player-shadow: inset 0 1px 0 rgb(255 255 255 / 0.8);
+  --nav-hover-bg: color-mix(in srgb, hsl(var(--accent)) 12%, transparent);
+  --nav-active-bg: linear-gradient(to bottom, color-mix(in srgb, hsl(var(--accent)) 62%, white), hsl(var(--accent))); --nav-active-fg: #fff; --nav-active-shadow: inset 0 1px 0 rgb(255 255 255 / 0.4);
+  --row-hover: linear-gradient(to bottom, color-mix(in srgb, hsl(var(--accent)) 62%, white), hsl(var(--accent))); --row-hover-fg: #fff; --row-current: color-mix(in srgb, hsl(var(--accent)) 22%, transparent);
+  --panel-tb-bg: linear-gradient(to bottom, color-mix(in srgb, hsl(var(--bg)) 40%, white), color-mix(in srgb, hsl(var(--bg)) 85%, black)); --panel-tb-margin: -1.25rem -1.25rem 0.25rem; --panel-tb-pad: 0.35rem 1rem; --tb-text-shadow: 0 1px 0 rgb(255 255 255 / 0.7);
+  --chk-size: 1rem; --chk-r: 3px; --chk-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 55%, transparent); --chk-bg: var(--aq-gel); --chk-shadow: inset 0 1px 0 rgb(255 255 255 / 0.85), 0 1px 1px rgb(0 0 0 / 0.2);
+  --chk-on-bg: var(--aq-blue); --chk-on-border: color-mix(in srgb, hsl(var(--accent)) 60%, black); --chk-on-fg: #fff; --chk-radio-on-bg: var(--aq-blue); --chk-dot: #fff; --chk-hover-border: hsl(var(--accent));
+  --chk-focus: 0 0 0 3px color-mix(in srgb, hsl(var(--accent)) 55%, transparent);
+  --rng-appearance: none; --rng-h: 5px; --rng-r: 3px; --rng-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 45%, transparent); --rng-shadow: inset 0 1px 2px rgb(0 0 0 / 0.3);
+  --rng-track: color-mix(in srgb, hsl(var(--bg)) 80%, white); --rng-fill: hsl(var(--accent));
+  --rng-tw: 1rem; --rng-th: 1rem; --rng-tr: 9999px; --rng-tb: 1px solid color-mix(in srgb, hsl(var(--fg)) 50%, transparent); --rng-thumb: var(--aq-gel); --rng-ts: 0 1px 2px rgb(0 0 0 / 0.4);
+}
+[data-ui="aqua"] .bt-titlebar { position: relative; justify-content: center; padding-left: 5rem; padding-right: 5rem; }
+[data-ui="aqua"] .bt-titlebar svg { display: none; }
+/* the three lights sit 20 px apart from x = 20: the close button is the first of them, drawn here; yellow and green are in --tb-bg */
+[data-ui="aqua"] .bt-close { position: absolute; left: 13.5px; top: 50%; transform: translateY(-50%); }
+[data-ui="aqua"] .bt-window .btn-accent:not(:disabled) { animation: aq-pulse 1.6s ease-in-out infinite; }
+[data-ui="aqua"] .bt-nav { font-size: 0.8125rem; }
+html[data-ui="aqua"] ::selection { background: #b5d5ff; color: #000; }
+@keyframes aq-pulse { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.14) saturate(1.1); } }

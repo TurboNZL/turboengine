@@ -1,0 +1,63 @@
+[data-ui="win11"] .bt-wf { padding-right: 0; }
+[data-ui="win11"] .bt-wf-btns { gap: 0; align-self: stretch; }
+[data-ui="win11"] .bt-wf-btn { --wf-r: 0; width: 2.9rem; height: auto; align-self: stretch; }
+[data-ui="win11"] .bt-wf-close { --wf-r: 0 0.4rem 0 0; }
+[data-ui="win11"] { --wf-close-hover: #c42b1c; }
+/* ================== Windows 11 (Fluent) ================== */
+[data-ui="win11"] {
+  --chk-size: 1.1rem; --chk-r: 4px; --chk-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 55%, transparent); --chk-bg: color-mix(in srgb, hsl(var(--fg)) 4%, transparent);
+  --radius: 8px; --ctl-r: 4px; --card-r: 8px; --win-r: 8px; --menu-r: 8px; --nav-r: 4px;
+  --font: "Segoe UI Variable Text", "Segoe UI Variable", "Segoe UI", "Open Sans", system-ui, sans-serif;
+  --dur: 167ms; --ease: cubic-bezier(0.1, 0.9, 0.2, 1);
+  --btn-bg: color-mix(in srgb, hsl(var(--fg)) 5%, hsl(var(--surface)));
+  --btn-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 14%, transparent);
+  --btn-hover-bg: color-mix(in srgb, hsl(var(--fg)) 9%, hsl(var(--surface))); --btn-hover-border: color-mix(in srgb, hsl(var(--fg)) 14%, transparent);
+  --btn-active-transform: scale(0.97);
+  --btn-accent-border: 1px solid color-mix(in srgb, hsl(var(--accent)) 80%, black);
+  --ghost-hover-bg: color-mix(in srgb, hsl(var(--fg)) 8%, transparent);
+  --in-bg: color-mix(in srgb, hsl(var(--fg)) 5%, hsl(var(--surface)));
+  --in-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 14%, transparent); --in-hover-border: color-mix(in srgb, hsl(var(--fg)) 24%, transparent); --in-focus-border: color-mix(in srgb, hsl(var(--fg)) 14%, transparent);
+  --in-shadow: inset 0 -1px 0 color-mix(in srgb, hsl(var(--fg)) 45%, transparent); --in-focus-shadow: inset 0 -2px 0 hsl(var(--accent));
+  --card-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 8%, transparent); --card-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+  --win-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 14%, transparent); --win-shadow: 0 8px 32px rgb(0 0 0 / 0.37); --dialog-anim: bt-pop 250ms cubic-bezier(0.1, 0.9, 0.2, 1);
+  --tb-border: 0 solid transparent; --tb-weight: 600; --tb-size: 1.05rem;
+  --close-hover-bg: #c42b1c; --close-hover-fg: #fff; --close-r: 4px;
+  --bar-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 10%, transparent);
+  --menu-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 10%, transparent); --pop-shadow: 0 8px 20px rgb(0 0 0 / 0.26); --menu-anim: bt-drop-fluent 167ms cubic-bezier(0.1, 0.9, 0.2, 1);
+  --menu-hi-bg: color-mix(in srgb, hsl(var(--fg)) 9%, transparent);
+  --nav-hover-bg: color-mix(in srgb, hsl(var(--fg)) 7%, transparent); --nav-active-bg: color-mix(in srgb, hsl(var(--fg)) 9%, transparent); --nav-active-shadow: inset 3px 0 0 hsl(var(--accent));
+  --row-hover: color-mix(in srgb, hsl(var(--fg)) 7%, transparent);
+  --rng-appearance: none; --rng-h: 0.25rem; --rng-track: color-mix(in srgb, hsl(var(--fg)) 30%, transparent);
+  --rng-tw: 1.25rem; --rng-th: 1.25rem; --rng-thumb: hsl(var(--accent)); --rng-tb: 4px solid hsl(var(--surface)); --rng-ts: 0 0 0 1px color-mix(in srgb, hsl(var(--fg)) 30%, transparent);
+}
+[data-ui="win11"] { --player-in: bt-slide-in 320ms cubic-bezier(0.1, 0.9, 0.2, 1) both; --player-out: bt-slide-out 200ms cubic-bezier(0.7, 0, 1, 0.5) both; --player-ms: 200ms; --pop-out: bt-slide-out 150ms cubic-bezier(0.7, 0, 1, 0.5) both; --pop-ms: 150ms; }
+[data-ui="win11"] { --page-in: bt-page-up 320ms cubic-bezier(0.1, 0.9, 0.2, 1) backwards; }
+/* ================== Windows 11, refined (Fluent / WinUI 3) ==================
+ * 4 px controls, 8 px overlays, a button that gets quieter (not smaller) when pressed, an acrylic flyout with inset
+ * 4 px items, a Mica-like sidebar, and the NavigationView's 3x16 accent pill that slides between items. */
+[data-ui="win11"] {
+  --ctl-r: 4px; --menu-r: 8px; --win-r: 8px; --card-r: 8px; --nav-r: 4px;
+  --btn-active-transform: none; --btn-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 9%, transparent);
+  --btn-shadow: inset 0 -1px 0 color-mix(in srgb, hsl(var(--fg)) 8%, transparent);
+  --btn-accent-border: 1px solid color-mix(in srgb, hsl(var(--accent)) 70%, black); --btn-accent-shadow: inset 0 -1px 0 rgb(0 0 0 / 0.2);
+  --menu-bg: color-mix(in srgb, hsl(var(--surface)) 82%, transparent); --menu-hi-bg: color-mix(in srgb, hsl(var(--fg)) 8%, transparent); --menu-hi-fg: inherit;
+  --side-bg: color-mix(in srgb, hsl(var(--surface)) 62%, hsl(var(--bg))); --top-bg: color-mix(in srgb, hsl(var(--bg)) 70%, transparent);
+  --nav-active-bg: color-mix(in srgb, hsl(var(--fg)) 7%, transparent); --nav-active-shadow: none;
+  --backdrop: rgb(0 0 0 / 0.42); --win-shadow: 0 32px 64px rgb(0 0 0 / 0.37), 0 2px 21px rgb(0 0 0 / 0.37);
+  --dialog-anim: bt-pop 250ms cubic-bezier(0.1, 0.9, 0.2, 1);
+}
+[data-ui="win11"] .btn:active:not(.btn-accent):not(.btn-ghost) { background: color-mix(in srgb, hsl(var(--fg)) 3%, hsl(var(--surface))); color: hsl(var(--muted)); }
+[data-ui="win11"] .btn-accent:active { filter: brightness(0.88); }
+[data-ui="win11"] .bt-menu { padding: 4px; -webkit-backdrop-filter: blur(30px) saturate(1.25); backdrop-filter: blur(30px) saturate(1.25); }
+[data-ui="win11"] .bt-menu [role="menuitem"], [data-ui="win11"] .bt-menu [role="option"] { border-radius: 4px; }
+[data-ui="win11"] .bt-side { -webkit-backdrop-filter: blur(40px) saturate(1.2); backdrop-filter: blur(40px) saturate(1.2); }
+[data-ui="win11"] .bt-nav { position: relative; z-index: 1; }
+[data-ui="win11"] .bt-side .bt-ind {
+  display: block; position: absolute; left: 0; top: 0; width: 3px; height: 16px; border-radius: 3px; z-index: 2; pointer-events: none;
+  background: hsl(var(--accent)); opacity: var(--ind-o, 0); will-change: transform;
+  transform: translate3d(calc(var(--ind-x, 0px) + 4px), calc(var(--ind-y, 0px) + (var(--ind-h, 0px) - 16px) / 2), 0);
+}
+[data-ui="win11"] [data-ind-ready] > .bt-ind { transition: transform 250ms cubic-bezier(0.1, 0.9, 0.2, 1), opacity 120ms linear; }
+[data-ui="win11"] .bt-tab[aria-current="page"] { border-bottom: 3px solid hsl(var(--accent)); border-radius: 0; }
+@keyframes bt-drop-fluent { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: none; } }
+@keyframes bt-page-up { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }

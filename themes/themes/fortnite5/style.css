@@ -1,0 +1,55 @@
+[data-ui="fortnite5"] {
+  --dur: 120ms; --ease: cubic-bezier(0.2, 0.9, 0.3, 1);
+  --btn-weight: 800; --btn-border: 0 solid transparent;
+  --ghost-hover-bg: hsl(var(--fg) / 0.14);
+  --in-focus-shadow: none;
+  --tb-border: 0 solid transparent; --tb-pad: 0.6rem 1.25rem; --tb-size: 1.35rem; --tb-weight: 900; --tb-justify: space-between;
+  --close-hover-bg: rgb(0 0 0 / 0.18);
+  --panel-tb-margin: 0 0 0.5rem; --panel-tb-pad: 0;
+  --chk-size: 1.2rem; --vote-ms: 380ms;
+  --rng-appearance: none; --rng-h: 8px; --rng-tw: 1rem; --rng-th: 1rem;
+}
+html[data-ui="fortnite5"] { font-size: 14px; }
+[data-ui="fortnite5"] { text-transform: uppercase; letter-spacing: 0.02em; font-weight: 700; }
+[data-ui="fortnite5"] :is(button, .btn, select, [role="menuitem"], [role="option"], h1, h2, h3, label, summary) { text-transform: inherit; letter-spacing: inherit; }
+[data-ui="fortnite5"] :is(.input, input, textarea, code, pre, p, .font-mono, [contenteditable]) { text-transform: none; letter-spacing: 0; }
+[data-ui="fortnite5"] :is(h1, h2, h3, .bt-titlebar h2) { font-family: var(--title-font); font-weight: 800; }
+[data-ui="fortnite5"] .btn { font-weight: 800; letter-spacing: 0.04em; }
+[data-ui="fortnite5"] .btn:hover:not(:disabled) { transform: translateY(-1px); }
+[data-ui="fortnite5"] .btn:active:not(:disabled) { transform: translateY(1px); }
+[data-ui="fortnite5"] :is(h1, h2, .bt-titlebar h2) { font-style: italic; }
+[data-ui="fortnite5"] .bt-titlebar svg { display: none; }
+[data-ui="fortnite5"] .btn.btn-accent { font-size: 1rem; }
+[data-ui="fortnite5"] { --fn-weight: 700; }
+[data-ui="fortnite5"] :is(.font-light, .font-normal, .font-medium, .font-semibold, .bt-nav, .bt-tab, .chip, th, label, [role="menuitem"], [role="option"], .btn) { font-weight: var(--fn-weight); }
+[data-ui="fortnite5"] :is(.font-bold, .font-extrabold, h1, h2, h3, .bt-titlebar h2) { font-weight: 900; }
+/* ---- Chapter 5-6 (2023-): neutral dark glass; regular = light grey, loud = yellow, quiet = text only ---- */
+[data-ui="fortnite5"] {
+  --radius: 8px; --ctl-r: 8px; --card-r: 10px; --win-r: 12px; --menu-r: 10px; --nav-r: 8px; --chip-r: 8px; --in-r: 8px;
+  --font: "Heading Now", Archivo, Montserrat, "Segoe UI", system-ui, sans-serif; --title-font: "Heading Now", Archivo, Montserrat, "Segoe UI", system-ui, sans-serif;
+  --btn-weight: 700;
+  --btn-bg: #dfe2e8; --btn-fg: #12151c; --btn-shadow: none; --btn-hover-bg: #fff; --btn-active-shadow: none; --btn-active-transform: scale(0.98);
+  --btn-accent-bg: #ffee00; --btn-accent-fg: #000; --btn-accent-shadow: none; --btn-accent-hover-bg: #fff35c; --btn-accent-hover-shadow: none;
+  --in-bg: rgb(255 255 255 / 0.08); --in-border: 1px solid rgb(255 255 255 / 0.16); --in-hover-border: rgb(255 255 255 / 0.4); --in-focus-border: #e6e9ef;
+  --card-bg: rgb(20 24 34 / 0.78); --card-border: 1px solid rgb(255 255 255 / 0.1); --card-shadow: none;
+  --win-bg: #171b26; --win-border: 1px solid rgb(255 255 255 / 0.14); --win-shadow: 0 24px 60px rgb(0 0 0 / 0.55); --dialog-anim: bt-pop 160ms cubic-bezier(0.2, 0.9, 0.3, 1);
+  --tb-bg: transparent; --tb-fg: #fff; --close-fg: #a8aebb; --close-hover-fg: #fff;
+  --bar-border: 1px solid rgb(255 255 255 / 0.1);
+  --menu-bg: #1b2030; --menu-border: 1px solid rgb(255 255 255 / 0.14); --pop-shadow: 0 12px 30px rgb(0 0 0 / 0.5); --menu-anim: bt-pop 120ms cubic-bezier(0.2, 0.9, 0.3, 1);
+  --menu-hi-bg: #e6e9ef; --menu-hi-fg: #12151c;
+  --side-bg: rgb(14 17 25 / 0.82); --top-bg: rgb(14 17 25 / 0.82); --player-bg: rgb(20 24 34 / 0.92); --player-shadow: none;
+  --nav-hover-bg: rgb(255 255 255 / 0.1); --nav-active-bg: #e6e9ef; --nav-active-fg: #12151c; --nav-active-shadow: none;
+  --row-hover: rgb(255 255 255 / 0.08); --row-current: rgb(255 238 0 / 0.16);
+  --panel-tb-fg: #fff;
+  --chk-border: 2px solid #a8aebb; --chk-on-fg: #000;
+  --rng-track: rgb(255 255 255 / 0.2); --rng-fill: #fff; --rng-thumb: #fff; --rng-ts: none;
+}
+/* Hover/focus outline: in the current lobby a hovered or focused control gets a white frame instead of only changing fill. Drawn with outline so nothing shifts. */
+[data-ui="fortnite5"] :is(.btn, .bt-nav, .chip, .bt-tab, .bt-close, .bt-row, .input, [role="menuitem"], [role="option"], a.card, button.card) { outline: 2px solid transparent; outline-offset: 2px; transition: outline-color var(--dur) var(--ease), background-color var(--dur) var(--ease), color var(--dur) var(--ease); }
+[data-ui="fortnite5"] :is(.btn, .bt-nav, .chip, .bt-tab, .bt-close, .bt-row, a.card, button.card):is(:hover, :focus-visible):not(:disabled) { outline-color: #fff; }
+[data-ui="fortnite5"] .bt-row:is(:hover, :focus-visible) { outline-offset: -2px; }
+[data-ui="fortnite5"] .input:is(:hover, :focus-visible) { outline-color: rgb(255 255 255 / 0.7); outline-offset: 1px; }
+[data-ui="fortnite5"] :is([role="menuitem"], [role="option"]):is(:hover, :focus-visible) { outline: 2px solid #fff; outline-offset: -3px; }
+[data-ui="fortnite5"] .bt-nav[aria-current="page"]:hover { outline-color: #fff; }
+[data-ui="fortnite5"] .btn.btn-ghost { background: transparent; color: inherit; }
+[data-ui="fortnite5"] .btn.btn-ghost:hover { background: rgb(255 255 255 / 0.1); }

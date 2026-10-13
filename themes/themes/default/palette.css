@@ -1,0 +1,16 @@
+[data-theme='default'] {
+  --bg: 240 12% 7%; --surface: 240 10% 10%; --raised: 240 9% 14%; --line: 240 8% 20%; --hover: 240 8% 20%;
+  --fg: 240 20% 96%; --muted: 240 8% 62%;
+  --accent: 262 83% 66%; --accent-fg: 0 0% 100%;
+  --good: 152 60% 50%; --warn: 42 92% 58%; --bad: 0 78% 64%; --top: 200 95% 65%;
+  --radius: 14px; --font: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --row-y: 0.5rem; --grid-min: 11rem;
+}
+[data-theme='light'] {
+  --bg: 40 20% 97%; --surface: 0 0% 100%; --raised: 40 15% 93%; --line: 40 10% 86%; --hover: 40 10% 86%;
+  --fg: 240 15% 12%; --muted: 240 6% 42%;
+  --accent: 262 70% 52%; --accent-fg: 0 0% 100%;
+  --good: 152 60% 34%; --warn: 38 90% 40%; --bad: 0 70% 48%; --top: 210 90% 42%;
+  --radius: 14px; --font: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --row-y: 0.5rem; --grid-min: 11rem;
+}

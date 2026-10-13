@@ -1,0 +1,56 @@
+{
+  "id": "macos",
+  "label": "macOS (Big Sur to Sequoia)",
+  "style": {
+    "description": "Apple's flat 2020s look: 10 px windows, flat blue default buttons, a see-through sidebar and toolbar, sheet-style dialogs, in SF.",
+    "font": "system-ui",
+    "matching": {
+      "light": "macos",
+      "dark": "macos-dark"
+    },
+    "order": 90
+  },
+  "palettes": [
+    {
+      "id": "macos",
+      "label": "macOS",
+      "mode": "light",
+      "bg": "#f5f5f7",
+      "primary": "#007aff",
+      "fg": "#1d1d1f",
+      "mutedFg": "#6e6e73",
+      "motif": "hills",
+      "overrides": {
+        "card": "#ffffff",
+        "secondary": "#ececf0",
+        "muted": "#ececf0",
+        "accent": "#e1e1e6",
+        "border": "#d6d6db",
+        "input": "#c7c7cc"
+      },
+      "group": "platform",
+      "order": 320
+    },
+    {
+      "id": "macos-dark",
+      "label": "macOS Dark",
+      "mode": "dark",
+      "bg": "#1e1e1e",
+      "primary": "#0a84ff",
+      "onPrimary": "0 0% 100%",
+      "fg": "#f5f5f7",
+      "mutedFg": "#98989d",
+      "motif": "hills",
+      "overrides": {
+        "card": "#2a2a2c",
+        "secondary": "#3a3a3c",
+        "muted": "#323234",
+        "accent": "#48484a",
+        "border": "#3d3d40",
+        "input": "#545458"
+      },
+      "group": "platform",
+      "order": 330
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+--- a/e2e/settings.mjs
++++ b/e2e/settings.mjs
+@@ -38,7 +38,7 @@
+   // ---- 1. Settings dialog opens from the gear, and a changed setting survives a reload
+   await page.getByRole('button', { name: 'Settings' }).first().click();
+   await page.waitForSelector('.settings');
+-  const tabs = await page.$$eval('.settings-nav .bt-tab', (els) => els.map((e) => e.textContent));
++  const tabs = await page.$$eval('.settings-nav .tab', (els) => els.map((e) => e.textContent));
+   assert.deepEqual(tabs, ['General', 'Keys', 'Captions', 'Updates', 'Device', 'About']);
+   const track = page.getByRole('combobox', { name: 'Track order' });
+   await track.selectOption('audio');
+--- a/src/app/dom.ts
++++ b/src/app/dom.ts
+@@ -34,7 +34,7 @@
+   const win = h(
+     'div',
+     { class: `bt-window dlg ${extraClass}`.trim(), role: 'dialog', 'aria-label': title },
+-    h('div', { class: 'bt-titlebar' }, h('span', {}, title), h('button', { class: 'bt-close', 'aria-label': 'Close', onclick: close }, '×')),
++    h('div', { class: 'bt-titlebar flex-titlebar' }, h('h2', {}, title), h('button', { class: 'bt-close', 'aria-label': 'Close', onclick: close }, '×')),
+     h('div', { class: 'bt-body' }, body),
+     buttons.length ? h('div', { class: 'bt-footer' }, buttons) : null,
+   );
+--- a/src/app/main.ts
++++ b/src/app/main.ts
+@@ -85,7 +85,7 @@
+ const status = h('div', { class: 'status', role: 'status' });
+ 
+ const tabs: Record<string, HTMLElement> = { Clip: inspector.el, Keys: keys.el, Media: bin.el, Captions: captions.el, Project: projectPanel() };
+-const tabBar = h('div', { class: 'tabs bt-tabbar' });
++const tabBar = h('div', { class: 'tabs', role: 'tablist' });
+ const tabBody = h('div', { class: 'tab-body' });
+ let activeTab = 'Clip';
+ const side = h('aside', { class: 'bt-side side collapsed' }, tabBar, tabBody);
+@@ -94,10 +94,10 @@
+   if (userTap && name === activeTab) side.classList.toggle('collapsed');
+   else if (userTap) side.classList.remove('collapsed');
+   activeTab = name;
+-  for (const b of tabBar.children) (b as HTMLElement).setAttribute('aria-current', b.textContent === name ? 'page' : 'false');
++  for (const b of tabBar.children) (b as HTMLElement).setAttribute('aria-selected', String(b.textContent === name));
+   tabBody.replaceChildren(tabs[name]!);
+ }
+-for (const name of Object.keys(tabs)) tabBar.append(h('button', { class: 'bt-tab', onclick: () => showTab(name, true) }, name));
++for (const name of Object.keys(tabs)) tabBar.append(h('button', { class: 'tab', role: 'tab', onclick: () => showTab(name, true) }, name));
+ showTab('Clip');
+ // Switch panels only when a DIFFERENT clip or caption gets selected. Undo, redo and picking a track also announce a
+ // selection change; they must not pull the person out of the panel they are working in. The Keys panel stays put so
+--- a/src/app/settingsDialog.ts
++++ b/src/app/settingsDialog.ts
+@@ -35,16 +35,16 @@
+ export function openSettings(deps: SettingsDeps, tab: SettingsTab = 'General'): void {
+   const { store } = deps;
+   const body = h('div', { class: 'settings-body' });
+-  const nav = h('div', { class: 'settings-nav' });
++  const nav = h('div', { class: 'settings-nav', role: 'tablist', 'aria-orientation': 'vertical' });
+   let current: SettingsTab = tab;
+ 
+   const show = (t: SettingsTab) => {
+     current = t;
+-    for (const b of nav.children) (b as HTMLElement).setAttribute('aria-current', b.textContent === t ? 'page' : 'false');
++    for (const b of nav.children) (b as HTMLElement).setAttribute('aria-selected', String(b.textContent === t));
+     body.replaceChildren(build(t));
+     body.scrollTop = 0;
+   };
+-  for (const t of TABS) nav.append(h('button', { class: 'bt-tab', onclick: () => show(t) }, t));
++  for (const t of TABS) nav.append(h('button', { class: 'tab', role: 'tab', onclick: () => show(t) }, t));
+ 
+   const build = (t: SettingsTab): HTMLElement => {
+     switch (t) {
+--- a/src/app/styles.css
++++ b/src/app/styles.css
+@@ -26,7 +26,7 @@
+ 
+ .side { display: flex; flex-direction: column; min-height: 0; min-width: 0; overflow: hidden; border-left: 1px solid hsl(var(--line)); }
+ .tabs { display: flex; }
+-.tabs .bt-tab { flex: 1; }
++.tabs .tab { flex: 1; min-width: 0; padding-inline: 0.25rem; font-size: 0.9rem; }
+ .tab-body { flex: 1; overflow: auto; padding: 0.6rem; min-height: 0; }
+ 
+ .prop { display: grid; grid-template-columns: 5.2rem minmax(0, 1fr) 4.6rem auto; gap: 0.4rem; align-items: center; margin: 0.3rem 0; }
+@@ -113,7 +113,7 @@
+   #app:has(.side:not(.collapsed)) { grid-template-rows: auto minmax(0, 1fr) 150px auto auto; }
+   .stage { padding: 0.3rem; }
+   .btn { min-height: 44px; min-width: 44px; }
+-  .bt-tab { min-height: 44px; }
++  .tab { min-height: 44px; }
+   .edit-bar { padding: 0.5rem; gap: 0.5rem; }
+   .edit-bar .zoom { display: none; }
+   .transport .btn { min-width: 48px; }
+@@ -126,7 +126,7 @@
+ .dlg-wide .bt-body { flex: 1; min-height: 0; padding: 0; display: flex; }
+ .settings { display: grid; grid-template-columns: 150px minmax(0, 1fr); flex: 1; min-height: 0; width: 100%; }
+ .settings-nav { display: flex; flex-direction: column; border-right: 1px solid hsl(var(--line)); overflow-y: auto; }
+-.settings-nav .bt-tab { text-align: left; justify-content: flex-start; padding: 0.7rem 0.9rem; }
++.settings-nav .tab { text-align: left; }
+ .settings-body { overflow-y: auto; padding: 0.9rem; min-width: 0; }
+ .setting { display: flex; gap: 0.6rem; align-items: flex-start; padding: 0.3rem 0; }
+ .setting.col { flex-direction: column; gap: 0.25rem; }
+@@ -140,7 +140,7 @@
+ @media (max-width: 640px) {
+   .settings { grid-template-columns: 1fr; grid-template-rows: auto minmax(0, 1fr); }
+   .settings-nav { flex-direction: row; border-right: 0; border-bottom: 1px solid hsl(var(--line)); overflow-x: auto; overflow-y: hidden; }
+-  .settings-nav .bt-tab { flex: none; }
++  .settings-nav .tab { flex: none; }
+   .key-row { grid-template-columns: 1fr auto; }
+   .key-label { grid-column: 1 / -1; font-weight: 600; }
+ }
+@@ -186,3 +186,15 @@
+   .style-stage { flex: none; border-left: 0; border-top: 1px solid var(--bt-border, #8885); order: -1; }
+   .style-preview { max-height: 14rem; }
+ }
++
++/* In-page tabs (the app's own pattern: turbothemes has no hook for them; colours from tokens only, so every look works) */
++.tab { appearance: none; background: none; border: 0; border-radius: 0; margin: 0; padding: 0.6rem 0.8rem; font: inherit; font-weight: 500; color: hsl(var(--muted)); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; white-space: nowrap; transition: color var(--dur, 120ms) var(--ease, ease); }
++.tab:hover { color: hsl(var(--fg)); }
++.tab[aria-selected='true'] { color: hsl(var(--fg)); border-bottom-color: hsl(var(--accent)); }
++.tab:focus-visible { outline: 2px solid hsl(var(--accent)); outline-offset: -2px; }
++.tabs { border-bottom: 1px solid hsl(var(--line)); }
++.settings-nav .tab { border-bottom: 0; margin-bottom: 0; border-left: 2px solid transparent; margin-left: -1px; }
++.settings-nav .tab[aria-selected='true'] { border-left-color: hsl(var(--accent)); background: hsl(var(--hover) / 0.5); }
++@media (max-width: 720px) { .settings-nav .tab { border-left: 0; border-bottom: 2px solid transparent; } .settings-nav .tab[aria-selected='true'] { border-bottom-color: hsl(var(--accent)); } }
++.flex-titlebar { display: flex; align-items: center; }
++.dlg { overflow: hidden; }

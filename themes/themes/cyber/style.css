@@ -1,0 +1,38 @@
+/* ================== Cyberpunk 2077 ==================
+ * Near-black with caution-tape yellow, cyan and red glints; every panel has two chamfered corners instead of rounded ones, labels are
+ * condensed capitals, selection is a solid yellow bar with black type. */
+[data-ui="cyber"] {
+  --radius: 0px; --ctl-r: 0px; --card-r: 0px; --win-r: 0px; --menu-r: 0px; --nav-r: 0px; --chip-r: 0px; --in-r: 0px;
+  --font: "Barlow Condensed", "Rajdhani", "Arial Narrow", system-ui, sans-serif; --title-font: var(--font);
+  --dur: 100ms; --ease: steps(3);
+  --btn-bg: hsl(var(--raised)); --btn-fg: hsl(var(--fg)); --btn-weight: 600; --btn-border: 0 solid transparent; --btn-shadow: inset 3px 0 0 hsl(var(--accent));
+  --btn-hover-bg: hsl(var(--accent)); --btn-hover-border: transparent; --btn-hover-shadow: none;
+  --btn-active-shadow: inset 0 0 0 2px #000; --btn-active-transform: none;
+  --btn-accent-bg: hsl(var(--accent)); --btn-accent-fg: #000; --btn-accent-border: 0 solid transparent; --btn-accent-border-color: transparent; --btn-accent-shadow: none;
+  --btn-accent-hover-bg: #fff; --btn-accent-hover-shadow: none; --btn-accent-text-shadow: none;
+  --ghost-hover-bg: color-mix(in srgb, hsl(var(--accent)) 16%, transparent);
+  --in-bg: color-mix(in srgb, hsl(var(--fg)) 8%, transparent); --in-border: 1px solid color-mix(in srgb, hsl(var(--accent)) 45%, transparent); --in-shadow: none; --in-hover-border: hsl(var(--accent)); --in-focus-border: hsl(var(--accent)); --in-focus-shadow: inset 0 -2px 0 hsl(var(--accent)); --in-px: 0.75rem;
+  --card-bg: hsl(var(--surface)); --card-border: 1px solid color-mix(in srgb, hsl(var(--accent)) 40%, transparent); --card-shadow: none;
+  --backdrop: rgb(0 0 0 / 0.75);
+  --win-bg: hsl(var(--bg)); --win-border: 1px solid hsl(var(--accent)); --win-shadow: 0 0 30px color-mix(in srgb, hsl(var(--accent)) 20%, transparent); --dialog-anim: bt-fade 120ms steps(4);
+  --tb-bg: hsl(var(--accent)); --tb-fg: #000; --tb-border: 0 solid transparent; --tb-pad: 0.45rem 1rem; --tb-size: 1.15rem; --tb-weight: 700; --tb-justify: space-between; --tb-text-shadow: none;
+  --close-fg: #000; --close-hover-bg: #000; --close-hover-fg: hsl(var(--accent)); --close-r: 0;
+  --bar-border: 1px solid color-mix(in srgb, hsl(var(--accent)) 35%, transparent);
+  --menu-bg: hsl(var(--bg)); --menu-border: 1px solid hsl(var(--accent)); --pop-shadow: 0 0 18px color-mix(in srgb, hsl(var(--accent)) 22%, transparent); --menu-anim: bt-fade 100ms ease-out; --menu-hi-bg: hsl(var(--accent)); --menu-hi-fg: #000;
+  --side-bg: hsl(var(--bg)); --side-shadow: none; --top-bg: hsl(var(--bg)); --top-shadow: none; --player-bg: hsl(var(--bg)); --player-shadow: none;
+  --nav-hover-bg: color-mix(in srgb, hsl(var(--accent)) 16%, transparent); --nav-active-bg: hsl(var(--accent)); --nav-active-fg: #000; --nav-active-shadow: none;
+  --row-hover: color-mix(in srgb, hsl(var(--accent)) 14%, transparent); --row-current: color-mix(in srgb, hsl(var(--accent)) 28%, transparent);
+  --panel-tb-fg: hsl(var(--accent)); --panel-tb-margin: 0 0 0.5rem; --panel-tb-pad: 0;
+  --chk-size: 1.1rem; --chk-r: 0; --chk-border: 2px solid hsl(var(--accent)); --chk-bg: transparent; --chk-hover-border: hsl(var(--accent)); --chk-focus: 0 0 0 2px color-mix(in srgb, hsl(var(--accent)) 40%, transparent);
+  --chk-on-bg: hsl(var(--accent)); --chk-on-border: hsl(var(--accent)); --chk-on-fg: #000; --chk-radio-on-bg: hsl(var(--accent)); --chk-dot: #000;
+  --rng-appearance: none; --rng-h: 4px; --rng-r: 0; --rng-track: color-mix(in srgb, hsl(var(--fg)) 22%, transparent); --rng-fill: hsl(var(--accent));
+  --rng-tw: 0.9rem; --rng-th: 0.9rem; --rng-tr: 0; --rng-thumb: hsl(var(--accent)); --rng-tb: 2px solid hsl(var(--bg)); --rng-ts: none;
+}
+[data-ui="cyber"] :is(h1, h2, h3, .bt-brand, .bt-titlebar h2, .bt-panel-title, .btn, .bt-nav, .chip, th) { text-transform: uppercase; letter-spacing: 0.06em; }
+[data-ui="cyber"] h1 { font-size: 2.1rem; font-weight: 700; color: hsl(var(--accent)); }
+[data-ui="cyber"] .btn, [data-ui="cyber"] .card, [data-ui="cyber"] .bt-nav, [data-ui="cyber"] .bt-window, [data-ui="cyber"] .bt-menu { clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px)); }
+[data-ui="cyber"] .card, [data-ui="cyber"] .bt-window, [data-ui="cyber"] .bt-menu { clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px)); }
+[data-ui="cyber"] .btn:hover:not(:disabled), [data-ui="cyber"] .btn:hover:not(:disabled) * { color: #000; }
+[data-ui="cyber"] .chip { background: transparent; border: 1px solid hsl(180 100% 50% / 0.6); color: hsl(180 100% 55%); }
+[data-ui="cyber"] .bt-row:hover, [data-ui="cyber"] .bt-row-current { box-shadow: inset 3px 0 0 hsl(var(--accent)); }
+[data-ui="cyber"] { --page-in: bt-fade 110ms linear backwards; --vote-ms: 260ms; }

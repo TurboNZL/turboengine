@@ -1,0 +1,128 @@
+/* Windows 7: small glossy caption buttons hanging from the top edge; Close is the red one */
+[data-ui="win7"] .bt-wf-btns { gap: 0; align-self: flex-start; margin-right: 0.15rem; }
+[data-ui="win7"] .bt-wf-btn { --wf-r: 0 0 4px 4px; --wf-border: 1px solid rgb(0 0 0 / 0.5); --wf-bg: linear-gradient(to bottom, rgb(255 255 255 / 0.55) 0, rgb(255 255 255 / 0.2) 49.9%, rgb(0 0 0 / 0.08) 50%, rgb(255 255 255 / 0.3) 100%);
+  --wf-hover: linear-gradient(to bottom, rgb(190 225 255 / 0.9) 0, rgb(120 190 255 / 0.55) 49.9%, rgb(40 130 230 / 0.6) 50%, rgb(130 210 255 / 0.75) 100%); --wf-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.5); --wf-shadow-hover: inset 0 0 0 1px rgb(255 255 255 / 0.6), 0 0 6px rgb(120 200 255 / 0.8);
+  width: 1.7rem; height: 1.2rem; color: #fff; border-top: 0; margin-left: -1px; }
+[data-ui="win7"] .bt-wf-close { width: 2.9rem; --wf-bg: linear-gradient(to bottom, #ecb7ab 0, #e08b7b 49.9%, #c8412a 50%, #de6e42 100%); }
+[data-ui="win7"] .bt-wf-close:is(:hover, :focus-visible) { background: linear-gradient(to bottom, #f6cdc3 0, #ef9f8e 49.9%, #de3a1c 50%, #f77f45 100%); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.6), 0 0 6px rgb(255 120 90 / 0.9); }
+/* ================== Windows 7 (Aero) ==================
+ * Rebuilt around what makes Aero recognisable: translucent blurred glass for the window frame and toolbar with a diagonal glare, buttons whose
+ * gradient splits hard at the middle (light above, darker below) with a white inner line, a blue "hot" state for hover/press with a cyan glow, a
+ * red glossy Close tab flush with the top-right corner, an Explorer-style navigation pane with outlined blue selection, and a dark glass
+ * taskbar for the player. Colours are mixed from the colour theme (the neutral edges come from --fg), so Windows 7 and Windows 7 Dark both work.
+ * --w7-w stands for "white" (opaque white in light themes, a lifted surface in dark ones). */
+[data-ui="win7"] {
+  --w7-w: #fff; --w7-paper: color-mix(in srgb, hsl(var(--surface)) 50%, #fff);
+  --w7-glow: color-mix(in srgb, hsl(var(--accent)) 42%, #3db7f2);
+  --w7-edge: color-mix(in srgb, hsl(var(--fg)) 50%, #a0a0a0);
+  --w7-sel-edge: color-mix(in srgb, hsl(var(--accent)) 50%, var(--w7-w));
+  --w7-sel: linear-gradient(to bottom, color-mix(in srgb, hsl(var(--accent)) 10%, var(--w7-w)), color-mix(in srgb, hsl(var(--accent)) 24%, var(--w7-w)));
+  --w7-hov: linear-gradient(to bottom, color-mix(in srgb, hsl(var(--accent)) 5%, var(--w7-w)), color-mix(in srgb, hsl(var(--accent)) 13%, var(--w7-w)));
+  --w7-glass: linear-gradient(to bottom, color-mix(in srgb, var(--w7-glow) 22%, var(--w7-w)) 0, color-mix(in srgb, var(--w7-glow) 34%, var(--w7-w)) 49.9%, color-mix(in srgb, hsl(var(--accent)) 26%, var(--w7-w)) 50%, color-mix(in srgb, var(--w7-glow) 32%, var(--w7-w)) 100%);
+
+  --chk-size: 0.95rem; --chk-r: 3px; --chk-border: 1px solid var(--w7-edge); --chk-bg: linear-gradient(135deg, color-mix(in srgb, hsl(var(--raised)) 85%, #000), var(--w7-w) 60%); --chk-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.9); --chk-hover-border: hsl(var(--accent)); --chk-on-bg: var(--chk-bg); --chk-on-border: var(--w7-edge); --chk-on-fg: #2a6a2f; --chk-radio-on-bg: var(--chk-bg); --chk-dot: color-mix(in srgb, hsl(var(--accent)) 80%, #1b7fd0); --chk-focus: 0 0 0 2px color-mix(in srgb, var(--w7-glow) 70%, transparent);
+  --radius: 4px; --ctl-r: 3px; --card-r: 4px; --win-r: 7px 7px 3px 3px; --menu-r: 3px; --nav-r: 3px; --chip-r: 3px;
+  --font: "Segoe UI", "Selawik", "Open Sans", system-ui, sans-serif;
+  --dur: 200ms; --ease: ease-out;
+
+  /* standard button: hard split at the middle, 1px grey edge, white inner line */
+  --gel: linear-gradient(to bottom, color-mix(in srgb, hsl(var(--raised)) 38%, var(--w7-w)) 0, color-mix(in srgb, hsl(var(--raised)) 66%, var(--w7-w)) 49.9%, color-mix(in srgb, hsl(var(--raised)) 90%, #000) 50%, color-mix(in srgb, hsl(var(--raised)) 78%, #000) 100%);
+  --gel-hot: linear-gradient(to bottom, color-mix(in srgb, var(--w7-glow) 14%, var(--w7-w)) 0, color-mix(in srgb, var(--w7-glow) 24%, var(--w7-w)) 49.9%, color-mix(in srgb, var(--w7-glow) 44%, var(--w7-w)) 50%, color-mix(in srgb, var(--w7-glow) 62%, var(--w7-w)) 100%);
+  --gel-down: linear-gradient(to bottom, color-mix(in srgb, var(--w7-glow) 28%, var(--w7-w)) 0, color-mix(in srgb, var(--w7-glow) 40%, var(--w7-w)) 49.9%, color-mix(in srgb, var(--w7-glow) 62%, var(--w7-w)) 50%, color-mix(in srgb, var(--w7-glow) 80%, var(--w7-w)) 100%);
+  --btn-bg: var(--gel); --btn-border: 1px solid var(--w7-edge); --btn-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.7);
+  --btn-hover-bg: var(--gel-hot); --btn-hover-border: color-mix(in srgb, hsl(var(--accent)) 85%, #3c7fb1); --btn-hover-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.75), 0 0 3px color-mix(in srgb, var(--w7-glow) 55%, transparent);
+  --btn-active-shadow: inset 0 1px 3px rgb(0 0 0 / 0.35), inset 0 0 0 1px color-mix(in srgb, var(--w7-glow) 50%, transparent);
+  /* the call to action: the blue glossy variant */
+  --btn-accent-bg: linear-gradient(to bottom, color-mix(in srgb, var(--w7-glow) 40%, var(--w7-w)) 0, color-mix(in srgb, hsl(var(--accent)) 62%, var(--w7-w)) 49.9%, hsl(var(--accent)) 50%, color-mix(in srgb, hsl(var(--accent)) 60%, var(--w7-glow)) 100%);
+  --btn-accent-border: 1px solid color-mix(in srgb, hsl(var(--accent)) 70%, #000); --btn-accent-border-color: color-mix(in srgb, hsl(var(--accent)) 70%, #000);
+  --btn-accent-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.5), inset 0 -7px 8px -5px color-mix(in srgb, var(--w7-glow) 90%, transparent), 0 1px 2px rgb(0 0 0 / 0.25);
+  --btn-accent-text-shadow: 0 -1px 0 rgb(0 0 0 / 0.45);
+  --btn-accent-hover-bg: linear-gradient(to bottom, color-mix(in srgb, var(--w7-glow) 55%, var(--w7-w)) 0, color-mix(in srgb, hsl(var(--accent)) 52%, var(--w7-w)) 49.9%, color-mix(in srgb, hsl(var(--accent)) 90%, var(--w7-glow)) 50%, color-mix(in srgb, var(--w7-glow) 85%, var(--w7-w)) 100%);
+  --btn-accent-hover-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.7), 0 0 7px var(--w7-glow);
+  --ghost-hover-bg: var(--w7-hov);
+
+  /* fields: pale grey edge that turns blue on hover, glow on focus */
+  --in-bg: color-mix(in srgb, hsl(var(--surface)) 40%, var(--w7-w)); --in-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 30%, #b4bfcf); --in-shadow: inset 0 1px 1px rgb(0 0 0 / 0.1);
+  --in-hover-border: color-mix(in srgb, var(--w7-glow) 80%, #4a86b6); --in-focus-border: color-mix(in srgb, hsl(var(--accent)) 85%, #3d7bad); --in-focus-shadow: inset 0 1px 1px rgb(0 0 0 / 0.1), 0 0 4px color-mix(in srgb, var(--w7-glow) 70%, transparent);
+  --card-bg: hsl(var(--surface)); --card-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 22%, #a9bad2); --card-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.75), 0 1px 2px rgb(0 0 0 / 0.1);
+
+  /* window: blurred glass frame with a dark outer line and a white inner line */
+  --backdrop: rgb(10 26 52 / 0.32);
+  --win-bg: color-mix(in srgb, color-mix(in srgb, hsl(var(--accent)) 30%, #b9d3f0) 74%, transparent);
+  --win-border: 1px solid rgb(0 0 0 / 0.62); --win-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.7), 0 6px 22px rgb(0 0 0 / 0.5), 0 0 1px rgb(255 255 255 / 0.4); --dialog-anim: bt-pop 200ms ease-out;
+  --tb-border: 0 solid transparent; --tb-pad: 6px 6px 8px 16px; --tb-size: 0.92rem; --tb-weight: 400; --tb-justify: space-between;
+  --tb-text-shadow: 0 0 12px #fff, 0 0 5px #fff, 0 0 2px #fff;
+  --body-bg: hsl(var(--surface));
+  --close-fg: #fff; --close-border: 1px solid rgb(0 0 0 / 0.6); --close-r: 0 0 5px 5px; --close-bg: linear-gradient(to bottom, #ecb7ab 0, #e08b7b 49.9%, #c8412a 50%, #de6e42 100%);
+  --close-hover-bg: linear-gradient(to bottom, #f6cdc3 0, #ef9f8e 49.9%, #de3a1c 50%, #f77f45 100%); --close-hover-fg: #fff; --close-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.5), 0 0 3px rgb(0 0 0 / 0.3);
+  --bar-border: 1px solid color-mix(in srgb, hsl(var(--accent)) 22%, #98acc6);
+
+  --menu-bg: color-mix(in srgb, hsl(var(--surface)) 55%, var(--w7-w)); --menu-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 40%, #8a8a8a); --pop-shadow: 2px 3px 4px rgb(0 0 0 / 0.38), inset 0 0 0 1px rgb(255 255 255 / 0.85); --menu-anim: bt-fade 140ms ease-out;
+  --menu-hi-bg: var(--w7-sel); --menu-hi-fg: inherit;
+
+  /* chrome: glass toolbar, Explorer-style navigation pane, taskbar-style player */
+  --top-bg: var(--w7-glass); --top-shadow: inset 0 1px 0 rgb(255 255 255 / 0.75), inset 0 -1px 0 rgb(255 255 255 / 0.35), 0 2px 5px rgb(0 0 0 / 0.18);
+  --side-bg: linear-gradient(to bottom, color-mix(in srgb, hsl(var(--surface)) 40%, var(--w7-w)), color-mix(in srgb, hsl(var(--accent)) 8%, hsl(var(--surface)))); --side-shadow: inset -1px 0 0 rgb(255 255 255 / 0.8);
+  --player-bg: linear-gradient(to bottom, rgb(255 255 255 / 0.3) 0, rgb(255 255 255 / 0.08) 49.9%, rgb(0 0 0 / 0.22) 50%, rgb(0 0 0 / 0) 100%), color-mix(in srgb, #1a2b49 86%, hsl(var(--accent)));
+  --player-shadow: inset 0 1px 0 rgb(255 255 255 / 0.55), 0 -2px 8px rgb(0 0 0 / 0.3);
+  --nav-hover-bg: var(--w7-hov); --nav-active-bg: var(--w7-sel); --nav-active-shadow: inset 0 0 0 1px var(--w7-sel-edge), inset 0 0 0 2px rgb(255 255 255 / 0.55);
+  --row-hover: var(--w7-hov); --row-current: var(--w7-sel);
+  --panel-tb-bg: linear-gradient(to bottom, var(--w7-w), color-mix(in srgb, hsl(var(--accent)) 12%, var(--w7-w))); --panel-tb-fg: color-mix(in srgb, hsl(var(--accent)) 70%, #0b2547);
+  --panel-tb-margin: -1.25rem -1.25rem 0.5rem; --panel-tb-pad: 0.45rem 1.25rem;
+  --rng-appearance: none; --rng-h: 0.375rem; --rng-r: 3px; --rng-border: 1px solid var(--w7-edge); --rng-shadow: inset 0 1px 2px rgb(0 0 0 / 0.3);
+  --rng-track: color-mix(in srgb, hsl(var(--fg)) 12%, hsl(var(--surface))); --rng-fill: var(--w7-glow); --rng-tw: 0.8rem; --rng-th: 1.25rem; --rng-tr: 3px; --rng-tb: 1px solid var(--w7-edge); --rng-thumb: var(--gel);
+}
+[data-ui="win7"][data-mode="dark"] {
+  --w7-w: color-mix(in srgb, #fff 20%, hsl(var(--surface))); --w7-paper: hsl(var(--surface));
+  --w7-edge: color-mix(in srgb, hsl(var(--fg)) 40%, hsl(var(--surface)));
+  --win-bg: color-mix(in srgb, color-mix(in srgb, hsl(var(--accent)) 35%, #1c2d48) 78%, transparent);
+  --tb-text-shadow: 0 0 10px rgb(0 0 0 / 0.9), 0 0 3px rgb(0 0 0 / 0.9);
+  --menu-bg: hsl(var(--surface)); --in-bg: hsl(var(--raised));
+  --btn-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.12);
+}
+/* the glass frame: blur, diagonal glare and a soft top sheen over the translucent blue */
+[data-ui="win7"] .bt-window {
+  padding: 0 8px 8px; -webkit-backdrop-filter: blur(9px) saturate(1.5); backdrop-filter: blur(9px) saturate(1.5);
+  background-image: linear-gradient(to bottom, rgb(255 255 255 / 0.4), rgb(255 255 255 / 0) 42px),
+    linear-gradient(113deg, rgb(255 255 255 / 0.42) 0 22%, transparent 22.2% 50%, rgb(255 255 255 / 0.2) 50.2% 58%, transparent 58.2%);
+}
+[data-ui="win7"][data-mode="dark"] .bt-window { background-image: linear-gradient(to bottom, rgb(255 255 255 / 0.18), transparent 42px), linear-gradient(113deg, rgb(255 255 255 / 0.12) 0 22%, transparent 22.2% 50%, rgb(255 255 255 / 0.06) 50.2% 58%, transparent 58.2%); }
+[data-ui="win7"] .bt-titlebar { margin: 0 -8px; }
+[data-ui="win7"] .bt-body { border: 1px solid rgb(0 0 0 / 0.5); box-shadow: 0 0 0 1px rgb(255 255 255 / 0.5); }
+[data-ui="win7"] .bt-footer { background: linear-gradient(to bottom, color-mix(in srgb, hsl(var(--surface)) 70%, var(--w7-w)), hsl(var(--surface))); border: 1px solid rgb(0 0 0 / 0.5); border-top: 1px solid color-mix(in srgb, hsl(var(--fg)) 14%, hsl(var(--surface))); box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.8); }
+/* Close: the red glossy tab flush with the top-right corner */
+[data-ui="win7"] .bt-close { width: 47px; height: 19px; padding: 0; align-self: flex-start; margin: -6px -2px 0 0; border-top-width: 0; }
+[data-ui="win7"] .bt-close svg { width: 13px; height: 13px; stroke-width: 3; filter: drop-shadow(0 0 2px rgb(0 0 0 / 0.65)); }
+[data-ui="win7"] .bt-close:active { filter: brightness(0.86); }
+/* Explorer content area: paper-white, with the glass chrome around it */
+html[data-ui="win7"]:not([data-wallpaper="on"]) main { background: var(--w7-paper); }
+[data-ui="win7"] .bt-top { border-bottom-color: color-mix(in srgb, hsl(var(--accent)) 35%, #7f9bc0); }
+[data-ui="win7"] .bt-side { border-right-color: color-mix(in srgb, hsl(var(--accent)) 28%, #a2b6d0); }
+[data-ui="win7"] .bt-nav:hover:not([aria-current="page"]) { box-shadow: inset 0 0 0 1px color-mix(in srgb, hsl(var(--accent)) 28%, var(--w7-w)), inset 0 0 0 2px rgb(255 255 255 / 0.5); }
+[data-ui="win7"] .bt-nav[aria-current="page"] { color: hsl(var(--fg)); }
+[data-ui="win7"] .bt-row:hover { box-shadow: inset 0 0 0 1px color-mix(in srgb, hsl(var(--accent)) 26%, var(--w7-w)); }
+[data-ui="win7"] .bt-row-current { box-shadow: inset 0 0 0 1px var(--w7-sel-edge), inset 0 0 0 2px rgb(255 255 255 / 0.5); }
+[data-ui="win7"] :is([role="menuitem"], [role="option"]):is(:hover, :focus-visible, .bt-select-hi) { box-shadow: inset 0 0 0 1px var(--w7-sel-edge), inset 0 0 0 2px rgb(255 255 255 / 0.55); }
+[data-ui="win7"] :is([role="menuitem"], [role="option"]) { border-radius: 3px; }
+[data-ui="win7"] .btn:focus-visible { outline: 1px dotted color-mix(in srgb, hsl(var(--fg)) 80%, transparent); outline-offset: -4px; }
+[data-ui="win7"] .btn:active:not(:disabled):not(.btn-accent):not(.btn-ghost) { background: var(--gel-down); border-color: color-mix(in srgb, hsl(var(--accent)) 70%, #2c628b); }
+[data-ui="win7"] .bt-panel-title { border-bottom: 1px solid color-mix(in srgb, hsl(var(--accent)) 22%, #c4d1e4); font-weight: 600; }
+/* Explorer's column-header strip: pale gradient with a hard middle split and a blue-grey underline */
+[data-ui="win7"] [role="toolbar"] { background: linear-gradient(to bottom, var(--w7-w) 0, color-mix(in srgb, hsl(var(--accent)) 5%, var(--w7-w)) 49.9%, color-mix(in srgb, hsl(var(--accent)) 10%, var(--w7-w)) 50%, color-mix(in srgb, hsl(var(--accent)) 6%, var(--w7-w)) 100%); border-bottom-color: color-mix(in srgb, hsl(var(--accent)) 25%, #bccbe0); }
+/* the taskbar: dark glass, so its type and buttons turn light */
+[data-ui="win7"] :is(.bt-player, .bt-tabbar) { --fg: 0 0% 100%; --muted: 212 32% 80%; color: #fff; -webkit-backdrop-filter: blur(8px) saturate(1.4); backdrop-filter: blur(8px) saturate(1.4); }
+[data-ui="win7"] .bt-player .btn:not(.btn-accent):not(.btn-ghost) { background: linear-gradient(to bottom, rgb(255 255 255 / 0.28) 0, rgb(255 255 255 / 0.1) 49.9%, rgb(0 0 0 / 0.2) 50%, rgb(255 255 255 / 0.08) 100%); border-color: rgb(255 255 255 / 0.45); color: #fff; box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.18); }
+[data-ui="win7"] .bt-player .btn:not(.btn-accent):not(.btn-ghost):hover { background: linear-gradient(to bottom, rgb(150 215 255 / 0.55) 0, rgb(100 190 255 / 0.28) 49.9%, rgb(30 120 210 / 0.5) 50%, rgb(110 205 255 / 0.55) 100%); border-color: rgb(190 235 255 / 0.85); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.4), 0 0 8px rgb(110 205 255 / 0.55); }
+[data-ui="win7"] .bt-player .btn-ghost:hover { background: linear-gradient(to bottom, rgb(255 255 255 / 0.28), rgb(255 255 255 / 0.08)); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.35); }
+[data-ui="win7"] .bt-tab[aria-current="page"] { color: #fff; text-shadow: 0 0 6px var(--w7-glow); }
+/* scrollbars: the light track with a gel thumb */
+[data-ui="win7"] * { scrollbar-width: auto; scrollbar-color: auto; }
+[data-ui="win7"] ::-webkit-scrollbar { width: 15px; height: 15px; }
+[data-ui="win7"] ::-webkit-scrollbar-button { display: none; }
+[data-ui="win7"] ::-webkit-scrollbar-corner { background: color-mix(in srgb, hsl(var(--surface)) 80%, var(--w7-w)); }
+[data-ui="win7"] ::-webkit-scrollbar-track { background: linear-gradient(to right, color-mix(in srgb, hsl(var(--fg)) 8%, hsl(var(--surface))), color-mix(in srgb, hsl(var(--surface)) 50%, var(--w7-w)) 60%, color-mix(in srgb, hsl(var(--fg)) 4%, hsl(var(--surface)))); border-left: 1px solid color-mix(in srgb, hsl(var(--fg)) 14%, hsl(var(--surface))); }
+[data-ui="win7"] ::-webkit-scrollbar-track:horizontal { background: linear-gradient(to bottom, color-mix(in srgb, hsl(var(--fg)) 8%, hsl(var(--surface))), color-mix(in srgb, hsl(var(--surface)) 50%, var(--w7-w)) 60%, color-mix(in srgb, hsl(var(--fg)) 4%, hsl(var(--surface)))); border-left: 0; border-top: 1px solid color-mix(in srgb, hsl(var(--fg)) 14%, hsl(var(--surface))); }
+[data-ui="win7"] ::-webkit-scrollbar-thumb { background: linear-gradient(to right, color-mix(in srgb, hsl(var(--raised)) 40%, var(--w7-w)), color-mix(in srgb, hsl(var(--raised)) 80%, var(--w7-w)) 48%, color-mix(in srgb, hsl(var(--raised)) 92%, #000) 52%, color-mix(in srgb, hsl(var(--raised)) 80%, #000)); border: 1px solid var(--w7-edge); border-radius: 3px; box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.6); min-height: 36px; min-width: 36px; }
+[data-ui="win7"] ::-webkit-scrollbar-thumb:hover { background: linear-gradient(to right, color-mix(in srgb, var(--w7-glow) 16%, var(--w7-w)), color-mix(in srgb, var(--w7-glow) 28%, var(--w7-w)) 48%, color-mix(in srgb, var(--w7-glow) 50%, var(--w7-w)) 52%, color-mix(in srgb, var(--w7-glow) 66%, var(--w7-w))); border-color: color-mix(in srgb, hsl(var(--accent)) 85%, #3c7fb1); }
+[data-ui="win7"] { --player-in: bt-fade 300ms ease-out both; --player-out: bt-fade-out 240ms ease-in both; --player-ms: 240ms; --pop-out: bt-fade-out 200ms ease-in both; --pop-ms: 200ms; }
+[data-ui="win7"] { --page-in: bt-fade 120ms linear backwards; }

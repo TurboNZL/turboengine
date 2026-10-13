@@ -1,0 +1,47 @@
+/* ================== Spotify ==================
+ * The desktop app's 2024-26 layout (read off a screenshot): a black canvas, the library and the main view as separate rounded dark panels
+ * with 8 px gaps, bold muted navigation that turns white, pill search and chips, green pill actions, tiles that lighten on hover,
+ * a white round play button. Pair it with the Spotify colours. Circular is Spotify's own face; Figtree stands in for it. */
+[data-ui="spotify"] {
+  --radius: 8px; --ctl-r: 9999px; --card-r: 8px; --win-r: 12px; --menu-r: 4px; --nav-r: 6px; --chip-r: 9999px; --in-r: 9999px;
+  --font: "Albert Sans", "Circular Std", "Spotify Mix", "Helvetica Neue", Helvetica, Arial, sans-serif; --title-font: var(--font);
+  --dur: 150ms; --ease: ease-out;
+  --btn-bg: transparent; --btn-fg: hsl(var(--fg)); --btn-weight: 700; --btn-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 45%, transparent); --btn-shadow: none;
+  --btn-hover-bg: transparent; --btn-hover-border: hsl(var(--fg)); --btn-active-transform: scale(0.97);
+  --btn-accent-bg: hsl(var(--accent)); --btn-accent-fg: #000; --btn-accent-border: 0 solid transparent; --btn-accent-hover-bg: color-mix(in srgb, hsl(var(--accent)) 86%, white);
+  --ghost-hover-bg: color-mix(in srgb, hsl(var(--fg)) 10%, transparent);
+  --in-bg: hsl(var(--raised)); --in-border: 1px solid transparent; --in-hover-border: color-mix(in srgb, hsl(var(--fg)) 30%, transparent); --in-focus-border: hsl(var(--fg)); --in-focus-shadow: none; --in-px: 1rem;
+  --card-bg: hsl(var(--raised)); --card-border: 0 solid transparent; --card-shadow: none;
+  --backdrop: rgb(0 0 0 / 0.7);
+  --win-bg: hsl(var(--raised)); --win-border: 0 solid transparent; --win-shadow: 0 16px 40px rgb(0 0 0 / 0.6); --dialog-anim: bt-pop 160ms ease-out;
+  --tb-bg: transparent; --tb-border: 0 solid transparent; --tb-pad: 1.25rem 1.5rem 0.25rem; --tb-size: 1.35rem; --tb-weight: 800; --tb-justify: space-between;
+  --close-r: 9999px; --close-hover-bg: color-mix(in srgb, hsl(var(--fg)) 12%, transparent);
+  --bar-border: 0 solid transparent;
+  --menu-bg: hsl(var(--raised)); --menu-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 8%, transparent); --pop-shadow: 0 16px 24px rgb(0 0 0 / 0.5); --menu-anim: bt-fade 100ms ease-out; --menu-hi-bg: color-mix(in srgb, hsl(var(--fg)) 10%, transparent);
+  --side-bg: hsl(var(--surface)); --side-shadow: none; --top-bg: transparent; --top-shadow: none; --player-bg: hsl(var(--bg)); --player-shadow: none;
+  --nav-hover-bg: transparent; --nav-active-bg: transparent; --nav-active-fg: hsl(var(--fg));
+  --row-hover: color-mix(in srgb, hsl(var(--fg)) 8%, transparent); --row-current: color-mix(in srgb, hsl(var(--fg)) 12%, transparent);
+  --chk-size: 1.1rem; --chk-r: 4px; --chk-border: 2px solid color-mix(in srgb, hsl(var(--fg)) 60%, transparent); --chk-bg: transparent; --chk-hover-border: hsl(var(--fg)); --chk-focus: 0 0 0 3px color-mix(in srgb, hsl(var(--accent)) 35%, transparent);
+  --chk-on-bg: hsl(var(--accent)); --chk-on-border: hsl(var(--accent)); --chk-on-fg: #000; --chk-radio-on-bg: hsl(var(--accent)); --chk-dot: #000;
+  --rng-appearance: none; --rng-h: 4px; --rng-r: 9999px; --rng-border: 0 solid transparent; --rng-track: color-mix(in srgb, hsl(var(--fg)) 28%, transparent); --rng-fill: hsl(var(--fg));
+  --rng-tw: 12px; --rng-th: 12px; --rng-tr: 9999px; --rng-thumb: hsl(var(--fg)); --rng-tb: 0 solid transparent; --rng-ts: 0 2px 4px rgb(0 0 0 / 0.5);
+}
+[data-ui="spotify"] .bt-shell { -webkit-backdrop-filter: none; backdrop-filter: none; }
+[data-ui="spotify"] .bt-side.bt-shell { margin: 8px 0 0 8px; border-radius: 8px; }
+@media (min-width: 768px) {
+  [data-ui="spotify"] main { margin: 8px 8px 0 0; border-radius: 8px; background: hsl(var(--surface)); } }
+[data-ui="spotify"] main { background: hsl(var(--surface)); }
+[data-ui="spotify"] .bt-top { background: linear-gradient(to bottom, color-mix(in srgb, hsl(var(--accent)) 14%, hsl(var(--surface))), hsl(var(--surface))); }
+[data-ui="spotify"] .bt-nav { font-weight: 700; color: hsl(var(--muted)); }
+[data-ui="spotify"] .bt-nav:hover, [data-ui="spotify"] .bt-nav[aria-current="page"] { color: hsl(var(--fg)); }
+[data-ui="spotify"] .bt-brand { font-weight: 800; }
+[data-ui="spotify"] main h1 { font-weight: 800; font-size: 2rem; letter-spacing: -0.02em; }
+[data-ui="spotify"] .chip { background: hsl(var(--raised)); font-weight: 500; }
+[data-ui="spotify"] .bt-tile, [data-ui="spotify"] .bt-cap { transition: background-color var(--dur) var(--ease); }
+[data-ui="spotify"] .bt-tile { padding: 12px; border-radius: 8px; background: transparent; }
+[data-ui="spotify"] .bt-tile:hover { background: hsl(var(--hover)); }
+[data-ui="spotify"] .bt-cover { border-radius: 6px; box-shadow: 0 8px 24px rgb(0 0 0 / 0.5); }
+[data-ui="spotify"] .bt-cover[data-kind="artist"] { border-radius: 9999px; }
+[data-ui="spotify"] .bt-player .btn-accent { background: hsl(var(--fg)); color: hsl(var(--bg)); border-radius: 9999px; }
+[data-ui="spotify"] .bt-player .btn-accent:hover { transform: scale(1.06); background: hsl(var(--fg)); }
+[data-ui="spotify"] .bt-range:hover { --rng-fill: hsl(var(--accent)); }

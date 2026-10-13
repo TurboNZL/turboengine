@@ -1,0 +1,19 @@
+{
+  "id": "solarized",
+  "label": "Solarized Dark",
+  "palettes": [
+    {
+      "id": "solarized",
+      "label": "Solarized Dark",
+      "mode": "dark",
+      "bg": [193, 100, 9],
+      "primary": [205, 69, 49],
+      "fg": "44 87% 94%",
+      "mutedFg": "186 13% 62%",
+      "motif": "waves",
+      "step": 1.2,
+      "group": "colour",
+      "order": 190
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "id": "amoled",
+  "label": "AMOLED black",
+  "palettes": [
+    {
+      "id": "amoled",
+      "label": "AMOLED black",
+      "mode": "dark",
+      "bg": [0, 0, 0],
+      "primary": [190, 90, 50],
+      "motif": "stars",
+      "step": 1.4,
+      "group": "colour",
+      "order": 130
+    }
+  ]
+}

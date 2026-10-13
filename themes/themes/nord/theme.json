@@ -1,0 +1,19 @@
+{
+  "id": "nord",
+  "label": "Nord",
+  "palettes": [
+    {
+      "id": "nord",
+      "label": "Nord",
+      "mode": "dark",
+      "bg": [220, 16, 17],
+      "primary": [193, 43, 67],
+      "fg": "218 27% 94%",
+      "mutedFg": "219 15% 70%",
+      "motif": "peaks",
+      "step": 1.1,
+      "group": "colour",
+      "order": 140
+    }
+  ]
+}

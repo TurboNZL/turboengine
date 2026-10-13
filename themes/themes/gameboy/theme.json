@@ -1,0 +1,46 @@
+{
+  "id": "gameboy",
+  "label": "Game Boy (DMG-01)",
+  "style": {
+    "description": "The four greens of the original LCD, 2 px square frames, hard shadows, inverted picks and Press Start 2P type. Covers are tinted green.",
+    "font": "Press Start 2P",
+    "matching": {
+      "light": "dmg",
+      "dark": "dmg"
+    },
+    "fonts": [
+      {
+        "package": "press-start-2p",
+        "weights": [400]
+      },
+      {
+        "package": "vt323",
+        "weights": [400]
+      }
+    ],
+    "order": 220
+  },
+  "palettes": [
+    {
+      "id": "dmg",
+      "label": "DMG Green",
+      "mode": "light",
+      "bg": "#9bbc0f",
+      "primary": "#306230",
+      "onPrimary": "71 85% 40%",
+      "fg": "#0f380f",
+      "mutedFg": "#306230",
+      "motif": "dots",
+      "overrides": {
+        "card": "#8bac0f",
+        "secondary": "#8bac0f",
+        "muted": "#8bac0f",
+        "accent": "#8bac0f",
+        "border": "#306230",
+        "input": "#8bac0f"
+      },
+      "group": "inspired",
+      "order": 400
+    }
+  ]
+}

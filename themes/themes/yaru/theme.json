@@ -1,0 +1,63 @@
+{
+  "id": "yaru",
+  "label": "Yaru (Ubuntu)",
+  "style": {
+    "description": "Ubuntu's GNOME theme: libadwaita shapes with the Ubuntu typeface and the orange accent.",
+    "font": "Ubuntu",
+    "matching": {
+      "light": "yaru",
+      "dark": "yaru-dark"
+    },
+    "fonts": [
+      {
+        "package": "ubuntu",
+        "weights": [400, 500, 700]
+      }
+    ],
+    "order": 320
+  },
+  "palettes": [
+    {
+      "id": "yaru",
+      "label": "Yaru (Ubuntu)",
+      "mode": "light",
+      "bg": "#fafafa",
+      "primary": "#e95420",
+      "onPrimary": "0 0% 100%",
+      "fg": "#3d3d3d",
+      "mutedFg": "#7d7d7d",
+      "motif": "hills",
+      "overrides": {
+        "card": "#ffffff",
+        "secondary": "#ebebeb",
+        "muted": "#f0f0f0",
+        "accent": "#e3e3e3",
+        "border": "#dfdbd2",
+        "input": "#dcdcdc"
+      },
+      "group": "platform",
+      "order": 650
+    },
+    {
+      "id": "yaru-dark",
+      "label": "Yaru Dark (Ubuntu)",
+      "mode": "dark",
+      "bg": "#333333",
+      "primary": "#e95420",
+      "onPrimary": "0 0% 100%",
+      "fg": "#f2f2f2",
+      "mutedFg": "#b0b0b0",
+      "motif": "hills",
+      "overrides": {
+        "card": "#3d3d3d",
+        "secondary": "#2b2b2b",
+        "muted": "#383838",
+        "accent": "#4a4a4a",
+        "border": "#1f1f1f",
+        "input": "#2b2b2b"
+      },
+      "group": "platform",
+      "order": 660
+    }
+  ]
+}

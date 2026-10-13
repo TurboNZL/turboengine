@@ -1,0 +1,39 @@
+/* ================== Zune HD (Metro) ==================
+ * Black, huge light lowercase titles, no boxes: content is set in type and flat tiles, controls are outlined in white, the one accent
+ * colour marks the place you are. Segoe UI Light (Open Sans Light elsewhere). */
+[data-ui="zune"] {
+  --radius: 0px; --ctl-r: 0px; --card-r: 0px; --win-r: 0px; --menu-r: 0px; --nav-r: 0px; --chip-r: 0px; --in-r: 0px;
+  --font: "Segoe UI", "Open Sans", system-ui, sans-serif; --title-font: "Segoe UI Light", "Segoe UI", "Open Sans", system-ui, sans-serif;
+  --dur: 180ms; --ease: cubic-bezier(0.1, 0.9, 0.2, 1);
+  --btn-bg: transparent; --btn-fg: hsl(var(--fg)); --btn-weight: 400; --btn-border: 2px solid color-mix(in srgb, hsl(var(--fg)) 70%, transparent); --btn-shadow: none;
+  --btn-hover-bg: color-mix(in srgb, hsl(var(--fg)) 16%, transparent); --btn-hover-border: hsl(var(--fg)); --btn-hover-shadow: none;
+  --btn-active-shadow: none; --btn-active-transform: scale(0.97);
+  --btn-accent-bg: hsl(var(--accent)); --btn-accent-fg: hsl(var(--accent-fg)); --btn-accent-border: 2px solid hsl(var(--accent)); --btn-accent-border-color: hsl(var(--accent)); --btn-accent-shadow: none;
+  --btn-accent-hover-bg: color-mix(in srgb, hsl(var(--accent)) 88%, white); --btn-accent-hover-shadow: none; --btn-accent-text-shadow: none;
+  --ghost-hover-bg: color-mix(in srgb, hsl(var(--fg)) 14%, transparent);
+  --in-bg: color-mix(in srgb, hsl(var(--fg)) 14%, transparent); --in-border: 2px solid transparent; --in-shadow: none; --in-hover-border: color-mix(in srgb, hsl(var(--fg)) 60%, transparent); --in-focus-border: hsl(var(--accent)); --in-focus-shadow: none; --in-px: 0.75rem;
+  --card-bg: transparent; --card-border: 0 solid transparent; --card-shadow: none;
+  --backdrop: rgb(0 0 0 / 0.7);
+  --win-bg: hsl(var(--surface)); --win-border: 0 solid transparent; --win-shadow: 0 20px 60px rgb(0 0 0 / 0.7); --dialog-anim: bt-fade 200ms ease-out;
+  --tb-bg: transparent; --tb-fg: hsl(var(--fg)); --tb-border: 0 solid transparent; --tb-pad: 1rem 1.4rem 0.4rem; --tb-size: 2rem; --tb-weight: 300; --tb-justify: space-between; --tb-text-shadow: none;
+  --close-fg: hsl(var(--fg)); --close-hover-bg: color-mix(in srgb, hsl(var(--fg)) 15%, transparent); --close-hover-fg: hsl(var(--fg)); --close-r: 0;
+  --bar-border: 0 solid transparent;
+  --menu-bg: hsl(var(--surface)); --menu-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 30%, transparent); --pop-shadow: 0 8px 24px rgb(0 0 0 / 0.6); --menu-anim: bt-fade 100ms ease-out; --menu-hi-bg: hsl(var(--accent)); --menu-hi-fg: hsl(var(--accent-fg));
+  --side-bg: transparent; --side-shadow: none; --top-bg: transparent; --top-shadow: none; --player-bg: hsl(var(--surface)); --player-shadow: none;
+  --nav-hover-bg: transparent; --nav-active-bg: transparent; --nav-active-fg: hsl(var(--accent)); --nav-active-shadow: none;
+  --row-hover: color-mix(in srgb, hsl(var(--fg)) 10%, transparent); --row-current: color-mix(in srgb, hsl(var(--accent)) 26%, transparent);
+  --panel-tb-fg: hsl(var(--accent)); --panel-tb-margin: 0 0 0.5rem; --panel-tb-pad: 0;
+  --chk-size: 1.1rem; --chk-r: 0; --chk-border: 2px solid color-mix(in srgb, hsl(var(--fg)) 70%, transparent); --chk-bg: transparent; --chk-hover-border: hsl(var(--accent)); --chk-focus: 0 0 0 2px color-mix(in srgb, hsl(var(--accent)) 40%, transparent);
+  --chk-on-bg: hsl(var(--accent)); --chk-on-border: hsl(var(--accent)); --chk-on-fg: hsl(var(--accent-fg)); --chk-radio-on-bg: hsl(var(--accent)); --chk-dot: hsl(var(--accent-fg));
+  --rng-appearance: none; --rng-h: 3px; --rng-r: 0; --rng-track: color-mix(in srgb, hsl(var(--fg)) 28%, transparent); --rng-fill: hsl(var(--accent));
+  --rng-tw: 0.5rem; --rng-th: 1.5rem; --rng-tr: 0; --rng-thumb: hsl(var(--fg)); --rng-tb: 0 solid transparent; --rng-ts: none;
+}
+[data-ui="zune"] :is(h1, h2, h3, .bt-brand, .bt-titlebar h2, .bt-panel-title) { font-family: var(--title-font); font-weight: 300; text-transform: lowercase; letter-spacing: -0.01em; }
+[data-ui="zune"] h1 { font-size: 3rem; line-height: 1; margin-bottom: 0.5rem; }
+[data-ui="zune"] h2 { font-size: 1.6rem; }
+[data-ui="zune"] .bt-nav { font-family: var(--title-font); font-weight: 300; font-size: 1.15rem; text-transform: lowercase; padding-top: 0.3rem; padding-bottom: 0.3rem; color: hsl(var(--muted)); }
+[data-ui="zune"] .bt-nav[aria-current="page"] { color: hsl(var(--accent)); }
+[data-ui="zune"] .btn { text-transform: lowercase; }
+[data-ui="zune"] .card { background: hsl(var(--raised) / 0.55); }
+[data-ui="zune"] .bt-cover { border-radius: 0; }
+[data-ui="zune"] { --page-in: bt-fade 220ms ease-out backwards; }

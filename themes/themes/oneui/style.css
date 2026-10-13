@@ -1,0 +1,60 @@
+/* ================== Samsung One UI ==================
+ * The quick panel and settings of One UI 7/8 (read off a screenshot of the quick panel): large squircle-ish panels, translucent frosted
+ * tiles over a soft gradient, circle and pill controls, a white circle for the active control, thick pill sliders with a white fill. */
+[data-ui="oneui"] {
+  --radius: 26px; --ctl-r: 9999px; --card-r: 28px; --win-r: 32px; --menu-r: 22px; --nav-r: 9999px; --chip-r: 9999px; --in-r: 9999px;
+  --font: "Outfit", "Roboto Flex", "Samsung One", system-ui, sans-serif; --title-font: var(--font);
+  --dur: 220ms; --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --oneui-glass: color-mix(in srgb, hsl(var(--surface)) 62%, transparent);
+  --btn-bg: color-mix(in srgb, hsl(var(--fg)) 10%, transparent); --btn-fg: hsl(var(--fg)); --btn-weight: 500; --btn-border: 0 solid transparent; --btn-shadow: none;
+  --btn-hover-bg: color-mix(in srgb, hsl(var(--fg)) 16%, transparent); --btn-active-transform: scale(0.96);
+  --btn-accent-bg: hsl(var(--accent)); --btn-accent-fg: hsl(var(--accent-fg)); --btn-accent-border: 0 solid transparent; --btn-accent-hover-bg: color-mix(in srgb, hsl(var(--accent)) 88%, white);
+  --ghost-hover-bg: color-mix(in srgb, hsl(var(--fg)) 10%, transparent);
+  --in-bg: color-mix(in srgb, hsl(var(--fg)) 9%, transparent); --in-border: 0 solid transparent; --in-hover-border: transparent; --in-focus-border: transparent; --in-focus-shadow: 0 0 0 2px hsl(var(--accent)); --in-px: 1.1rem; --in-py: 0.65rem;
+  --card-bg: var(--oneui-glass); --card-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 10%, transparent); --card-shadow: none;
+  --backdrop: rgb(0 0 0 / 0.35);
+  --win-bg: color-mix(in srgb, hsl(var(--surface)) 88%, transparent); --win-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 12%, transparent); --win-shadow: 0 20px 60px rgb(0 0 0 / 0.35); --dialog-anim: bt-pop 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  --tb-bg: transparent; --tb-border: 0 solid transparent; --tb-pad: 1.4rem 1.6rem 0.4rem; --tb-size: 1.3rem; --tb-weight: 600; --tb-justify: space-between;
+  --close-bg: color-mix(in srgb, hsl(var(--fg)) 12%, transparent); --close-r: 9999px;
+  --bar-border: 0 solid transparent;
+  --menu-bg: color-mix(in srgb, hsl(var(--surface)) 86%, transparent); --menu-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 12%, transparent); --pop-shadow: 0 14px 40px rgb(0 0 0 / 0.3); --menu-anim: bt-pop 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  --menu-hi-bg: color-mix(in srgb, hsl(var(--fg)) 12%, transparent);
+  --side-bg: color-mix(in srgb, hsl(var(--surface)) 40%, transparent); --side-shadow: none;
+  --top-bg: transparent; --top-shadow: none;
+  --player-bg: color-mix(in srgb, hsl(var(--surface)) 70%, transparent); --player-shadow: none;
+  --nav-hover-bg: color-mix(in srgb, hsl(var(--fg)) 8%, transparent); --nav-active-bg: hsl(var(--fg)); --nav-active-fg: hsl(var(--bg));
+  --row-hover: color-mix(in srgb, hsl(var(--fg)) 8%, transparent); --row-current: color-mix(in srgb, hsl(var(--accent)) 22%, transparent);
+  --chk-size: 1.35rem; --chk-r: 9999px; --chk-border: 2px solid color-mix(in srgb, hsl(var(--fg)) 40%, transparent); --chk-bg: transparent; --chk-hover-border: hsl(var(--fg)); --chk-focus: 0 0 0 3px color-mix(in srgb, hsl(var(--accent)) 35%, transparent);
+  --chk-on-bg: hsl(var(--accent)); --chk-on-border: hsl(var(--accent)); --chk-on-fg: hsl(var(--accent-fg)); --chk-radio-on-bg: hsl(var(--accent)); --chk-dot: hsl(var(--accent-fg));
+  /* the thick pill slider with a white fill and no visible knob */
+  --rng-appearance: none; --rng-h: 1.6rem; --rng-r: 9999px; --rng-border: 0 solid transparent; --rng-track: color-mix(in srgb, hsl(var(--fg)) 22%, transparent); --rng-fill: hsl(var(--fg));
+  --rng-tw: 0.3rem; --rng-th: 1.6rem; --rng-tr: 9999px; --rng-thumb: transparent; --rng-tb: 0 solid transparent; --rng-ts: none;
+}
+html[data-ui="oneui"] .bt-shell, html[data-ui="oneui"] .card, html[data-ui="oneui"] .bt-menu, html[data-ui="oneui"] .bt-window { -webkit-backdrop-filter: blur(26px) saturate(1.3); backdrop-filter: blur(26px) saturate(1.3); }
+[data-ui="oneui"] .bt-side.bt-shell { margin: 10px 0 10px 10px; border-radius: 30px; }
+[data-ui="oneui"] .bt-player.bt-shell { margin: 0 10px 10px; border-radius: 30px; }
+[data-ui="oneui"] .bt-nav { font-weight: 500; padding-inline: 1rem; }
+[data-ui="oneui"] .bt-nav[aria-current="page"] svg, [data-ui="oneui"] .bt-nav[aria-current="page"] { color: hsl(var(--bg)); }
+[data-ui="oneui"] .btn-accent { color: var(--btn-accent-fg); }
+[data-ui="oneui"] .bt-cover { border-radius: 24px; }
+[data-ui="oneui"] .bt-cover[data-kind="artist"] { border-radius: 9999px; }
+[data-ui="oneui"] main h1 { font-size: 2rem; font-weight: 600; }
+[data-ui="oneui"] .bt-range { border-radius: 9999px; overflow: hidden; }
+/* quick-panel tiles: every button is a frosted translucent pill with a fine light edge; the active/primary one is a solid white pill (dark mode) */
+[data-ui="oneui"] {
+  --btn-bg: color-mix(in srgb, hsl(var(--fg)) 13%, transparent); --btn-hover-bg: color-mix(in srgb, hsl(var(--fg)) 20%, transparent);
+  --btn-shadow: inset 0 1px 0 rgb(255 255 255 / 0.18), inset 0 0 0 1px rgb(255 255 255 / 0.08);
+}
+:is(html, div)[data-ui="oneui"] .btn { -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); min-height: 2.5rem; padding-inline: 1.15rem; transition: background-color var(--dur), transform var(--dur) var(--ease), box-shadow var(--dur); }
+[data-ui="oneui"] .btn:active { transform: scale(0.94); }
+:is(html, div)[data-ui="oneui"] .btn.btn-ghost { background: transparent; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+:is(html, div)[data-ui="oneui"] .btn.btn-ghost:hover { background: var(--ghost-hover-bg); }
+/* icon-only buttons are circles */
+[data-ui="oneui"] .btn.\!p-2 { width: 2.5rem; height: 2.5rem; padding: 0 !important; justify-content: center; border-radius: 9999px; }
+html[data-mode="dark"] [data-ui="oneui"], html[data-mode="dark"][data-ui="oneui"] { --btn-accent-bg: #fff; --btn-accent-fg: #17171a; --btn-accent-hover-bg: #e8e8ee; }
+html[data-mode="dark"][data-ui="oneui"] .btn-accent, html[data-mode="dark"] [data-ui="oneui"] .btn-accent { box-shadow: 0 2px 10px rgb(0 0 0 / 0.25); }
+[data-ui="oneui"] .btn-accent { font-weight: 600; }
+/* panels: big squircles with the same glass edge as the tiles */
+[data-ui="oneui"] .card { border-radius: 30px; box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.12); }
+/* sliders: thick pills; the filled part is white with the track as a dark glass groove */
+[data-ui="oneui"] .bt-range { height: 1.6rem; border-radius: 9999px; box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.06); }

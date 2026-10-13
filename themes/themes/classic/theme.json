@@ -1,0 +1,18 @@
+{
+  "id": "classic",
+  "label": "Classic",
+  "palettes": [
+    {
+      "id": "classic",
+      "label": "Classic",
+      "mode": "dark",
+      "bg": [240, 6, 4],
+      "primary": [217, 91, 60],
+      "motif": "grid",
+      "own": true,
+      "note": "The original look, tighter",
+      "group": "own",
+      "order": 10
+    }
+  ]
+}

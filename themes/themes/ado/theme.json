@@ -1,0 +1,48 @@
+{
+  "id": "ado",
+  "label": "Ado",
+  "style": {
+    "description": "Stage-black and electric blue with a hot red edge: condensed italic capitals, thin glowing outlines, a slash before page titles and square controls that light up.",
+    "font": "Barlow Condensed",
+    "matching": {
+      "light": "ado",
+      "dark": "ado"
+    },
+    "fonts": [
+      {
+        "package": "archivo",
+        "weights": [400, 600, 700, 800, 900],
+        "italic": [700, 800]
+      },
+      {
+        "package": "barlow-condensed",
+        "weights": [400, 600, 700, 800, 900],
+        "italic": [700, 800, 900]
+      }
+    ],
+    "order": 310
+  },
+  "palettes": [
+    {
+      "id": "ado",
+      "label": "Ado",
+      "mode": "dark",
+      "bg": "#04060f",
+      "primary": "#2f6bff",
+      "onPrimary": "0 0% 100%",
+      "fg": "#f2f5ff",
+      "mutedFg": "#8b97c4",
+      "motif": "rays",
+      "overrides": {
+        "card": "#0a1024",
+        "secondary": "#101a3a",
+        "muted": "#0d1530",
+        "accent": "#16255a",
+        "border": "#1d2d6e",
+        "input": "#101a3a"
+      },
+      "group": "inspired",
+      "order": 620
+    }
+  ]
+}

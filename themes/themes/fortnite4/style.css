@@ -1,0 +1,66 @@
+[data-ui="fortnite4"] {
+  --dur: 120ms; --ease: cubic-bezier(0.2, 0.9, 0.3, 1);
+  --btn-weight: 800; --btn-border: 0 solid transparent;
+  --ghost-hover-bg: hsl(var(--fg) / 0.14);
+  --in-focus-shadow: none;
+  --tb-border: 0 solid transparent; --tb-pad: 0.6rem 1.25rem; --tb-size: 1.35rem; --tb-weight: 900; --tb-justify: space-between;
+  --close-hover-bg: rgb(0 0 0 / 0.18);
+  --panel-tb-margin: 0 0 0.5rem; --panel-tb-pad: 0;
+  --chk-size: 1.2rem; --vote-ms: 380ms;
+  --rng-appearance: none; --rng-h: 8px; --rng-tw: 1rem; --rng-th: 1rem;
+}
+/* the wide geometric stand-in for Heading Now takes more room: nudge down */
+html[data-ui="fortnite4"] { font-size: 14px; }
+[data-ui="fortnite4"] { text-transform: uppercase; letter-spacing: 0.02em; font-weight: 700; }
+[data-ui="fortnite4"] :is(button, .btn, select, [role="menuitem"], [role="option"], h1, h2, h3, label, summary) { text-transform: inherit; letter-spacing: inherit; }
+[data-ui="fortnite4"] :is(.input, input, textarea, code, pre, p, .font-mono, [contenteditable]) { text-transform: none; letter-spacing: 0; }
+[data-ui="fortnite4"] :is(h1, h2, h3, .bt-titlebar h2) { font-family: var(--title-font); font-weight: 800; }
+[data-ui="fortnite4"] .btn { font-weight: 800; letter-spacing: 0.04em; }
+[data-ui="fortnite4"] .btn:hover:not(:disabled) { transform: translateY(-1px); }
+[data-ui="fortnite4"] .btn:active:not(:disabled) { transform: translateY(1px); }
+[data-ui="fortnite4"] .bt-titlebar svg { display: none; }
+[data-ui="fortnite4"] .btn.btn-accent { font-size: 1rem; }
+[data-ui="fortnite4"] { --fn-weight: 700; }
+[data-ui="fortnite4"] :is(.font-light, .font-normal, .font-medium, .font-semibold, .bt-nav, .bt-tab, .chip, th, label, [role="menuitem"], [role="option"], .btn) { font-weight: var(--fn-weight); }
+[data-ui="fortnite4"] :is(.font-bold, .font-extrabold, h1, h2, h3, .bt-titlebar h2) { font-weight: 900; }
+/* ---- Chapter 4 (2023, curved-edge redesign): blue, charcoal buttons, thin white outlines, white selected row, Heading Now ---- */
+[data-ui="fortnite4"] {
+  --radius: 3px; --ctl-r: 3px; --card-r: 4px; --win-r: 4px; --menu-r: 3px; --nav-r: 3px; --chip-r: 3px; --in-r: 3px;
+  --font: "Heading Now", Archivo, Montserrat, "Segoe UI", system-ui, sans-serif; --title-font: "Heading Now", Archivo, Montserrat, "Segoe UI", system-ui, sans-serif;
+  --btn-weight: 700;
+  --btn-bg: #3a4254; --btn-fg: #fff; --btn-border: 1px solid rgb(255 255 255 / 0.22); --btn-shadow: none; --btn-hover-bg: #4b5570; --btn-hover-border: rgb(255 255 255 / 0.5);
+  --btn-active-shadow: none; --btn-active-transform: none;
+  --btn-accent-bg: #ffe500; --btn-accent-fg: #000; --btn-accent-border: 1px solid #fff4a0; --btn-accent-border-color: #fff4a0; --btn-accent-shadow: none; --btn-accent-hover-bg: #fff04d; --btn-accent-hover-shadow: none;
+  --in-bg: #161d3e; --in-border: 1px solid rgb(255 255 255 / 0.3); --in-hover-border: rgb(255 255 255 / 0.6); --in-focus-border: #fff;
+  --card-bg: rgb(10 47 148 / 0.7); --card-border: 1px solid rgb(255 255 255 / 0.18); --card-shadow: none;
+  --win-bg: #0b3bb0; --win-border: 1px solid rgb(255 255 255 / 0.35); --win-shadow: 0 24px 60px rgb(0 10 60 / 0.6); --dialog-anim: bt-pop 160ms cubic-bezier(0.2, 0.9, 0.3, 1);
+  --tb-bg: #141a38; --tb-fg: #fff; --close-fg: #fff; --close-hover-fg: #fff;
+  --bar-border: 1px solid rgb(255 255 255 / 0.15);
+  --menu-bg: #141a38; --menu-border: 1px solid rgb(255 255 255 / 0.3); --pop-shadow: 0 12px 30px rgb(0 10 60 / 0.55); --menu-anim: bt-pop 120ms cubic-bezier(0.2, 0.9, 0.3, 1);
+  --menu-hi-bg: #fff; --menu-hi-fg: #0a2a78;
+  --side-bg: linear-gradient(to bottom, #0c40b8, #0a2f94); --top-bg: #141a38; --player-bg: #141a38; --player-shadow: none;
+  --nav-hover-bg: rgb(255 255 255 / 0.14); --nav-active-bg: #fff; --nav-active-fg: #0a2a78; --nav-active-shadow: none;
+  --row-hover: rgb(255 255 255 / 0.12); --row-current: rgb(255 255 255 / 0.2);
+  --panel-tb-fg: #fff;
+  --chk-border: 2px solid #fff; --chk-on-fg: #0a2a78;
+  --rng-track: #161d3e; --rng-fill: #fff; --rng-thumb: #fff; --rng-ts: none;
+}
+[data-ui="fortnite4"] { --slant: -10deg; }
+[data-ui="fortnite4"] :is(.btn:not(.btn-ghost), .bt-nav) { isolation: isolate; background: transparent; border-color: transparent; box-shadow: none; transform-style: flat; }
+[data-ui="fortnite4"] :is(.btn:not(.btn-ghost):not(.absolute), .bt-nav) { position: relative; }
+[data-ui="fortnite4"] .btn:not(.btn-ghost):is(:hover, :active) { background: transparent; border-color: transparent; box-shadow: none; }
+[data-ui="fortnite4"] .bt-nav:is(:hover, [aria-current="page"]) { background: transparent; box-shadow: none; }
+[data-ui="fortnite4"] :is(.btn:not(.btn-ghost), .bt-nav)::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; transform: skewX(var(--slant)); border-radius: var(--ctl-r);
+  transition: background-color var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+[data-ui="fortnite4"] .btn:not(.btn-ghost)::before { background: var(--btn-bg); border: var(--btn-border); box-shadow: var(--btn-shadow); }
+[data-ui="fortnite4"] .btn:not(.btn-ghost):hover:not(:disabled)::before { background: var(--btn-hover-bg); border-color: var(--btn-hover-border); box-shadow: var(--btn-hover-shadow); }
+[data-ui="fortnite4"] .btn:not(.btn-ghost):active:not(:disabled)::before { box-shadow: var(--btn-active-shadow); }
+[data-ui="fortnite4"] .btn.btn-accent::before { background: var(--btn-accent-bg); border: var(--btn-accent-border); box-shadow: var(--btn-accent-shadow); }
+[data-ui="fortnite4"] .btn.btn-accent:hover:not(:disabled)::before { background: var(--btn-accent-hover-bg); border-color: var(--btn-accent-border-color, transparent); box-shadow: var(--btn-accent-hover-shadow); }
+[data-ui="fortnite4"] .bt-nav::before { background: transparent; border: 0; box-shadow: none; }
+[data-ui="fortnite4"] .bt-nav:hover::before { background: var(--nav-hover-bg); }
+[data-ui="fortnite4"] .bt-nav[aria-current="page"]::before { background: var(--nav-active-bg); box-shadow: var(--nav-active-shadow); }
+[data-ui="fortnite4"] .btn:not(.btn-ghost) { padding-inline: 1.2rem; }
+[data-ui="fortnite4"] .btn:not(.btn-ghost) { font-size: 0.95rem; }

@@ -1,0 +1,62 @@
+{
+  "id": "win11",
+  "label": "Windows 11",
+  "style": {
+    "description": "Fluent: rounded, light shadows, accent underline on fields and smooth slide-in motion in Segoe UI Variable.",
+    "font": "Segoe UI Variable",
+    "matching": {
+      "light": "win11",
+      "dark": "win11-dark"
+    },
+    "fonts": [
+      {
+        "package": "open-sans",
+        "weights": [400, 600, 700]
+      }
+    ],
+    "order": 40
+  },
+  "palettes": [
+    {
+      "id": "win11",
+      "label": "Windows 11",
+      "mode": "light",
+      "bg": "#f3f3f3",
+      "primary": "#005fb8",
+      "fg": "#1a1a1a",
+      "mutedFg": "#5d5d5d",
+      "motif": "waves",
+      "overrides": {
+        "card": "#fbfbfb",
+        "secondary": "#ededed",
+        "muted": "#ededed",
+        "accent": "#e5e5e5",
+        "border": "#e0e0e0",
+        "input": "#c9c9c9"
+      },
+      "group": "platform",
+      "order": 240
+    },
+    {
+      "id": "win11-dark",
+      "label": "Windows 11 Dark",
+      "mode": "dark",
+      "bg": "#202020",
+      "primary": "#4cc2ff",
+      "onPrimary": "0 0% 0%",
+      "fg": "0 0% 100%",
+      "mutedFg": "#c5c5c5",
+      "motif": "waves",
+      "overrides": {
+        "card": "#2b2b2b",
+        "secondary": "#323232",
+        "muted": "#323232",
+        "accent": "#3a3a3a",
+        "border": "#3b3b3b",
+        "input": "#5a5a5a"
+      },
+      "group": "platform",
+      "order": 250
+    }
+  ]
+}

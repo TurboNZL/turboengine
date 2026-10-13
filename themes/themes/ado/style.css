@@ -1,0 +1,39 @@
+/* ================== Ado ==================
+ * Stage black with an electric-blue signature colour and a hot red edge. Condensed italic capitals, hairline blue outlines that glow, a red
+ * slash before page titles, square controls that light up on hover, a red underline under the current page. Barlow Condensed for type. */
+[data-ui="ado"] {
+  --ado-red: #ff2a4d; --ado-glow: color-mix(in srgb, hsl(var(--accent)) 55%, transparent);
+  --radius: 2px; --ctl-r: 2px; --card-r: 3px; --win-r: 3px; --menu-r: 2px; --nav-r: 2px; --chip-r: 2px; --in-r: 2px;
+  --font: "Barlow Condensed", "Archivo", system-ui, sans-serif; --title-font: var(--font);
+  --dur: 140ms; --ease: ease-out;
+  --btn-bg: transparent; --btn-fg: hsl(var(--fg)); --btn-weight: 600; --btn-border: 1px solid color-mix(in srgb, hsl(var(--accent)) 60%, transparent); --btn-shadow: none;
+  --btn-hover-bg: color-mix(in srgb, hsl(var(--accent)) 18%, transparent); --btn-hover-border: hsl(var(--accent)); --btn-hover-shadow: 0 0 14px var(--ado-glow), inset 0 -2px 0 var(--ado-red); --btn-active-transform: translateY(1px);
+  --btn-accent-bg: hsl(var(--accent)); --btn-accent-fg: #fff; --btn-accent-border: 1px solid hsl(var(--accent)); --btn-accent-hover-bg: color-mix(in srgb, hsl(var(--accent)) 82%, white); --btn-accent-hover-shadow: 0 0 18px var(--ado-glow), inset 0 -2px 0 var(--ado-red);
+  --ghost-hover-bg: color-mix(in srgb, hsl(var(--accent)) 14%, transparent);
+  --in-bg: hsl(var(--raised)); --in-border: 1px solid hsl(var(--line)); --in-hover-border: color-mix(in srgb, hsl(var(--accent)) 60%, transparent); --in-focus-border: hsl(var(--accent)); --in-focus-shadow: 0 0 12px var(--ado-glow); --in-px: 0.75rem;
+  --card-bg: hsl(var(--surface)); --card-border: 1px solid hsl(var(--line)); --card-shadow: none;
+  --backdrop: rgb(2 4 12 / 0.8);
+  --win-bg: hsl(var(--surface)); --win-border: 1px solid hsl(var(--accent)); --win-shadow: 0 0 30px var(--ado-glow), 6px 6px 0 rgb(0 0 0 / 0.5); --dialog-anim: bt-fade 140ms ease-out;
+  --tb-bg: transparent; --tb-border: 0 solid transparent; --tb-pad: 0.9rem 1.2rem 0.2rem; --tb-size: 1.35rem; --tb-weight: 800; --tb-justify: space-between;
+  --close-r: 2px; --close-hover-bg: var(--ado-red); --close-hover-fg: #fff;
+  --bar-border: 1px solid hsl(var(--line));
+  --menu-bg: hsl(var(--surface)); --menu-border: 1px solid hsl(var(--accent)); --pop-shadow: 0 0 20px var(--ado-glow); --menu-anim: bt-fade 90ms ease-out; --menu-hi-bg: hsl(var(--accent)); --menu-hi-fg: #fff;
+  --side-bg: hsl(var(--bg)); --side-shadow: none; --top-bg: hsl(var(--bg)); --top-shadow: 0 1px 0 hsl(var(--line)); --player-bg: hsl(var(--bg)); --player-shadow: 0 -1px 0 hsl(var(--accent) / 0.5);
+  --nav-hover-bg: color-mix(in srgb, hsl(var(--accent)) 12%, transparent); --nav-active-bg: color-mix(in srgb, hsl(var(--accent)) 18%, transparent); --nav-active-fg: #fff; --nav-active-shadow: inset 3px 0 0 var(--ado-red);
+  --row-hover: color-mix(in srgb, hsl(var(--accent)) 10%, transparent); --row-current: color-mix(in srgb, hsl(var(--accent)) 20%, transparent);
+  --chk-size: 1.1rem; --chk-r: 2px; --chk-border: 1px solid hsl(var(--accent)); --chk-bg: transparent; --chk-hover-border: var(--ado-red); --chk-focus: 0 0 8px var(--ado-glow);
+  --chk-on-bg: hsl(var(--accent)); --chk-on-border: hsl(var(--accent)); --chk-on-fg: #fff; --chk-radio-on-bg: hsl(var(--accent)); --chk-dot: #fff;
+  --rng-appearance: none; --rng-h: 3px; --rng-r: 0; --rng-border: 0 solid transparent; --rng-track: hsl(var(--line)); --rng-fill: hsl(var(--accent));
+  --rng-tw: 8px; --rng-th: 18px; --rng-tr: 0; --rng-thumb: var(--ado-red); --rng-tb: 0 solid transparent; --rng-ts: 0 0 10px var(--ado-red);
+}
+html[data-ui="ado"] { font-size: 17px; }
+[data-ui="ado"] :is(h1, h2, h3, .bt-brand, .bt-panel-title, .bt-ptitle) { font-style: italic; font-weight: 800; text-transform: uppercase; letter-spacing: 0.02em; }
+[data-ui="ado"] main h1 { font-size: 2.4rem; line-height: 1; }
+[data-ui="ado"] main h1::before { content: "/ "; color: var(--ado-red); }
+[data-ui="ado"] .btn, [data-ui="ado"] .bt-nav, [data-ui="ado"] .bt-toplink { text-transform: uppercase; letter-spacing: 0.06em; }
+[data-ui="ado"] .bt-nav { font-weight: 600; }
+[data-ui="ado"] .bt-toplink[aria-current="page"] { box-shadow: inset 0 -2px 0 var(--ado-red); }
+[data-ui="ado"] .bt-cover { border-radius: 2px; box-shadow: 0 0 0 1px hsl(var(--line)); }
+[data-ui="ado"] .card:hover, [data-ui="ado"] .bt-tile:hover .bt-cover { box-shadow: 0 0 14px var(--ado-glow); }
+[data-ui="ado"] .chip { text-transform: uppercase; letter-spacing: 0.05em; border: 1px solid hsl(var(--line)); background: transparent; }
+[data-ui="ado"] ::selection { background: var(--ado-red); color: #fff; }

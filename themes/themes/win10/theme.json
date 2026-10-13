@@ -1,0 +1,62 @@
+{
+  "id": "win10",
+  "label": "Windows 10",
+  "style": {
+    "description": "Flat and square with crisp 2 px borders and quick transitions in Segoe UI.",
+    "font": "Segoe UI",
+    "matching": {
+      "light": "win10",
+      "dark": "win10-dark"
+    },
+    "fonts": [
+      {
+        "package": "open-sans",
+        "weights": [400, 600, 700]
+      }
+    ],
+    "order": 50
+  },
+  "palettes": [
+    {
+      "id": "win10",
+      "label": "Windows 10",
+      "mode": "light",
+      "bg": "#ffffff",
+      "primary": "#0078d7",
+      "fg": "#000000",
+      "mutedFg": "#666666",
+      "motif": "grid",
+      "overrides": {
+        "card": "#f2f2f2",
+        "secondary": "#e6e6e6",
+        "muted": "#e6e6e6",
+        "accent": "#cce4f7",
+        "border": "#cccccc",
+        "input": "#7a7a7a"
+      },
+      "group": "platform",
+      "order": 260
+    },
+    {
+      "id": "win10-dark",
+      "label": "Windows 10 Dark",
+      "mode": "dark",
+      "bg": "#1f1f1f",
+      "primary": "#0078d7",
+      "onPrimary": "0 0% 100%",
+      "fg": "0 0% 100%",
+      "mutedFg": "#b3b3b3",
+      "motif": "grid",
+      "overrides": {
+        "card": "#2b2b2b",
+        "secondary": "#333333",
+        "muted": "#333333",
+        "accent": "#404040",
+        "border": "#404040",
+        "input": "#7a7a7a"
+      },
+      "group": "platform",
+      "order": 270
+    }
+  ]
+}

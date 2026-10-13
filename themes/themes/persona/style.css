@@ -1,0 +1,38 @@
+/* ================== Persona 5 ==================
+ * Black, red and white, nothing soft: hard offset shadows, italic capitals in a tall display face, a selected item in solid red with a
+ * white edge, borders you could cut yourself on. (Anton stands in for the game's hand-cut lettering.) */
+[data-ui="persona"] {
+  --radius: 0px; --ctl-r: 0px; --card-r: 0px; --win-r: 0px; --menu-r: 0px; --nav-r: 0px; --chip-r: 0px; --in-r: 0px;
+  --font: Archivo, "Arial Narrow", system-ui, sans-serif; --title-font: Anton, "Barlow Condensed", Impact, sans-serif;
+  --dur: 110ms; --ease: cubic-bezier(0.2, 0.9, 0.2, 1);
+  --btn-bg: #000; --btn-fg: #fff; --btn-weight: 800; --btn-border: 2px solid #fff; --btn-shadow: 3px 3px 0 hsl(var(--accent));
+  --btn-hover-bg: hsl(var(--accent)); --btn-hover-border: #fff; --btn-hover-shadow: 3px 3px 0 #fff;
+  --btn-active-shadow: 0 0 0 hsl(var(--accent)); --btn-active-transform: translate(3px, 3px);
+  --btn-accent-bg: hsl(var(--accent)); --btn-accent-fg: #fff; --btn-accent-border: 2px solid #fff; --btn-accent-border-color: #fff; --btn-accent-shadow: 3px 3px 0 #000;
+  --btn-accent-hover-bg: #fff; --btn-accent-hover-shadow: 3px 3px 0 #000; --btn-accent-text-shadow: none;
+  --ghost-hover-bg: color-mix(in srgb, hsl(var(--accent)) 35%, transparent);
+  --in-bg: #000; --in-border: 2px solid #fff; --in-shadow: none; --in-hover-border: hsl(var(--accent)); --in-focus-border: hsl(var(--accent)); --in-focus-shadow: 3px 3px 0 hsl(var(--accent)); --in-px: 0.75rem;
+  --card-bg: #101012; --card-border: 2px solid #fff; --card-shadow: 4px 4px 0 hsl(var(--accent));
+  --backdrop: rgb(0 0 0 / 0.78);
+  --win-bg: #0b0b0c; --win-border: 3px solid #fff; --win-shadow: 8px 8px 0 hsl(var(--accent)); --dialog-anim: bt-pop 160ms cubic-bezier(0.2, 0.9, 0.2, 1);
+  --tb-bg: hsl(var(--accent)); --tb-fg: #fff; --tb-border: 0 solid transparent; --tb-pad: 0.5rem 1.1rem; --tb-size: 1.5rem; --tb-weight: 400; --tb-justify: space-between; --tb-text-shadow: none;
+  --close-fg: #fff; --close-hover-bg: #000; --close-hover-fg: #fff; --close-r: 0;
+  --bar-border: 2px solid #fff;
+  --menu-bg: #000; --menu-border: 2px solid #fff; --pop-shadow: 5px 5px 0 hsl(var(--accent)); --menu-anim: bt-drop 110ms ease-out; --menu-hi-bg: hsl(var(--accent)); --menu-hi-fg: #fff;
+  --side-bg: #000; --side-shadow: none; --top-bg: #000; --top-shadow: none; --player-bg: #000; --player-shadow: none;
+  --nav-hover-bg: color-mix(in srgb, hsl(var(--accent)) 30%, transparent); --nav-active-bg: hsl(var(--accent)); --nav-active-fg: #fff; --nav-active-shadow: inset 6px 0 0 #fff;
+  --row-hover: color-mix(in srgb, hsl(var(--accent)) 28%, transparent); --row-current: color-mix(in srgb, hsl(var(--accent)) 55%, transparent);
+  --panel-tb-fg: #fff; --panel-tb-margin: 0 0 0.5rem; --panel-tb-pad: 0;
+  --chk-size: 1.1rem; --chk-r: 0; --chk-border: 2px solid #fff; --chk-bg: #000; --chk-hover-border: hsl(var(--accent)); --chk-focus: 0 0 0 2px color-mix(in srgb, hsl(var(--accent)) 40%, transparent);
+  --chk-on-bg: hsl(var(--accent)); --chk-on-border: hsl(var(--accent)); --chk-on-fg: hsl(var(--accent-fg)); --chk-radio-on-bg: hsl(var(--accent)); --chk-dot: hsl(var(--accent-fg));
+  --rng-appearance: none; --rng-h: 4px; --rng-r: 0; --rng-track: #333; --rng-fill: hsl(var(--accent));
+  --rng-tw: 0.9rem; --rng-th: 0.9rem; --rng-tr: 0; --rng-thumb: hsl(var(--accent)); --rng-tb: 2px solid #fff; --rng-ts: 2px 2px 0 hsl(var(--accent));
+}
+[data-ui="persona"] :is(h1, h2, h3, .bt-brand, .bt-titlebar h2, .bt-panel-title) { font-family: var(--title-font); text-transform: uppercase; font-weight: 400; font-style: italic; letter-spacing: 0.03em; }
+[data-ui="persona"] h1 { font-size: 2.4rem; text-shadow: 3px 3px 0 hsl(var(--accent)); }
+[data-ui="persona"] :is(.btn, .bt-nav, .chip) { text-transform: uppercase; letter-spacing: 0.03em; }
+[data-ui="persona"] .btn { font-style: italic; }
+[data-ui="persona"] .chip { background: #fff; color: #000; font-weight: 700; }
+[data-ui="persona"] .bt-nav { font-style: italic; font-weight: 800; color: #fff; }
+[data-ui="persona"] .bt-row:hover, [data-ui="persona"] .bt-row-current { outline: 2px solid #fff; outline-offset: -2px; }
+[data-ui="persona"] { --page-in: bt-fade 110ms linear backwards; --vote-ms: 260ms; }

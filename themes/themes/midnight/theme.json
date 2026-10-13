@@ -1,0 +1,16 @@
+{
+  "id": "midnight",
+  "label": "Midnight",
+  "palettes": [
+    {
+      "id": "midnight",
+      "label": "Midnight",
+      "mode": "dark",
+      "bg": [232, 50, 6],
+      "primary": [243, 85, 67],
+      "motif": "stars",
+      "group": "colour",
+      "order": 60
+    }
+  ]
+}

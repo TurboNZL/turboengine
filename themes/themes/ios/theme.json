@@ -1,0 +1,48 @@
+{
+  "id": "ios",
+  "label": "iOS",
+  "palettes": [
+    {
+      "id": "ios",
+      "label": "iOS",
+      "mode": "light",
+      "bg": "#f2f2f7",
+      "primary": "#007aff",
+      "onPrimary": "0 0% 100%",
+      "fg": "#000000",
+      "mutedFg": "#8e8e93",
+      "motif": "hills",
+      "overrides": {
+        "card": "#ffffff",
+        "secondary": "#e5e5ea",
+        "muted": "#e5e5ea",
+        "accent": "#d1d1d6",
+        "border": "#c6c6c8",
+        "input": "#e5e5ea"
+      },
+      "group": "platform",
+      "order": 630
+    },
+    {
+      "id": "ios-dark",
+      "label": "iOS Dark",
+      "mode": "dark",
+      "bg": "#000000",
+      "primary": "#0a84ff",
+      "onPrimary": "0 0% 100%",
+      "fg": "#ffffff",
+      "mutedFg": "#8e8e93",
+      "motif": "hills",
+      "overrides": {
+        "card": "#1c1c1e",
+        "secondary": "#2c2c2e",
+        "muted": "#2c2c2e",
+        "accent": "#3a3a3c",
+        "border": "#38383a",
+        "input": "#2c2c2e"
+      },
+      "group": "platform",
+      "order": 640
+    }
+  ]
+}

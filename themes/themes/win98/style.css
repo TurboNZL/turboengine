@@ -1,0 +1,44 @@
+/* Windows 98: raised grey squares with black glyphs; they press in */
+[data-ui="win98"] .bt-wf-btn { --wf-r: 0; --wf-bg: #c0c0c0; --wf-hover: #c0c0c0; --wf-active: #c0c0c0; --wf-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fff, inset -2px -2px #808080, inset 2px 2px #dfdfdf; width: 1.15rem; height: 1rem; color: #000; }
+[data-ui="win98"] .bt-wf-btn:active { box-shadow: inset 1px 1px #0a0a0a, inset -1px -1px #fff, inset 2px 2px #808080, inset -2px -2px #dfdfdf; }
+[data-ui="win98"] .bt-wf-close:is(:hover, :focus-visible) { background: #c0c0c0; color: #000; }
+/* ================== Windows 98 (classic) ================== */
+[data-ui="win98"] {
+  --chk-size: 0.95rem; --chk-r: 0; --chk-border: 0 solid transparent; --chk-bg: #fff; --chk-shadow: inset -1px -1px #fff, inset 1px 1px #808080, inset -2px -2px #dfdfdf, inset 2px 2px #000; --chk-hover-border: transparent; --chk-on-bg: #fff; --chk-on-border: transparent; --chk-on-fg: #000; --chk-radio-on-bg: #fff; --chk-dot: #000; --chk-focus: inset -1px -1px #fff, inset 1px 1px #808080, inset -2px -2px #dfdfdf, inset 2px 2px #000, 0 0 0 1px #000;
+  --radius: 0px; --ctl-r: 0; --card-r: 0; --win-r: 0; --menu-r: 0; --nav-r: 0; --chip-r: 0;
+  --font: "MS Sans Serif", "Microsoft Sans Serif", Tahoma, "DejaVu Sans", Verdana, sans-serif; --title-font: var(--font);
+  --b98-raised: inset -1px -1px #0a0a0a, inset 1px 1px #ffffff, inset -2px -2px #808080, inset 2px 2px #dfdfdf;
+  --b98-sunken: inset -1px -1px #ffffff, inset 1px 1px #808080, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
+  --b98-title: linear-gradient(90deg, hsl(var(--accent)), #1084d0);
+  --dur: 0ms; --dialog-anim: bt-none 1ms; --menu-anim: none;
+  --btn-bg: hsl(var(--surface)); --btn-fg: #000; --btn-border: 0 solid transparent; --btn-shadow: var(--b98-raised); --btn-weight: 400;
+  --btn-hover-bg: hsl(var(--surface)); --btn-active-shadow: var(--b98-sunken);
+  --btn-accent-bg: hsl(var(--surface)); --btn-accent-fg: #000; --btn-accent-shadow: var(--b98-raised); --btn-accent-hover-bg: hsl(var(--surface)); --btn-accent-hover-shadow: var(--b98-raised);
+  --ghost-hover-bg: transparent;
+  --in-bg: #fff; --in-border: 0 solid transparent; --in-shadow: var(--b98-sunken); --in-focus-shadow: var(--b98-sunken);
+  --card-bg: hsl(var(--surface)); --card-border: 0 solid transparent; --card-shadow: var(--b98-raised);
+  --backdrop: rgb(0 0 0 / 0.25);
+  --win-bg: hsl(var(--surface)); --win-border: 0 solid transparent; --win-shadow: var(--b98-raised), 3px 3px 0 rgb(0 0 0 / 0.45);
+  --tb-bg: var(--b98-title); --tb-fg: #fff; --tb-border: 0 solid transparent; --tb-pad: 0.2rem 0.35rem; --tb-size: 0.9rem; --tb-weight: 700;
+  --close-fg: #000; --close-bg: hsl(var(--surface)); --close-shadow: var(--b98-raised); --close-hover-bg: hsl(var(--surface)); --close-hover-fg: #000; --close-r: 0;
+  --bar-border: 0 solid transparent;
+  --menu-bg: hsl(var(--surface)); --menu-border: 0 solid transparent; --pop-shadow: var(--b98-raised), 2px 2px 0 rgb(0 0 0 / 0.4); --menu-hi-bg: hsl(var(--accent)); --menu-hi-fg: #fff;
+  --side-shadow: var(--b98-raised); --top-bg: hsl(var(--surface)); --top-shadow: var(--b98-raised); --player-shadow: var(--b98-raised);
+  --nav-hover-bg: transparent; --nav-active-bg: hsl(var(--accent)); --nav-active-fg: #fff;
+  --row-hover: hsl(var(--accent)); --row-hover-fg: #fff; --row-current: color-mix(in srgb, hsl(var(--accent)) 25%, transparent);
+  --panel-tb-bg: var(--b98-title); --panel-tb-fg: #fff; --panel-tb-margin: -1.25rem -1.25rem 0.25rem; --panel-tb-pad: 0.2rem 0.5rem;
+  --rng-appearance: none; --rng-h: 0.3rem; --rng-r: 0; --rng-shadow: var(--b98-sunken); --rng-track: #fff; --rng-fill: hsl(var(--accent));
+  --rng-tw: 0.7rem; --rng-th: 1.3rem; --rng-tr: 0; --rng-thumb: hsl(var(--surface)); --rng-ts: var(--b98-raised);
+}
+html[data-ui="win98"] { font-size: 14px; }
+[data-ui="win98"] *, [data-ui="win98"] ::before, [data-ui="win98"] ::after { transition-duration: 0s !important; border-radius: 0 !important; }
+[data-ui="win98"] .bt-row:hover * { color: #fff; }
+/* a 2px inset keeps list rows off the bevel, but only for cards that have no padding of their own (panels and tiles keep theirs) */
+[data-ui="win98"] .card:not([class*=" p-"]):not([class*=" px-"]):not([class*=" py-"]):not(.bt-panel) { padding: 2px; }
+[data-ui="win98"] .bt-titlebar svg { display: none; }
+[data-ui="win98"] .bt-close { padding: 0 0.2rem; }
+[data-ui="win98"] .bt-window { padding: 2px; }
+[data-ui="win98"] ::selection { background: hsl(var(--accent)); color: #fff; }
+[data-ui="win98"] { --vote-ms: 0ms; --player-in: none; --player-out: none; --player-ms: 0ms; --pop-out: none; --pop-ms: 0ms; }
+[data-ui="win98"] .bt-sel[data-selected] { outline: 1px dotted #000; outline-offset: -4px; background-image: linear-gradient(hsl(var(--accent) / 0.18), hsl(var(--accent) / 0.18)); }
+[data-ui="win98"] { --page-in: none; }
