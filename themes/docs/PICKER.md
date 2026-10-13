@@ -97,6 +97,7 @@ Colour chips are small. Put them in a CSS grid that fills the row, **not one chi
 Until these are fixed in `engine/src/picker-element.ts`, prefer the drop-down variant or build on the controller as above.
 
 - **It previews on the real page** (hover and focus call `picker.preview`). See above.
+- **`sections="..."` breaks in React 19.** React 19 sets attributes of a custom element as *properties* when the element has a member of that name, and the element has a private method `sections()`: `<turbo-themes-picker sections="wallpaper,updates">` in JSX overwrites it with a string and rendering throws (`this.sections is not a function`). Create the element with `document.createElement` and `setAttribute('sections', ...)` instead (the engine should rename the method).
 - **The colour chips stack one per line.** The grouped palettes are wrapped in an element that is itself a `.tt-sec`, and the rule that stretches children of a section (`.tt-sec > select, .tt-tiles, .tt-group, ...`) does not list `.tt-sec`, so the wrapper shrinks to one column and the `auto-fill` grid inside it collapses (measured: 188 px wide, three chips on three rows; with `turbo-themes-picker .tt-sec > .tt-sec { justify-self: stretch }` added it is 872 px wide and one row). If you must use the element, add that rule.
 
 ## 3. Keeping the choice
