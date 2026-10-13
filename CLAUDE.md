@@ -33,7 +33,7 @@ A session only sees repositories attached to it. When working on an app that is 
 The theme engine and all themes live here (package `turbothemes`; the old repository is retired). Read `themes/CLAUDE.md` before touching them. Rules that differ from the rest of the repo: this is a real **package** (apps install it, they do not copy it), `themes/dist` is committed by CI (`.github/workflows/themes-build.yml`) and downloaded by running apps, and the engine half almost never changes while themes do. Themes are the default for every app; opting out is a documented option (`modules/appearance`), never the template's default.
 
 ## Mandatory sets
-An app that runs its own server takes `self-hosted-server`: `cloudflare-access` + `server-install-update` + `updaters` + `release-pipeline`. Every app with a desktop or Android build takes `updaters` and `release-pipeline`.
+An app that runs its own server takes `self-hosted-server`: `cloudflare-access` + `server-install-update` + `updaters` + `release-pipeline`. Every app with a desktop or Android build takes `updaters` and `release-pipeline`. A **web-only** app served by its own server takes `docker-self-host` + `release-pipeline` instead (see `self-hosted-server`).
 
 ## Two theme packs
 `themes/` is the full pack (default). `themes-open/` is the stripped-down pack for apps that are or may be sold: no third-party names, logos, brand fonts or trade dress. It is generated from `themes/` by `themes-open/make.py` (edit the keep/rename lists there, not the generated folders), so a fix in `themes/` reaches it by regenerating. When adding a theme to `themes/`, decide whether it belongs in the open pack; anything named after a product, game, OS or vendor does not.

@@ -21,6 +21,7 @@ The repository needs a default `main` branch, GitHub Actions enabled, workflow p
 | `windows-server` | the tray server installer | `server-install-update` |
 | `android` | signed APK | `android-shell` |
 | `termux-bundle` | the server bundle the Android app installs into Termux | `termux-server` |
+| `docker` / `node-bundle` | multi-arch image on ghcr.io and a Node tarball (web-only apps; replace `desktop`/`android`) | `docker-self-host` |
 
 ## Asset naming (all lowercase)
 `<app>[-<edition>]-<version>-<os>-<arch>.<ext>`: `turbomusic-2026.10.31-linux-amd64.deb`, `...-windows-x64-setup.exe`, `...-android.apk`. The updaters never look at file names (electron-updater reads `latest*.yml`, Android takes the first `.apk`), so names can change without a transition period. Set names with `artifactName` in the electron-builder config.
