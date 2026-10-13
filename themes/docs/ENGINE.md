@@ -31,7 +31,7 @@ const themes = start(options);
 | `setSource(source \| false)` | changes where updates come from (for example after the user pastes an access token). |
 | `resetToBuiltin()` | forgets downloaded themes. |
 | `appearance()` | the look that is applied now. |
-| `preview(a \| null)` | tries a look without keeping it; `null` goes back. |
+| `preview(a \| null)` | re-themes the real page with a look without keeping it; `null` goes back. Not for hover or focus: preview those in a mock page ([PICKER.md](PICKER.md#2a-previewing-a-look-use-a-mock-page-not-the-real-page)). |
 | `onAppearance(fn)` | called after every `apply()` from anywhere; returns an unsubscribe. |
 | `picker()` | the headless picker controller ([PICKER.md](PICKER.md)). |
 | `version()` | `{ hash, built, origin: 'builtin' \| 'downloaded', checkedAt, source }` for a "last updated" line. |
