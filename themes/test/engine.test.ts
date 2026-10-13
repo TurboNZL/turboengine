@@ -296,3 +296,11 @@ describe('fonts, wallpaper and effects', () => {
     expect(document.querySelectorAll('.bt-ripple').length).toBe(1);
   });
 });
+
+describe('base.css', () => {
+  it('gives multi-line boxes a capped radius and room for the text (a pill radius clipped it: turbothemes#1)', async () => {
+    const css = (await import('node:fs')).readFileSync('engine/base.css', 'utf8');
+    expect(css).toMatch(/textarea\.input\s*\{[^}]*border-radius:\s*min\(var\(--in-r[^}]*1\.25rem\)/);
+    expect(css).toMatch(/textarea\.input\s*\{[^}]*padding-inline:\s*max\(var\(--in-px[^}]*1rem\)/);
+  });
+});

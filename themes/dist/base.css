@@ -66,6 +66,8 @@ input[type='date'], input[type='time'], input[type='color'] { color-scheme: inhe
 .input { border-radius: var(--in-r, var(--ctl-r)); padding-inline: var(--in-px, 0.75rem); padding-block: var(--in-py, 0.375rem); background: var(--in-bg); border: var(--in-border); box-shadow: var(--in-shadow); transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease); }
 .input:hover { border-color: var(--in-hover-border); }
 .input:focus { border-color: var(--in-focus-border); box-shadow: var(--in-focus-shadow); }
+/* a multi-line box is not a single-line field: a pill radius (--in-r: 9999px in Spotify, YouTube Music...) would clip its text at the corners */
+textarea.input { border-radius: min(var(--in-r, var(--ctl-r)), 1.25rem); padding-inline: max(var(--in-px, 0.75rem), 1rem); padding-block: 0.6rem; }
 .card { border-radius: var(--card-r); background: var(--card-bg); border: var(--card-border); box-shadow: var(--card-shadow); }
 .chip { border-radius: var(--chip-r); }
 .bt-backdrop { background: var(--backdrop); }
