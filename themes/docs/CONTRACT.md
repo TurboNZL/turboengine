@@ -56,7 +56,7 @@ Where an app's pages are listed (a side bar, top tabs, a dock ...) is not a them
 | `data-glass` | `regular` or `clear` (Liquid Glass) |
 | `data-wallpaper` | `on` when a wallpaper is showing |
 
-A **preview** of another look inside a page: put `data-ui`, `data-theme`, `data-mode` and the inline variables from `themeStyle(id)` on a wrapper element. Every rule in a theme is scoped to its own `[data-ui="x"]`, so a wrapper renders its own look inside a page set to a different one.
+A **preview** of another look inside a page: put `data-ui`, `data-theme`, `data-mode` and the inline variables from `themeStyle(id)` on a wrapper element. Every rule in a theme is scoped to its own `[data-ui="x"]`, so a wrapper renders its own look inside a page set to a different one. This is the **mock page system**, and it is how a picker should preview a look: hovering an option moves the mock, never the real page ([PICKER.md, section 2a](PICKER.md#2a-previewing-a-look-use-a-mock-page-not-the-real-page)).
 
 ## What a style sets (the variable families)
 

@@ -15,6 +15,7 @@ The theme package is `themes/` of this repository (name `turbothemes`; the old s
 
 ## Gotchas
 - Utilities beat the themes' component rules (same layer): markup a style must control carries only the hook class.
+- **Do not preview a look by restyling the real page on hover** (`picker.preview` / the stock tiles variant do). Hover moves the mock page (`PreviewApp` in `AppearanceCard.tsx`), the page changes on click. Colour chips go in a multi-column grid (`TILE_GRID`), not one per line. Rules and the stock element's known issues: `themes/docs/PICKER.md`, section 2a.
 - Multi-line text boxes get a pill radius from some styles (turbothemes#1): keep the local `textarea.input` rule at the end of `index.css` until the engine fixes it.
 - Liquid Glass positions the player/dock with fixed offsets: every layout needs its own offset rule (see `layouts.css`).
 - Service worker caches: bump the cache name when an unfingerprinted asset such as `icon.svg` changes.
