@@ -4,7 +4,7 @@
   "optional": true,
   "summary": "A theme-drawn title bar (traffic lights by UI style), the preload bridge `window.<app>Desktop`, the single-instance main process, GPU modes and graphics readback.",
   "source": {
-    "repo": "TurboNZL/Curator",
+    "repo": "TurboNZL/turbomusic",
     "ref": "b6d85a8f35751b29a707b1935b19437c0175b5d9"
   },
   "files": [

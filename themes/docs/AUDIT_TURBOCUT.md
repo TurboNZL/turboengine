@@ -1,8 +1,8 @@
-# Audit: TurboCut against Curator (2026-10-13)
+# Audit: TurboCut against TurboMusic (2026-10-13)
 
-What this is: TurboCut (`TurboNZL/turbocut`) and Curator (`TurboNZL/curator`) were both run in headless Chromium and screenshotted under the same looks, at 1440 and 390 px, with dialogs open. Curator is the reference for "turbothemes done properly". This file lists what differs, how bad it is, and the fix **that was tested** (it is in `patches/turbocut-tabs-and-dialog.patch`; nothing was changed in either app repo).
+What this is: TurboCut (`TurboNZL/turbocut`) and TurboMusic (`TurboNZL/turbomusic`) were both run in headless Chromium and screenshotted under the same looks, at 1440 and 390 px, with dialogs open. TurboMusic is the reference for "turbothemes done properly". This file lists what differs, how bad it is, and the fix **that was tested** (it is in `patches/turbocut-tabs-and-dialog.patch`; nothing was changed in either app repo).
 
-Method, so it can be repeated: Curator ran from a scratch copy against a seeded server (8 albums, 120 votes); TurboCut ran from its own checkout with a generated test clip (`e2e/make-media.sh`). Screenshots for macOS, Windows 11, Aqua, Material, GTK 4, Fortnite Ch 5-6, Windows 98 and Liquid Glass. The automated part is `examples/verify-looks.mjs` (see [INTEGRATION.md](INTEGRATION.md), section 5).
+Method, so it can be repeated: TurboMusic ran from a scratch copy against a seeded server (8 albums, 120 votes); TurboCut ran from its own checkout with a generated test clip (`e2e/make-media.sh`). Screenshots for macOS, Windows 11, Aqua, Material, GTK 4, Fortnite Ch 5-6, Windows 98 and Liquid Glass. The automated part is `examples/verify-looks.mjs` (see [INTEGRATION.md](INTEGRATION.md), section 5).
 
 ## Verdict
 
@@ -28,9 +28,9 @@ Findings 1 to 3 are all about **using a hook for something it is not**, or **lea
 
 ![TurboCut before: tabs in the editor panel](img/turbocut-before-editor.png)
 
-The five tabs on the right (Clip, Keys, Media, Captions, Project) are plain buttons with the browser's own 2 px border and square corners, stuck together; the selected one is only blue text. In Curator the equivalent control (its Settings tabs) is a calm underline strip: muted text, the selected tab in full colour with an accent underline.
+The five tabs on the right (Clip, Keys, Media, Captions, Project) are plain buttons with the browser's own 2 px border and square corners, stuck together; the selected one is only blue text. In TurboMusic the equivalent control (its Settings tabs) is a calm underline strip: muted text, the selected tab in full colour with an accent underline.
 
-![Curator Settings: the reference](img/ref-curator-settings.png)
+![TurboMusic Settings: the reference](img/ref-curator-settings.png)
 
 Why it happens: TurboCut sets `class="bt-tab"` on each button. In `base.css` the only rule for it is `.bt-tab { color: muted }` and `[aria-current=page] { color: accent }`. The styles never draw a border or background for it because it was only ever meant for the icon+label cells of the phone bar. So the browser's default button border shows, in every style.
 
@@ -58,7 +58,7 @@ After the fix:
 
 Settings sections are `div.stack` with a `div.bt-panel-title` first. Styles that draw a title as a coloured bar (Windows 98) lay it over the content below with negative margins, which is what the first Windows 98 screenshot shows: the "Track order" select cut by the next bar. Wrapped in `section.card.bt-panel` with an `h2.bt-panel-title`, the bars sit in their own padded panel. (The screenshot shows the result of wrapping them at runtime; the patch does not change the panels, because that is a bigger edit in `settingsDialog.ts` and the owner said only the tabs are horrific. Do it when Settings is next touched. The checker keeps reporting it until then.)
 
-## What is the same as Curator, and good
+## What is the same as TurboMusic, and good
 
 - CSS order, engine start, persistence, picker, update check.
 - Colour only from tokens (`hsl(var(--line))` etc.); radius from `var(--radius)`; the only hex values are black behind video.

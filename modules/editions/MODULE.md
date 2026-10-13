@@ -2,13 +2,13 @@
 
 One Electron codebase shipped as three editions (window + library server, window only, headless server) with a server module that can be installed or removed inside the app.
 
-Optional. Reference files are in `files/` (the paths are the paths in the app); they were taken from Curator at `b6d85a8`, where they are known to work.
+Optional. Reference files are in `files/` (the paths are the paths in the app); they were taken from TurboMusic at `b6d85a8`, where they are known to work.
 
 ## Shape
 - **full** (`package.json` build): window + the app's own server on 127.0.0.1.
 - **app** (`electron-builder.app.json`, `curatorEdition: "app"`): window only; serves just the web client (`staticServer.ts`), port = full's + 1 so both can be installed.
 - **server**: Windows = tray app + setup wizard (`electron-builder.server.json`); Linux = headless (`electron-builder.server-linux.json`): `headless.ts` run by the Electron binary as plain Node. `serverWrapper.cjs` (electron-builder `afterPack`) swaps the program for a launcher that sets `ELECTRON_RUN_AS_NODE=1`, so the same files serve a systemd `.deb` and an `.AppImage` and nothing has to be installed first (Electron brings Node with `node:sqlite`).
-- **server module**: `desktop.json` `serverModule` (default on in full, off in app) + IPC `curator:server-module` (see Curator `apps/electron/src/main.ts`), so the app can install or remove its own server from Settings.
+- **server module**: `desktop.json` `serverModule` (default on in full, off in app) + IPC `curator:server-module` (see TurboMusic `apps/electron/src/main.ts`), so the app can install or remove its own server from Settings.
 
 ## Gotchas
 - Give each edition its own `appId`, `productName`, `executableName`, `desktopName`/`StartupWMClass` and update `channel`.

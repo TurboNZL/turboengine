@@ -4,7 +4,7 @@
   "optional": true,
   "summary": "Wrapping tab strip, card order conventions, and a pairing code (`CUR1-<base64url>`) that carries address, token and access credentials to a new device.",
   "source": {
-    "repo": "TurboNZL/Curator",
+    "repo": "TurboNZL/turbomusic",
     "ref": "b6d85a8f35751b29a707b1935b19437c0175b5d9"
   },
   "files": [

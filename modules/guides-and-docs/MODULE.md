@@ -2,7 +2,7 @@
 
 `docs/guides` = user guides bundled into Settings > Guides; `docs/development` = developer notes; `PROJECT_BRIEF.md` and `CLAUDE.md` at the root.
 
-Recommended for every app. Reference files are in `files/` (the paths are the paths in the app); they were taken from Curator at `b6d85a8`, where they are known to work.
+Recommended for every app. Reference files are in `files/` (the paths are the paths in the app); they were taken from TurboMusic at `b6d85a8`, where they are known to work.
 
 ## Layout
 ```

@@ -2,7 +2,7 @@
 
 How an app starts the turbothemes engine, owns its layouts, shows the picker (colour theme, UI style, layout, wallpaper) and the theme-update card.
 
-Recommended for every app. Reference files are in `files/` (the paths are the paths in the app); they were taken from Curator at `b6d85a8`, where they are known to work.
+Recommended for every app. Reference files are in `files/` (the paths are the paths in the app); they were taken from TurboMusic at `b6d85a8`, where they are known to work.
 
 ## Themes live in this repo
 The theme package is `themes/` of this repository (name `turbothemes`; the old separate repository is retired). It has its own `CLAUDE.md`, docs (`themes/docs/`: CONTRACT, AUTHORING, INTEGRATION, PICKER ...), tests and a committed `dist/` that CI rebuilds. Apps get it two ways: **build time** as a pnpm git dependency on a subfolder, and **run time** as theme updates the app downloads from `themes/dist` on `main` (so a theme fix never needs an app release).

@@ -4,7 +4,7 @@
   "optional": false,
   "summary": "Every merge to main becomes a release: auto-PR for pushed branches, checks, next version vYYYY.M.N, installers and APK attached, lowercase asset names.",
   "source": {
-    "repo": "TurboNZL/Curator",
+    "repo": "TurboNZL/turbomusic",
     "ref": "b6d85a8f35751b29a707b1935b19437c0175b5d9"
   },
   "files": [

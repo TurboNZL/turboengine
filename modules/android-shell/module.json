@@ -4,7 +4,7 @@
   "optional": true,
   "summary": "A native Kotlin app hosting the web client from http://localhost, with a JS bridge, a Media3 player (notification, Android Auto), and an optional Termux-hosted server.",
   "source": {
-    "repo": "TurboNZL/Curator",
+    "repo": "TurboNZL/turbomusic",
     "ref": "b6d85a8f35751b29a707b1935b19437c0175b5d9"
   },
   "files": [

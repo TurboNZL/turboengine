@@ -2,7 +2,7 @@
 
 A native Kotlin app hosting the web client from http://localhost, with a JS bridge, a Media3 player (notification, Android Auto), and an optional Termux-hosted server.
 
-Optional. Reference files are in `files/` (the paths are the paths in the app); they were taken from Curator at `b6d85a8`, where they are known to work.
+Optional. Reference files are in `files/` (the paths are the paths in the app); they were taken from TurboMusic at `b6d85a8`, where they are known to work.
 
 - The page is served from `http://localhost` (secure context, no mixed-content rules), so images and audio load straight from an http home server.
 - The bridge is a Java interface: strings only, results as JSON, changes as events.

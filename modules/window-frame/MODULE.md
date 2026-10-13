@@ -2,7 +2,7 @@
 
 A theme-drawn title bar (traffic lights by UI style), the preload bridge `window.<app>Desktop`, the single-instance main process, GPU modes and graphics readback.
 
-Optional. Reference files are in `files/` (the paths are the paths in the app); they were taken from Curator at `b6d85a8`, where they are known to work.
+Optional. Reference files are in `files/` (the paths are the paths in the app); they were taken from TurboMusic at `b6d85a8`, where they are known to work.
 
 - `customFrame` (desktop.json, applies after restart): the page draws minimise/maximise/close from the current UI style; macOS-like styles put the buttons on the left. The `.bt-wf*` rules live in turbothemes.
 - `app.setDesktopName('<app>.desktop')` makes the launcher icon and the window one thing on Wayland (`StartupWMClass` in the deb must match).

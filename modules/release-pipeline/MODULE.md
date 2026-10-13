@@ -2,7 +2,7 @@
 
 Every merge to main becomes a release: auto-PR for pushed branches, checks, next version vYYYY.M.N, installers and APK attached, lowercase asset names.
 
-Recommended for every app. Reference files are in `files/` (the paths are the paths in the app); they were taken from Curator at `b6d85a8`, where they are known to work.
+Recommended for every app. Reference files are in `files/` (the paths are the paths in the app); they were taken from TurboMusic at `b6d85a8`, where they are known to work.
 
 ## What it does
 - `auto-pr.yml`: a push of any non-main branch opens a PR (needs the repo setting *Actions > General > Allow GitHub Actions to create and approve pull requests*).
@@ -11,7 +11,7 @@ Recommended for every app. Reference files are in `files/` (the paths are the pa
 - A merged PR cannot take new work: the next change goes on a fresh branch from main (the AI should restart its branch from main).
 
 ## Asset naming (all lowercase)
-`<app>[-<edition>]-<version>-<os>-<arch>.<ext>`: `music-curator-2026.10.31-linux-amd64.deb`, `...-windows-x64-setup.exe`, `...-android.apk`. The updaters never look at file names (electron-updater reads `latest*.yml`, Android takes the first `.apk`), so names can change without a transition period. Set names with `artifactName` in the electron-builder config.
+`<app>[-<edition>]-<version>-<os>-<arch>.<ext>`: `turbomusic-2026.10.31-linux-amd64.deb`, `...-windows-x64-setup.exe`, `...-android.apk`. The updaters never look at file names (electron-updater reads `latest*.yml`, Android takes the first `.apk`), so names can change without a transition period. Set names with `artifactName` in the electron-builder config.
 
 ## Gotchas
 - Releases the pipeline makes are visible to updaters as soon as `gh release create` runs, while assets arrive minutes later: the updater must treat "release exists, manifest not there yet" as "still being built" (see the `updaters` module).

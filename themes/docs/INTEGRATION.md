@@ -1,8 +1,8 @@
-# Adopting turbothemes the way Curator does
+# Adopting turbothemes the way TurboMusic does
 
-Curator (`TurboNZL/curator`, `apps/web`) is the reference implementation: every look in this repo was built and checked against it. TurboCut (`TurboNZL/turbocut`) is the second adopter and the one whose mistakes this guide is built from (see [AUDIT_TURBOCUT.md](AUDIT_TURBOCUT.md) for the screenshots). Read [CONTRACT.md](CONTRACT.md) first for the vocabulary (variables, hook classes, attributes); this file is about **how to apply it so the result looks deliberate in all 33 styles**, not only in the one you are developing in.
+TurboMusic (`TurboNZL/turbomusic`, `apps/web`) is the reference implementation: every look in this repo was built and checked against it. TurboCut (`TurboNZL/turbocut`) is the second adopter and the one whose mistakes this guide is built from (see [AUDIT_TURBOCUT.md](AUDIT_TURBOCUT.md) for the screenshots). Read [CONTRACT.md](CONTRACT.md) first for the vocabulary (variables, hook classes, attributes); this file is about **how to apply it so the result looks deliberate in all 33 styles**, not only in the one you are developing in.
 
-![Curator's Settings page: the reference](img/ref-curator-settings.png)
+![TurboMusic's Settings page: the reference](img/ref-curator-settings.png)
 
 The one-sentence rule: **an app supplies structure and layout, a theme supplies every colour, shape, font and motion.** If you catch yourself writing a colour, a radius, a font or a border for a control, you are doing a theme's job and the result will break in some style.
 
@@ -21,7 +21,7 @@ Under CI use the `git+https://github.com/TurboNZL/turboengine.git#path:/themes` 
 `base.css` holds the default variables and the generic `.btn`, `.input`, `.card`, `.bt-*` rules. They are meant to be **weaker than your own CSS and utility classes**, so import it **before** them:
 
 ```css
-/* Curator: index.css (Tailwind) */
+/* TurboMusic: index.css (Tailwind) */
 @import 'turbothemes/base.css';
 @tailwind base; @tailwind components; @tailwind utilities;
 ```
@@ -45,11 +45,11 @@ const themes = start({
 });
 ```
 
-Call it at module load, before you render anything, so a saved theme never flashes the default one (Curator calls `applyAppearance(settings)` as the second statement of `main.tsx`). Details of every option: [ENGINE.md](ENGINE.md).
+Call it at module load, before you render anything, so a saved theme never flashes the default one (TurboMusic calls `applyAppearance(settings)` as the second statement of `main.tsx`). Details of every option: [ENGINE.md](ENGINE.md).
 
-Decisions that Curator made, and when you should copy them:
+Decisions that TurboMusic made, and when you should copy them:
 
-| Curator did | Why | Copy it when |
+| TurboMusic did | Why | Copy it when |
 |---|---|---|
 | `fonts: 'none'` and bundles the `@fontsource` fonts itself in `src/fonts.css` | the app must work offline (phone, Pi, LAN) | the app is an installed/offline app. A web-only app can keep the default `'cdn'`. |
 | `storagePrefix: 'curator'` | its old keys (`curator.wallpaperImage`) kept working | you migrate an app that already stored something. New apps keep the default. |
@@ -68,11 +68,11 @@ This gives `bg-surface`, `text-muted`, `border-line`, `bg-accent`, `rounded-them
 
 ### 1.5 Give the user a picker
 
-Cheapest: `<turbo-themes-picker></turbo-themes-picker>` in the settings page ([PICKER.md](PICKER.md)); it already handles preview-on-hover, "matching colours", wallpaper and "check for newer themes", and it wears the look it is choosing. Curator draws its own (`components/AppearanceCard.tsx`: tiles, a live preview, groups) on the headless `themes.picker()` controller, which is worth doing when the picker is a feature of the app. Either way **put it where a person will find it** and show which look is active.
+Cheapest: `<turbo-themes-picker></turbo-themes-picker>` in the settings page ([PICKER.md](PICKER.md)); it already handles preview-on-hover, "matching colours", wallpaper and "check for newer themes", and it wears the look it is choosing. TurboMusic draws its own (`components/AppearanceCard.tsx`: tiles, a live preview, groups) on the headless `themes.picker()` controller, which is worth doing when the picker is a feature of the app. Either way **put it where a person will find it** and show which look is active.
 
 ## 2. The structure you owe the themes
 
-The hook classes in [CONTRACT.md](CONTRACT.md) are only half of it. The rest is DOM structure the style CSS assumes. These are the recipes that work everywhere; each is Curator's markup.
+The hook classes in [CONTRACT.md](CONTRACT.md) are only half of it. The rest is DOM structure the style CSS assumes. These are the recipes that work everywhere; each is TurboMusic's markup.
 
 ### 2.1 Dialog
 
@@ -110,7 +110,7 @@ A panel title is the **first child of a `.card.bt-panel`**. Styles such as Windo
 
 `.bt-tab` is **only the item of the phone bottom bar** (`.bt-tabbar`), and `.bt-tabbar` is a bar the styles give a border-top, glass and a bottom safe-area. Reusing them for an in-page tab strip is the single biggest cause of ugly UI in TurboCut: the style CSS only sets a colour on `.bt-tab`, so a plain `<button>` keeps the browser's own bordered, grey, outset look, and Liquid Glass turns the strip into a glass bar with a lens.
 
-Until a real hook exists in the engine, an in-page tab strip is the app's own small component, built **from tokens only** so every look works. This is Curator's (`pages/Settings.tsx`) and the version verified in TurboCut:
+Until a real hook exists in the engine, an in-page tab strip is the app's own small component, built **from tokens only** so every look works. This is TurboMusic's (`pages/Settings.tsx`) and the version verified in TurboCut:
 
 ```html
 <div role="tablist" class="tabs">
@@ -134,9 +134,9 @@ The clean fix is a `.bt-tabs` / `.bt-pagetab` hook in `base.css` plus a variable
 
 ### 2.4 Menus, drop-downs, popovers
 
-Anything that floats goes **in a portal at the end of `<body>`**, wears `bt-menu`, items have `role="menuitem"` (or `role="option"`), and the open animation comes from `var(--menu-anim)`. Position it with `fixed`, and measure it with `offsetWidth`/`offsetHeight`: the opening animation scales the box, so `getBoundingClientRect` reports it too small and the menu is clamped wrongly (Curator learned this the hard way). Native `<select>` is acceptable for simple forms (the `.input` class styles it); Curator replaced it with a themed `Select.tsx` where the list itself had to look like the style.
+Anything that floats goes **in a portal at the end of `<body>`**, wears `bt-menu`, items have `role="menuitem"` (or `role="option"`), and the open animation comes from `var(--menu-anim)`. Position it with `fixed`, and measure it with `offsetWidth`/`offsetHeight`: the opening animation scales the box, so `getBoundingClientRect` reports it too small and the menu is clamped wrongly (TurboMusic learned this the hard way). Native `<select>` is acceptable for simple forms (the `.input` class styles it); TurboMusic replaced it with a themed `Select.tsx` where the list itself had to look like the style.
 
-To animate **out**, keep the element mounted for the style's exit time and set `data-leaving`. Curator's `usePresence` (`lib/presence.ts`) reads `--pop-ms`/`--player-ms` from `<html>` with `getComputedStyle`. Without it menus still work; they just vanish instantly in the styles that animate them.
+To animate **out**, keep the element mounted for the style's exit time and set `data-leaving`. TurboMusic's `usePresence` (`lib/presence.ts`) reads `--pop-ms`/`--player-ms` from `<html>` with `getComputedStyle`. Without it menus still work; they just vanish instantly in the styles that animate them.
 
 ### 2.5 Buttons, fields, cards, rows, sliders
 
@@ -149,7 +149,7 @@ To animate **out**, keep the element mounted for the style's exit time and set `
 
 ### 2.6 Icons
 
-Draw icons as inline SVG with `stroke="currentColor"` (Curator uses lucide). A coloured emoji (TurboCut's 🧲 snapping button) ignores the palette, the dark/light mode and the style, and is the first thing to look wrong next to monochrome glyphs. If you must use a character, use a text glyph from the UI font, not an emoji.
+Draw icons as inline SVG with `stroke="currentColor"` (TurboMusic uses lucide). A coloured emoji (TurboCut's 🧲 snapping button) ignores the palette, the dark/light mode and the style, and is the first thing to look wrong next to monochrome glyphs. If you must use a character, use a text glyph from the UI font, not an emoji.
 
 ### 2.7 Layout
 
@@ -167,13 +167,13 @@ Hover/pressed/focus/disabled states, focus rings, selection colour, `color-schem
 | a control to look different in one style | edit that style's folder here (`themes/<id>/style.css`), push, the apps update themselves |
 | a new kind of control (tabs, toast, switch) | add the hook class + variables to `engine/base.css`, document it in CONTRACT.md, bump the engine; until then build it from tokens (2.3) |
 | an effect scripted in JS | engine release |
-| a custom layout of pages | the app's own CSS under `[data-layout=…]` (Curator's `layouts.css`) |
+| a custom layout of pages | the app's own CSS under `[data-layout=…]` (TurboMusic's `layouts.css`) |
 
 Apps own the **last word** on purpose: a utility class that sets a `.btn`'s background beats the style. That is a feature for one-off needs (a red delete button), and the reason to keep such overrides rare.
 
-## 5. Verify like Curator was verified
+## 5. Verify like TurboMusic was verified
 
-Curator's looks were checked with **screenshots under every style at desktop and phone widths, with a dialog open**, not by reading CSS. Do the same:
+TurboMusic's looks were checked with **screenshots under every style at desktop and phone widths, with a dialog open**, not by reading CSS. Do the same:
 
 ```
 node examples/verify-looks.mjs --url http://localhost:5173 --out shots \
@@ -182,7 +182,7 @@ node examples/verify-looks.mjs --url http://localhost:5173 --out shots \
 
 `examples/verify-looks.mjs` loads the app under eight representative looks (`--looks default:default,macos:macos,win98:win98,liquid:dark,…`) at two widths, opens the dialog you name, saves a screenshot per look and **fails** on: sideways overflow, buttons the browser still draws natively, a title bar whose close button wrapped, a title bar without an `<h2>`, a panel title outside a `.card.bt-panel`, uncaught page errors. It needs the app to persist the look with `persist: true` (or pass `--storage` with your own key). Run it before you claim a screen is themed; then **open the screenshots** and look at them. The checker finds structure mistakes; only a person sees "this tab strip looks wrong".
 
-A good minimum set of looks to look at by eye: `default` (the baseline), `macos` (traffic lights, flat), `win11` (close button on the right, accent underline), `win98` (bevels, coloured panel bars, no motion: the harshest test of structure), `liquid` with a dark palette (glass, lens, floating bars), `fortnite5` (ALL CAPS, slanted shapes) and `material`. If those seven look right, the other 26 almost always do (a rule of thumb from Curator, not a guarantee).
+A good minimum set of looks to look at by eye: `default` (the baseline), `macos` (traffic lights, flat), `win11` (close button on the right, accent underline), `win98` (bevels, coloured panel bars, no motion: the harshest test of structure), `liquid` with a dark palette (glass, lens, floating bars), `fortnite5` (ALL CAPS, slanted shapes) and `material`. If those seven look right, the other 26 almost always do (a rule of thumb from TurboMusic, not a guarantee).
 
 ## 6. Checklist for a person or an AI adding turbothemes (or adding a screen to an app that has it)
 
@@ -198,7 +198,7 @@ A good minimum set of looks to look at by eye: `default` (the baseline), `macos`
 
 ## 7. Where the reference code is
 
-| Thing | Curator file |
+| Thing | TurboMusic file |
 |---|---|
 | engine start-up and settings glue | `apps/web/src/lib/appearance.ts`, `main.tsx` |
 | CSS entry (`base.css` first) and Tailwind preset | `apps/web/src/index.css`, `tailwind.config.ts` |
