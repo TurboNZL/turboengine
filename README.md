@@ -11,7 +11,7 @@ The **main framework** for TurboNZL apps: working, battle-tested code and conven
 
 The themes are part of this repository (`themes/`, with their own `CLAUDE.md`): apps install the package from this repo and receive theme updates at run time from `themes/dist`. The `appearance` module is how an app wires them in.
 
-**An app that runs its own server** must take the `self-hosted-server` bundle: `cloudflare-access` + `server-install-update` + `updaters` + `release-pipeline`.
+**An app that runs its own server** must take the `self-hosted-server` bundle: `cloudflare-access` + `server-install-update` + `updaters` + `release-pipeline`. A **web-only** app (no desktop/Android client) takes `docker-self-host` + `release-pipeline` instead.
 
 ## Modules
 | Module | Optional | What | Requires |
@@ -21,6 +21,7 @@ The themes are part of this repository (`themes/`, with their own `CLAUDE.md`): 
 | [`cloudflare-access`](modules/cloudflare-access/MODULE.md) | yes | A server behind Cloudflare Access wants two headers on every request; this makes web, desktop and Android send them, including for <audio>, <img> and event streams that cannot. |  |
 | [`device-pairing`](modules/device-pairing/MODULE.md) | yes | A code that carries server address, access token and access-service credentials to a new device (`CUR1-<base64url>`). | settings-shell |
 | [`discord-presence`](modules/discord-presence/MODULE.md) | yes | Shows the playing track in Discord through the local IPC socket; needs the app's own Discord application id. | window-frame |
+| [`docker-self-host`](modules/docker-self-host/MODULE.md) | yes | A web app served by its own Node server as one multi-arch Docker image plus a Node tarball, with an optional cloudflared service and the sign-in code (setup code, hashed sessions and tokens, same-site check, lockout) that is safe behind a tunnel. | release-pipeline |
 | [`editions`](modules/editions/MODULE.md) | yes | One Electron codebase shipped as three editions (window + library server, window only, headless server) with a server module that can be installed or removed inside the app. |  |
 | [`gpu-modes`](modules/gpu-modes/MODULE.md) | yes | Chromium falls back to software rendering silently; this reads back what it got and tries start-up modes in turn ("Automatic"). | window-frame |
 | [`guides-and-docs`](modules/guides-and-docs/MODULE.md) | no | `docs/guides` = user guides bundled into Settings > Guides; `docs/development` = developer notes; `PROJECT_BRIEF.md` and `CLAUDE.md` at the root. |  |

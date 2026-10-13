@@ -1,0 +1,17 @@
+{
+  "name": "docker-self-host",
+  "title": "Docker image, compose with a Cloudflare tunnel, and the web auth that goes with it",
+  "optional": true,
+  "summary": "A web app served by its own Node server, shipped as one multi-arch Docker image (ghcr.io) plus a Node tarball, with an optional cloudflared service and the sign-in code (setup code, scrypt, hashed sessions and tokens, same-site check, login lockout) that is safe behind a tunnel.",
+  "source": {
+    "repo": "TurboNZL/turbokeep",
+    "ref": "9e8b5a89f7ef8c1ad11e404ebdedb3ee08d770cf"
+  },
+  "files": [
+    "Dockerfile",
+    "docker-compose.yml",
+    ".dockerignore",
+    ".env.example",
+    "apps/server/src/auth.ts"
+  ]
+}
