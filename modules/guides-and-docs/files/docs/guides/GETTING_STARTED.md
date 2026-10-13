@@ -1,9 +1,9 @@
 # Getting started
 
-Music Curator keeps your music library, plays it, and lets you rank it by choosing between two tracks at a time. **You need nothing but one of the first two options below.** A home server (option 3) is optional and only matters once you want the same library on several devices; it can be a Windows PC, a Linux computer or a Raspberry Pi.
+TurboMusic keeps your music library, plays it, and lets you rank it by choosing between two tracks at a time. **You need nothing but one of the first two options below.** A home server (option 3) is optional and only matters once you want the same library on several devices; it can be a Windows PC, a Linux computer or a Raspberry Pi.
 
 ## 1. On a computer: the desktop app (simplest)
-1. Open the [latest release](https://github.com/TurboNZL/Curator/releases/latest) and download the installer for your system (Windows `.exe`, Linux `.AppImage` or `.deb`).
+1. Open the [latest release](https://github.com/TurboNZL/turbomusic/releases/latest) and download the installer for your system (Windows `.exe`, Linux `.AppImage` or `.deb`).
 2. Install and open it. It brings its own server and stores your library in a folder (Settings → This app shows where; you can change it). There is nothing to connect or type.
 3. To bring music in, press **Add** (top right):
    - **Add audio files**: pick mp3/flac/m4a files from your computer.
@@ -12,7 +12,7 @@ Music Curator keeps your music library, plays it, and lets you rank it by choosi
 4. The app updates itself: when a new version is out it downloads in the background and installs when you close it.
 
 ## 2. In a browser or on a phone, no install
-Open the address of a Curator server in any browser (option 3 gives you one). The app works offline once loaded and syncs when the server is reachable. On Android you can also install the **Android app** from the same releases page (`music-curator-<version>-android.apk`: allow "install unknown apps" for your browser once). It plays in the background, with a media notification and Android Auto.
+Open the address of a TurboMusic server in any browser (option 3 gives you one). The app works offline once loaded and syncs when the server is reachable. On Android you can also install the **Android app** from the same releases page (`turbomusic-<version>-android.apk`: allow "install unknown apps" for your browser once). It plays in the background, with a media notification and Android Auto.
 
 ## 3. A home server (the same library on all your devices)
 Any computer that stays on can be the server: a **Windows PC** ([WINDOWS_SERVER.md](WINDOWS_SERVER.md): an installer with a setup wizard), or a **Linux machine such as a Raspberry Pi** (below). Pick one; you can change your mind later because the library moves with a backup.
@@ -23,7 +23,7 @@ Any computer that stays on can be the server: a **Windows PC** ([WINDOWS_SERVER.
 1. Plug the drive in. Find its name and mount it: `lsblk -f` shows it; if it already appears under `/media/...` or `/mnt/...` you can use that folder. (Making the mount permanent: [DEPLOY_PI.md](DEPLOY_PI.md) section 1.)
 2. On the Pi (a terminal, or `ssh` from your computer), run one command, with the folder on the drive where the library should live:
    ```
-   curl -fsSL https://raw.githubusercontent.com/TurboNZL/Curator/main/scripts/install-pi.sh | sudo bash -s -- --data-dir /mnt/music/curator
+   curl -fsSL https://raw.githubusercontent.com/TurboNZL/turbomusic/main/scripts/install-pi.sh | sudo bash -s -- --data-dir /mnt/music/curator
    ```
    It installs everything it needs (Node, ffmpeg, yt-dlp, the app), starts the server, and prints the address and the token. It takes a few minutes. Run it again at any time to repair or update; add `--dry-run` first to see exactly what it would do.
 3. Open the printed address (for example `http://raspberrypi.local:47813`) in a browser. The first screen asks for the **token** the installer printed (it is also in `<your folder>/token`). Paste it, and you are in.

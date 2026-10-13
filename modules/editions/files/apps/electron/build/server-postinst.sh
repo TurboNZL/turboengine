@@ -1,5 +1,5 @@
 #!/bin/sh
-# Music Curator Server (.deb): a system service that starts at boot. The library lives in /var/lib/music-curator (move it with CURATOR_DATA_DIR in
+# TurboMusic Server (.deb): a system service that starts at boot. The library lives in /var/lib/music-curator (move it with CURATOR_DATA_DIR in
 # /etc/music-curator/server.env). The access token is in /var/lib/music-curator/token.
 set -e
 if ! id music-curator >/dev/null 2>&1; then
@@ -7,14 +7,14 @@ if ! id music-curator >/dev/null 2>&1; then
 fi
 mkdir -p /etc/music-curator
 [ -f /etc/music-curator/server.env ] || cat > /etc/music-curator/server.env <<'EOF'
-# Settings for the Music Curator server service. Uncomment and edit, then: sudo systemctl restart music-curator-server
+# Settings for the TurboMusic server service. Uncomment and edit, then: sudo systemctl restart music-curator-server
 #CURATOR_DATA_DIR=/var/lib/music-curator
 #CURATOR_PORT=47813
 #CURATOR_HOST=0.0.0.0
 EOF
 cat > /lib/systemd/system/music-curator-server.service <<'EOF'
 [Unit]
-Description=Music Curator server
+Description=TurboMusic server
 After=network-online.target
 Wants=network-online.target
 
@@ -35,5 +35,5 @@ if [ -d /run/systemd/system ]; then
   systemctl daemon-reload
   systemctl enable music-curator-server >/dev/null 2>&1 || true
   systemctl restart music-curator-server || true
-  echo "Music Curator Server is running. Address and token: sudo journalctl -u music-curator-server -n 20  (token file: /var/lib/music-curator/token)"
+  echo "TurboMusic Server is running. Address and token: sudo journalctl -u music-curator-server -n 20  (token file: /var/lib/music-curator/token)"
 fi

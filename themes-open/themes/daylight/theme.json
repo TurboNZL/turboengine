@@ -1,0 +1,18 @@
+{
+  "id": "daylight",
+  "label": "Daylight",
+  "palettes": [
+    {
+      "id": "daylight",
+      "label": "Daylight",
+      "mode": "light",
+      "bg": [210, 40, 96.5],
+      "primary": [221, 83, 48],
+      "fg": "222 84% 5%",
+      "mutedFg": "215 16% 42%",
+      "motif": "waves",
+      "group": "colour",
+      "order": 30
+    }
+  ]
+}

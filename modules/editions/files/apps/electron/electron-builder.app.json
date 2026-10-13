@@ -1,6 +1,6 @@
 {
   "appId": "app.musiccurator.frontend",
-  "productName": "Music Curator App",
+  "productName": "TurboMusic App",
   "directories": {
     "output": "release/app",
     "buildResources": "build"
@@ -13,7 +13,7 @@
     "name": "music-curator-app",
     "desktopName": "music-curator-app.desktop",
     "curatorEdition": "app",
-    "description": "Music Curator app only: the window, with the library on a server you connect"
+    "description": "TurboMusic app only: the window, with the library on a server you connect"
   },
   "extraResources": [
     {
@@ -25,12 +25,12 @@
     {
       "provider": "github",
       "owner": "TurboNZL",
-      "repo": "Curator",
+      "repo": "turbomusic",
       "releaseType": "release",
       "channel": "app"
     }
   ],
-  "artifactName": "music-curator-app-${version}-${os}-${arch}.${ext}",
+  "artifactName": "turbomusic-app-${version}-${os}-${arch}.${ext}",
   "linux": {
     "target": [
       "AppImage",
@@ -39,7 +39,7 @@
     "category": "Audio",
     "icon": "build/icon.png",
     "executableName": "music-curator-app",
-    "maintainer": "Music Curator <noreply@musiccurator.app>",
+    "maintainer": "TurboMusic <noreply@musiccurator.app>",
     "synopsis": "Personal music library and ranking",
     "desktop": {
       "entry": {
@@ -49,7 +49,7 @@
   },
   "deb": {
     "packageName": "music-curator-app",
-    "artifactName": "music-curator-app-${version}-linux-${arch}.${ext}"
+    "artifactName": "turbomusic-app-${version}-linux-${arch}.${ext}"
   },
   "win": {
     "target": [
@@ -63,7 +63,7 @@
     "icon": "build/icon.png"
   },
   "nsis": {
-    "artifactName": "music-curator-app-${version}-windows-${arch}-setup.${ext}",
+    "artifactName": "turbomusic-app-${version}-windows-${arch}-setup.${ext}",
     "oneClick": false,
     "allowToChangeInstallationDirectory": true
   }

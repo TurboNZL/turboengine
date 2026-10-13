@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// A logo generator in the Curator style (see docs/LOGO.md): a dark rounded tile with a soft brand-colour glow, a lit ring, a dark inner disc with fine
+// A logo generator in the TurboMusic style (see docs/LOGO.md): a dark rounded tile with a soft brand-colour glow, a lit ring, a dark inner disc with fine
 // grooves and a sheen, a glossy centre motif with a bright leading edge and a drop shadow, and a hub. Everything is computed from geometry, so a
 // new app only changes the PALETTE and the motif() function.
 //   node examples/logo/make-logo.mjs [outDir]            writes logo.svg, logo-mono.svg (one colour, for notification/tray icons)

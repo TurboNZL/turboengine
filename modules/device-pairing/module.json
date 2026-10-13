@@ -1,0 +1,16 @@
+{
+  "name": "device-pairing",
+  "title": "Device pairing code",
+  "optional": true,
+  "summary": "A code that carries server address, access token and access-service credentials to a new device (`CUR1-<base64url>`).",
+  "source": {
+    "repo": "TurboNZL/turbomusic",
+    "ref": "ea3f5eaff467673231c721e33ffa773a93719ed2"
+  },
+  "requires": [
+    "settings-shell"
+  ],
+  "files": [
+    "apps/web/src/lib/pairCode.ts"
+  ]
+}

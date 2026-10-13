@@ -4,8 +4,8 @@
   "optional": false,
   "summary": "`docs/guides` = user guides bundled into Settings > Guides; `docs/development` = developer notes; `PROJECT_BRIEF.md` and `CLAUDE.md` at the root.",
   "source": {
-    "repo": "TurboNZL/Curator",
-    "ref": "b6d85a8f35751b29a707b1935b19437c0175b5d9"
+    "repo": "TurboNZL/turbomusic",
+    "ref": "ea3f5eaff467673231c721e33ffa773a93719ed2"
   },
   "files": [
     "apps/web/src/lib/guides.ts",

@@ -1,0 +1,19 @@
+{
+  "id": "mocha",
+  "label": "Mocha",
+  "palettes": [
+    {
+      "id": "mocha",
+      "label": "Mocha",
+      "mode": "dark",
+      "bg": [240, 21, 11],
+      "primary": [267, 84, 78],
+      "fg": "226 64% 88%",
+      "mutedFg": "228 24% 72%",
+      "motif": "hills",
+      "step": 1.1,
+      "group": "colour",
+      "order": 160
+    }
+  ]
+}

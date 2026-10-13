@@ -51,6 +51,3 @@ html, body { overflow-x: hidden; overscroll-behavior-x: none; }
 @media (prefers-reduced-motion: reduce) { .bt-drift { animation: none; } }
 /* the full-screen player: a click on an icon must count as a click on its button (the glyph itself was not reliably the target) */
 .bt-now button svg, .bt-now button svg * { pointer-events: none; }
-
-/* Multi-line boxes: a pill radius (Spotify, YouTube Music) would clip the text at the corners. Stopgap for TurboNZL/turbothemes#1; delete when the engine does this. */
-textarea.input { border-radius: min(var(--in-r, var(--ctl-r, 8px)), 1.25rem); padding-inline: max(var(--in-px, 0.75rem), 1rem); padding-block: 0.6rem; }

@@ -15,7 +15,7 @@ export function WindowFrame() {
   const ctl = d.windowControl.bind(d);
   return (
     <div className="bt-wf" onDoubleClick={() => ctl('maximize')}>
-      <span className="bt-wf-title">Music Curator</span>
+      <span className="bt-wf-title">TurboMusic</span>
       <div className="bt-wf-btns">
         <button type="button" className="bt-wf-btn" aria-label="Minimise" onClick={() => ctl('minimize')} onDoubleClick={(e) => e.stopPropagation()}><Minus size={14} /></button>
         <button type="button" className="bt-wf-btn" aria-label={max ? 'Restore' : 'Maximise'} onClick={() => ctl('maximize')} onDoubleClick={(e) => e.stopPropagation()}>{max ? <Copy size={12} /> : <Square size={12} />}</button>

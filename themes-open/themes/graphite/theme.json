@@ -1,0 +1,17 @@
+{
+  "id": "graphite",
+  "label": "Graphite",
+  "palettes": [
+    {
+      "id": "graphite",
+      "label": "Graphite",
+      "mode": "dark",
+      "bg": [220, 8, 9],
+      "primary": [213, 60, 58],
+      "motif": "grid",
+      "step": 0.9,
+      "group": "colour",
+      "order": 120
+    }
+  ]
+}

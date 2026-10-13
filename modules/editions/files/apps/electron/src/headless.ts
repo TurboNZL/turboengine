@@ -26,7 +26,7 @@ export function parseHeadlessArgs(argv: string[]): HeadlessArgs {
   return out;
 }
 
-export const HELP = `Music Curator Server (headless)
+export const HELP = `TurboMusic Server (headless)
   --data-dir DIR   where the library lives (default: $CURATOR_DATA_DIR, else ~/music-curator-data)
   --port N         default 47813
   --host ADDR      default 0.0.0.0 (all network interfaces)
@@ -49,7 +49,7 @@ async function main() {
   process.env.TMPDIR ??= join(config.dataDir, 'tmp');
   const running = await startServer(config);
   const ips = Object.values(networkInterfaces()).flat().filter((i) => i && i.family === 'IPv4' && !i.internal).map((i) => i!.address);
-  console.log(`Music Curator server
+  console.log(`TurboMusic server
   data dir : ${config.dataDir}
   listening: ${config.host}:${running.port}
   urls     : ${ips.map((ip) => `http://${ip}:${running.port}`).join(', ') || '(no LAN address found)'}
@@ -58,4 +58,4 @@ async function main() {
 }
 
 // only when run as the program, not when a test imports the helpers
-if (process.env.VITEST === undefined) main().catch((e) => { console.error(`Music Curator server cannot start: ${(e as Error).message}`); process.exit(1); });
+if (process.env.VITEST === undefined) main().catch((e) => { console.error(`TurboMusic server cannot start: ${(e as Error).message}`); process.exit(1); });

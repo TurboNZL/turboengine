@@ -1,0 +1,16 @@
+{
+  "id": "ember",
+  "label": "Ember",
+  "palettes": [
+    {
+      "id": "ember",
+      "label": "Ember",
+      "mode": "dark",
+      "bg": [22, 40, 6],
+      "primary": [24, 94, 52],
+      "motif": "peaks",
+      "group": "colour",
+      "order": 110
+    }
+  ]
+}

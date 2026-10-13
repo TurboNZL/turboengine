@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TurboMusic Server</title>
+<style>
+  :root { --bg:#14141b; --panel:#1d1d27; --raised:#272735; --line:#34344a; --fg:#f1f1f6; --muted:#9a9ab0; --accent:#8b5cf6; --good:#34d399; --warn:#fbbf24; --bad:#f87171; }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body { background: var(--bg); color: var(--fg); font: 15px/1.5 "Segoe UI", system-ui, sans-serif; display: flex; flex-direction: column; }
+  header { padding: 18px 28px 0; }
+  h1 { margin: 0; font-size: 22px; }
+  .steps { display: flex; gap: 6px; margin: 14px 0 0; padding: 0; list-style: none; flex-wrap: wrap; }
+  .steps li { font-size: 12px; padding: 4px 10px; border-radius: 999px; background: var(--panel); color: var(--muted); border: 1px solid var(--line); }
+  .steps li.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .steps li.done { color: var(--good); }
+  main { flex: 1; overflow-y: auto; padding: 20px 28px; }
+  h2 { margin: 0 0 4px; font-size: 18px; }
+  p { margin: 6px 0; color: var(--muted); }
+  p.fg, .fg { color: var(--fg); }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; margin: 12px 0; }
+  .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .grow { flex: 1; min-width: 0; }
+  .path { background: var(--raised); border: 1px solid var(--line); border-radius: 8px; padding: 7px 10px; font-family: Consolas, monospace; font-size: 13px; overflow-wrap: anywhere; min-width: 0; flex: 1; }
+  .path.empty { color: var(--muted); font-family: inherit; }
+  button { font: inherit; color: var(--fg); background: var(--raised); border: 1px solid var(--line); border-radius: 8px; padding: 7px 14px; cursor: pointer; }
+  button:hover { border-color: var(--accent); }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+  button:disabled { opacity: .5; cursor: default; }
+  input[type=text], input[type=number], input[type=password] { font: inherit; color: var(--fg); background: var(--raised); border: 1px solid var(--line); border-radius: 8px; padding: 7px 10px; }
+  input[type=text], input[type=password] { width: 100%; }
+  label.check { display: flex; gap: 8px; align-items: flex-start; margin: 8px 0; color: var(--fg); }
+  label.check input { margin-top: 4px; accent-color: var(--accent); }
+  footer { display: flex; gap: 10px; padding: 14px 28px; border-top: 1px solid var(--line); background: var(--panel); }
+  footer .sp { flex: 1; }
+  .tag { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; border-radius: 999px; padding: 2px 8px; background: var(--raised); color: var(--muted); }
+  .tag.rec { background: rgba(52,211,153,.15); color: var(--good); }
+  .ok { color: var(--good); } .warn { color: var(--warn); } .bad { color: var(--bad); }
+  ol.guide { margin: 8px 0 8px 18px; padding: 0; color: var(--fg); }
+  ol.guide li { margin: 6px 0; } ol.guide li span { color: var(--muted); }
+  a { color: #a78bfa; cursor: pointer; text-decoration: underline; }
+  code { background: var(--raised); padding: 1px 6px; border-radius: 5px; font-family: Consolas, monospace; font-size: 13px; }
+  progress { width: 100%; height: 8px; accent-color: var(--accent); }
+  .opt h3 { margin: 0 0 2px; font-size: 16px; } .opt p { margin: 4px 0; }
+  .hide { display: none !important; }
+</style>
+</head>
+<body>
+<header>
+  <h1>TurboMusic Server</h1>
+  <ol class="steps" id="steps"></ol>
+</header>
+<main id="main"></main>
+<footer><button id="back">Back</button><span class="sp"></span><button id="skip" class="hide">Skip this step</button><button id="next" class="primary">Next</button></footer>
+
+<script>
+const api = window.curatorSetup;
+const STEPS = ['Welcome', 'Folders', 'Network', 'YouTube tools', 'Spotify', 'Away from home', 'Finish'];
+let step = 0, S = null, busy = false, progress = {}, tunnel = null, result = null;
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const gb = (n) => (n == null ? '' : n >= 1e12 ? (n / 1e12).toFixed(1) + ' TB free' : (n / 1e9).toFixed(0) + ' GB free');
+const free = {};
+
+async function refresh() { S = await api.state(); }
+async function save(patch) { S.config = await api.save(patch); }
+
+function pathBox(key, label, hint, fallback) {
+  const v = S.config[key];
+  return `<div class="card"><div class="row"><div class="grow"><b>${label}</b><p>${hint}</p></div></div>
+    <div class="row"><div class="path ${v ? '' : 'empty'}">${v ? esc(v) : fallback}</div>
+    <button data-pick="${key}" data-title="${esc(label)}">Choose…</button>${v && key !== 'dataDir' ? `<button data-clear="${key}">Use the default</button>` : ''}</div>
+    ${v && free[key] != null ? `<p>${gb(free[key])}</p>` : ''}</div>`;
+}
+
+const views = [
+  () => `<h2>Welcome</h2>
+    <p class="fg">This turns this Windows computer into your own music server. Your phone, tablet and other computers connect to it to play your library, and everything stays on your hardware.</p>
+    <div class="card"><b>What happens next</b>
+      <ol class="guide"><li>Pick where the library lives <span>(the database, the music files and downloads can each go on a different drive).</span></li>
+      <li>Choose whether other devices on your home network may connect.</li>
+      <li>Optionally add the programs that download from YouTube.</li>
+      <li>Read how Spotify songs can be played.</li>
+      <li>Optionally set up a Cloudflare tunnel to reach the server away from home.</li></ol>
+      <p>It runs quietly in the tray (the icons near the clock) and uses almost no memory or CPU while idle. This wizard takes about five minutes and you can reopen it any time from the tray icon.</p></div>
+    ${S.running ? '<p class="warn">The server is already running. Changes you make here are applied when you press “Apply and restart” on the last step.</p>' : ''}`,
+
+  () => `<h2>Where should everything live?</h2>
+    <p>Pick a folder for each kind of data. Folders you leave on the default stay inside the database folder. Choose empty folders; they are created if they do not exist.</p>
+    ${pathBox('dataDir', 'Database and settings', 'Small but busy: the library database and your access token. Best on a fast drive (an SSD).', 'Default')}
+    ${pathBox('filesDir', 'Music and pictures', 'The big one: every song, cover and artist picture you add. Put it on your biggest drive.', 'Inside the database folder')}
+    ${pathBox('tmpDir', 'Downloads in progress', 'Half-finished downloads and uploads. Any drive with some free space.', 'Inside the database folder')}
+    ${pathBox('cacheDir', 'Download cache', 'What yt-dlp remembers between downloads. Any drive.', 'Inside the database folder')}
+    <p>Moving folders later keeps your files: the app copies them over first.</p>`,
+
+  () => `<h2>Who may connect?</h2>
+    <label class="check"><input type="checkbox" id="lan" ${S.config.lan ? 'checked' : ''}><span><b>Other devices on my home network</b><br><span style="color:var(--muted)">Phones, tablets and other computers on the same Wi-Fi can use the server. Turn this off to use it from this computer only.</span></span></label>
+    <div class="card"><div class="row"><b>Port</b><input type="number" id="port" min="1" max="65535" value="${S.config.port}" style="width:110px"><span style="color:var(--muted)">The default (${47813}) is deliberately unusual. Change it only if something else uses it.</span></div></div>
+    <div class="card"><b>The first time it starts, Windows asks about its firewall</b>
+      <p>Tick <b>Private networks</b> and press “Allow access”. Without this, other devices cannot reach the server (this computer still can).</p></div>
+    <div class="card"><b>Access token</b><p>Everything the server does needs this token, so nobody on your network can read your library without it. You get it, and a one-click link that sets a new device up, on the last step.</p></div>`,
+
+  () => {
+    const t = S.tools.filter((x) => x.id !== 'cloudflared');
+    return `<h2>YouTube downloads (optional)</h2>
+      <p>To add songs by pasting a YouTube link, the server needs three small programs. They are downloaded from their own projects' pages, into the database folder's <code>tools</code> folder, and nothing else on your computer is touched. Skip this if you only upload your own files; you can come back any time.</p>
+      <div class="card">${t.map((x) => `<label class="check"><input type="checkbox" data-tool="${x.id}" ${x.installed ? 'checked disabled' : 'checked'}><span><b>${x.label}</b> ${x.installed ? '<span class="ok">installed</span>' : ''}<br><span style="color:var(--muted)">${x.why}</span>
+        ${progress[x.id] ? `<br><progress max="${progress[x.id].total || 1}" value="${progress[x.id].done}"></progress><span style="color:var(--muted)">${progress[x.id].stage === 'unpack' ? 'Unpacking…' : progress[x.id].stage === 'done' ? 'Done' : 'Downloading…'}</span>` : ''}</span></label>`).join('')}
+        <div class="row"><button class="primary" id="install" ${busy || t.every((x) => x.installed) ? 'disabled' : ''}>Download the selected programs</button><span id="installMsg" class="${result && result.ok === false ? 'bad' : 'ok'}">${result ? (result.ok ? 'All set.' : esc(result.error)) : ''}</span></div></div>
+      <p>YouTube changes often, so the programs are kept current by pressing the button again later (it fetches the newest versions).</p>`;
+  },
+
+  () => `<h2>Playing Spotify songs</h2>
+    <p class="fg">TurboMusic can play songs from your Spotify library right next to your own files. For every option you need <b>Spotify Premium</b>, and you sign in once inside TurboMusic under <b>Settings → Spotify</b>. Here is what each choice means in plain words:</p>
+    <div class="card opt"><h3>1. Use the Spotify app you already have <span class="tag rec">Easiest · recommended</span></h3>
+      <p class="fg">TurboMusic becomes a remote control for Spotify on your phone, computer, smart speaker or TV. You press play in TurboMusic and the song comes out of that device.</p>
+      <p>Nothing to install on this server. Good for: living-room speakers, the Spotify app you already use. Catch: it plays through the Spotify device, so TurboMusic's own equaliser and offline mode do not apply to those songs.</p></div>
+    <div class="card opt"><h3>2. Play it inside TurboMusic itself</h3>
+      <p class="fg">In the TurboMusic web page or desktop app on a computer, a speaker called “TurboMusic” appears and Spotify songs play right there, in the same queue as your files.</p>
+      <p>Catch: it needs a modern browser and a <b>secure (https) address</b>. A plain home-network address like <code>http://192.168…</code> is not secure, so this works through the Cloudflare tunnel in the next step or on this computer itself (<code>localhost</code>). It does not work in the Android app.</p></div>
+    <div class="card opt"><h3>3. A Spotify speaker run by the server <span class="tag">Raspberry Pi only</span></h3>
+      <p class="fg">Spotify's own small player (“Soloist”) can run on a Raspberry Pi and play through its speakers or stream to your apps.</p>
+      <p>Spotify only makes it for Linux, so it is not available on this Windows server. If you ever add a Pi, it gets it.</p></div>
+    <p><b>My suggestion:</b> start with option 1. It needs nothing here and works right away.</p>`,
+
+  () => `<h2>Reach your music away from home (optional)</h2>
+    <p class="fg">By default only devices on your home network can connect. A Cloudflare Tunnel lets you reach the server from anywhere without opening anything on your router: this computer makes an outgoing connection to Cloudflare, and Cloudflare gives you a normal https address. It is free and also unlocks Spotify option 2. Skip this step if home-only is enough.</p>
+    <div class="card"><b>Set it up (about 10 minutes, once)</b>
+      <ol class="guide">
+        <li>Make a free Cloudflare account and add a domain you own to it <span>(a domain costs a few dollars a year; Cloudflare's dashboard walks you through adding it).</span> <a data-open="https://dash.cloudflare.com/sign-up">Open Cloudflare</a></li>
+        <li>In the dashboard open <b>Zero Trust</b> → <b>Networks</b> → <b>Tunnels</b> → <b>Create a tunnel</b> → choose <b>Cloudflared</b>. <a data-open="https://one.dash.cloudflare.com/">Open Zero Trust</a></li>
+        <li>Name it (for example “music”). On the next page choose <b>Windows</b>: it shows a long command. <b>Copy only the long token</b>, the text after <code>--token</code> or <code>install</code>, and paste it below. Do not run that command: this app runs the tunnel for you.</li>
+        <li>In the tunnel's <b>Public hostname</b> tab add one: pick a name such as <code>music.yourdomain.com</code>, set the service type to <b>HTTP</b> and the URL to <code>localhost:${S.config.port}</code>.</li>
+        <li>Press <b>Apply and restart</b> on the last step. After a minute the status below says <b>Connected</b>, and <code>https://music.yourdomain.com</code> opens your server.</li>
+      </ol>
+      <p>Your server's access token still protects everything: the tunnel only makes it reachable. Do not turn on Cloudflare Access in front of the whole address unless you also set it up for the apps (see the guides in TurboMusic's Settings).</p></div>
+    <div class="card">
+      <label class="check"><input type="checkbox" id="tOn" ${S.config.tunnelOn ? 'checked' : ''}><span><b>Run the tunnel</b></span></label>
+      <div class="row"><input type="password" id="tToken" placeholder="Paste the tunnel token here" value="${esc(S.config.tunnelToken)}" autocomplete="off" spellcheck="false"><button id="tShow">Show</button></div>
+      <p id="tStatus" class="${tunnel && tunnel.status === 'connected' ? 'ok' : tunnel && tunnel.status === 'error' ? 'bad' : ''}">${tunnel ? esc(tunnel.message) : 'Not running yet.'}</p></div>`,
+
+  () => result && result.ok
+    ? `<h2>The server is running</h2>
+      <div class="card"><b>On this computer</b><p class="fg"><code>http://localhost:${S.config.port}</code></p>
+        ${S.addresses.length ? `<b>On your home network</b>${S.addresses.map((a) => `<p class="fg"><code>${esc(a)}</code> <button data-copy="${esc(a)}">Copy</button></p>`).join('')}` : ''}
+        <b>Access token</b><p class="fg"><code>${esc(S.token)}</code> <button data-copy="${esc(S.token)}">Copy</button></p></div>
+      <div class="row"><button class="primary" id="openBrowser">Open TurboMusic in the browser</button><button id="openFolder">Show the library folder</button></div>
+      <p>To set up another device: open its address in a browser (or the Android app) and enter the address and token under <b>Settings → Server</b>. Easier: open TurboMusic from the button above, then use <b>Pair a device</b> in that same Settings page to make a link or code.</p>
+      <p>This window can be closed. The server keeps running in the tray, near the clock: right-click its icon for the menu.</p>`
+    : `<h2>Ready</h2>
+      <div class="card"><b>Summary</b>
+        <p class="fg">Database: <code>${esc(S.config.dataDir)}</code><br>Music and pictures: <code>${esc(S.config.filesDir || 'inside the database folder')}</code><br>Downloads: <code>${esc(S.config.tmpDir || 'inside the database folder')}</code> · Cache: <code>${esc(S.config.cacheDir || 'inside the database folder')}</code><br>
+        Network: ${S.config.lan ? 'home network and this computer' : 'this computer only'}, port ${S.config.port}<br>Cloudflare tunnel: ${S.config.tunnelOn && S.config.tunnelToken ? 'on' : 'off'}</p></div>
+      <label class="check"><input type="checkbox" id="startWin" ${S.config.startWithWindows ? 'checked' : ''}><span><b>Start with Windows</b><br><span style="color:var(--muted)">So the server is back after a restart. It starts hidden in the tray.</span></span></label>
+      <div class="row"><button class="primary" id="apply" ${busy ? 'disabled' : ''}>${S.running ? 'Apply and restart' : 'Install and start the server'}</button><span id="applyMsg" class="${result && !result.ok ? 'bad' : ''}">${busy ? 'Working…' : result && !result.ok ? esc(result.error) : ''}</span></div>`,
+];
+
+function render() {
+  $('#steps').innerHTML = STEPS.map((s, i) => `<li class="${i === step ? 'on' : i < step ? 'done' : ''}">${i + 1}. ${s}</li>`).join('');
+  $('#main').innerHTML = views[step]();
+  const last = step === STEPS.length - 1, fin = last && result && result.ok;
+  $('#back').classList.toggle('hide', step === 0 || fin);
+  $('#next').textContent = fin ? 'Close' : last ? 'Close' : 'Next';
+  $('#next').classList.toggle('hide', last && !fin && !S.running ? true : false);
+  $('#skip').classList.toggle('hide', !(step === 3 || step === 5));
+  bind();
+}
+
+function bind() {
+  document.querySelectorAll('[data-pick]').forEach((b) => b.onclick = async () => {
+    const dir = await api.chooseFolder(b.dataset.title);
+    if (!dir) return;
+    await save({ [b.dataset.pick]: dir });
+    free[b.dataset.pick] = await api.freeSpace(dir);
+    render();
+  });
+  document.querySelectorAll('[data-clear]').forEach((b) => b.onclick = async () => { await save({ [b.dataset.clear]: '' }); render(); });
+  document.querySelectorAll('[data-open]').forEach((a) => a.onclick = () => api.open(a.dataset.open));
+  document.querySelectorAll('[data-copy]').forEach((b) => b.onclick = () => { api.copy(b.dataset.copy); b.textContent = 'Copied'; });
+  const lan = $('#lan'); if (lan) lan.onchange = () => save({ lan: lan.checked });
+  const port = $('#port'); if (port) port.onchange = () => save({ port: Number(port.value) });
+  const inst = $('#install'); if (inst) inst.onclick = async () => {
+    const ids = [...document.querySelectorAll('[data-tool]:not(:disabled)')].filter((c) => c.checked).map((c) => c.dataset.tool);
+    if (!ids.length) return;
+    busy = true; result = null; render();
+    result = await api.installTools(ids); busy = false; await refresh(); render();
+  };
+  const tOn = $('#tOn'), tTok = $('#tToken');
+  if (tOn) { tOn.onchange = () => save({ tunnelOn: tOn.checked }); tTok.onchange = () => save({ tunnelToken: tTok.value }); tTok.oninput = () => save({ tunnelToken: tTok.value }); $('#tShow').onclick = () => { tTok.type = tTok.type === 'password' ? 'text' : 'password'; $('#tShow').textContent = tTok.type === 'password' ? 'Show' : 'Hide'; }; }
+  const sw = $('#startWin'); if (sw) sw.onchange = () => save({ startWithWindows: sw.checked });
+  const apply = $('#apply'); if (apply) apply.onclick = async () => {
+    busy = true; result = null; render();
+    result = await api.finish(); busy = false; await refresh(); render();
+  };
+  const ob = $('#openBrowser'); if (ob) ob.onclick = () => api.open('browser');
+  const of = $('#openFolder'); if (of) of.onclick = () => api.open('folder');
+}
+
+$('#back').onclick = () => { if (step > 0) { step--; result = null; render(); } };
+$('#skip').onclick = () => { step++; result = null; render(); };
+$('#next').onclick = async () => {
+  if (step === STEPS.length - 1) { window.close(); return; }
+  if (step === 2) { const p = Number($('#port').value); if (!(p >= 1 && p <= 65535)) { alert('Enter a port between 1 and 65535.'); return; } }
+  step++; result = null; await refresh(); render();
+};
+api.onProgress((p) => { progress[p.tool] = p; if (step === 3) render(); });
+api.onTunnel((t) => { tunnel = t; const el = $('#tStatus'); if (el) { el.textContent = t.message; el.className = t.status === 'connected' ? 'ok' : t.status === 'error' ? 'bad' : ''; } });
+
+(async () => { await refresh(); tunnel = S.tunnel; if (!S.firstRun) step = 1; render(); })();
+</script>
+</body>
+</html>

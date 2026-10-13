@@ -1,0 +1,17 @@
+{
+  "id": "liquid",
+  "label": "Glass lens",
+  "style": {
+    "description": "Translucent floating bars that bend the light behind them, rim highlights, springy press and morphing menus.",
+    "font": "system-ui",
+    "matching": {
+      "light": "light",
+      "dark": "default"
+    },
+    "effects": [
+      "liquid-glass"
+    ],
+    "order": 120
+  },
+  "palettes": []
+}

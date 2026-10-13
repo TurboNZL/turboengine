@@ -29,9 +29,9 @@ export function describePkexec(code: number | null, stderr = ''): PkexecResult {
 
 /** What a terminal window runs when there is no graphical password prompt: the same install with sudo, then a pause so the output can be read. */
 export const terminalInstallScript = (file: string) =>
-  `echo 'Installing the Music Curator update. Your password is asked by sudo below.'; echo; ` +
+  `echo 'Installing the TurboMusic update. Your password is asked by sudo below.'; echo; ` +
   `sudo sh -c ${shQuote(debInstallScript(file))}; code=$?; echo; ` +
-  `if [ $code -eq 0 ]; then echo 'Done. Music Curator will restart.'; else echo "The install failed (code $code)."; fi; ` +
+  `if [ $code -eq 0 ]; then echo 'Done. TurboMusic will restart.'; else echo "The install failed (code $code)."; fi; ` +
   `printf 'Press Enter to close this window… '; read _; exit $code`;
 
 /** Terminal emulators to try, in order, each with the arguments that run a shell script and keep the process alive until the window closes. */
@@ -54,7 +54,7 @@ export const installedMatches = (installed: string, wanted: string) => installed
 export const hasNoNewPrivs = (procStatus: string) => /^NoNewPrivs:\s*1\s*$/m.test(procStatus);
 
 export const NO_NEW_PRIVS_MESSAGE =
-  'This copy of Music Curator was started in a way that forbids asking for a password (the "no new privileges" flag is set, for example by a sandbox or a container), and opening a terminal through your session did not work either. Install it from a normal terminal instead (the AppImage build does not need this):';
+  'This copy of TurboMusic was started in a way that forbids asking for a password (the "no new privileges" flag is set, for example by a sandbox or a container), and opening a terminal through your session did not work either. Install it from a normal terminal instead (the AppImage build does not need this):';
 
 /**
  * A process started with no_new_privs hands the flag to everything it starts, so a terminal opened by the app can never run sudo. The user's systemd

@@ -1,6 +1,6 @@
 {
   "appId": "app.musiccurator.server.linux",
-  "productName": "Music Curator Server",
+  "productName": "TurboMusic Server",
   "directories": {
     "output": "release/server-linux",
     "buildResources": "build"
@@ -13,7 +13,7 @@
   "extraMetadata": {
     "main": "dist/headless.mjs",
     "name": "music-curator-server",
-    "description": "Music Curator server, headless: the library server as a service or a command, no window",
+    "description": "TurboMusic server, headless: the library server as a service or a command, no window",
     "curatorEdition": "server"
   },
   "extraResources": [
@@ -27,12 +27,12 @@
     {
       "provider": "github",
       "owner": "TurboNZL",
-      "repo": "Curator",
+      "repo": "turbomusic",
       "releaseType": "release",
       "channel": "server"
     }
   ],
-  "artifactName": "music-curator-server-${version}-${os}-${arch}.${ext}",
+  "artifactName": "turbomusic-server-${version}-${os}-${arch}.${ext}",
   "linux": {
     "target": [
       "AppImage",
@@ -41,12 +41,12 @@
     "category": "Network",
     "icon": "build/icon.png",
     "executableName": "music-curator-server",
-    "maintainer": "Music Curator <noreply@musiccurator.app>",
+    "maintainer": "TurboMusic <noreply@musiccurator.app>",
     "synopsis": "Personal music library and ranking"
   },
   "deb": {
     "packageName": "music-curator-server",
-    "artifactName": "music-curator-server-${version}-linux-${arch}.${ext}",
+    "artifactName": "turbomusic-server-${version}-linux-${arch}.${ext}",
     "afterInstall": "build/server-postinst.sh",
     "afterRemove": "build/server-postrm.sh",
     "recommends": [

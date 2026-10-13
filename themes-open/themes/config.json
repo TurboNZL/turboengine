@@ -1,0 +1,58 @@
+{
+  "defaults": {
+    "theme": "default",
+    "ui": "default"
+  },
+  "system": {
+    "dark": "default",
+    "light": "light"
+  },
+  "choices": {
+    "theme": [
+      {
+        "id": "auto",
+        "label": "Match this device",
+        "note": "The palette of your device's own look, light or dark by its setting"
+      },
+      {
+        "id": "system",
+        "label": "System",
+        "note": "Follows your device"
+      }
+    ],
+    "ui": [
+      {
+        "id": "auto",
+        "label": "Match this device",
+        "description": "Picks Material on Android phones and Chromebooks and the standard look everywhere else. Follows the device's light or dark setting.",
+        "font": "system-ui"
+      }
+    ]
+  },
+  "fallbackDevice": {
+    "name": "Standard v2",
+    "ui": "default",
+    "light": "light",
+    "dark": "default"
+  },
+  "devices": [
+    {
+      "name": "Material",
+      "when": {
+        "ua": "Android"
+      },
+      "ui": "material",
+      "light": "material",
+      "dark": "material-dark"
+    },
+    {
+      "name": "ChromeOS (Material)",
+      "when": {
+        "ua": "CrOS"
+      },
+      "ui": "material",
+      "light": "material",
+      "dark": "material-dark"
+    }
+  ]
+}

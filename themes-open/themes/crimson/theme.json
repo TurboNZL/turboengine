@@ -1,0 +1,16 @@
+{
+  "id": "crimson",
+  "label": "Crimson",
+  "palettes": [
+    {
+      "id": "crimson",
+      "label": "Crimson",
+      "mode": "dark",
+      "bg": [350, 40, 6],
+      "primary": [351, 78, 52],
+      "motif": "rays",
+      "group": "colour",
+      "order": 100
+    }
+  ]
+}

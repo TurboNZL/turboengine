@@ -1,0 +1,17 @@
+{
+  "name": "gpu-modes",
+  "title": "GPU modes and graphics readback (Electron)",
+  "optional": true,
+  "summary": "Chromium falls back to software rendering silently; this reads back what it got and tries start-up modes in turn (\"Automatic\").",
+  "source": {
+    "repo": "TurboNZL/turbomusic",
+    "ref": "ea3f5eaff467673231c721e33ffa773a93719ed2"
+  },
+  "requires": [
+    "window-frame"
+  ],
+  "files": [
+    "apps/electron/src/graphics.ts",
+    "apps/electron/src/gpuModes.ts"
+  ]
+}

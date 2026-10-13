@@ -1,0 +1,39 @@
+{
+  "id": "default",
+  "label": "Standard v2",
+  "style": {
+    "description": "The app's own look. Follows the colour theme's rounding and density (Classic is tighter).",
+    "font": "Inter",
+    "matching": {
+      "light": "light",
+      "dark": "default"
+    },
+    "order": 10
+  },
+  "palettes": [
+    {
+      "id": "default",
+      "label": "Standard v2",
+      "mode": "dark",
+      "bg": [240, 12, 7],
+      "primary": [262, 83, 66],
+      "motif": "stars",
+      "own": true,
+      "note": "Dark, medium density",
+      "group": "own",
+      "order": 0
+    },
+    {
+      "id": "light",
+      "label": "Light",
+      "mode": "light",
+      "bg": [40, 20, 97],
+      "primary": [262, 70, 52],
+      "motif": "hills",
+      "own": true,
+      "note": "Light, medium density",
+      "group": "own",
+      "order": 20
+    }
+  ]
+}

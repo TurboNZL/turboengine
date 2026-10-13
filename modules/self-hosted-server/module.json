@@ -1,0 +1,17 @@
+{
+  "name": "self-hosted-server",
+  "title": "Self-hosted server: the mandatory set",
+  "optional": false,
+  "summary": "An app that runs its own server must ship these together, so every TurboNZL server is reached, installed and updated the same way. Has no files; it lists what is required.",
+  "source": {
+    "repo": "TurboNZL/turbomusic",
+    "ref": "ea3f5eaff467673231c721e33ffa773a93719ed2"
+  },
+  "requires": [
+    "cloudflare-access",
+    "server-install-update",
+    "updaters",
+    "release-pipeline"
+  ],
+  "files": []
+}

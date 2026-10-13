@@ -4,23 +4,14 @@
   "optional": true,
   "summary": "A native Kotlin app hosting the web client from http://localhost, with a JS bridge, a Media3 player (notification, Android Auto), and an optional Termux-hosted server.",
   "source": {
-    "repo": "TurboNZL/Curator",
-    "ref": "b6d85a8f35751b29a707b1935b19437c0175b5d9"
+    "repo": "TurboNZL/turbomusic",
+    "ref": "ea3f5eaff467673231c721e33ffa773a93719ed2"
   },
   "files": [
     "apps/android/app/src/main/kotlin/app/musiccurator/android/MainActivity.kt",
     "apps/android/app/src/main/kotlin/app/musiccurator/android/CuratorBridge.kt",
     "apps/android/app/src/main/kotlin/app/musiccurator/android/ServerPrefs.kt",
-    "apps/android/app/src/main/kotlin/app/musiccurator/android/AccessProxy.kt",
-    "apps/android/app/src/main/kotlin/app/musiccurator/android/TermuxServer.kt",
     "apps/android/app/src/main/AndroidManifest.xml",
-    "apps/android/app/build.gradle.kts",
-    "apps/android/app/src/main/assets/termux/setup.sh",
-    "apps/android/app/src/main/assets/termux/start.sh",
-    "apps/android/app/src/main/assets/termux/stop.sh",
-    "apps/android/app/src/main/assets/termux/remove.sh",
-    "apps/android/app/src/main/assets/termux/one-time-line.sh",
-    "apps/web/src/lib/termux.ts",
-    "apps/web/src/components/TermuxServerCard.tsx"
+    "apps/android/app/build.gradle.kts"
   ]
 }

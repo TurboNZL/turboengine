@@ -1,0 +1,16 @@
+{
+  "id": "dark",
+  "label": "Slate",
+  "palettes": [
+    {
+      "id": "dark",
+      "label": "Slate",
+      "mode": "dark",
+      "bg": [222, 47, 5],
+      "primary": [217, 91, 55],
+      "motif": "grid",
+      "group": "colour",
+      "order": 50
+    }
+  ]
+}

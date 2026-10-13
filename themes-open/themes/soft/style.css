@@ -1,0 +1,55 @@
+/* neutral Close (the style has no red one) */
+[data-ui="soft"] .bt-wf-close:is(:hover, :focus-visible) { background: color-mix(in srgb, currentColor 22%, transparent); color: inherit; }
+[data-ui="soft"] .bt-wf-btn { --wf-r: 9999px; width: 1.7rem; height: 1.7rem; }
+/* ================== soft / soft ================== */
+/*
+ * Modelled on soft 1.x: a flush grey sidebar with a hairline separator, a flat header bar (no blur) over the content, 6 px flat
+ * buttons and entries in a translucent grey, 12 px cards and popovers with a one-pixel outline plus a soft shadow, sidebar rows that
+ * highlight in grey (never the accent), regular-weight text, circular close buttons and a white round slider knob. Colours still come
+ * from the colour theme (soft / soft Dark are its matching palettes); only mixes of its foreground are used here.
+ */
+[data-ui="soft"] {
+  --chk-size: 1.1rem; --chk-r: 4px; --chk-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 28%, transparent); --chk-bg: transparent; --chk-hover-border: color-mix(in srgb, hsl(var(--fg)) 45%, transparent);
+  --radius: 12px; --ctl-r: 6px; --card-r: 12px; --win-r: 12px; --menu-r: 12px; --nav-r: 6px;
+  --font: "soft Sans", "Inter", system-ui, sans-serif;
+  --dur: 150ms; --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94); --tb-justify: center;
+  --btn-bg: color-mix(in srgb, hsl(var(--fg)) 8%, transparent); --btn-hover-bg: color-mix(in srgb, hsl(var(--fg)) 13%, transparent); --btn-weight: 400;
+  --btn-active-transform: none; --btn-active-shadow: inset 0 0 0 99px color-mix(in srgb, hsl(var(--fg)) 6%, transparent);
+  --btn-accent-hover-bg: color-mix(in srgb, hsl(var(--accent)) 88%, white);
+  --ghost-hover-bg: color-mix(in srgb, hsl(var(--fg)) 8%, transparent);
+  --in-bg: color-mix(in srgb, hsl(var(--fg)) 7%, transparent); --in-border: 1px solid transparent; --in-hover-border: transparent; --in-focus-border: transparent;
+  --in-shadow: none; --in-focus-shadow: 0 0 0 2px hsl(var(--accent) / 0.85);
+  --card-bg: hsl(var(--surface)); --card-border: 0 solid transparent;
+  --card-shadow: 0 0 0 1px color-mix(in srgb, hsl(var(--fg)) 8%, transparent), 0 1px 3px rgb(0 0 0 / 0.1), 0 1px 2px rgb(0 0 0 / 0.06);
+  --win-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 12%, transparent); --win-shadow: 0 8px 30px rgb(0 0 0 / 0.3), 0 2px 8px rgb(0 0 0 / 0.2);
+  --dialog-anim: bt-pop 180ms cubic-bezier(0.2, 0.8, 0.3, 1);
+  --tb-bg: color-mix(in srgb, hsl(var(--fg)) 5%, hsl(var(--surface))); --tb-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 12%, transparent); --tb-pad: 0.7rem 1rem; --tb-weight: 700; --tb-size: 1rem;
+  --close-bg: color-mix(in srgb, hsl(var(--fg)) 8%, transparent); --close-r: 9999px; --close-hover-bg: color-mix(in srgb, hsl(var(--fg)) 14%, transparent);
+  --bar-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 12%, transparent);
+  --menu-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 10%, transparent); --pop-shadow: 0 2px 10px rgb(0 0 0 / 0.25), 0 0 0 1px rgb(0 0 0 / 0.04);
+  --menu-anim: bt-fade 120ms ease-out; --menu-hi-bg: color-mix(in srgb, hsl(var(--fg)) 9%, transparent);
+  /* the side bar and the header bar are a shade apart from the content, as in soft; no blur, no floating */
+  --side-bg: color-mix(in srgb, hsl(var(--fg)) 5%, hsl(var(--bg))); --side-shadow: none;
+  --top-bg: color-mix(in srgb, hsl(var(--fg)) 6%, hsl(var(--bg))); --top-shadow: none;
+  --player-bg: color-mix(in srgb, hsl(var(--fg)) 6%, hsl(var(--bg))); --player-shadow: none;
+  --nav-hover-bg: color-mix(in srgb, hsl(var(--fg)) 6%, transparent); --nav-active-bg: color-mix(in srgb, hsl(var(--fg)) 10%, transparent); --nav-active-fg: hsl(var(--fg));
+  --row-hover: color-mix(in srgb, hsl(var(--fg)) 6%, transparent); --row-current: color-mix(in srgb, hsl(var(--fg)) 9%, transparent);
+  --rng-appearance: none; --rng-h: 0.4rem; --rng-track: color-mix(in srgb, hsl(var(--fg)) 14%, transparent);
+  --rng-tw: 1.15rem; --rng-th: 1.15rem; --rng-thumb: #fff; --rng-ts: 0 1px 3px rgb(0 0 0 / 0.45), 0 0 0 1px rgb(0 0 0 / 0.08);
+}
+[data-ui="soft"] .bt-titlebar { position: relative; }
+[data-ui="soft"] .bt-titlebar .bt-close { position: absolute; right: 0.6rem; top: 50%; transform: translateY(-50%); padding: 0.3rem; }
+html[data-ui="soft"] ::selection { background: color-mix(in srgb, hsl(var(--accent)) 40%, transparent); }
+/* flat header bar: no blur, and the library pages' side bar runs the full height with a hairline */
+[data-ui="soft"] .bt-shell { -webkit-backdrop-filter: none; backdrop-filter: none; }
+[data-ui="soft"] .bt-top { backdrop-filter: none; -webkit-backdrop-filter: none; }
+[data-ui="soft"] .bt-nav { font-weight: 400; padding-block: 0.55rem; color: hsl(var(--fg)); }
+[data-ui="soft"] .bt-nav[aria-current="page"] { font-weight: 500; }
+[data-ui="soft"] .bt-brand { font-size: 1rem; font-weight: 700; }
+[data-ui="soft"] .btn.btn-accent { font-weight: 500; }
+[data-ui="soft"] h1 { font-weight: 800; letter-spacing: 0; }
+/* boxed lists (soft "boxed-list"): a rounded card whose rows are divided by hairlines */
+[data-ui="soft"] .card.overflow-hidden .bt-row + .bt-row, [data-ui="soft"] .card.overflow-hidden > div + div { border-top: 1px solid color-mix(in srgb, hsl(var(--fg)) 8%, transparent); }
+[data-ui="soft"] .chip { background: color-mix(in srgb, hsl(var(--fg)) 8%, transparent); }
+[data-ui="soft"] { --player-in: bt-slide-in 320ms cubic-bezier(0.2, 0.8, 0.3, 1) both; --player-out: bt-slide-out 220ms ease-in both; --player-ms: 220ms; --pop-out: bt-fade-out 150ms ease-in both; --pop-ms: 150ms; }
+[data-ui="soft"] { --page-in: bt-fade 220ms ease-out backwards; }

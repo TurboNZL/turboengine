@@ -1,0 +1,16 @@
+{
+  "id": "forest",
+  "label": "Forest",
+  "palettes": [
+    {
+      "id": "forest",
+      "label": "Forest",
+      "mode": "dark",
+      "bg": [160, 35, 5],
+      "primary": [152, 69, 38],
+      "motif": "peaks",
+      "group": "colour",
+      "order": 80
+    }
+  ]
+}

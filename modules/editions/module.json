@@ -4,8 +4,8 @@
   "optional": true,
   "summary": "One Electron codebase shipped as three editions (window + library server, window only, headless server) with a server module that can be installed or removed inside the app.",
   "source": {
-    "repo": "TurboNZL/Curator",
-    "ref": "b6d85a8f35751b29a707b1935b19437c0175b5d9"
+    "repo": "TurboNZL/turbomusic",
+    "ref": "ea3f5eaff467673231c721e33ffa773a93719ed2"
   },
   "files": [
     "apps/electron/package.json",
