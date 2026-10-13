@@ -33,7 +33,7 @@ The themes are part of this repository (`themes/`, with their own `CLAUDE.md`): 
 | [`window-frame`](modules/window-frame/MODULE.md) | yes | A theme-drawn title bar (traffic lights by UI style), the preload bridge `window.<app>Desktop`, the single-instance main process, GPU modes and graphics readback. |  |
 
 ## Using it
-**New app:** copy `templates/` into the repo (`CLAUDE.md`, `PROJECT_BRIEF.md`, `.turboengine.json`), then add modules by copying their `files/` and following `MODULE.md`. Tell the AI: *"Read TurboNZL/turboengine (CLAUDE.md and the modules you need) and set this app up from it; pin to commit X."*
+**New app:** follow [`templates/NEW_APP_CHECKLIST.md`](templates/NEW_APP_CHECKLIST.md): create the default `main` branch, an MIT `LICENSE` and a `README.md`, and remind the user to enable GitHub Actions, the workflow write permission with *create and approve pull requests*, and the Claude connection for the new repository. Copy `templates/` into the repo (`CLAUDE.md`, `PROJECT_BRIEF.md`, `README.md`, `LICENSE`, `.turboengine.json`), then add modules by copying their `files/` and following `MODULE.md`. Tell the AI: *"Read TurboNZL/turboengine (CLAUDE.md and the modules you need) and set this app up from it; pin to commit X."*
 
 **Existing app:** add `.turboengine.json`, then `node scripts/engine-diff.mjs ../my-app --show` shows how far it has drifted.
 

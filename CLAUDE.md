@@ -18,6 +18,8 @@ On 2026-10-13 `window-frame`, `android-shell` and `settings-shell` were split. A
 ## Starting an app
 Copy `templates/*`, pick modules (`release-pipeline`, `updaters`, `appearance`, `guides-and-docs` are for everyone; the rest are optional), copy their `files/`, follow each `MODULE.md`, fill in `.turboengine.json` with the engine commit you used, and write the "Engine" section of the app's `CLAUDE.md` (the template has it).
 
+**Always follow `templates/NEW_APP_CHECKLIST.md`.** A new program must get a default `main` branch, an MIT `LICENSE` and a `README.md`, and the AI must remind the user to enable GitHub Actions, turn on workflow write permission with "Allow GitHub Actions to create and approve pull requests", and (if Claude's GitHub access is limited to selected repositories) add the new repository to the Claude connection.
+
 ## Taking an app's improvement back
 1. Diff: `node scripts/engine-diff.mjs <app> --show`.
 2. Copy the improved files into `modules/<m>/files/<same path>`; keep app-specific names out of anything that is meant to be generic, or leave them and say so in `MODULE.md`.
