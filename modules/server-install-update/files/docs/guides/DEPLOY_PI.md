@@ -10,7 +10,7 @@ Written from the server's actual behaviour (`packages/server`). The parts that d
 > ```
 > Mount the drive first (section 1; or use the folder your desktop already mounts). `--dry-run` shows what it would do; running it again updates. [GETTING_STARTED.md](GETTING_STARTED.md) has the plain-language version. Everything below is the same thing by hand, plus what the script does not cover. The script itself has only been checked with `bash -n` and a dry run, not on a real Pi: if a step fails it says which, and the manual sections below are the fallback.
 
-> **Docker is the simplest way now:** no service account, no Node, one-line updates. See [MIGRATE_TO_DOCKER.md](MIGRATE_TO_DOCKER.md) for moving an existing server, or just use the `docker-compose.yml` in the repository for a new one (`docker compose up -d`).
+> **The simplest way now:** `scripts/install-server.sh --root /mnt/data/turbomusic` puts the whole server in one folder (own Node, ffmpeg, yt-dlp, library), needs no root and updates from the app. See [MIGRATE_SERVER.md](MIGRATE_SERVER.md). The rest of this page is the older way with a dedicated service account.
 
 ## Packaged install (no Node, no git): the server .deb or AppImage
 Each release has a headless server for Linux that brings its own runtime:

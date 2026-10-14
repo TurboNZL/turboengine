@@ -15,7 +15,7 @@ A bundle, not code. If an app runs **its own server** (a library, a project stor
 | `updaters` | the apps update themselves (.deb, AppImage, Windows, APK) the same way the server does |
 | `release-pipeline` | the releases the updaters read |
 
-The install in `server-install-update` has two flavours: the systemd/Windows tray one, and **Docker** (preferred for a new server: no service account). Either way the same four are required.
+The install in `server-install-update` has two flavours: the one-folder install (`install-server.sh`, a user service, any drive, no root) and the Windows tray app. Docker is not one of them (no in-app update, no host audio). Either way the same four are required.
 
 Add to `.turboengine.json` all four plus this name, then do the checklist: Access fields in Settings (id, secret) wired into every request path, pairing code carries them, the update card appears on a service install, the guide for installing the server exists in `docs/guides`.
 
