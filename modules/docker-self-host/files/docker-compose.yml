@@ -1,5 +1,6 @@
 # TurboKeep. Start it:               docker compose up -d
 # Start it with a Cloudflare tunnel: docker compose --profile tunnel up -d     (needs TUNNEL_TOKEN in .env, see docs/guides/CLOUDFLARE_TUNNEL.md)
+# The port on THIS machine is TURBOKEEP_PORT (default 47901): every program on a machine needs its own port, see the engine's docs/SERVER_APPS.md.
 services:
   turbokeep:
     image: ghcr.io/turbonzl/turbokeep:latest
@@ -17,9 +18,10 @@ services:
       # TURBOKEEP_MAX_IMPORT_MB: "256"
     volumes:
       - turbokeep-data:/data
-    # Reachable on this machine only; the tunnel talks to it over the compose network. To use it on your LAN, change to "8080:8080".
+    # Reachable on this machine only; the tunnel talks to it over the compose network (always on 8080 INSIDE the container, which clashes with nothing).
+    # The left-hand number is the port on this machine: set TURBOKEEP_PORT in .env to move it. To use it on your LAN, drop the "127.0.0.1:".
     ports:
-      - "127.0.0.1:8080:8080"
+      - "127.0.0.1:${TURBOKEEP_PORT:-47901}:8080"
 
   cloudflared:
     image: cloudflare/cloudflared:latest
@@ -27,7 +29,9 @@ services:
     restart: unless-stopped
     command: tunnel --no-autoupdate run
     environment:
-      TUNNEL_TOKEN: ${TUNNEL_TOKEN:?set TUNNEL_TOKEN in .env}
+      # `:-` and not `:?`: compose reads the variable for EVERY service, even one in a profile that is not running, so a required variable
+      # stops a plain `docker compose up` with "required variable TUNNEL_TOKEN is missing". Empty is fine until the tunnel profile is used.
+      TUNNEL_TOKEN: ${TUNNEL_TOKEN:-}
     depends_on:
       - turbokeep
 

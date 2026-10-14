@@ -2,13 +2,13 @@
 
 A web app served by its own Node server, shipped as one multi-arch Docker image plus a Node tarball, with an optional `cloudflared` service, and the sign-in code that is safe behind a tunnel.
 
-Optional. For an app that has **no desktop or Android client** and is only used through the browser (TurboKeep). Reference files are in `files/` (the paths are the paths in the app); source: `TurboNZL/turbokeep` at `9e8b5a8`.
+Optional. This is **way B** of [`docs/SERVER_APPS.md`](../../docs/SERVER_APPS.md); **way A** is the native service of `server-install-update`. For an app that has **no desktop or Android client** and is only used through the browser (TurboKeep). Reference files are in `files/` (the paths are the paths in the app); source: `TurboNZL/turbokeep` at `9e8b5a8`.
 
 **Replaces, for such an app:** `server-install-update` (Docker is the install; `docker compose pull && docker compose up -d` is the update) and `updaters` (nothing to self-update). **Does not replace** `release-pipeline` (the Docker job is added to it, see below). If the app also has a desktop or Android client, take the full `self-hosted-server` set instead, and `cloudflare-access` for those clients.
 
 ## Pieces
 - `Dockerfile`: the build stage runs on `$BUILDPLATFORM` (pnpm install + build once, no emulation), the final image only copies `server.mjs` and the built client, runs as `node`, one volume `/data`, one port, a health check on `/api/health`. `ARG VERSION` becomes `TURBOKEEP_VERSION` (rename it for your app).
-- `docker-compose.yml`: the app (published on `127.0.0.1` only, named volume) and a `cloudflared` service in the `tunnel` profile that reads `TUNNEL_TOKEN` from `.env`. The tunnel's public hostname points at `http://<service>:<port>`.
+- `docker-compose.yml`: the app (published on `127.0.0.1:${APP_PORT:-<registry port>}:<inside port>` only, named volume) and a `cloudflared` service in the `tunnel` profile that reads `TUNNEL_TOKEN` from `.env`. The tunnel's public hostname points at `http://<service>:<inside port>`. The host port comes from [`docs/PORTS.md`](../../docs/PORTS.md): never 8080.
 - `apps/server/src/auth.ts`: scrypt passwords, sessions and `tk_` API tokens stored as SHA-256 only, a same-site check for cookie writes, a failed-login limiter, the visitor address behind a tunnel. It imports `./db.ts` (a `sessions` table with `token_hash, user_id, kind, name, created_at, expires_at, last_used`) and `./config.ts` (`trustProxy`, `origins`); the cookie name and the token prefix are TurboKeep's. Rename together; renaming after release logs everyone out.
 - The server also needs, in `server.ts`: a **setup code** (random, printed to the log) for the first account when none exists, with `TURBOKEEP_ADMIN_USER`/`_PASSWORD` as the headless alternative. See TurboKeep `apps/server/src/server.ts` and the `/api/auth/register` route.
 
@@ -40,6 +40,8 @@ Optional. For an app that has **no desktop or Android client** and is only used 
 plus `permissions: packages: write` on the workflow, and a `node-bundle` job that tars `server.mjs` + `web/` into `<app>-<version>-node.tar.gz` (see TurboKeep `release.yml`). `check.yml` gets a `docker/build-push-action` with `push: false`.
 
 ## Gotchas (each was found or checked in TurboKeep)
+- **Never use `${VAR:?message}` in `docker-compose.yml`.** Compose reads every variable for every service, even one in a profile that is not running, so `${TUNNEL_TOKEN:?...}` made a plain `docker compose up` fail with "required variable TUNNEL_TOKEN is missing" on a machine with no tunnel (found by the owner on a Raspberry Pi). Use `${TUNNEL_TOKEN:-}`; TurboKeep's `deploy.test.ts` guards it.
+- **Ports must be unique per machine.** The published port is the one that matters: take it from [`docs/PORTS.md`](../../docs/PORTS.md), make it configurable (`APP_PORT` in `.env`), and tell users in the guide. See also [`docs/SERVER_APPS.md`](../../docs/SERVER_APPS.md) for how this way and the native-service way fit together.
 - **Behind a tunnel the visitor is `CF-Connecting-IP`.** Cloudflare *appends* to an `X-Forwarded-For` the visitor sent, so its first entry is forgeable: use the CF header, else the **last** `X-Forwarded-For` entry. Both are forgeable by anyone who reaches the port directly, so publish the container port on `127.0.0.1` only.
 - **Same-site check:** `Sec-Fetch-Site: same-origin` first (the browser sets it, and it survives a tunnel/proxy that rewrites `Host`), then `Origin` against `Host`/`X-Forwarded-Host`, then an allow-list env var for odd setups.
 - **The first account must not be claimable by whoever finds the URL first:** print a setup code in the log (or create the admin from env).
