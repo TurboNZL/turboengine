@@ -1,7 +1,7 @@
 {
   "name": "TurboMusic",
   "emblem": "note",
-  "accent": null,
+  "emblemColor": null,
   "out": {
     "svg": "apps/web/public/icon.svg",
     "mono": "apps/web/public/icon-mono.svg",

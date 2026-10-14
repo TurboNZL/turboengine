@@ -11,7 +11,7 @@ import { buildLogo, loadEmblem } from './logo/lib.mjs';
 const argv = process.argv.slice(2), opt = (n) => { const i = argv.indexOf(n); return i < 0 ? undefined : argv[i + 1]; };
 const root = resolve(opt('--root') ?? process.cwd());
 const cfg = JSON.parse(readFileSync(resolve(root, opt('--config') ?? 'branding/logo.json'), 'utf8'));
-const logo = buildLogo({ name: cfg.name, accent: cfg.accent ?? undefined, emblem: loadEmblem(cfg.emblem, root) });
+const logo = buildLogo({ name: cfg.name, color: cfg.emblemColor ?? undefined, emblem: loadEmblem(cfg.emblem, root) });
 const out = cfg.out ?? {};
 
 const write = (rel, text) => { const p = join(root, rel); mkdirSync(dirname(p), { recursive: true }); writeFileSync(p, text); console.log('wrote', rel); };

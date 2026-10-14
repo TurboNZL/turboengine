@@ -10,9 +10,9 @@ export const ENGINE_ACCENT = '#e10600';
 export const INK = '#0b0b0e', DISC = '#101015', CHAR = '#17171c', GROOVE = '#2b2b33';
 export const C = 256;          // centre of the 512 canvas
 export const SCALE = 0.9;      // the mark sits at 90% inside the tile so the ring never touches the edge
-export const PLATE = 104;      // radius of the dark plate an emblem sits on (covers the roots of the blades)
-export const EMBLEM = 156;     // the emblem's box on the 512 canvas (a 100 box is scaled to this)
-const MONO_R0 = 118, MONO_EMBLEM = 176; // the one-colour twin: blades start further out, the emblem is larger
+export const PLATE = 130;      // radius of the dark plate an emblem sits on (covers the roots of the blades)
+export const EMBLEM = 212;     // the emblem's box on the 512 canvas (a 100 box is scaled to this)
+const MONO_R0 = 132, MONO_EMBLEM = 214; // the one-colour twin: blades start further out, the emblem is larger
 
 const f = (n) => +n.toFixed(2);
 const pol = (cx, cy, r, a) => [cx + r * Math.cos(a), cy + r * Math.sin(a)];
@@ -33,7 +33,7 @@ function blade(cx, cy, a, r0, r1, twist, width) {
 }
 const wheel = (cx, cy, r0, r1, n, twist, width) => Array.from({ length: n }, (_, i) => blade(cx, cy, -Math.PI / 2 + (i * 2 * Math.PI) / n, r0, r1, twist, width)).join('');
 
-// ---- colour: one accent, three tones ----
+// ---- colour: one colour, three tones (the engine red for the mark; the app's own colour for its emblem) ----
 const hsl = (hex) => {
   const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
   const mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2, d = mx - mn;
@@ -77,11 +77,12 @@ const place = (d, k, ox, oy) => d.replace(/(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/g
 const emblemAt = (e, size, cx, cy) => place(e.d, size / e.box, cx - size / 2, cy - size / 2);
 
 /**
- * @param {{ name: string, accent?: string, emblem?: object | null }} o
+ * @param {{ name: string, color?: string, emblem?: object | null }} o
+ * The ring, blades, plate rim and glow are ALWAYS the engine red. Only the emblem takes `color`, the app's own identifying colour.
  * `emblem` null = the plain engine mark (the TurboEngine logo)
  */
-export function buildLogo({ name, accent = ENGINE_ACCENT, emblem = null }) {
-  const t = tones(accent), e = emblem ? parseEmblem(emblem) : null;
+export function buildLogo({ name, color = ENGINE_ACCENT, emblem = null }) {
+  const t = tones(ENGINE_ACCENT), et = tones(color), e = emblem ? parseEmblem(emblem) : null;
   const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '') + '-'; // SVG ids are shared by every inline SVG on a page: prefix them
   const BLADES = 6, TWIST = 0.95, R0 = 52, R1 = 176;
   const blades = wheel(C, C, R0, R1, BLADES, TWIST, 0.5);
@@ -96,10 +97,10 @@ export function buildLogo({ name, accent = ENGINE_ACCENT, emblem = null }) {
   /** the full-colour logo: a rounded tile, 512 x 512 */
   const svg = (size = 512) => {
     const centre = e
-      // an emblem replaces the hub: a dark plate with a lit rim, and the emblem in the accent on top
+      // an emblem replaces the hub: a dark plate with a lit rim, and the emblem in the app's own colour on top
       ? `<circle cx="${C}" cy="${C}" r="${PLATE}" fill="${INK}"/>
     <path d="${ringPath(C, C, PLATE, PLATE - 5)}" fill-rule="evenodd" fill="url(#${id('ring')})"/>
-    <g filter="url(#${id('soft')})"><path d="${emblemAt(e, EMBLEM, C, C)}" fill="url(#${id('fin')})"/></g>`
+    <g filter="url(#${id('soft')})"><path d="${emblemAt(e, EMBLEM, C, C)}" fill="url(#${id('emb')})"/></g>`
       : `<circle cx="${C}" cy="${C}" r="50" fill="url(#${id('hub')})"/>
     <circle cx="${C}" cy="${C}" r="50" fill="none" stroke="${t.edge}" stroke-opacity=".5" stroke-width="2"/>
     <g fill="${t.deep}" fill-opacity=".7">${bolts}</g>
@@ -110,6 +111,7 @@ export function buildLogo({ name, accent = ENGINE_ACCENT, emblem = null }) {
     <radialGradient id="${id('glow')}" cx="50%" cy="50%" r="55%"><stop offset="0" stop-color="${t.mid}" stop-opacity=".30"/><stop offset=".7" stop-color="${t.mid}" stop-opacity=".06"/><stop offset="1" stop-color="${t.mid}" stop-opacity="0"/></radialGradient>
     <linearGradient id="${id('ring')}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${t.light}"/><stop offset=".5" stop-color="${t.mid}"/><stop offset="1" stop-color="${t.dark}"/></linearGradient>
     <linearGradient id="${id('fin')}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${t.fin[0]}"/><stop offset="1" stop-color="${t.fin[1]}"/></linearGradient>
+    <linearGradient id="${id('emb')}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${et.light}"/><stop offset="1" stop-color="${et.dark}"/></linearGradient>
     <radialGradient id="${id('hub')}" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="${t.light}"/><stop offset=".55" stop-color="${t.mid}"/><stop offset="1" stop-color="${t.dark}"/></radialGradient>
     <linearGradient id="${id('sheen')}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".16"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/></linearGradient>
     <filter id="${id('soft')}" x="-10%" y="-10%" width="120%" height="120%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity=".55"/></filter>
@@ -152,7 +154,7 @@ export function buildLogo({ name, accent = ENGINE_ACCENT, emblem = null }) {
     apath(DISC, sc(C, C, 206)) +
     apath(t.mid, tx(blades)) +
     (e
-      ? apath(INK, sc(C, C, PLATE)) + apath(t.mid, sc2(C, C, PLATE, PLATE - 5), 'android:fillType="evenOdd" ') + apath(t.mid, tx(emblemAt(e, EMBLEM, C, C)))
+      ? apath(INK, sc(C, C, PLATE)) + apath(t.mid, sc2(C, C, PLATE, PLATE - 5), 'android:fillType="evenOdd" ') + apath(et.mid, tx(emblemAt(e, EMBLEM, C, C)))
       : apath(t.mid, sc(C, C, 50)) + apath(INK, sc(C, C, 13))));
 
   // the notification's small icon: white only on transparent (Android tints it), 24 dp: the mono twin scaled to 24
