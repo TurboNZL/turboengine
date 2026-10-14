@@ -41,7 +41,7 @@ Files, from the `server-install-update` module: `scripts/install-pi.sh`, `script
 ## 4. Way B in detail: Docker (TurboKeep)
 Files, from the `docker-self-host` module: `Dockerfile`, `docker-compose.yml`, `.dockerignore`, `.env.example`, the `docker` / `node-bundle` jobs for `release.yml`.
 - The build stage runs on the builder's architecture; the final image only copies `server.mjs` and the built client, runs as `node`, one `/data` volume, `HEALTHCHECK` on `/api/health`.
-- `docker-compose.yml` publishes `127.0.0.1:${<APP>_PORT:-<registry port>}:<inside port>` and has a `cloudflared` service in the `tunnel` profile reading `TUNNEL_TOKEN` from `.env`. The tunnel's public hostname is `http://<service>:<inside port>`.
+- `docker-compose.yml` publishes `${<APP>_BIND:-0.0.0.0}:${<APP>_PORT:-<registry port>}:<inside port>` (reachable from the network by default; `<APP>_BIND=127.0.0.1` once a tunnel is in use) and has a `cloudflared` service in the `tunnel` profile reading `TUNNEL_TOKEN` from `.env`. The tunnel's public hostname is `http://<service>:<inside port>`.
 - Update `docker compose pull && docker compose up -d`; back up with `VACUUM INTO`.
 - Releases also attach a Node tarball (`<app>-<version>-node.tar.gz`) for running without Docker.
 
@@ -58,4 +58,5 @@ Files, from the `docker-self-host` module: `Dockerfile`, `docker-compose.yml`, `
 - **ghcr packages start private.** Make the package public after the first release or `docker compose pull` is denied for everyone else.
 - **Cloudflare refuses request bodies over the plan's limit** (100 MB Free and Pro): big imports go over the LAN.
 - **`pnpm/action-setup@v4` fails if given both `version:` and `packageManager`.**
-- **Exposing the published port beyond `127.0.0.1`** next to a tunnel lets anyone forge `CF-Connecting-IP`; publish on loopback only.
+- **A port published on `127.0.0.1` cannot be opened from another computer.** The first TurboKeep compose file did that, and the Pi could not be reached from the owner's PC. Default to `0.0.0.0` and make it a setting.
+- **Next to a tunnel, close the direct door:** with the tunnel working, set `<APP>_BIND=127.0.0.1`, because anyone who can reach the port directly can forge `CF-Connecting-IP`.

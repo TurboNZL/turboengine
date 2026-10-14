@@ -18,10 +18,11 @@ services:
       # TURBOKEEP_MAX_IMPORT_MB: "256"
     volumes:
       - turbokeep-data:/data
-    # Reachable on this machine only; the tunnel talks to it over the compose network (always on 8080 INSIDE the container, which clashes with nothing).
-    # The left-hand number is the port on this machine: set TURBOKEEP_PORT in .env to move it. To use it on your LAN, drop the "127.0.0.1:".
+    # Published on this machine as TURBOKEEP_BIND:TURBOKEEP_PORT (defaults 0.0.0.0:47901): open http://<this machine's address>:47901 from any device on the network.
+    # Once a Cloudflare tunnel works, set TURBOKEEP_BIND=127.0.0.1 in .env so ONLY this machine (and the tunnel, which uses the compose network) can reach it.
+    # Inside the container it is always 8080, which clashes with nothing.
     ports:
-      - "127.0.0.1:${TURBOKEEP_PORT:-47901}:8080"
+      - "${TURBOKEEP_BIND:-0.0.0.0}:${TURBOKEEP_PORT:-47901}:8080"
 
   cloudflared:
     image: cloudflare/cloudflared:latest
