@@ -20,7 +20,7 @@
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.Curator"
+        android:theme="@style/Theme.TurboMusic"
         android:usesCleartextTraffic="true">
 
         <!-- tells Android Auto that this is a media app -->

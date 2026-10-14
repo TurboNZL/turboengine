@@ -1,6 +1,6 @@
 # Logos: one engine mark, one emblem per app
 
-Every TurboNZL app shares **one mark**, the TurboEngine logo, and tells itself apart with an **emblem** laid over the centre. Recommended for every app; source: `TurboNZL/turbomusic` at `f258fb7`, where it runs.
+Every TurboNZL app shares **one mark**, the TurboEngine logo, and tells itself apart with an **emblem** laid over the centre. Recommended for every app; source: `TurboNZL/turbomusic` at `62934e8`, where it runs.
 
 | TurboEngine (no emblem) | TurboMusic (emblem `note`) |
 |---|---|
@@ -38,7 +38,6 @@ An emblem is `branding/emblems/<name>.json`: `{ "box": 100, "d": "M..L..Z..." }`
 - Regenerating the engine's own logo: from this repo's root, `node modules/logos/files/scripts/gen-icons.mjs --png` (config `branding/logo.json`). `branding/turbomusic-512.png` is a copy of TurboMusic's icon, shown above for comparison.
 
 ## Files
-- `scripts/gen-icons.mjs` (the entry point; reads `branding/logo.json`)
-- `scripts/logo/lib.mjs` (the mark, tones, emblem placement, SVG / mono / Android output; pure functions)
-- `scripts/logo/emblems/note.json` (the beamed note)
-- example config: `branding/logo.json` (per app, so not compared by `engine-diff`)
+- `scripts/gen-icons.mjs`
+- `scripts/logo/lib.mjs`
+- `scripts/logo/emblems/note.json`

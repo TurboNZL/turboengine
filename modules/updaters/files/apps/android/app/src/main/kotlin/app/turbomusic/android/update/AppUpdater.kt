@@ -1,12 +1,12 @@
-package app.musiccurator.android.update
+package app.turbomusic.android.update
 
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
 import androidx.core.content.FileProvider
-import app.musiccurator.android.BuildConfig
-import app.musiccurator.android.ServerPrefs
+import app.turbomusic.android.BuildConfig
+import app.turbomusic.android.ServerPrefs
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File

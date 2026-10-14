@@ -5,14 +5,14 @@
   "summary": "electron-updater from GitHub releases (with a .deb path that works without a polkit agent) and a native Android updater, both through one Settings card.",
   "source": {
     "repo": "TurboNZL/turbomusic",
-    "ref": "ea3f5eaff467673231c721e33ffa773a93719ed2"
+    "ref": "62934e8318aaef698adad16745269fe342782c47"
   },
   "files": [
     "apps/electron/src/updater.ts",
     "apps/electron/src/updateErrors.ts",
     "apps/electron/src/debInstall.ts",
-    "apps/android/app/src/main/kotlin/app/musiccurator/android/update/AppUpdater.kt",
-    "apps/android/app/src/main/kotlin/app/musiccurator/android/update/Releases.kt",
+    "apps/android/app/src/main/kotlin/app/turbomusic/android/update/AppUpdater.kt",
+    "apps/android/app/src/main/kotlin/app/turbomusic/android/update/Releases.kt",
     "apps/web/src/lib/native.ts",
     "apps/web/src/components/AppSettings.tsx"
   ]

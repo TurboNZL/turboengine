@@ -13,18 +13,18 @@ const sourceFor = (s: Pick<DeviceSettings, 'themesToken'>) => githubSource({ tok
 
 function ensure(s: DeviceSettings): TurboThemes {
   if (engine) return engine;
-  const host = window as unknown as { curatorDesktop?: { desktopEnv?: string }; CuratorAndroid?: unknown };
+  const host = window as unknown as { turbomusicDesktop?: { desktopEnv?: string }; TurboMusicAndroid?: unknown };
   engine = start({
-    storagePrefix: 'curator', // keeps the keys it always had: curator.wallpaperImage
+    storagePrefix: 'turbomusic', // keeps the keys it always had: turbomusic.wallpaperImage
     fonts: 'none', // the fonts are bundled (src/fonts.css), so styles work offline
-    lens: () => !host.CuratorAndroid, // the Android app gets frosted glass without refraction
-    host: { desktopEnv: host.curatorDesktop?.desktopEnv },
+    lens: () => !host.TurboMusicAndroid, // the Android app gets frosted glass without refraction
+    host: { desktopEnv: host.turbomusicDesktop?.desktopEnv },
     autoUpdate: s.themeUpdates,
     source: sourceFor(s),
   });
   // the layouts' CSS goes after the themes' stylesheet (the engine appended it to <head>), as it always came after the styles
   const el = document.createElement('style');
-  el.id = 'curator-layouts';
+  el.id = 'turbomusic-layouts';
   el.textContent = layoutsCss;
   document.head.appendChild(el);
   return engine;

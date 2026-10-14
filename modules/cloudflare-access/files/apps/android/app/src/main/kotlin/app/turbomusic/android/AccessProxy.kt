@@ -1,4 +1,4 @@
-package app.musiccurator.android
+package app.turbomusic.android
 
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse

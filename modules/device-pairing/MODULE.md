@@ -2,7 +2,7 @@
 
 A code that carries server address, access token and access-service credentials to a new device (`CUR1-<base64url>`).
 
-Optional. Reference files are in `files/` (the paths are the paths in the app); source: `TurboNZL/turbomusic` at `ea3f5ea`.
+Optional. Reference files are in `files/` (the paths are the paths in the app); source: `TurboNZL/turbomusic` at `62934e8`.
 
 **Requires:** `settings-shell`.
 

@@ -84,9 +84,8 @@ const TOOLBAR_LABEL: Record<string, string> = { '/': 'Journal' };
 const MOBILE_HIDDEN = ['/discover', '/singles', '/eras', '/playlists', '/stats', '/queue', '/notes', '/health', '/settings'];
 
 const ADD: { label: string; icon: typeof Plus; target: EditTarget }[] = [
-  { label: 'Import from YouTube', icon: Download, target: { kind: 'import', id: '' } },
+  { label: 'YouTube Music: search or paste a link', icon: Download, target: { kind: 'import', id: '' } },
   { label: 'Import from Spotify', icon: ListMusic, target: { kind: 'import-spotify', id: '' } },
-  { label: 'Find YouTube Music albums', icon: Search, target: { kind: 'match-links', id: '' } },
   { label: 'Add audio files', icon: FileAudio, target: { kind: 'upload', id: '' } },
   { label: 'New album', icon: Disc3, target: { kind: 'new-album', id: '' } },
   { label: 'New track', icon: Music2, target: { kind: 'new-track', id: '' } },

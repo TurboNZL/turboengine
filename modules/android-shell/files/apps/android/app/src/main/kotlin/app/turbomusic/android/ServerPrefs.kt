@@ -1,4 +1,4 @@
-package app.musiccurator.android
+package app.turbomusic.android
 
 import android.content.Context
 
@@ -7,7 +7,7 @@ import android.content.Context
  * client whenever its Settings change; the update token is typed in Settings > App updates.
  */
 class ServerPrefs(context: Context) {
-    private val p = context.applicationContext.getSharedPreferences("curator", Context.MODE_PRIVATE)
+    private val p = context.applicationContext.getSharedPreferences("turbomusic", Context.MODE_PRIVATE)
 
     var serverUrl: String
         get() = p.getString("serverUrl", "") ?: ""

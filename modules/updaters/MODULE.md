@@ -2,7 +2,7 @@
 
 electron-updater from GitHub releases (with a .deb path that works without a polkit agent) and a native Android updater, both through one Settings card.
 
-Recommended for every app. Reference files are in `files/` (the paths are the paths in the app); source: `TurboNZL/turbomusic` at `ea3f5ea`, where they run.
+Recommended for every app. Reference files are in `files/` (the paths are the paths in the app); source: `TurboNZL/turbomusic` at `62934e8`, where they run.
 
 **Mandatory** for every app that ships a desktop or Android build, and part of `self-hosted-server`: the server and the apps must update the same way, from the same releases (`release-pipeline`).
 
@@ -17,7 +17,7 @@ Recommended for every app. Reference files are in `files/` (the paths are the pa
 - `apps/electron/src/updater.ts`
 - `apps/electron/src/updateErrors.ts`
 - `apps/electron/src/debInstall.ts`
-- `apps/android/app/src/main/kotlin/app/musiccurator/android/update/AppUpdater.kt`
-- `apps/android/app/src/main/kotlin/app/musiccurator/android/update/Releases.kt`
+- `apps/android/app/src/main/kotlin/app/turbomusic/android/update/AppUpdater.kt`
+- `apps/android/app/src/main/kotlin/app/turbomusic/android/update/Releases.kt`
 - `apps/web/src/lib/native.ts`
 - `apps/web/src/components/AppSettings.tsx`

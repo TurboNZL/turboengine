@@ -5,7 +5,7 @@
   "summary": "How a library server gets onto a machine (one-command Linux/Pi installer, Windows tray app with a setup wizard) and how it updates itself from a button in Settings.",
   "source": {
     "repo": "TurboNZL/turbomusic",
-    "ref": "ea3f5eaff467673231c721e33ffa773a93719ed2"
+    "ref": "62934e8318aaef698adad16745269fe342782c47"
   },
   "requires": [
     "cloudflare-access",
@@ -24,6 +24,12 @@
     "apps/electron/src/serverEdition/setup-preload.ts",
     "apps/electron/src/serverEdition/setup.html",
     "apps/electron/src/serverEdition/tools.ts",
-    "apps/electron/src/serverEdition/tunnel.ts"
+    "apps/electron/src/serverEdition/tunnel.ts",
+    "Dockerfile",
+    "docker-compose.yml",
+    "docker-entrypoint.sh",
+    ".env.example",
+    ".dockerignore",
+    "docs/guides/MIGRATE_TO_DOCKER.md"
   ]
 }

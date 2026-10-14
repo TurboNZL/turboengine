@@ -65,7 +65,9 @@
 /* ---- dock ---- */
 /* Bottom dock: on a wide window every page has its own button and the bar fills the bottom edge (no "More"); only Liquid Glass draws it as a floating pill, and that is the theme's own rule */
 @media (min-width: 768px) {
-  [data-layout="dock"] .bt-tabbar { margin: 0; overflow-x: auto; }
+  /* the dock scrolls sideways on a narrow window, but never shows a scrollbar: where scrollbars take space, one appearing (the sliding pill briefly overshooting the end) made the whole dock bounce up */
+  [data-layout="dock"] .bt-tabbar { margin: 0; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }
+  [data-layout="dock"] .bt-tabbar::-webkit-scrollbar { display: none; }
   [data-layout="dock"] .bt-tabbar .bt-tab { padding-block: 0.5rem; font-size: 11px; min-width: 4.25rem; }
   [data-layout="dock"] .bt-content { max-width: 80rem; }
 }

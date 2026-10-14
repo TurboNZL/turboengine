@@ -1,4 +1,4 @@
-package app.musiccurator.android
+package app.turbomusic.android
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -22,7 +22,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.webkit.WebViewAssetLoader
-import app.musiccurator.android.update.AppUpdater
+import app.turbomusic.android.update.AppUpdater
 
 /**
  * Shows the web client (bundled in the app's assets, served from http://localhost, a secure context, so IndexedDB and fetch behave like on the
@@ -69,9 +69,9 @@ class MainActivity : AppCompatActivity() {
         }
         web.setBackgroundColor(0xFF0B0B10.toInt())
         NativeAudio.init(this)
-        audioEmit = { json -> web.post { web.evaluateJavascript("window.dispatchEvent(new CustomEvent('curator-audio',{detail:$json}))", null) } }
+        audioEmit = { json -> web.post { web.evaluateJavascript("window.dispatchEvent(new CustomEvent('turbomusic-audio',{detail:$json}))", null) } }
         NativeAudio.emit = audioEmit
-        web.addJavascriptInterface(CuratorBridge(this, web), "CuratorAndroid")
+        web.addJavascriptInterface(TurboMusicBridge(this, web), "TurboMusicAndroid")
 
         val accessProxy = AccessProxy(ServerPrefs(this))
         val loader = WebViewAssetLoader.Builder().setDomain(HOST).setHttpAllowed(true).addPathHandler("/", SpaAssets(this)).build()
@@ -101,7 +101,7 @@ class MainActivity : AppCompatActivity() {
         })
 
         AppUpdater.listener = { s ->
-            web.post { web.evaluateJavascript("window.dispatchEvent(new CustomEvent('curator-update',{detail:${s.json()}}))", null) }
+            web.post { web.evaluateJavascript("window.dispatchEvent(new CustomEvent('turbomusic-update',{detail:${s.json()}}))", null) }
         }
         if (Build.VERSION.SDK_INT >= 33 && checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED)
             notifications.launch(Manifest.permission.POST_NOTIFICATIONS)

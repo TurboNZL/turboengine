@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
 # Install the TurboMusic home server on a Raspberry Pi (or any Debian/Ubuntu Linux machine), start it, and print how to connect.
 #
-#   curl -fsSL https://raw.githubusercontent.com/TurboNZL/turbomusic/main/scripts/install-pi.sh | sudo bash -s -- --data-dir /mnt/music/curator
+#   curl -fsSL https://raw.githubusercontent.com/TurboNZL/turbomusic/main/scripts/install-pi.sh | sudo bash -s -- --data-dir /mnt/music/turbomusic
 #   sudo ./scripts/install-pi.sh --help
 #
 # Safe to run again: it updates what is there. Nothing is installed outside the folders and files named in the summary it prints first.
 set -euo pipefail
 
-USER_NAME="curator"; DATA_DIR=""; PORT="47813"; REPO="https://github.com/TurboNZL/turbomusic.git"; BRANCH="main"
+USER_NAME="turbomusic"; DATA_DIR=""; PORT="47813"; REPO="https://github.com/TurboNZL/turbomusic.git"; BRANCH="main"
 DRY=0; YES=0; YTDLP=1
 
 usage() { cat <<USAGE
 Usage: install-pi.sh [options]
   --data-dir PATH   where your library lives (database, music, pictures). Put it on the external drive, not the SD card.
-                    Default: /var/lib/curator (that IS the SD card on a Pi, and you will be asked to confirm)
+                    Default: /var/lib/turbomusic (that IS the SD card on a Pi, and you will be asked to confirm)
   --port N          port of the server (default $PORT)
   --user NAME       the system user that runs the server (default $USER_NAME)
   --repo URL        where to download TurboMusic from (default $REPO)
@@ -55,9 +55,9 @@ case "$(uname -m)" in
   *) die "no build of Node for this processor: $(uname -m)" ;;
 esac
 
-[ -n "$DATA_DIR" ] || DATA_DIR="/var/lib/curator"
+[ -n "$DATA_DIR" ] || DATA_DIR="/var/lib/turbomusic"
 case "$DATA_DIR" in /*) ;; *) die "--data-dir must be a full path starting with /" ;; esac
-HOME_DIR="/home/$USER_NAME"; APP_DIR="$HOME_DIR/music-curator"
+HOME_DIR="/home/$USER_NAME"; APP_DIR="$HOME_DIR/turbomusic"
 
 # is the data folder on the same disk as the operating system? (the SD card, on a Pi)
 on_system_disk() {
@@ -69,7 +69,7 @@ say "TurboMusic home server"
 note "user: $USER_NAME     app: $APP_DIR     library: $DATA_DIR     port: $PORT"
 if on_system_disk; then
   note "WARNING: $DATA_DIR is on the same disk as the operating system. On a Raspberry Pi that is the SD card:"
-  note "music will fill it, and constant writes wear it out. Plug in a drive, mount it, and run this again with --data-dir /mnt/yourdrive/curator."
+  note "music will fill it, and constant writes wear it out. Plug in a drive, mount it, and run this again with --data-dir /mnt/yourdrive/turbomusic."
   if [ "$YES" = 0 ] && [ "$DRY" = 0 ]; then
     if [ -r /dev/tty ]; then read -r -p "    Continue anyway? [y/N] " ans < /dev/tty; [[ "$ans" =~ ^[Yy] ]] || die "cancelled. Nothing was changed."; else die "re-run with --yes to accept, or choose --data-dir on another drive."; fi
   fi
@@ -108,7 +108,7 @@ if [ -d "$APP_DIR/.git" ]; then as_user "cd '$APP_DIR' && git fetch --depth 1 or
 else as_user "git clone --depth 1 --branch '$BRANCH' '$REPO' '$APP_DIR'"; fi
 
 say "5/8 Building (this takes a few minutes on a Pi)"
-as_user "cd '$APP_DIR' && pnpm install --ignore-scripts --filter @curator/core --filter @curator/server --filter @curator/web && pnpm --filter @curator/web build"
+as_user "cd '$APP_DIR' && pnpm install --ignore-scripts --filter @turbomusic/core --filter @turbomusic/server --filter @turbomusic/web && pnpm --filter @turbomusic/web build"
 
 say "6/8 yt-dlp (YouTube import and audio download)"
 if [ "$YTDLP" = 0 ]; then note "skipped (--no-ytdlp)"; else
@@ -118,15 +118,15 @@ if [ "$YTDLP" = 0 ]; then note "skipped (--no-ytdlp)"; else
     if [ "$DRY" = 1 ]; then note "[dry run] write /etc/yt-dlp.conf with: --js-runtimes node"; else printf -- '--js-runtimes node\n' > /etc/yt-dlp.conf; fi
   fi
   # YouTube breaks old yt-dlp versions every few weeks: keep it current by itself
-  if [ "$DRY" = 1 ]; then note "[dry run] write curator-ytdlp-update.service and .timer (weekly: yt-dlp -U)"; else
-    cat > /etc/systemd/system/curator-ytdlp-update.service <<UNIT
+  if [ "$DRY" = 1 ]; then note "[dry run] write turbomusic-ytdlp-update.service and .timer (weekly: yt-dlp -U)"; else
+    cat > /etc/systemd/system/turbomusic-ytdlp-update.service <<UNIT
 [Unit]
 Description=Update yt-dlp for TurboMusic
 [Service]
 Type=oneshot
 ExecStart=/usr/local/bin/yt-dlp -U
 UNIT
-    cat > /etc/systemd/system/curator-ytdlp-update.timer <<UNIT
+    cat > /etc/systemd/system/turbomusic-ytdlp-update.timer <<UNIT
 [Unit]
 Description=Weekly yt-dlp update for TurboMusic
 [Timer]
@@ -142,8 +142,8 @@ fi
 say "7/8 The service"
 NODE_PATH_BIN="$(command -v node 2>/dev/null || echo /usr/local/bin/node)"
 MOUNT_LINE=""; case "$DATA_DIR" in /var/lib/*|/home/*) ;; *) MOUNT_LINE="RequiresMountsFor=$DATA_DIR" ;; esac
-if [ "$DRY" = 1 ]; then note "[dry run] write /etc/systemd/system/curator.service (user $USER_NAME, node $NODE_PATH_BIN, data $DATA_DIR, port $PORT)"; else
-  cat > /etc/systemd/system/curator.service <<UNIT
+if [ "$DRY" = 1 ]; then note "[dry run] write /etc/systemd/system/turbomusic.service (user $USER_NAME, node $NODE_PATH_BIN, data $DATA_DIR, port $PORT)"; else
+  cat > /etc/systemd/system/turbomusic.service <<UNIT
 [Unit]
 Description=TurboMusic server
 After=network-online.target
@@ -153,8 +153,8 @@ $MOUNT_LINE
 [Service]
 User=$USER_NAME
 WorkingDirectory=$APP_DIR/packages/server
-Environment=CURATOR_DATA_DIR=$DATA_DIR
-Environment=CURATOR_PORT=$PORT
+Environment=TURBOMUSIC_DATA_DIR=$DATA_DIR
+Environment=TURBOMUSIC_PORT=$PORT
 Environment=PATH=/usr/local/bin:/usr/bin:/bin
 ExecStart=$NODE_PATH_BIN --experimental-strip-types --disable-warning=ExperimentalWarning src/index.ts
 Restart=on-failure
@@ -165,19 +165,19 @@ WantedBy=multi-user.target
 UNIT
   # the "Update server" button and scripts/update.sh may stop and start the service, and nothing else
   SC="$(command -v systemctl)"
-  printf '%s ALL=(root) NOPASSWD: %s stop curator, %s start curator, %s is-active --quiet curator\n' "$USER_NAME" "$SC" "$SC" "$SC" > /etc/sudoers.d/curator
-  chmod 440 /etc/sudoers.d/curator
-  if ! visudo -cf /etc/sudoers.d/curator >/dev/null; then rm -f /etc/sudoers.d/curator; note "could not set up passwordless restart for updates (skipped)"; fi
+  printf '%s ALL=(root) NOPASSWD: %s stop turbomusic, %s start turbomusic, %s is-active --quiet turbomusic\n' "$USER_NAME" "$SC" "$SC" "$SC" > /etc/sudoers.d/turbomusic
+  chmod 440 /etc/sudoers.d/turbomusic
+  if ! visudo -cf /etc/sudoers.d/turbomusic >/dev/null; then rm -f /etc/sudoers.d/turbomusic; note "could not set up passwordless restart for updates (skipped)"; fi
 fi
 run systemctl daemon-reload
-run systemctl enable --now curator
-[ "$YTDLP" = 0 ] || run systemctl enable --now curator-ytdlp-update.timer
+run systemctl enable --now turbomusic
+[ "$YTDLP" = 0 ] || run systemctl enable --now turbomusic-ytdlp-update.timer
 
 say "8/8 Checking it answers"
 if [ "$DRY" = 1 ]; then note "[dry run] wait for http://127.0.0.1:$PORT/api/health"; else
   ok=0; for _ in $(seq 1 40); do if curl -fsS "http://127.0.0.1:$PORT/api/health" >/dev/null 2>&1; then ok=1; break; fi; sleep 1; done
-  [ "$ok" = 1 ] || die "the server did not start. Look at: journalctl -u curator -n 50"
-  TOKEN="$(cat "$DATA_DIR/token" 2>/dev/null || echo '(see journalctl -u curator)')"
+  [ "$ok" = 1 ] || die "the server did not start. Look at: journalctl -u turbomusic -n 50"
+  TOKEN="$(cat "$DATA_DIR/token" 2>/dev/null || echo '(see journalctl -u turbomusic)')"
   printf '\n\033[1m\033[32mDone. TurboMusic is running.\033[0m\n\n'
   note "Open it in a browser on any device on your network:"
   for ip in $(hostname -I 2>/dev/null); do case "$ip" in *:*) ;; *) note "    http://$ip:$PORT" ;; esac; done
@@ -187,7 +187,7 @@ if [ "$DRY" = 1 ]; then note "[dry run] wait for http://127.0.0.1:$PORT/api/heal
   note "    $TOKEN"
   note ""
   note "Update later with:  sudo -u $USER_NAME -H $APP_DIR/scripts/update.sh      (or the Update server button in Settings)"
-  note "Logs:               journalctl -u curator -f"
+  note "Logs:               journalctl -u turbomusic -f"
   note "Spotify Soloist:    needs a sound server first:  sudo $APP_DIR/scripts/setup-pi-audio.sh --user $USER_NAME"
   note "Next steps:         docs/guides/GETTING_STARTED.md"
 fi

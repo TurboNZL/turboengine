@@ -1,3 +1,5 @@
+import { getLibrary } from '../lib/derive.ts';
+import { speedTest, type SpeedLine } from '../lib/speedTest.ts';
 import { haptic } from '../lib/haptics.ts';
 import { EqualizerCard } from '../components/EqualizerCard.tsx';
 import { guessDeviceName } from '../lib/connect.ts';
@@ -18,7 +20,7 @@ import { BackupCard } from '../components/BackupCard.tsx';
 import { GuidesTab } from '../components/GuidesTab.tsx';
 import { ServerUpdateCard } from '../components/ServerUpdate.tsx';
 import { ConnectionTokens, PairDevice, ServerHealthCard } from '../components/ServerHealthCard.tsx';
-import { AppUpdatesCard, DiscordCard, GraphicsLine } from '../components/AppSettings.tsx';
+import { AppUpdatesCard, DiscordCard, GraphicsLine, MigrateCard } from '../components/AppSettings.tsx';
 
 
 export function SettingsPage() {
@@ -30,6 +32,7 @@ export function SettingsPage() {
   const [status, setStatus] = useState<ServerStatus | string | null>(null);
   const [usage, setUsage] = useState<{ usage: number; quota: number } | null>(null);
   const [acq, setAcq] = useState<string | null>(null);
+  const [speed, setSpeed] = useState<SpeedLine[] | 'running' | null>(null);
 
   useEffect(() => { void navigator.storage?.estimate?.().then((e) => setUsage({ usage: e.usage ?? 0, quota: e.quota ?? 0 })); }, []);
 
@@ -43,6 +46,13 @@ export function SettingsPage() {
         : /^(401|403)$|Server said 40[13]/.test(m) ? 'Cloudflare Access turned the request away: check the service token (and that the Access policy action is Service Auth).'
         : `Cannot reach the server.${cfId ? ' With Cloudflare Access in front, also check the service token and the CORS setting described below.' : ''}`);
     }
+  }
+  async function runSpeed() {
+    setSpeed('running');
+    const lib = getLibrary();
+    const withFile = lib.tracks.find((t) => t.file);
+    const withCover = lib.albums.find((a) => a.cover);
+    setSpeed(await speedTest(new Api({ serverUrl: url, token, cfAccessId: cfId, cfAccessSecret: cfSecret }), { audio: withFile?.file ?? undefined, cover: withCover?.cover ?? undefined }));
   }
   const save = () => { updateSettings({ serverUrl: url.trim(), token: token.trim(), cfAccessId: cfId.trim(), cfAccessSecret: cfSecret.trim() }); };
 
@@ -84,7 +94,10 @@ export function SettingsPage() {
             <p className="text-xs text-muted">From the web client on the server&apos;s own address nothing else is needed. From another origin (the Android or desktop app) the browser first sends a preflight request that Access must let through: in the Access application&apos;s CORS settings turn on <em>Bypass options requests to origin</em>, and turn the <em>binding cookie</em> off. Live audio from Soloist (beaming) and file downloads cannot carry the headers.</p>
           </div>
         </details>
-        <div className="flex flex-wrap items-center gap-2"><button className="btn" onClick={test}>Test connection</button><button className="btn btn-accent" onClick={save}>Save &amp; sync</button>
+        <div className="flex flex-wrap items-center gap-2"><button className="btn" onClick={test}>Test connection</button><button className="btn" onClick={() => void runSpeed()} disabled={speed === 'running' || !url.trim() && !token.trim()} title="Times the server, the start of a song and a cover, and tells whether Cloudflare Access accepts the token">Speed test</button><button className="btn btn-accent" onClick={save}>Save &amp; sync</button>
+        {speed && <div className="rounded-theme border border-line p-3 text-sm" role="status" aria-live="polite">
+          {speed === 'running' ? 'Measuring…' : <ul className="space-y-1">{speed.map((l) => <li key={l.label} className="flex flex-wrap items-baseline gap-x-3"><span className="w-64 shrink-0">{l.label}</span><b className="w-20 shrink-0 tabular-nums">{l.ms === null ? '—' : `${l.ms} ms`}</b><span className="text-xs text-muted">{l.note}</span></li>)}</ul>}
+        </div>}
           <button className="btn btn-ghost" onClick={() => void syncNow()} disabled={sync.state === 'syncing'}><RefreshCw size={15} className={cn(sync.state === 'syncing' && 'animate-spin')} />Sync now</button></div>
         <ConnectionTokens />
         <PairDevice draft={{ token, cfAccessId: cfId, cfAccessSecret: cfSecret }} />
@@ -133,6 +146,7 @@ export function SettingsPage() {
         <GraphicsLine />
         <p className="text-xs text-muted">Version {desktop()!.version}. {!desktop()!.serverModule ? '' : "Changing the folder restarts the app and starts with an empty library there, unless you copy the old folder's contents over first."}</p>
       </Section>}
+      <MigrateCard />
       <TermuxServerCard />
       <DiscordCard />
       </>}

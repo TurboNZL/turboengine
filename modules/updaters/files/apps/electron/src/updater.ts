@@ -112,7 +112,7 @@ export class Updates {
 
   /** The version dpkg reports for this app, or '' when it cannot be read. */
   private installedVersion(): string {
-    try { return execFileSync('dpkg-query', ['-W', '-f=${Version}', 'music-curator'], { encoding: 'utf8' }).trim(); } catch { return ''; }
+    try { return execFileSync('dpkg-query', ['-W', '-f=${Version}', 'turbomusic'], { encoding: 'utf8' }).trim(); } catch { return ''; }
   }
 
   /** Runs the install in the first terminal emulator that exists; resolves true when one opened and has closed again. */

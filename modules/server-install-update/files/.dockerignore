@@ -1,0 +1,8 @@
+.git
+**/node_modules
+**/dist
+apps/android
+apps/electron/release
+data
+*.md
+!README.md

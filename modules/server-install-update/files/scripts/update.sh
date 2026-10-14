@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 # Update the Pi deployment: stop service, pull, install, build web client, restart.
-# Run as the user that owns the checkout (e.g. curator). Needs sudo for systemctl unless root.
+# Run as the user that owns the checkout (e.g. turbomusic). Needs sudo for systemctl unless root.
 #   --live  leave the service alone (no sudo): used by the app's "Update server" button, which restarts the server itself afterwards.
 set -euo pipefail
 
 LIVE=0; [ "${1:-}" = "--live" ] && LIVE=1
-SERVICE="${CURATOR_SERVICE:-curator}"
-# Node: the one on PATH (the installer puts it in /usr/local/bin), else an nvm install of the service user. CURATOR_NODE_BIN overrides.
-NODE_BIN="${CURATOR_NODE_BIN:-}"
+SERVICE="${TURBOMUSIC_SERVICE:-turbomusic}"
+# Node: the one on PATH (the installer puts it in /usr/local/bin), else an nvm install of the service user. TURBOMUSIC_NODE_BIN overrides.
+NODE_BIN="${TURBOMUSIC_NODE_BIN:-}"
 if [ -z "$NODE_BIN" ]; then
   if command -v node >/dev/null 2>&1; then NODE_BIN="$(dirname "$(command -v node)")"
-  else NODE_BIN="$(ls -d /home/curator/.nvm/versions/node/*/bin 2>/dev/null | sort -V | tail -1)"; fi
+  else NODE_BIN="$(ls -d /home/turbomusic/.nvm/versions/node/*/bin 2>/dev/null | sort -V | tail -1)"; fi
 fi
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
@@ -36,14 +36,23 @@ if [ "$LIVE" -eq 0 ]; then
   $SUDO systemctl stop "$SERVICE"
 fi
 
+# A checkout made under the project's first name still points at the old address (GitHub forwards it); make the current one permanent.
+ORIGIN="$(git remote get-url origin 2>/dev/null || true)"
+NEW_ORIGIN="$(printf '%s' "$ORIGIN" | sed -E 's#([Tt]urbo[Nn][Zz][Ll])/[Cc]urator(\.git)?/?$#\1/turbomusic.git#')"
+if [ -n "$ORIGIN" ] && [ "$NEW_ORIGIN" != "$ORIGIN" ]; then
+  step "Pointing the checkout at the renamed repository"
+  echo "$ORIGIN -> $NEW_ORIGIN"
+  git remote set-url origin "$NEW_ORIGIN"
+fi
+
 step "Pulling latest code (git pull --ff-only)"
 git pull --ff-only
 
 step "Installing dependencies (pnpm install)"
-pnpm install --ignore-scripts --filter @curator/core --filter @curator/server --filter @curator/web
+pnpm install --ignore-scripts --filter @turbomusic/core --filter @turbomusic/server --filter @turbomusic/web
 
 step "Building web client"
-pnpm --filter @curator/web build
+pnpm --filter @turbomusic/web build
 
 if [ "$LIVE" -eq 0 ]; then
   step "Starting $SERVICE service"

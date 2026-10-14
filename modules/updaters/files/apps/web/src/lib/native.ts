@@ -23,7 +23,7 @@ export interface NativeUpdates {
 
 /** What the Android app puts on `window` (a Java interface: strings only, so results come back as JSON and updates as events). */
 interface AndroidBridge { setServer(url: string, token: string): void; version(): string; updateState(): string; checkForUpdate(): void; installUpdate(): void; hasUpdateToken(): boolean; setUpdateToken(t: string): void }
-const android = (): AndroidBridge | undefined => (typeof window === 'undefined' ? undefined : (window as unknown as { CuratorAndroid?: AndroidBridge }).CuratorAndroid);
+const android = (): AndroidBridge | undefined => (typeof window === 'undefined' ? undefined : (window as unknown as { TurboMusicAndroid?: AndroidBridge }).TurboMusicAndroid);
 
 export const isAndroidApp = () => !!android();
 export const appVersion = (): string | null => desktop()?.version ?? android()?.version() ?? null;
@@ -42,8 +42,8 @@ export function nativeUpdates(): NativeUpdates | null {
     setToken: async (t) => a.setUpdateToken(t),
     onState: (cb) => {
       const h = (e: Event) => cb((e as CustomEvent<UpdateState>).detail);
-      window.addEventListener('curator-update', h);
-      return () => window.removeEventListener('curator-update', h);
+      window.addEventListener('turbomusic-update', h);
+      return () => window.removeEventListener('turbomusic-update', h);
     },
   };
 }
