@@ -46,7 +46,9 @@ plus `permissions: packages: write` on the workflow, and a `node-bundle` job tha
 - Cloudflare refuses request bodies over the plan's limit (100 MB Free/Pro, 200 MB Business, 500 MB Enterprise) with a 413: big imports/uploads go through the LAN.
 - Use `node:sqlite` (Node >= 22.13) instead of a native module: no compiler in the image, arm64 for free. Vitest handles it. Add `--disable-warning=ExperimentalWarning` to the start command.
 - Name the volume's mount point in the image and `chown` it to `node` before `VOLUME`, otherwise a fresh named volume is root-owned and the app cannot write.
-- Docker has no daemon in cloud sessions: the Dockerfile and compose file were replayed by hand (clean `pnpm install --frozen-lockfile && pnpm build`, then the bundle run from an empty folder), never built as an image. Do the real `docker build` once on a machine that has it.
+- Docker has no daemon in cloud sessions: the Dockerfile and compose file were replayed by hand there (clean `pnpm install --frozen-lockfile && pnpm build`, then the bundle run from an empty folder). The `docker` job in `check.yml` (`push: false`) then built the image on GitHub and passed, so the build is proven; running the container (volume ownership, health check) still wants one `docker compose up` on a real machine.
+- **New ghcr packages start private.** After the first release, set the package to public (GitHub > Packages > the package > Package settings) or `docker compose pull` is denied for everyone else; say so in the app's self-hosting guide.
+- `pnpm/action-setup@v4` with both `version:` and `packageManager` fails: use `packageManager` only (see `release-pipeline`).
 - The Cloudflare tunnel guide in TurboKeep (`docs/guides/CLOUDFLARE_TUNNEL.md`) is the template for the user-facing steps.
 
 ## Files

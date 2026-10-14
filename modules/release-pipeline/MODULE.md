@@ -31,6 +31,7 @@ The repository needs a default `main` branch, GitHub Actions enabled, workflow p
 - electron-builder names its update manifests after the channel (`latest.yml`, `app.yml`, `server.yml`): give every edition its own `publish.channel` or they overwrite each other.
 - Pre-releases count: `/releases/latest` ignores them and 404s when every release is one. Updaters list `/releases` instead.
 - `pnpm install --ignore-scripts` in CI, with `--filter` for just what each job needs.
+- **`pnpm/action-setup@v4` fails in under a second if the workflow passes `version:` and `package.json` also has `packageManager`** ("multiple versions of pnpm specified"). Use one: with `packageManager` set, write just `- uses: pnpm/action-setup@v4`. TurboKeep hit this on its first run.
 
 ## Files
 - `.github/workflows/release.yml`
