@@ -10,7 +10,6 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
-  packages: write
 concurrency:
   group: release
   cancel-in-progress: false
@@ -120,31 +119,8 @@ jobs:
           cp apps/electron/dist/headless.mjs bundle/
           cp -r apps/web/dist/. bundle/web/
           TAG='${{ needs.release.outputs.tag }}'
-          tar -czf "turbomusic-server-${TAG#v}-termux.tar.gz" -C bundle .
-          gh release upload "$TAG" "turbomusic-server-${TAG#v}-termux.tar.gz" --clobber
+          # one bundle, two names: the Termux module and the self-contained server install (scripts/install-server.sh and the app's "Update server") both read it
+          tar -czf "turbomusic-server-${TAG#v}-node.tar.gz" -C bundle .
+          cp "turbomusic-server-${TAG#v}-node.tar.gz" "turbomusic-server-${TAG#v}-termux.tar.gz"
+          gh release upload "$TAG" "turbomusic-server-${TAG#v}-node.tar.gz" "turbomusic-server-${TAG#v}-termux.tar.gz" --clobber
         env: { GH_TOKEN: '${{ secrets.GITHUB_TOKEN }}' }
-
-  # The server as a Docker image (linux/amd64 and linux/arm64, so a Raspberry Pi pulls the right one): ghcr.io/<owner>/turbomusic:<version> and :latest.
-  # `docker compose pull && docker compose up -d` is the whole update.
-  docker:
-    needs: release
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: docker/setup-qemu-action@v3
-      - uses: docker/setup-buildx-action@v3
-      - uses: docker/login-action@v3
-        with: { registry: ghcr.io, username: '${{ github.actor }}', password: '${{ secrets.GITHUB_TOKEN }}' }
-      - id: meta
-        run: |
-          echo "image=ghcr.io/${GITHUB_REPOSITORY,,}" >> "$GITHUB_OUTPUT"
-          TAG='${{ needs.release.outputs.tag }}'; echo "version=${TAG#v}" >> "$GITHUB_OUTPUT"
-      - uses: docker/build-push-action@v6
-        with:
-          context: .
-          platforms: linux/amd64,linux/arm64
-          push: true
-          build-args: VERSION=${{ steps.meta.outputs.version }}
-          tags: |
-            ${{ steps.meta.outputs.image }}:${{ steps.meta.outputs.version }}
-            ${{ steps.meta.outputs.image }}:latest

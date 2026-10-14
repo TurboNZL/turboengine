@@ -25,7 +25,6 @@
     "apps/electron/src/serverEdition/setup.html",
     "apps/electron/src/serverEdition/tools.ts",
     "apps/electron/src/serverEdition/tunnel.ts",
-    "docs/guides/MIGRATE_TO_DOCKER.md",
     "packages/server/src/bundleUpdate.ts",
     "packages/server/test/bundleUpdate.test.ts",
     "scripts/install-server.sh",
