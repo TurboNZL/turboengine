@@ -1,6 +1,6 @@
 # Logos in the TurboMusic style
 
-> **Standard now:** the engine's `logos` module (`modules/logos/MODULE.md`) generates every app's logo from one `branding/logo.json`: the TurboEngine mark plus an emblem on a plate. This page keeps the design reasoning and the older per-app recipe (`examples/logo/make-logo.mjs`, which draws a different motif in place of the whole wheel); prefer the module for new apps.
+> **Standard now:** the engine's `logos` module (`modules/logos/MODULE.md`) generates every app's logo from one `branding/logo.json`: the TurboEngine mark plus an emblem on a plate. This page keeps the design reasoning and the older per-app recipe (`examples/logo/make-logo.mjs`, which draws a different motif in place of the whole wheel); prefer the module for new apps. **One rule differs:** the module never recolours the mark; the red ring/rim is fixed engine red and only the centre emblem has the app's own colour (this page's "one accent per app" predates that).
 
 TurboMusic's icon is the look the owner wants for every app: a dark rounded tile, a lit ring, a dark record-like disc and one glossy shape in the middle. This guide explains what makes it work, gives the exact numbers, and ships a generator (`examples/logo/make-logo.mjs`) so a new app gets a family-resemblance logo by changing a palette and one function.
 
