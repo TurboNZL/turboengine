@@ -15,5 +15,16 @@
     "apps/android/app/src/main/kotlin/app/musiccurator/android/update/Releases.kt",
     "apps/web/src/lib/native.ts",
     "apps/web/src/components/AppSettings.tsx"
-  ]
+  ],
+  "variants": {
+    "vanilla-electron": {
+      "source": {
+        "repo": "TurboNZL/turbocut"
+      },
+      "files": [
+        "variants/vanilla-electron/debInstall.cjs",
+        "variants/vanilla-electron/updater.cjs"
+      ]
+    }
+  }
 }

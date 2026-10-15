@@ -10,7 +10,10 @@
   "files": [
     "scripts/gen-icons.mjs",
     "scripts/logo/lib.mjs",
-    "scripts/logo/emblems/note.json"
+    "scripts/logo/emblems/note.json",
+    "scripts/logo/emblems/cut.json"
   ],
-  "examples": ["branding/logo.json"]
+  "examples": [
+    "branding/logo.json"
+  ]
 }

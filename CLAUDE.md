@@ -32,6 +32,9 @@ A session only sees repositories attached to it. When working on an app that is 
 ## Themes (`themes/`)
 The theme engine and all themes live here (package `turbothemes`; the old repository is retired). Read `themes/CLAUDE.md` before touching them. Rules that differ from the rest of the repo: this is a real **package** (apps install it, they do not copy it), `themes/dist` is committed by CI (`.github/workflows/themes-build.yml`) and downloaded by running apps, and the engine half almost never changes while themes do. Themes are the default for every app; opting out is a documented option (`modules/appearance`), never the template's default.
 
+## Desktop updates
+Every app with an Electron desktop build updates a Linux `.deb` the same way (download with electron-updater, install through pkexec, then a sudo terminal, then `systemd-run --user` under `no_new_privs`, success only when `dpkg-query` shows the new version). The rules and both implementations (TypeScript class, vanilla CommonJS in `modules/updaters/variants/vanilla-electron/`) are in `modules/updaters/MODULE.md`.
+
 ## Mandatory sets
 An app that runs its own server takes `self-hosted-server`: `cloudflare-access` + `server-install-update` + `updaters` + `release-pipeline`. Every app with a desktop or Android build takes `updaters` and `release-pipeline`. A **web-only** app served by its own server takes `docker-self-host` + `release-pipeline` instead (see `self-hosted-server`).
 

@@ -35,7 +35,7 @@ The themes are part of this repository (`themes/`, with their own `CLAUDE.md`): 
 | [`server-install-update`](modules/server-install-update/MODULE.md) | yes | How a library server gets onto a machine (one-command Linux/Pi installer, Windows tray app with a setup wizard) and how it updates itself from a button in Settings. | cloudflare-access, updaters |
 | [`settings-shell`](modules/settings-shell/MODULE.md) | yes | Wrapping tab strip, card order conventions, and a pairing code (`CUR1-<base64url>`) that carries address, token and access credentials to a new device. |  |
 | [`termux-server`](modules/termux-server/MODULE.md) | yes | An Android app that can install, start and stop its own library server inside Termux (beta; never run on a real device when written). | android-shell |
-| [`updaters`](modules/updaters/MODULE.md) | no | electron-updater from GitHub releases (with a .deb path that works without a polkit agent) and a native Android updater, both through one Settings card. |  |
+| [`updaters`](modules/updaters/MODULE.md) | no | electron-updater from GitHub releases (with a .deb installer that works without a polkit agent: password prompt, then a sudo terminal, verified by dpkg; TypeScript and vanilla CommonJS versions) and a native Android updater, both through one Settings card. |  |
 | [`window-frame`](modules/window-frame/MODULE.md) | yes | A theme-drawn title bar (traffic lights by UI style), the preload bridge `window.<app>Desktop`, the single-instance main process, GPU modes and graphics readback. |  |
 
 ## Using it
