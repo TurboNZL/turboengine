@@ -1,0 +1,15 @@
+{
+  "name": "layouts",
+  "title": "Layouts: where the pages are listed (optional)",
+  "optional": true,
+  "summary": "A template for switchable layouts over the theme hook classes: floating rounded side bar, icon rail, floating rail, top tabs and bottom dock. Fixes the usual flat, full-height 'square' side bar.",
+  "source": {
+    "repo": "TurboNZL/turboengine",
+    "ref": "written for the engine, floating rules checked in Chromium against themes/dist/base.css; the older app-specific set is TurboMusic's layouts.css (see modules/appearance)"
+  },
+  "files": [
+    "apps/web/src/layouts.css",
+    "apps/web/src/lib/layout.ts",
+    "apps/web/src/components/AppShell.tsx"
+  ]
+}

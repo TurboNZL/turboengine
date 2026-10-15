@@ -1,0 +1,41 @@
+/*
+ * Layouts template (engine module `layouts`, optional). A layout decides WHERE the app's pages are listed (<html data-layout="...">),
+ * whatever the colour theme and UI style. They are plain CSS over the hook classes of components/AppShell.tsx, so any look works with any layout.
+ * Every rule is scoped to its own [data-layout]; the default ("side", the engine's flat full-height bar) needs no rule at all.
+ * Load this AFTER the themes' stylesheet so these rules win ties with a style.
+ *
+ * Hook classes: .bt-frame (row holding side bar + page) .bt-side (side bar) .bt-pane (the scrolling page) .bt-nav (a link) .bt-tabbar (phone tabs)
+ */
+
+/* ---- floating: the side bar is a rounded panel that hovers over the page, not a square bar glued to the window edge ---- */
+@media (min-width: 768px) {
+  [data-layout="floating"]:not([data-ui="liquid"]) .bt-frame { gap: var(--float-gap, 12px); padding: var(--float-gap, 12px); }
+  [data-layout="floating"]:not([data-ui="liquid"]) .bt-side {
+    align-self: stretch; border: var(--bar-border); border-radius: var(--side-r, calc(var(--radius, 14px) * 1.6));
+    box-shadow: var(--side-shadow, none), 0 10px 30px -12px rgb(0 0 0 / 0.35);
+  }
+  /* keep nav highlights inside the rounded corners */
+  [data-layout="floating"] .bt-side { overflow: hidden; }
+}
+
+/* ---- rail: a narrow side bar of icons only (names go on hover through the title attribute) ---- */
+[data-layout="rail"] .bt-side { width: 4.5rem; padding: 0.75rem 0.5rem; align-items: center; }
+[data-layout="rail"] .bt-side .bt-label-text { display: none; }
+[data-layout="rail"] .bt-side .bt-nav { justify-content: center; padding: 0.65rem; width: 100%; }
+[data-layout="rail"] .bt-side .bt-brand { padding: 0; margin-bottom: 0.5rem; justify-content: center; }
+
+/* ---- floating-rail: both of the above, a narrow rounded pill of icons ---- */
+@media (min-width: 768px) {
+  [data-layout="floating-rail"]:not([data-ui="liquid"]) .bt-frame { gap: var(--float-gap, 12px); padding: var(--float-gap, 12px); }
+  [data-layout="floating-rail"] .bt-side { width: 4.5rem; padding: 0.75rem 0.5rem; align-items: center; align-self: center; height: auto; max-height: 100%; overflow: hidden;
+    border: var(--bar-border); border-radius: 9999px; box-shadow: var(--side-shadow, none), 0 10px 30px -12px rgb(0 0 0 / 0.35); }
+  [data-layout="floating-rail"] .bt-side .bt-label-text { display: none; }
+  [data-layout="floating-rail"] .bt-side .bt-nav { justify-content: center; padding: 0.65rem; width: 100%; border-radius: 9999px; }
+  [data-layout="floating-rail"] .bt-side .bt-brand { padding: 0; margin-bottom: 0.5rem; justify-content: center; }
+}
+
+/* ---- topbar / dock: hide the side bar; the app renders its own links (see AppShell.tsx) ---- */
+[data-layout="topbar"] .bt-side, [data-layout="dock"] .bt-side { display: none; }
+@media (min-width: 768px) {
+  [data-layout="dock"] .bt-tabbar { display: flex; }
+}
