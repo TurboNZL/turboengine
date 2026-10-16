@@ -41,7 +41,7 @@ The themes are part of this repository (`themes/`, with their own `CLAUDE.md`): 
 | [`settings-shell`](modules/settings-shell/MODULE.md) | yes | Wrapping tab strip, card order conventions, and a pairing code (`CUR1-<base64url>`) that carries address, token and access credentials to a new device. |  |
 | [`tag-tree`](modules/tag-tree/MODULE.md) | yes | Parent.Child tags: parents shown even with no notes of their own, empty tags removed, inherited colours (the bar says the parent, the glow the child). |  |
 | [`termux-server`](modules/termux-server/MODULE.md) | yes | An Android app that can install, start and stop its own library server inside Termux (beta; never run on a real device when written). | android-shell |
-| [`updaters`](modules/updaters/MODULE.md) | no | electron-updater from GitHub releases (with a .deb path that works without a polkit agent) and a native Android updater, both through one Settings card. |  |
+| [`updaters`](modules/updaters/MODULE.md) | no | electron-updater from GitHub releases (with a .deb installer that works without a polkit agent: password prompt, then a sudo terminal, verified by dpkg; TypeScript and vanilla CommonJS versions) and a native Android updater, both through one Settings card. |  |
 | [`window-frame`](modules/window-frame/MODULE.md) | yes | A theme-drawn title bar (traffic lights by UI style), the preload bridge `window.<app>Desktop`, the single-instance main process, GPU modes and graphics readback. |  |
 
 ## Using it

@@ -29,7 +29,17 @@ An emblem is `branding/emblems/<name>.json`: `{ "box": 100, "d": "M..L..Z..." }`
 - A prompt that works for an AI agent: "Write `branding/emblems/<name>.json` for <idea>: polygons only (absolute M, L, Z), clockwise, inside a 100 box, at most three shapes, nothing thinner than 7 units. Then run `node scripts/gen-icons.mjs --sheet sheet.png` and fix anything unreadable at 32 px."
 - A good emblem for another app can be promoted into `files/scripts/logo/emblems/` here so others can reuse it.
 
+## Apps using it
+| App | Emblem | `emblemColor` |
+|---|---|---|
+| TurboMusic | `note` | null (engine red, the first app) |
+| TurboCut | `cut` (a play triangle split by a slanted blade, two polygons) | `#14c8d8` (cyan) |
+
+Pick the next app's hue away from red and from these.
+
 ## Gotchas
+- **Capacitor's default Android icon resources collide with the generated ones.** Delete `values/ic_launcher_background.xml`, `drawable/ic_launcher_background.xml`, `drawable-v24/ic_launcher_foreground.xml` and every `mipmap-*/ic_launcher_foreground.png`, and point `mipmap-anydpi-v26/ic_launcher*.xml` at `@drawable/ic_launcher_foreground` (the generator writes that and `values/colors.xml`). Otherwise the build fails on a duplicate `ic_launcher_background` or keeps showing the old foreground (`drawable-v24` wins on API 24+). List the legacy `mipmap-*/ic_launcher.png` and `ic_launcher_round.png` sizes (48, 72, 96, 144, 192) in `out.png` so pre-26 devices match.
+- **Electron needs `build/icon.png` (512)**; electron-builder derives the Windows icon from it. A plain Vite web app needs `<link rel="icon">` tags for `icon.svg` and `favicon-32.png` in `index.html` and the files in `public/`.
 - **SVG ids are shared by every inline SVG on a page.** `lib.mjs` prefixes them with the app name (`turbomusic-ring`), so two logos can sit on one page (docs, a launcher) without borrowing each other's gradients.
 - **The notification icon is the mono twin**, not a cut of the full icon: ring, blades starting at radius 132, the emblem larger. It is white, so the emblem colour does not show there; the shape alone must identify the app. With a plate and rim in white the emblem would merge into the blades.
 - **Rings are filled paths, not strokes** (evenodd), so Android vector drawables match the SVG exactly. Circles use relative arcs and are built at their final size; only blades and emblems (absolute polygons) are scaled by arithmetic.
@@ -44,4 +54,5 @@ An emblem is `branding/emblems/<name>.json`: `{ "box": 100, "d": "M..L..Z..." }`
 - `scripts/gen-icons.mjs` (the entry point; reads `branding/logo.json`)
 - `scripts/logo/lib.mjs` (the mark, tones, emblem placement, SVG / mono / Android output; pure functions)
 - `scripts/logo/emblems/note.json` (the beamed note)
+- `scripts/logo/emblems/cut.json` (TurboCut's split play triangle; from `TurboNZL/turbocut`)
 - example config: `branding/logo.json` (per app, so not compared by `engine-diff`)
