@@ -5,7 +5,8 @@
   "summary": "The TurboEngine logo (ring, record, six-bladed wheel) is shared by every app; an app adds its own emblem on a plate in the centre (TurboMusic: a red note). One config file generates the SVG, one-colour icon, PNGs and Android vectors.",
   "source": {
     "repo": "TurboNZL/turbomusic",
-    "ref": "f258fb7"
+    "ref": "f258fb7",
+    "also": "TurboNZL/turbokeep claude/notes-ui-ux-improvements-lc6qs1 (symbol-only small icons)"
   },
   "files": [
     "scripts/gen-icons.mjs",

@@ -1,0 +1,15 @@
+{
+  "name": "custom-emoji",
+  "title": "Custom emoji: any picture, shrunk to emoji size",
+  "optional": true,
+  "summary": "Import a picture (even a 4k one), the browser shrinks it to 96 px PNG, the server keeps it and serves it with a year-long cache header; a searchable emoji picker that focuses its search box and manages them.",
+  "source": {
+    "repo": "TurboNZL/turbokeep",
+    "ref": "claude/notes-ui-ux-improvements-lc6qs1"
+  },
+  "files": [
+    "apps/server/src/emoji.ts",
+    "apps/web/src/lib/emoji.tsx",
+    "apps/web/src/components/EmojiPicker.tsx"
+  ]
+}
