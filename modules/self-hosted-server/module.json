@@ -5,7 +5,7 @@
   "summary": "An app that runs its own server must ship these together, so every TurboNZL server is reached, installed and updated the same way. Has no files; it lists what is required.",
   "source": {
     "repo": "TurboNZL/turbomusic",
-    "ref": "ea3f5eaff467673231c721e33ffa773a93719ed2"
+    "ref": "62934e8318aaef698adad16745269fe342782c47"
   },
   "requires": [
     "cloudflare-access",

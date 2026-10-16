@@ -13,13 +13,13 @@ jobs:
         with: { version: 10 }
       - uses: actions/setup-node@v4
         with: { node-version: 22, cache: pnpm }
-      - run: pnpm install --ignore-scripts --filter @curator/web --filter @curator/core --filter @curator/server
-      - run: pnpm --filter @curator/core test
-      - run: pnpm --filter @curator/server test
-      - run: pnpm --filter @curator/server exec tsc --noEmit
-      - run: pnpm --filter @curator/web exec tsc --noEmit
-      - run: pnpm --filter @curator/web test
-      - run: pnpm --filter @curator/web build
+      - run: pnpm install --ignore-scripts --filter @turbomusic/web --filter @turbomusic/core --filter @turbomusic/server
+      - run: pnpm --filter @turbomusic/core test
+      - run: pnpm --filter @turbomusic/server test
+      - run: pnpm --filter @turbomusic/server exec tsc --noEmit
+      - run: pnpm --filter @turbomusic/web exec tsc --noEmit
+      - run: pnpm --filter @turbomusic/web test
+      - run: pnpm --filter @turbomusic/web build
 
   android:
     runs-on: ubuntu-latest
@@ -33,6 +33,6 @@ jobs:
         with: { distribution: temurin, java-version: 17 }
       - uses: gradle/actions/setup-gradle@v4
         with: { gradle-version: '8.9' }
-      - run: pnpm install --ignore-scripts --filter @curator/web --filter @curator/core
-      - run: pnpm --filter @curator/web build
+      - run: pnpm install --ignore-scripts --filter @turbomusic/web --filter @turbomusic/core
+      - run: pnpm --filter @turbomusic/web build
       - run: gradle -p apps/android :app:testDebugUnitTest :app:assembleDebug

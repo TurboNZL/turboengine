@@ -5,7 +5,7 @@
   "summary": "A theme-drawn title bar (traffic lights by UI style), the preload bridge `window.<app>Desktop`, the single-instance main process, GPU modes and graphics readback.",
   "source": {
     "repo": "TurboNZL/turbomusic",
-    "ref": "ea3f5eaff467673231c721e33ffa773a93719ed2"
+    "ref": "62934e8318aaef698adad16745269fe342782c47"
   },
   "files": [
     "apps/web/src/components/WindowFrame.tsx",

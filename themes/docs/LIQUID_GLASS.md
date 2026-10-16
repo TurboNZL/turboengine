@@ -31,6 +31,10 @@ For a rounded rectangle of width w, height h and corner radius r:
 
 Filters are shared by every element whose size is within 4 px of each other, and a lens is switched on only after its image has decoded (a filter whose `feImage` is not ready renders as nothing).
 
+## Gotchas
+- **A sliding indicator must not spring its position.** `cubic-bezier(.34,1.56,.64,1)` overshoots by about 10% of the travel, so on a wide dock the pill went ~100 px past the last tab. Use an ease-out for `transform` and keep the spring for `width`/`height` only.
+- **An indicator that overshoots inside an `overflow-x: auto` bar makes the bar scrollable for a moment**; where scrollbars take space the bar grows and the whole dock "bounces up". Scrolling bars that hold an indicator should hide their scrollbar (`scrollbar-width: none`) and clip vertically.
+
 ## Browser support
 
 An SVG filter inside `backdrop-filter` works only in Chromium (Chrome, Edge, **Electron**). Safari and Firefox get the same design without the refraction: frosted glass with the rim highlight, the glow and all the motion. This is detected (`supportsLens()`), nothing needs configuring.

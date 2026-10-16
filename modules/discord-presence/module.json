@@ -5,7 +5,7 @@
   "summary": "Shows the playing track in Discord through the local IPC socket; needs the app's own Discord application id.",
   "source": {
     "repo": "TurboNZL/turbomusic",
-    "ref": "ea3f5eaff467673231c721e33ffa773a93719ed2"
+    "ref": "62934e8318aaef698adad16745269fe342782c47"
   },
   "requires": [
     "window-frame"

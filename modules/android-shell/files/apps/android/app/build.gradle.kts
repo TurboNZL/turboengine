@@ -9,11 +9,11 @@ val parts = appVersion.split(".").map { it.toIntOrNull() ?: 0 }
 val code = parts.getOrElse(0) { 0 } * 10000 + parts.getOrElse(1) { 0 } * 100 + parts.getOrElse(2) { 0 }
 
 android {
-    namespace = "app.musiccurator.android"
+    namespace = "app.turbomusic.android"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "app.musiccurator.android"
+        applicationId = "app.turbomusic.android"
         minSdk = 26
         targetSdk = 35
         versionCode = code
@@ -25,29 +25,30 @@ android {
 
     // One fixed key for every build: Android only installs an update over an app signed with the same key.
     // The repository is private and the app is for personal use, so the key lives in the repository.
+    // The key's alias and passwords are stored INSIDE the keystore file and still carry the first name; they change only with a new key (keytool -genkeypair).
     signingConfigs {
-        create("curator") {
-            storeFile = file("../curator.keystore")
+        create("turbomusic") {
+            storeFile = file("../turbomusic.keystore")
             storePassword = "curator-personal"
             keyAlias = "curator"
             keyPassword = "curator-personal"
         }
     }
     buildTypes {
-        release { signingConfig = signingConfigs.getByName("curator"); isMinifyEnabled = false }
-        debug { signingConfig = signingConfigs.getByName("curator"); applicationIdSuffix = ".debug"; versionNameSuffix = "-debug" }
+        release { signingConfig = signingConfigs.getByName("turbomusic"); isMinifyEnabled = false }
+        debug { signingConfig = signingConfigs.getByName("turbomusic"); applicationIdSuffix = ".debug"; versionNameSuffix = "-debug" }
     }
     compileOptions { sourceCompatibility = JavaVersion.VERSION_17; targetCompatibility = JavaVersion.VERSION_17 }
     kotlinOptions { jvmTarget = "17" }
     sourceSets["main"].assets.srcDir(layout.buildDirectory.dir("generated/web"))
 }
 
-// The web client (apps/web) is bundled into the app and shown in a WebView: build it first with `pnpm --filter @curator/web build`.
+// The web client (apps/web) is bundled into the app and shown in a WebView: build it first with `pnpm --filter @turbomusic/web build`.
 val copyWeb by tasks.registering(Copy::class) {
     val dist = file("../../web/dist")
     from(dist)
     into(layout.buildDirectory.dir("generated/web"))
-    doFirst { check(dist.resolve("index.html").exists()) { "Build the web client first: pnpm --filter @curator/web build" } }
+    doFirst { check(dist.resolve("index.html").exists()) { "Build the web client first: pnpm --filter @turbomusic/web build" } }
 }
 tasks.matching { it.name == "preBuild" }.configureEach { dependsOn(copyWeb) }
 

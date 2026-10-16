@@ -10,7 +10,7 @@ interface Bridge {
   termuxInstall(): boolean; termuxStart(): boolean; termuxStop(): boolean; termuxRemove(deleteLibrary: boolean): boolean; termuxSetOptions(autoStart: boolean, wake: boolean): void;
 }
 const bridge = (): Bridge | null => {
-  const b = typeof window === 'undefined' ? undefined : (window as unknown as { CuratorAndroid?: Partial<Bridge> }).CuratorAndroid;
+  const b = typeof window === 'undefined' ? undefined : (window as unknown as { TurboMusicAndroid?: Partial<Bridge> }).TurboMusicAndroid;
   return b && typeof b.termuxStatus === 'function' ? (b as Bridge) : null; // an older app has no such methods
 };
 

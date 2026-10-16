@@ -2,7 +2,7 @@
 
 Shows the playing track in Discord through the local IPC socket; needs the app's own Discord application id.
 
-Optional. Reference files are in `files/` (the paths are the paths in the app); source: `TurboNZL/turbomusic` at `ea3f5ea`.
+Optional. Reference files are in `files/` (the paths are the paths in the app); source: `TurboNZL/turbomusic` at `62934e8`.
 
 **Requires:** `window-frame`.
 

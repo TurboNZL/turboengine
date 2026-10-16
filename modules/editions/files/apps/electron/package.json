@@ -1,5 +1,5 @@
 {
-  "name": "@curator/electron",
+  "name": "@turbomusic/electron",
   "version": "0.1.0",
   "license": "MIT",
   "private": true,
@@ -7,23 +7,23 @@
   "author": "TurboMusic",
   "homepage": "https://github.com/TurboNZL/turbomusic",
   "main": "dist/main.mjs",
-  "desktopName": "music-curator.desktop",
+  "desktopName": "turbomusic.desktop",
   "type": "module",
   "scripts": {
     "build": "node scripts/build.mjs",
     "start": "node scripts/build.mjs && electron .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "dist:publish": "pnpm --filter @curator/web build && node scripts/build.mjs && electron-builder --publish always",
-    "dist": "pnpm --filter @curator/web build && node scripts/build.mjs && electron-builder",
-    "dist:dir": "pnpm --filter @curator/web build && node scripts/build.mjs && electron-builder --dir",
-    "dist:server": "pnpm --filter @curator/web build && node scripts/build.mjs && electron-builder --config electron-builder.server.json --win",
-    "dist:server:publish": "pnpm --filter @curator/web build && node scripts/build.mjs && electron-builder --config electron-builder.server.json --win --publish always",
+    "dist:publish": "pnpm --filter @turbomusic/web build && node scripts/build.mjs && electron-builder --publish always",
+    "dist": "pnpm --filter @turbomusic/web build && node scripts/build.mjs && electron-builder",
+    "dist:dir": "pnpm --filter @turbomusic/web build && node scripts/build.mjs && electron-builder --dir",
+    "dist:server": "pnpm --filter @turbomusic/web build && node scripts/build.mjs && electron-builder --config electron-builder.server.json --win",
+    "dist:server:publish": "pnpm --filter @turbomusic/web build && node scripts/build.mjs && electron-builder --config electron-builder.server.json --win --publish always",
     "start:server": "node scripts/build.mjs && electron dist/server-main.mjs",
-    "dist:app": "pnpm --filter @curator/web build && node scripts/build.mjs && electron-builder --config electron-builder.app.json",
-    "dist:app:publish": "pnpm --filter @curator/web build && node scripts/build.mjs && electron-builder --config electron-builder.app.json --publish always",
-    "dist:server:linux": "pnpm --filter @curator/web build && node scripts/build.mjs && electron-builder --config electron-builder.server-linux.json --linux",
-    "dist:server:linux:publish": "pnpm --filter @curator/web build && node scripts/build.mjs && electron-builder --config electron-builder.server-linux.json --linux --publish always",
+    "dist:app": "pnpm --filter @turbomusic/web build && node scripts/build.mjs && electron-builder --config electron-builder.app.json",
+    "dist:app:publish": "pnpm --filter @turbomusic/web build && node scripts/build.mjs && electron-builder --config electron-builder.app.json --publish always",
+    "dist:server:linux": "pnpm --filter @turbomusic/web build && node scripts/build.mjs && electron-builder --config electron-builder.server-linux.json --linux",
+    "dist:server:linux:publish": "pnpm --filter @turbomusic/web build && node scripts/build.mjs && electron-builder --config electron-builder.server-linux.json --linux --publish always",
     "start:headless": "node scripts/build.mjs && ELECTRON_RUN_AS_NODE=1 electron dist/headless.mjs"
   },
   "devDependencies": {
@@ -35,7 +35,7 @@
     "vitest": "^2.1.9"
   },
   "build": {
-    "appId": "app.musiccurator.desktop",
+    "appId": "app.turbomusic.desktop",
     "productName": "TurboMusic",
     "directories": {
       "output": "release",
@@ -67,17 +67,17 @@
       ],
       "category": "Audio",
       "icon": "build/icon.png",
-      "executableName": "music-curator",
-      "maintainer": "TurboMusic <noreply@musiccurator.app>",
+      "executableName": "turbomusic",
+      "maintainer": "TurboMusic <noreply@turbomusic.app>",
       "synopsis": "Personal music library and ranking",
       "desktop": {
         "entry": {
-          "StartupWMClass": "music-curator"
+          "StartupWMClass": "turbomusic"
         }
       }
     },
     "deb": {
-      "packageName": "music-curator",
+      "packageName": "turbomusic",
       "artifactName": "turbomusic-${version}-linux-${arch}.${ext}"
     },
     "win": {

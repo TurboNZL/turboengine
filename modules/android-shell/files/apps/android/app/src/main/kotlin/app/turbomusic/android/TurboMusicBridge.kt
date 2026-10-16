@@ -1,4 +1,4 @@
-package app.musiccurator.android
+package app.turbomusic.android
 
 import android.content.Context
 import android.os.Handler
@@ -6,10 +6,10 @@ import android.os.Looper
 import android.view.HapticFeedbackConstants
 import android.view.View
 import android.webkit.JavascriptInterface
-import app.musiccurator.android.update.AppUpdater
+import app.turbomusic.android.update.AppUpdater
 
-/** `window.CuratorAndroid` in the web client. Java interfaces carry strings only, so results are JSON and changes arrive as events. */
-class CuratorBridge(private val context: Context, private val view: View) {
+/** `window.TurboMusicAndroid` in the web client. Java interfaces carry strings only, so results are JSON and changes arrive as events. */
+class TurboMusicBridge(private val context: Context, private val view: View) {
     private val prefs = ServerPrefs(context)
 
     @JavascriptInterface fun version(): String = BuildConfig.VERSION_NAME
@@ -26,7 +26,7 @@ class CuratorBridge(private val context: Context, private val view: View) {
     /** this app adds the service token to the page's own GET requests for the server (AccessProxy), so the page need not download media whole to send it */
     @JavascriptInterface fun accessInjected(): Boolean = true
 
-    // ---- the server module (beta): the Curator server running in Termux, see TermuxServer.kt
+    // ---- the server module (beta): the TurboMusic server running in Termux, see TermuxServer.kt
     @JavascriptInterface fun termuxStatus(): String = Termux.status(context)
     /** the one line to paste into Termux, once */
     @JavascriptInterface fun termuxOneTimeLine(): String = Termux.oneTimeLine(context)

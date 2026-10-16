@@ -2,7 +2,7 @@
 
 TurboMusic (`TurboNZL/turbomusic`, `apps/web`) is the reference implementation: every look in this repo was built and checked against it. TurboCut (`TurboNZL/turbocut`) is the second adopter and the one whose mistakes this guide is built from (see [AUDIT_TURBOCUT.md](AUDIT_TURBOCUT.md) for the screenshots). Read [CONTRACT.md](CONTRACT.md) first for the vocabulary (variables, hook classes, attributes); this file is about **how to apply it so the result looks deliberate in all 33 styles**, not only in the one you are developing in.
 
-![TurboMusic's Settings page: the reference](img/ref-curator-settings.png)
+![TurboMusic's Settings page: the reference](img/ref-turbomusic-settings.png)
 
 The one-sentence rule: **an app supplies structure and layout, a theme supplies every colour, shape, font and motion.** If you catch yourself writing a colour, a radius, a font or a border for a control, you are doing a theme's job and the result will break in some style.
 
@@ -52,7 +52,7 @@ Decisions that TurboMusic made, and when you should copy them:
 | TurboMusic did | Why | Copy it when |
 |---|---|---|
 | `fonts: 'none'` and bundles the `@fontsource` fonts itself in `src/fonts.css` | the app must work offline (phone, Pi, LAN) | the app is an installed/offline app. A web-only app can keep the default `'cdn'`. |
-| `storagePrefix: 'curator'` | its old keys (`curator.wallpaperImage`) kept working | you migrate an app that already stored something. New apps keep the default. |
+| `storagePrefix: 'turbomusic'` | the keys of an install under the app's first name are copied by the app itself (`lib/legacyNames.ts`) | you migrate an app that already stored something. New apps keep the default. |
 | keeps the user's look in its **own** settings and calls `themes.apply(settings)` on every change | settings sync with its server | the look must travel with an account. Otherwise use `persist: true` (TurboCut). |
 | `themes.setSource(false)` when the user switches updates off, a GitHub token field for a private repo | the user owns the choice | always offer the "Check for newer themes" button and a way to switch auto-updates off |
 | layouts are the **app's** (`layouts.css`, `data-layout`) | where pages are listed is not a theme concern ([CONTRACT.md](CONTRACT.md)) | you have more than one navigation arrangement |

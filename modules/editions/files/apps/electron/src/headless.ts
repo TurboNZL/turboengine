@@ -6,7 +6,7 @@ import { startServer } from '../../../packages/server/src/start.ts';
 /**
  * The server edition without a window or a tray: the same library server the Raspberry Pi runs, packaged with its own runtime (the Electron
  * binary acting as plain Node, so nothing has to be installed first). It is what the Linux server .deb (a systemd service) and the Linux
- * server AppImage run. Settings come from the environment (CURATOR_DATA_DIR, CURATOR_PORT, CURATOR_HOST, CURATOR_TOKEN, ...) or from flags.
+ * server AppImage run. Settings come from the environment (TURBOMUSIC_DATA_DIR, TURBOMUSIC_PORT, TURBOMUSIC_HOST, TURBOMUSIC_TOKEN, ...) or from flags.
  */
 export interface HeadlessArgs { dataDir?: string; port?: string; host?: string; help: boolean }
 
@@ -27,7 +27,7 @@ export function parseHeadlessArgs(argv: string[]): HeadlessArgs {
 }
 
 export const HELP = `TurboMusic Server (headless)
-  --data-dir DIR   where the library lives (default: $CURATOR_DATA_DIR, else ~/music-curator-data)
+  --data-dir DIR   where the library lives (default: $TURBOMUSIC_DATA_DIR, else ~/turbomusic-data)
   --port N         default 47813
   --host ADDR      default 0.0.0.0 (all network interfaces)
 The access token is printed at start and kept in DIR/token.`;
@@ -36,9 +36,9 @@ The access token is printed at start and kept in DIR/token.`;
 export function headlessEnv(args: HeadlessArgs, env: NodeJS.ProcessEnv, home = homedir()): NodeJS.ProcessEnv {
   return {
     ...env,
-    CURATOR_DATA_DIR: args.dataDir ?? env.CURATOR_DATA_DIR ?? join(home, 'music-curator-data'),
-    ...(args.port ? { CURATOR_PORT: args.port } : {}),
-    ...(args.host ? { CURATOR_HOST: args.host } : {}),
+    TURBOMUSIC_DATA_DIR: args.dataDir ?? env.TURBOMUSIC_DATA_DIR ?? join(home, 'turbomusic-data'),
+    ...(args.port ? { TURBOMUSIC_PORT: args.port } : {}),
+    ...(args.host ? { TURBOMUSIC_HOST: args.host } : {}),
   };
 }
 

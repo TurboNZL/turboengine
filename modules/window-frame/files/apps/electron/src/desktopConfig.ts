@@ -26,9 +26,9 @@ const FILE = 'desktop.json';
 export function loadDesktopConfig(userData: string, env: NodeJS.ProcessEnv = process.env): DesktopConfig {
   let saved: Partial<DesktopConfig> = {};
   try { saved = JSON.parse(readFileSync(join(userData, FILE), 'utf8')) as Partial<DesktopConfig>; } catch { /* first launch */ }
-  const port = Number(env.CURATOR_DESKTOP_PORT ?? saved.port ?? DESKTOP_PORT);
+  const port = Number(env.TURBOMUSIC_DESKTOP_PORT ?? saved.port ?? DESKTOP_PORT);
   return {
-    dataDir: env.CURATOR_DATA_DIR || (typeof saved.dataDir === 'string' && saved.dataDir ? saved.dataDir : join(userData, 'library')),
+    dataDir: env.TURBOMUSIC_DATA_DIR || (typeof saved.dataDir === 'string' && saved.dataDir ? saved.dataDir : join(userData, 'library')),
     port: Number.isInteger(port) && port >= 1 && port <= 65535 ? port : DESKTOP_PORT,
     customFrame: saved.customFrame === true,
     serverModule: typeof saved.serverModule === 'boolean' ? saved.serverModule : undefined,
@@ -64,7 +64,7 @@ export interface DiscordConfig { discordEnabled: boolean; discordClientId: strin
 export function loadDiscordConfig(userData: string, env: NodeJS.ProcessEnv = process.env): DiscordConfig {
   let saved: Partial<DiscordConfig> = {};
   try { saved = JSON.parse(readFileSync(join(userData, FILE), 'utf8')) as Partial<DiscordConfig>; } catch { /* none yet */ }
-  const id = String(env.CURATOR_DISCORD_CLIENT_ID || saved.discordClientId || BUILT_IN_DISCORD_CLIENT_ID).trim();
+  const id = String(env.TURBOMUSIC_DISCORD_CLIENT_ID || saved.discordClientId || BUILT_IN_DISCORD_CLIENT_ID).trim();
   return { discordEnabled: saved.discordEnabled !== false, discordClientId: /^\d{15,25}$/.test(id) ? id : '' };
 }
 

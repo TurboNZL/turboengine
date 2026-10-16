@@ -2,7 +2,7 @@
 
 An Android app that can install, start and stop its own library server inside Termux (beta; never run on a real device when written).
 
-Optional. Reference files are in `files/` (the paths are the paths in the app); source: `TurboNZL/turbomusic` at `ea3f5ea`.
+Optional. Reference files are in `files/` (the paths are the paths in the app); source: `TurboNZL/turbomusic` at `62934e8`.
 
 **Requires:** `android-shell`.
 
@@ -15,7 +15,7 @@ Beta. An Android app that installs, starts and stops its own library server insi
 - Extras and result keys were written from memory of the RUN_COMMAND wiki; never run on a device.
 
 ## Files
-- `apps/android/app/src/main/kotlin/app/musiccurator/android/TermuxServer.kt`
+- `apps/android/app/src/main/kotlin/app/turbomusic/android/TermuxServer.kt`
 - `apps/android/app/src/main/assets/termux/setup.sh`
 - `apps/android/app/src/main/assets/termux/start.sh`
 - `apps/android/app/src/main/assets/termux/stop.sh`
