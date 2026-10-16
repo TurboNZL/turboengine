@@ -164,5 +164,22 @@ export function buildLogo({ name, color = ENGINE_ACCENT, emblem = null }) {
     apath('#FFFFFFFF', sm(wheel(C, C, e ? MONO_R0 : R0, R1, BLADES, TWIST, 0.5))) +
     apath('#FFFFFFFF', e ? sm(emblemAt(e, MONO_EMBLEM, C, C)) : circle(12, 12, 50 * kn)));
 
-  return { svg, mono, androidForeground, androidStat, androidBackground: CHAR, tones: t };
+  /**
+   * The small-size logo: ONLY the centre symbol in the app's own colour, no ring, blades or tile. At 16 to 48 px (a browser tab, a favicon) the full emblem is a dark
+   * dot with a red ring and the symbol disappears; the symbol alone stays readable. Cropped tightly (6% margin), transparent background. An engine mark without an
+   * emblem has no symbol of its own and falls back to the full logo.
+   */
+  const symbol = (size = 512) => {
+    if (!e) return svg(size);
+    const d = emblemAt(e, EMBLEM, C, C), xs = [], ys = [];
+    for (const m of d.matchAll(/(-?[\d.]+)[ ,](-?[\d.]+)/g)) { xs.push(Number(m[1])); ys.push(Number(m[2])); }
+    const w = Math.max(...xs) - Math.min(...xs), h = Math.max(...ys) - Math.min(...ys), side = Math.max(w, h) * 1.12;
+    const x0 = (Math.min(...xs) + Math.max(...xs)) / 2 - side / 2, y0 = (Math.min(...ys) + Math.max(...ys)) / 2 - side / 2;
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${f(x0)} ${f(y0)} ${f(side)} ${f(side)}" width="${size}" height="${size}" role="img" aria-label="${name}">
+  <defs><linearGradient id="${id('sym')}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${et.light}"/><stop offset="1" stop-color="${et.dark}"/></linearGradient></defs>
+  <path d="${d}" fill="url(#${id('sym')})"/>
+</svg>`;
+  };
+
+  return { svg, mono, symbol, androidForeground, androidStat, androidBackground: CHAR, tones: t };
 }

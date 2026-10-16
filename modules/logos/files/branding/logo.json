@@ -8,10 +8,11 @@
     "png": [
       ["apps/web/public/icon-512.png", 512],
       ["apps/web/public/icon-192.png", 192],
-      ["apps/web/public/favicon-32.png", 32],
       ["apps/electron/build/icon.png", 512],
       ["apps/electron/build/icon-256.png", 256]
     ],
+    "symbolSvg": "apps/web/public/favicon.svg",
+    "symbolPng": [["apps/web/public/favicon-32.png", 32], ["apps/web/public/favicon-48.png", 48]],
     "android": { "res": "apps/android/app/src/main/res", "stat": "ic_stat_curator" }
   }
 }

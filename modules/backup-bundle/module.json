@@ -1,0 +1,16 @@
+{
+  "name": "backup-bundle",
+  "title": "Backup bundle: everything in one zip, safe to import twice",
+  "optional": true,
+  "summary": "One JSON file in a zip with a format name and version, refused when newer, idempotent by id, with a dry run, tag looks that only fill gaps and the pictures the data refers to; plus the Settings import and export panel.",
+  "source": {
+    "repo": "TurboNZL/turbokeep",
+    "ref": "claude/notes-ui-ux-improvements-lc6qs1"
+  },
+  "files": [
+    "apps/server/src/formats/turbokeep.ts",
+    "apps/server/src/formats/types.ts",
+    "apps/server/src/io.ts",
+    "apps/web/src/components/ImportExport.tsx"
+  ]
+}
