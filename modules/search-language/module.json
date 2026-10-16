@@ -1,0 +1,15 @@
+{
+  "name": "search-language",
+  "title": "Search language: words plus chips, Discord style",
+  "optional": true,
+  "summary": "tag:, -tag:, excludes:, includes:, before:, after:, is:, has: and \"phrases\" parsed on the server, and a search box that turns them into chips with a suggestion list you can walk with Tab.",
+  "source": {
+    "repo": "TurboNZL/turbokeep",
+    "ref": "claude/notes-ui-ux-improvements-lc6qs1"
+  },
+  "files": [
+    "apps/server/src/search.ts",
+    "apps/web/src/lib/searchQuery.ts",
+    "apps/web/src/components/SearchBox.tsx"
+  ]
+}

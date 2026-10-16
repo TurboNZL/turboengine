@@ -1,0 +1,16 @@
+{
+  "name": "local-cache",
+  "title": "Local cache: show the copy first, then update",
+  "optional": true,
+  "summary": "Four caching levels (off, low, medium, high) kept in memory and localStorage, a prefetch that starts the first requests with the sign-in check, a button that remembers everything, and the Settings card for it.",
+  "source": {
+    "repo": "TurboNZL/turbokeep",
+    "ref": "claude/notes-ui-ux-improvements-lc6qs1"
+  },
+  "files": [
+    "apps/web/src/lib/cache.ts",
+    "apps/web/src/lib/precache.ts",
+    "apps/web/src/lib/prefetch.ts",
+    "apps/web/src/components/SpeedSection.tsx"
+  ]
+}

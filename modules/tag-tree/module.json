@@ -1,0 +1,15 @@
+{
+  "name": "tag-tree",
+  "title": "Tag tree: Parent.Child tags with inherited colours",
+  "optional": true,
+  "summary": "A parent shows even when no note is directly under it, children follow it, empty tags disappear, a child without a colour takes its parent's, and the bar can say the parent while the glow says the child.",
+  "source": {
+    "repo": "TurboNZL/turbokeep",
+    "ref": "claude/notes-ui-ux-improvements-lc6qs1"
+  },
+  "files": [
+    "apps/web/src/lib/tagTree.ts",
+    "apps/web/src/lib/tagLook.ts",
+    "apps/web/src/components/TagRail.tsx"
+  ]
+}

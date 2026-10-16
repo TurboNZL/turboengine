@@ -1,0 +1,19 @@
+{
+  "name": "motion",
+  "title": "Motion: one animation language for the whole app",
+  "optional": true,
+  "summary": "Arrive, swap, slide-in, pop, expand and the finish animation as plain CSS classes, plus the hook that gives only what is NEW the arrive class, a draggable divider and a text box that sizes itself.",
+  "source": {
+    "repo": "TurboNZL/turbokeep",
+    "ref": "claude/notes-ui-ux-improvements-lc6qs1"
+  },
+  "files": [
+    "apps/web/src/motion.css",
+    "apps/web/src/item-motion.css",
+    "apps/web/src/lib/arrivals.ts",
+    "apps/web/src/lib/fresh.ts",
+    "apps/web/src/lib/focus.ts",
+    "apps/web/src/components/AutoText.tsx",
+    "apps/web/src/components/Divider.tsx"
+  ]
+}
