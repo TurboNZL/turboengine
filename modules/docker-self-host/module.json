@@ -5,7 +5,7 @@
   "summary": "A web app served by its own Node server, shipped as one multi-arch Docker image (ghcr.io) plus a Node tarball, with an optional cloudflared service and the sign-in code (setup code, scrypt, hashed sessions and tokens, same-site check, login lockout) that is safe behind a tunnel.",
   "source": {
     "repo": "TurboNZL/turbokeep",
-    "ref": "9e8b5a89f7ef8c1ad11e404ebdedb3ee08d770cf"
+    "ref": "0e9ac2fdc4d0a3f8a12a2240f31636c1e0f0c6d5"
   },
   "files": [
     "Dockerfile",

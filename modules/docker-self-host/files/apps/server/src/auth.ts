@@ -43,7 +43,7 @@ function lookup(db: DB, secret: string): AuthUser | null {
 /**
  * The address the request really came from: behind a Cloudflare tunnel that is CF-Connecting-IP, not the tunnel's own. Otherwise the LAST entry of
  * X-Forwarded-For, the one the nearest proxy added: a client can put anything in front of it (Cloudflare appends to what the client sent).
- * Both headers can be forged by anyone who reaches the port directly, which is why the compose file only publishes it on 127.0.0.1.
+ * Both headers can be forged by anyone who reaches the port directly, which is why, once a tunnel is in use, TURBOKEEP_BIND=127.0.0.1 should keep the port off the network.
  */
 export function clientIp(c: Context, cfg: Config): string {
   if (cfg.trustProxy) {

@@ -16,6 +16,9 @@ The themes are part of this repository (`themes/`, with their own `CLAUDE.md`): 
 
 **An app that runs its own server** must take the `self-hosted-server` bundle: `cloudflare-access` + `server-install-update` + `updaters` + `release-pipeline`. A **web-only** app (no desktop/Android client) takes `docker-self-host` + `release-pipeline` instead.
 
+## Server apps and ports
+Every TurboNZL server app is built to one contract and hosted in one of two ways, the native service (TurboMusic) or Docker (TurboKeep): [`docs/SERVER_APPS.md`](docs/SERVER_APPS.md). **Every program on a machine needs its own port**, so each app has a registered number and the rules for picking one are in [`docs/PORTS.md`](docs/PORTS.md).
+
 ## Modules
 | Module | Optional | What | Requires |
 |---|---|---|---|

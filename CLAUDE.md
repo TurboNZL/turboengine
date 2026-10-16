@@ -38,6 +38,9 @@ Every app with an Electron desktop build updates a Linux `.deb` the same way (do
 ## Mandatory sets
 An app that runs its own server takes `self-hosted-server`: `cloudflare-access` + `server-install-update` + `updaters` + `release-pipeline`. Every app with a desktop or Android build takes `updaters` and `release-pipeline`. A **web-only** app served by its own server takes `docker-self-host` + `release-pipeline` instead (see `self-hosted-server`).
 
+## Server apps and ports
+`docs/SERVER_APPS.md` is the standard for building and hosting a server app (native service the TurboMusic way, or Docker the TurboKeep way). `docs/PORTS.md` is the **port registry**: port numbers must be unique on a machine, never default to 8080 or another common port, take the next free number from 47800-47999 when creating a server app and add its row in the same commit, and make the port a setting (`<APP>_PORT`).
+
 ## Two theme packs
 `themes/` is the full pack (default). `themes-open/` is the stripped-down pack for apps that are or may be sold: no third-party names, logos, brand fonts or trade dress. It is generated from `themes/` by `themes-open/make.py` (edit the keep/rename lists there, not the generated folders), so a fix in `themes/` reaches it by regenerating. When adding a theme to `themes/`, decide whether it belongs in the open pack; anything named after a product, game, OS or vendor does not.
 

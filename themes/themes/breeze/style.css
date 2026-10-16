@@ -21,7 +21,7 @@
   --in-focus-border: hsl(var(--accent)); --in-focus-shadow: inset 0 0 0 1px hsl(var(--accent));
   --card-bg: hsl(var(--surface)); --card-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 16%, transparent);
   --win-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 25%, transparent); --win-shadow: 0 6px 20px rgb(0 0 0 / 0.35), 0 1px 3px rgb(0 0 0 / 0.2); --dialog-anim: bt-fade 140ms ease-in-out;
-  --tb-bg: color-mix(in srgb, hsl(var(--fg)) 8%, hsl(var(--surface))); --tb-fg: hsl(var(--fg)); --tb-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 14%, transparent); --tb-pad: 0.5rem 0.9rem; --tb-size: 0.95rem; --tb-weight: 600;
+  --tb-bg: color-mix(in srgb, hsl(var(--fg)) 8%, hsl(var(--surface))); --tb-fg: hsl(var(--fg)); --tb-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 14%, transparent); --tb-pad: 0.5rem 0.9rem; --tb-size: 0.95rem; --tb-weight: 400; /* what the dialog title really rendered (the h1/h2 rule below wins over this token); KDE Breeze titles are regular weight. Keep this equal to the rendered weight so the window frame matches */
   --close-fg: hsl(var(--fg)); --close-r: 9999px; --close-hover-bg: #da4453; --close-hover-fg: #fff;
   --bar-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 16%, transparent);
   --menu-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 22%, transparent); --pop-shadow: 0 3px 10px rgb(0 0 0 / 0.3); --menu-anim: bt-drop 110ms ease-in-out;
