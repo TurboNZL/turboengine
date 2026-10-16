@@ -37,6 +37,8 @@ An emblem is `branding/emblems/<name>.json`: `{ "box": 100, "d": "M..L..Z..." }`
 - Colours of the engine red: light `#ff5a44`, mid `#e10600`, dark `#8f0300`. Neutrals are the same everywhere: `#26262f`, `#0b0b0e`, `#101015`, `#2b2b33`.
 - Regenerating the engine's own logo: from this repo's root, `node modules/logos/files/scripts/gen-icons.mjs --png` (config `branding/logo.json`). `branding/turbomusic-512.png` is a copy of TurboMusic's icon, shown above for comparison.
 
+- **The PWA uses the full logo, not the symbol.** The symbol-only rule (TurboKeep's, on the branch `claude/turbokeep-round-5`: favicons and anything 48 px or smaller are the emblem alone) covers browser tab icons only. The web manifest icons (`icon-192.png`, `icon-512.png`, `icon.svg` as maskable), the apple-touch icon and the installed-app/launcher icon stay the full mark (ring, blades, plate and emblem). Keep `favicon*` out of `manifest.webmanifest`. TurboMusic follows this (checked 2026-10-16: its manifest lists only the full icons).
+
 ## Files
 - `scripts/gen-icons.mjs` (the entry point; reads `branding/logo.json`)
 - `scripts/logo/lib.mjs` (the mark, tones, emblem placement, SVG / mono / Android output; pure functions)
