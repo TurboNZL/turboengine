@@ -1,6 +1,6 @@
 # Appearance
 
-How Curator looks is not decided in this repository. It is decided by **turbothemes** (the `themes/` folder of [github.com/TurboNZL/turboengine](https://github.com/TurboNZL/turboengine)), a small package that all of the owner's apps share, so they look consistent and the look can be improved without releasing an app.
+How TurboMusic looks is not decided in this repository. It is decided by **turbothemes** (the `themes/` folder of [github.com/TurboNZL/turboengine](https://github.com/TurboNZL/turboengine)), a small package that all of the owner's apps share, so they look consistent and the look can be improved without releasing an app.
 
 | Part | Where | Changes |
 |---|---|---|
@@ -14,16 +14,12 @@ How Curator looks is not decided in this repository. It is decided by **turbothe
 
 The markup uses the hook classes (`.btn`, `.input`, `.card`, `.chip`, `.bt-window`, `.bt-menu`, `.bt-side`, `.bt-top`, `.bt-player`, `.bt-tabbar`, `.bt-nav`, `.bt-tab`, `.bt-row`, `.bt-range`, ...) and takes every colour from the tokens (`bg-surface`, `text-muted`, `border-line`, `hsl(var(--accent))`) and every corner radius from `rounded-theme`. That is the whole contract; it is written out in turbothemes' `docs/CONTRACT.md`. If a page looks wrong in every style, it is a layout bug in the app. If a control looks wrong in one style, it is a bug in that style's folder in turbothemes.
 
-## The picker previews in a mock page
-
-Settings → Appearance shows a framed **mock page** (`PreviewApp` in `AppearanceCard.tsx`) beside the colour and style lists. Hovering or focusing an option changes only the mock; clicking applies it to the real page. The real page is never restyled while the pointer moves, because that makes the page flash through dozens of looks and moves the tiles from under the pointer. The colour chips are a multi-column grid. Written up in turbothemes' `docs/PICKER.md` (section 2a).
-
 ## Updating themes
 
 - Automatically: Settings → Appearance → **Themes** looks for newer themes in the background (at most every six hours) and when you press the button. The setting "Look for newer themes automatically" turns it off; the engine then only uses the themes built into the installed app.
 - Themes are fetched from `themes/dist` of the public turboengine repository. If that repository is ever made private, paste a read-only GitHub token into the same card.
 - A downloaded set is kept on the device and used at the next start, until a newer engine (a new app build with a newer `turbothemes` dependency) brings newer built-in themes.
-- To take a new **engine**: `pnpm update turbothemes --filter @curator/web`, then commit the lockfile.
+- To take a new **engine**: `pnpm update turbothemes --filter @turbomusic/web`, then commit the lockfile.
 
 ## Fonts
 

@@ -49,6 +49,7 @@ Commands: `pnpm install`, `pnpm test`, `pnpm typecheck`, `pnpm build`, `pnpm dev
 - SVG ids in a logo are one namespace per page: prefix them per app (the template has `ID`).
 
 ## Gotchas learned
+- **Window title weight is one token, `--tb-weight`**, for dialog title bars and the drawn window frame (`.bt-wf-title`). The frame used to hard-code 600, so 29 of 33 styles had a window border in a different weight from their own dialogs (2026-10-14). A broad `h1, h2` rule in a style can override the token for the dialog (Breeze did): `examples/verify-title-weights.mjs` (real Chromium, all styles) catches it; run it after editing any style's titles.
 - Selectors in a theme CSS must carry their own `[data-ui="id"]`; a shared rule for several styles is duplicated per style on purpose (see how fortnite2/4 and the macOS family look).
 - Palette order in the pickers is the `order` number; the original app showed palettes in its source order, so `order` is index*10.
 - `@layer components` in the old TurboMusic CSS was Tailwind's; plain CSS in `base.css` must come before the utilities (apps `@import` it first). `.btn` etc. rely on being weaker than an element's own utility classes.

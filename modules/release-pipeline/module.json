@@ -5,7 +5,7 @@
   "summary": "Every merge to main becomes a release: auto-PR for pushed branches, checks, next version vYYYY.M.N, installers and APK attached, lowercase asset names.",
   "source": {
     "repo": "TurboNZL/turbomusic",
-    "ref": "ea3f5eaff467673231c721e33ffa773a93719ed2"
+    "ref": "62934e8318aaef698adad16745269fe342782c47"
   },
   "files": [
     ".github/workflows/release.yml",

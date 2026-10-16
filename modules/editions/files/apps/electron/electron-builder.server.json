@@ -1,9 +1,9 @@
 {
-  "appId": "app.musiccurator.server",
+  "appId": "app.turbomusic.server",
   "productName": "TurboMusic Server",
   "directories": { "output": "release/server", "buildResources": "build" },
   "files": ["dist/**", "package.json", "build/icon-256.png"],
-  "extraMetadata": { "main": "dist/server-main.mjs", "name": "music-curator-server", "description": "TurboMusic Server for Windows: the library server in the system tray, with a setup wizard" },
+  "extraMetadata": { "main": "dist/server-main.mjs", "name": "turbomusic-server", "description": "TurboMusic Server for Windows: the library server in the system tray, with a setup wizard" },
   "extraResources": [{ "from": "../web/dist", "to": "web" }],
   "publish": [{ "provider": "github", "owner": "TurboNZL", "repo": "turbomusic", "releaseType": "release", "channel": "server" }],
   "win": { "target": [{ "target": "nsis", "arch": ["x64"] }], "icon": "build/icon.png" },

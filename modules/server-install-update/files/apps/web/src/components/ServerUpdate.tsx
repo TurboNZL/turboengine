@@ -29,7 +29,7 @@ export function ServerUpdateCard() {
         // after a restart the new process starts with a clean state ('idle'): coming back after the restart IS the success
         if (s.status === 'done' || sawRestart) { setUpdated(true); setNote(sawRestart ? 'Updated and restarted.' : 'Updated. Restart the server yourself to run the new code.'); }
       } catch {
-        if (tries > 120) { setWaiting(false); setNote('The server did not come back within 3 minutes. Check it with: journalctl -u curator -n 50'); return; }
+        if (tries > 120) { setWaiting(false); setNote('The server did not come back within 3 minutes. Check it with: journalctl -u turbomusic -n 50'); return; }
         follow(sawRestart, tries + 1); // restarting: no answer yet
       }
     }, sawRestart ? 2000 : 1200);

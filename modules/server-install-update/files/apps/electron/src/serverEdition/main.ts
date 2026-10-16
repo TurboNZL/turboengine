@@ -11,7 +11,7 @@ import { Updates } from '../updater.ts';
 import { folderPlan, lanUrls, loadServerConfig, pairCode, saveServerConfig, type ServerEditionConfig } from './serverConfig.ts';
 import { installTool, isInstalled, pathWith, TOOLS, toolsDir, type InstallProgress } from './tools.ts';
 import { Tunnel, type TunnelState } from './tunnel.ts';
-import { userDataPath } from '../appName.ts';
+import { bootUserData, migrationInfo, askForMigration } from '../userDataBoot.ts';
 
 /**
  * TurboMusic Server for Windows: the same server as the Pi runs, living in the system tray. No window while it works. The first start (and
@@ -20,8 +20,8 @@ import { userDataPath } from '../appName.ts';
  * while the wizard is closed, so it idles at a small amount of memory and no CPU.
  */
 const here = dirname(fileURLToPath(import.meta.url));
-// the product name changed to TurboMusic; installed apps keep their settings folder (see appName.ts)
-if (app.isPackaged) app.setPath('userData', userDataPath(app.getPath('appData'), 'server'));
+// the product name changed to TurboMusic; an installed server keeps its old settings folder until the person moves it (tray menu)
+bootUserData('server');
 const userData = () => app.getPath('userData');
 app.disableHardwareAcceleration();
 if (!app.requestSingleInstanceLock()) app.quit();
@@ -42,7 +42,7 @@ function webDir() { return findWebDir(process.resourcesPath, join(here, '../../w
 
 /** Link each folder the wizard chose in place of the one inside the data folder (a junction on Windows: no admin rights needed). */
 function applyFolders(c: ServerEditionConfig) {
-  const base = loadConfig({ CURATOR_DATA_DIR: c.dataDir }); // creates the data folder and its three subfolders
+  const base = loadConfig({ TURBOMUSIC_DATA_DIR: c.dataDir }); // creates the data folder and its three subfolders
   for (const { kind, target } of folderPlan(c)) {
     let same = false;
     try { same = realpathSync(join(base.dataDir, kind)).toLowerCase() === resolve(target).toLowerCase(); } catch { /* not there yet */ }
@@ -56,9 +56,9 @@ async function startRuntime(): Promise<void> {
   applyFolders(c);
   const t = tools(c);
   process.env.PATH = pathWith(t, process.env.PATH); // yt-dlp finds Deno and ffmpeg here
-  const env: NodeJS.ProcessEnv = { ...process.env, CURATOR_DATA_DIR: c.dataDir, CURATOR_HOST: c.lan ? '0.0.0.0' : '127.0.0.1', CURATOR_PORT: String(c.port), CURATOR_WEB_DIR: webDir() ?? '', CURATOR_UPDATE: '0' };
-  if (isInstalled(t, TOOLS[0])) env.CURATOR_YTDLP = join(t, 'yt-dlp.exe');
-  if (isInstalled(t, TOOLS[1])) env.CURATOR_FFMPEG_DIR = t;
+  const env: NodeJS.ProcessEnv = { ...process.env, TURBOMUSIC_DATA_DIR: c.dataDir, TURBOMUSIC_HOST: c.lan ? '0.0.0.0' : '127.0.0.1', TURBOMUSIC_PORT: String(c.port), TURBOMUSIC_WEB_DIR: webDir() ?? '', TURBOMUSIC_UPDATE: '0' };
+  if (isInstalled(t, TOOLS[0])) env.TURBOMUSIC_YTDLP = join(t, 'yt-dlp.exe');
+  if (isInstalled(t, TOOLS[1])) env.TURBOMUSIC_FFMPEG_DIR = t;
   try { running = await startServer(loadConfig(env)); }
   catch (e) {
     const code = (e as NodeJS.ErrnoException).code;
@@ -100,11 +100,25 @@ function rebuildTray() {
     { label: 'Show the library folder', enabled: !!running, click: () => void shell.openPath(c.dataDir) },
     { type: 'separator' },
     { label: 'Setup and settings…', click: () => openWizard() },
+    ...(migrationInfo('server').plan?.needed ? [{ label: 'Move to the TurboMusic folder…', click: () => void moveToTurboMusic() }] : []),
     ...(us.status === 'ready' ? [{ label: `Restart to update to ${us.version ?? 'the new version'}`, click: () => updates.install() }] : [{ label: us.status === 'downloading' ? `Downloading an update… ${us.percent ?? 0}%` : 'Check for updates', enabled: us.status !== 'downloading', click: () => void updates.check() }]),
     { label: 'Start with Windows', type: 'checkbox', checked: c.startWithWindows, click: (i) => { saveServerConfig(userData(), { startWithWindows: i.checked }); app.setLoginItemSettings({ openAtLogin: i.checked, args: ['--hidden'] }); } },
     { type: 'separator' },
     { label: 'Quit (stops the server)', click: () => { void stopRuntime().finally(() => app.exit(0)); } },
   ]));
+}
+
+/** Rename the old "TurboMusic Server" settings folder (the library too, if it was left inside it). The folder is in use, so this asks and the restart does it. */
+async function moveToTurboMusic() {
+  const plan = migrationInfo('server').plan;
+  if (!plan?.needed) return;
+  const lines = [`Rename ${plan.from} to ${plan.to}.`, ...plan.repoint.map((r) => `Point ${r.key} at ${r.to}.`), ...plan.untouched.map((u) => `Leave ${u.key} (${u.value}) where it is.`)];
+  const r = await dialog.showMessageBox({ type: 'question', buttons: ['Move now', 'Cancel'], defaultId: 0, cancelId: 1, message: 'Move to the TurboMusic folder?',
+    detail: `${lines.join('\n')}\n\nNothing is copied or deleted. The server restarts, and if anything goes wrong the old folder is put back.` });
+  if (r.response !== 0) return;
+  askForMigration('server');
+  await stopRuntime();
+  app.relaunch(); app.exit(0);
 }
 
 function openBrowser() {

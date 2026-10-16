@@ -11,7 +11,7 @@ import { DiscordPresence, findSockets, type Presence } from './discord.ts';
 import { Updates } from './updater.ts';
 import { describeGraphics, type Graphics } from './graphics.ts';
 import { activeMode, GPU_MODES, nextAutoStep } from './gpuModes.ts';
-import { userDataPath } from './appName.ts';
+import { bootUserData, migrationInfo, askForMigration, dismissMigrationNote } from './userDataBoot.ts';
 
 /**
  * The desktop app runs the same server as the Raspberry Pi, inside the app, on 127.0.0.1, with the library in a folder of the
@@ -24,17 +24,17 @@ type Local = { port: number; close(): Promise<void>; config: { dataDir: string; 
 let server: Local | null = null;
 /** "full" (window + library server) or "app" (window only; the library is on a server). electron-builder writes it into package.json for the app edition. */
 const edition: 'full' | 'app' = (() => {
-  if (process.env.CURATOR_EDITION === 'app') return 'app';
-  try { return (JSON.parse(readFileSync(join(app.getAppPath(), 'package.json'), 'utf8')) as { curatorEdition?: string }).curatorEdition === 'app' ? 'app' : 'full'; } catch { return 'full'; }
+  if (process.env.TURBOMUSIC_EDITION === 'app') return 'app';
+  try { return (JSON.parse(readFileSync(join(app.getAppPath(), 'package.json'), 'utf8')) as { turbomusicEdition?: string }).turbomusicEdition === 'app' ? 'app' : 'full'; } catch { return 'full'; }
 })();
-// the product name changed to TurboMusic; installed apps keep their settings folder (see appName.ts)
-if (app.isPackaged) app.setPath('userData', userDataPath(app.getPath('appData'), edition));
+// the product name changed to TurboMusic; an installed app keeps its old settings folder until the person moves it (userDataBoot.ts)
+bootUserData(edition);
 let win: BrowserWindow | null = null;
 const discord = new DiscordPresence();
-const updates = new Updates(app.isPackaged, (state) => win?.webContents.send('curator:update', state));
+const updates = new Updates(app.isPackaged, (state) => win?.webContents.send('turbomusic:update', state));
 
 // the desktop file's name is the window's identity on Wayland (its app id): without this the launcher's icon and the window do not match
-if (process.platform === 'linux') app.setDesktopName(edition === 'app' ? 'music-curator-app.desktop' : 'music-curator.desktop');
+if (process.platform === 'linux') app.setDesktopName(edition === 'app' ? 'turbomusic-app.desktop' : 'turbomusic.desktop');
 
 if (!app.requestSingleInstanceLock()) app.quit();
 app.on('second-instance', () => { if (win) { if (win.isMinimized()) win.restore(); win.focus(); } });
@@ -55,10 +55,10 @@ if (process.platform === 'linux') {
   if (gpuStart.software) app.disableHardwareAcceleration();
   else for (const [name, value] of gpuStart.switches) app.commandLine.appendSwitch(name, value);
 }
-// escape hatch for a driver that crashes the GPU process: CURATOR_SOFTWARE_RENDERING=1 pnpm --filter @curator/electron start
-if (process.env.CURATOR_SOFTWARE_RENDERING) app.disableHardwareAcceleration();
+// escape hatch for a driver that crashes the GPU process: TURBOMUSIC_SOFTWARE_RENDERING=1 pnpm --filter @turbomusic/electron start
+if (process.env.TURBOMUSIC_SOFTWARE_RENDERING) app.disableHardwareAcceleration();
 let gpuCrashes = 0;
-app.on('child-process-gone', (_e, d) => { if (d.type === 'GPU') { gpuCrashes++; console.warn(`[curator] the GPU process stopped (${d.reason}, code ${d.exitCode}); crash ${gpuCrashes}`); } });
+app.on('child-process-gone', (_e, d) => { if (d.type === 'GPU') { gpuCrashes++; console.warn(`[turbomusic] the GPU process stopped (${d.reason}, code ${d.exitCode}); crash ${gpuCrashes}`); } });
 
 async function graphics(): Promise<Graphics> {
   const info = (await app.getGPUInfo('complete').catch(() => app.getGPUInfo('basic').catch(() => null))) as { auxAttributes?: { glRenderer?: string; glImplementationParts?: string }; gpuDevice?: { vendorId?: number }[] } | null;
@@ -77,16 +77,16 @@ const serverModuleOn = (saved: boolean | undefined) => saved ?? edition === 'ful
 async function boot(): Promise<void> {
   const desk = loadDesktopConfig(userData());
   const webDir = findWebDir(process.resourcesPath, join(here, '../../web/dist'));
-  if (!webDir) throw new Error('The web client has not been built. Run `pnpm --filter @curator/web build` first.');
+  if (!webDir) throw new Error('The web client has not been built. Run `pnpm --filter @turbomusic/web build` first.');
   // the app edition's port is one above the full edition's, so both can be installed (and the window's storage stays put when the module is added or removed)
-  const port = process.env.CURATOR_DESKTOP_PORT || edition === 'full' ? desk.port : desk.port + 1;
+  const port = process.env.TURBOMUSIC_DESKTOP_PORT || edition === 'full' ? desk.port : desk.port + 1;
   if (!serverModuleOn(desk.serverModule)) { const s = await startStaticServer(webDir, port); server = { port: s.port, close: s.close, config: { dataDir: '', token: '' } }; return; }
-  const config = loadConfig({ ...process.env, CURATOR_DATA_DIR: desk.dataDir, CURATOR_HOST: '127.0.0.1', CURATOR_PORT: String(port), CURATOR_WEB_DIR: webDir });
+  const config = loadConfig({ ...process.env, TURBOMUSIC_DATA_DIR: desk.dataDir, TURBOMUSIC_HOST: '127.0.0.1', TURBOMUSIC_PORT: String(port), TURBOMUSIC_WEB_DIR: webDir });
   try { server = await startServer(config); }
   catch (e) {
     const code = (e as NodeJS.ErrnoException).code;
     throw new Error(code === 'EADDRINUSE'
-      ? `Port ${desk.port} is already in use. Close whatever uses it, or set CURATOR_DESKTOP_PORT to another port (the app remembers its data per port).`
+      ? `Port ${desk.port} is already in use. Close whatever uses it, or set TURBOMUSIC_DESKTOP_PORT to another port (the app remembers its data per port).`
       : `The library could not be opened in ${desk.dataDir}: ${(e as Error).message}`);
   }
 }
@@ -101,8 +101,8 @@ function openWindow() {
   });
   win.removeMenu();
   win.once('ready-to-show', () => win?.show());
-  win.on('maximize', () => win?.webContents.send('curator:window-state', true));
-  win.on('unmaximize', () => win?.webContents.send('curator:window-state', false));
+  win.on('maximize', () => win?.webContents.send('turbomusic:window-state', true));
+  win.on('unmaximize', () => win?.webContents.send('turbomusic:window-state', false));
   shortcuts(win);
   const origin = `http://127.0.0.1:${server!.port}`;
   // anything that is not this app opens in the user's browser instead of inside the app
@@ -110,7 +110,7 @@ function openWindow() {
   win.webContents.on('will-navigate', (e, url) => { if (!url.startsWith(origin)) { e.preventDefault(); if (/^https?:/.test(url)) void shell.openExternal(url); } });
   win.on('closed', () => { win = null; });
   // the GPU process starts lazily: look a moment after the page is up, and say it in the terminal if the app is painting in software
-  win.webContents.once('did-finish-load', () => setTimeout(() => void graphics().then((g) => console.log(`[curator] graphics: ${g.summary}${g.hardware ? '' : '. If your computer has a GPU, see docs/development/ELECTRON.md (Graphics).'}`)), 2500));
+  win.webContents.once('did-finish-load', () => setTimeout(() => void graphics().then((g) => console.log(`[turbomusic] graphics: ${g.summary}${g.hardware ? '' : '. If your computer has a GPU, see docs/development/ELECTRON.md (Graphics).'}`)), 2500));
   void win.loadURL(origin);
 }
 
@@ -127,33 +127,50 @@ function chooseFolder(): Promise<string | null> {
     });
 }
 
-ipcMain.on('curator:info', (e) => {
+ipcMain.on('turbomusic:info', (e) => {
   e.returnValue = { customFrame: loadDesktopConfig(userData()).customFrame, token: server?.config.token ?? '', version: app.getVersion(), dataDir: server?.config.dataDir ?? '', edition, serverModule: serverModuleOn(loadDesktopConfig(userData()).serverModule), platform: process.platform, desktopEnv: process.env.XDG_CURRENT_DESKTOP ?? '', port: server?.port ?? 0 };
 });
 // the Cloudflare Access service token rides on every request to the library server (see accessHeaders.ts), so audio and covers stream directly
 let accessRule: AccessRule | null = null;
-ipcMain.on('curator:access', (_e, serverUrl: unknown, id: unknown, secret: unknown) => {
+ipcMain.on('turbomusic:access', (_e, serverUrl: unknown, id: unknown, secret: unknown) => {
   accessRule = makeRule(serverUrl, id, secret);
   const ses = session.defaultSession;
   if (!accessRule) { ses.webRequest.onBeforeSendHeaders(null); return; }
   ses.webRequest.onBeforeSendHeaders({ urls: [`${accessRule.origin}/*`] }, (details, cb) => cb({ requestHeaders: withAccess(accessRule, details.url, details.requestHeaders) as Record<string, string> }));
 });
-ipcMain.handle('curator:graphics', () => graphics());
-ipcMain.handle('curator:gpu-get', () => { const c = loadDesktopConfig(userData()); return { mode: c.gpuMode, auto: c.gpuAuto, running: gpuStart.id, modes: GPU_MODES.map(({ id, label, hint }) => ({ id, label, hint })) }; });
-ipcMain.handle('curator:gpu-report', async () => {
+ipcMain.handle('turbomusic:graphics', () => graphics());
+ipcMain.handle('turbomusic:gpu-get', () => { const c = loadDesktopConfig(userData()); return { mode: c.gpuMode, auto: c.gpuAuto, running: gpuStart.id, modes: GPU_MODES.map(({ id, label, hint }) => ({ id, label, hint })) }; });
+ipcMain.handle('turbomusic:gpu-report', async () => {
   const g = await graphics();
   const info = await app.getGPUInfo('complete').catch(() => null);
   return JSON.stringify({ summary: g.summary, detail: g.detail, features: g.features, gpuCrashes: g.gpuCrashes, mode: gpuStart.id, electron: process.versions.electron, chrome: process.versions.chrome, session: { type: process.env.XDG_SESSION_TYPE, desktop: process.env.XDG_CURRENT_DESKTOP, display: process.env.DISPLAY, wayland: process.env.WAYLAND_DISPLAY }, gpuInfo: info }, null, 2);
 });
-ipcMain.on('curator:gpu-page', () => { const w = new BrowserWindow({ width: 1000, height: 800, title: 'Chromium GPU report' }); void w.loadURL('chrome://gpu'); });
-ipcMain.handle('curator:gpu-set', (_e, mode: unknown) => {
+ipcMain.on('turbomusic:gpu-page', () => { const w = new BrowserWindow({ width: 1000, height: 800, title: 'Chromium GPU report' }); void w.loadURL('chrome://gpu'); });
+ipcMain.handle('turbomusic:gpu-set', (_e, mode: unknown) => {
   const id = typeof mode === 'string' && (mode === 'auto' || GPU_MODES.some((m) => m.id === mode)) ? mode : 'auto';
   saveDesktopConfig(userData(), { gpuMode: id, gpuAuto: { step: 0, done: false } });
   app.relaunch(); app.exit(0);
 });
-ipcMain.handle('curator:choose-folder', () => chooseFolder());
+ipcMain.handle('turbomusic:choose-folder', () => chooseFolder());
+/** The move from the settings folder of the app's first name to the current one (Settings > This app). The folder cannot be renamed while this app has it open, so the button asks and the next start does it. */
+ipcMain.handle('turbomusic:migrate-info', () => migrationInfo(edition));
+ipcMain.handle('turbomusic:migrate-dismiss', () => { dismissMigrationNote(); });
+ipcMain.handle('turbomusic:migrate-run', async () => {
+  const info = migrationInfo(edition);
+  if (!info.plan?.needed) return false;
+  const lines = [`Rename ${info.plan.from} to ${info.plan.to}.`, ...info.plan.repoint.map((r) => `Point ${r.key} at ${r.to}.`), ...info.plan.untouched.map((u) => `Leave ${u.key} (${u.value}) where it is.`)];
+  const r = await dialog.showMessageBox(win ?? undefined!, { type: 'question', buttons: ['Move now', 'Cancel'], defaultId: 0, cancelId: 1, message: 'Move to the TurboMusic folder?',
+    detail: `${lines.join('\n')}\n\nNothing is copied or deleted: the folder is renamed, with your settings, library choice and window data inside. The app restarts, and if anything goes wrong the old folder is put back.` });
+  if (r.response !== 0) return false;
+  askForMigration(edition);
+  closing = true;
+  await Promise.allSettled([discord.stop(), server?.close()]);
+  server = null;
+  app.relaunch(); app.exit(0);
+  return true;
+});
 /** Install or remove the server module (this app's own library server). Removing keeps the library files unless the user says to delete them; both restart the app. */
-ipcMain.handle('curator:server-module', async (_e, on: unknown) => {
+ipcMain.handle('turbomusic:server-module', async (_e, on: unknown) => {
   const desk = loadDesktopConfig(userData());
   if (on === true) {
     const r = await dialog.showMessageBox(win ?? undefined!, { type: 'question', buttons: ['Install', 'Cancel'], defaultId: 0, cancelId: 1, message: 'Install the server module?',
@@ -176,35 +193,35 @@ ipcMain.handle('curator:server-module', async (_e, on: unknown) => {
   return true;
 });
 const discordInfo = () => ({ ...loadDiscordConfig(userData()), builtIn: !!BUILT_IN_DISCORD_CLIENT_ID, status: discord.status, detail: discord.detail, sockets: findSockets() });
-ipcMain.on('curator:presence', (_e, p: Presence | null) => {
+ipcMain.on('turbomusic:presence', (_e, p: Presence | null) => {
   if (p && (typeof p.title !== 'string' || typeof p.artist !== 'string')) return;
   discord.update(p ? { title: p.title, artist: p.artist, album: String(p.album ?? ''), duration: Number(p.duration) || 0, position: Number(p.position) || 0, playing: !!p.playing } : null);
 });
-ipcMain.handle('curator:discord-get', () => discordInfo());
-ipcMain.handle('curator:discord-set', (_e, patch: { discordEnabled?: boolean; discordClientId?: string }) => {
+ipcMain.handle('turbomusic:discord-get', () => discordInfo());
+ipcMain.handle('turbomusic:discord-set', (_e, patch: { discordEnabled?: boolean; discordClientId?: string }) => {
   saveDiscordConfig(userData(), { ...(typeof patch.discordEnabled === 'boolean' ? { discordEnabled: patch.discordEnabled } : {}), ...(typeof patch.discordClientId === 'string' ? { discordClientId: patch.discordClientId.trim() } : {}) });
   const c = loadDiscordConfig(userData());
   discord.configure(c.discordClientId, c.discordEnabled);
   return discordInfo();
 });
-ipcMain.handle('curator:update-has-token', () => !!loadUpdateToken(userData()));
-ipcMain.handle('curator:update-set-token', (_e, t: unknown) => { const v = typeof t === 'string' ? t.trim() : ''; saveUpdateToken(userData(), v); updates.setToken(v); });
-ipcMain.handle('curator:update-state', () => updates.state);
-ipcMain.handle('curator:update-check', () => updates.check());
-ipcMain.on('curator:update-install', () => updates.install());
-ipcMain.on('curator:window', (e, action: string) => {
+ipcMain.handle('turbomusic:update-has-token', () => !!loadUpdateToken(userData()));
+ipcMain.handle('turbomusic:update-set-token', (_e, t: unknown) => { const v = typeof t === 'string' ? t.trim() : ''; saveUpdateToken(userData(), v); updates.setToken(v); });
+ipcMain.handle('turbomusic:update-state', () => updates.state);
+ipcMain.handle('turbomusic:update-check', () => updates.check());
+ipcMain.on('turbomusic:update-install', () => updates.install());
+ipcMain.on('turbomusic:window', (e, action: string) => {
   const w = BrowserWindow.fromWebContents(e.sender);
   if (!w) return;
   if (action === 'minimize') w.minimize();
   else if (action === 'maximize') { if (w.isMaximized()) w.unmaximize(); else w.maximize(); }
   else if (action === 'close') w.close();
 });
-ipcMain.handle('curator:set-frame', async (_e, on: unknown) => {
+ipcMain.handle('turbomusic:set-frame', async (_e, on: unknown) => {
   saveDesktopConfig(userData(), { customFrame: on === true });
   const r = await dialog.showMessageBox({ type: 'info', buttons: ['Restart now', 'Later'], defaultId: 0, message: 'Window style changed', detail: 'The new window style applies after the app restarts.' });
   if (r.response === 0) { app.relaunch(); app.quit(); }
 });
-ipcMain.handle('curator:show-folder', () => { if (server) void shell.openPath(server.config.dataDir); });
+ipcMain.handle('turbomusic:show-folder', () => { if (server) void shell.openPath(server.config.dataDir); });
 
 /** There is no menu bar (everything it held is in Settings); the shortcuts people expect from it still work. */
 function shortcuts(w: BrowserWindow) {
@@ -251,11 +268,11 @@ void app.whenReady().then(async () => {
  */
 async function settleGraphics() {
   const c = loadDesktopConfig(userData());
-  if (process.platform !== 'linux' || c.gpuMode !== 'auto' || c.gpuAuto.done || process.env.CURATOR_SOFTWARE_RENDERING) return;
+  if (process.platform !== 'linux' || c.gpuMode !== 'auto' || c.gpuAuto.done || process.env.TURBOMUSIC_SOFTWARE_RENDERING) return;
   await new Promise((r) => setTimeout(r, 6000));
   const g = await graphics();
   const next = nextAutoStep({ mode: 'auto', auto: c.gpuAuto }, g.hardware && g.gpuCrashes === 0, process.env.XDG_SESSION_TYPE);
-  console.log(`[curator] graphics (${gpuStart.id}): ${g.summary}${next.done ? ' - settled' : ' - trying the next mode'}`);
+  console.log(`[turbomusic] graphics (${gpuStart.id}): ${g.summary}${next.done ? ' - settled' : ' - trying the next mode'}`);
   saveDesktopConfig(userData(), { gpuAuto: { step: next.step, done: next.done } });
   if (next.relaunch) { app.relaunch(); app.exit(0); }
 }

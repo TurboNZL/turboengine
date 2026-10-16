@@ -2,10 +2,10 @@
   "name": "server-install-update",
   "title": "Server install and self-update",
   "optional": true,
-  "summary": "How a library server gets onto a machine (one-command Linux/Pi installer, Windows tray app with a setup wizard) and how it updates itself from a button in Settings.",
+  "summary": "How a library server gets onto a machine (one-folder installer that needs no root and no service account, Windows tray app with a setup wizard) and how it updates itself from a button in Settings.",
   "source": {
     "repo": "TurboNZL/turbomusic",
-    "ref": "ea3f5eaff467673231c721e33ffa773a93719ed2"
+    "ref": "8b28292440858bf8e888c5ee29421f63e65032c7"
   },
   "requires": [
     "cloudflare-access",
@@ -24,6 +24,11 @@
     "apps/electron/src/serverEdition/setup-preload.ts",
     "apps/electron/src/serverEdition/setup.html",
     "apps/electron/src/serverEdition/tools.ts",
-    "apps/electron/src/serverEdition/tunnel.ts"
+    "apps/electron/src/serverEdition/tunnel.ts",
+    "packages/server/src/bundleUpdate.ts",
+    "packages/server/test/bundleUpdate.test.ts",
+    "scripts/install-server.sh",
+    "scripts/remove-old-install.sh",
+    "docs/guides/MIGRATE_SERVER.md"
   ]
 }

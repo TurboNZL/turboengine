@@ -1,5 +1,5 @@
 {
-  "appId": "app.musiccurator.frontend",
+  "appId": "app.turbomusic.frontend",
   "productName": "TurboMusic App",
   "directories": {
     "output": "release/app",
@@ -10,9 +10,9 @@
     "package.json"
   ],
   "extraMetadata": {
-    "name": "music-curator-app",
-    "desktopName": "music-curator-app.desktop",
-    "curatorEdition": "app",
+    "name": "turbomusic-app",
+    "desktopName": "turbomusic-app.desktop",
+    "turbomusicEdition": "app",
     "description": "TurboMusic app only: the window, with the library on a server you connect"
   },
   "extraResources": [
@@ -38,17 +38,17 @@
     ],
     "category": "Audio",
     "icon": "build/icon.png",
-    "executableName": "music-curator-app",
-    "maintainer": "TurboMusic <noreply@musiccurator.app>",
+    "executableName": "turbomusic-app",
+    "maintainer": "TurboMusic <noreply@turbomusic.app>",
     "synopsis": "Personal music library and ranking",
     "desktop": {
       "entry": {
-        "StartupWMClass": "music-curator-app"
+        "StartupWMClass": "turbomusic-app"
       }
     }
   },
   "deb": {
-    "packageName": "music-curator-app",
+    "packageName": "turbomusic-app",
     "artifactName": "turbomusic-app-${version}-linux-${arch}.${ext}"
   },
   "win": {

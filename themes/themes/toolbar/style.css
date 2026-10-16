@@ -1,6 +1,6 @@
 /* ================== Toolbar: the first version of the app (docs/appearance/TOOLBAR.md) ==================
  * Read off the original Tailwind markup: rounded-md controls, zinc-800 borders, a 16rem side bar with a
- * "CURATOR" wordmark, a full-width toolbar of text links with a pill search, a 6rem three-column player,
+ * app-name wordmark in capitals, a full-width toolbar of text links with a pill search, a 6rem three-column player,
  * 3xl black uppercase page titles, 10px black uppercase captions and bordered zinc-900/40 cover tiles.
  * The layout half (which pages are links in the toolbar) is in Layout.tsx (UiStyleDef.nav = "toolbar").
  * Colours are not set here: pair it with the Zinc colour theme (lib/theme.ts) for the exact zinc/blue values.

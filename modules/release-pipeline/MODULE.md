@@ -2,7 +2,7 @@
 
 Every merge to main becomes a release: auto-PR for pushed branches, checks, next version vYYYY.M.N, installers and APK attached, lowercase asset names.
 
-Recommended for every app. Reference files are in `files/` (the paths are the paths in the app); source: `TurboNZL/turbomusic` at `ea3f5ea` (workflows refreshed; they run there).
+Recommended for every app. Reference files are in `files/` (the paths are the paths in the app); source: `TurboNZL/turbomusic` at `62934e8` (workflows refreshed; they run there).
 
 ## What it does
 - `auto-pr.yml`: a push of any non-main branch opens a PR (needs the repo setting *Actions > General > Allow GitHub Actions to create and approve pull requests*).
@@ -31,6 +31,7 @@ The repository needs a default `main` branch, GitHub Actions enabled, workflow p
 - electron-builder names its update manifests after the channel (`latest.yml`, `app.yml`, `server.yml`): give every edition its own `publish.channel` or they overwrite each other.
 - Pre-releases count: `/releases/latest` ignores them and 404s when every release is one. Updaters list `/releases` instead.
 - `pnpm install --ignore-scripts` in CI, with `--filter` for just what each job needs.
+- **`pnpm/action-setup@v4` fails in under a second if the workflow passes `version:` and `package.json` also has `packageManager`** ("multiple versions of pnpm specified"). Use one: with `packageManager` set, write just `- uses: pnpm/action-setup@v4`. TurboKeep hit this on its first run.
 
 ## Files
 - `.github/workflows/release.yml`

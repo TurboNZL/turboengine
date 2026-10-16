@@ -130,10 +130,10 @@ input[type='checkbox']:disabled, input[type='radio']:disabled { opacity: 0.45; c
 .btn { max-width: 100%; }
 @media (max-width: 640px) {
   .btn { white-space: normal; text-align: center; } }
-/* the desktop app's themed title bar (components/WindowFrame.tsx): colours, size and shape come from the UI style's dialog variables */
+/* the desktop app's themed title bar (components/WindowFrame.tsx): colours and shape come from the UI style's dialog variables, and the WEIGHT is the dialog title bar's own token --tb-weight, so the window border and a dialog's title never disagree (before: a fixed 600 here, against 300 to 900 on dialogs, in 29 of 33 styles) */
 .bt-wf { display: flex; align-items: center; gap: 0.5rem; flex: none; height: 2.25rem; padding: 0 0.5rem 0 0.9rem; -webkit-app-region: drag; user-select: none;
-  background: var(--tb-bg, hsl(var(--surface))); color: var(--tb-fg, inherit); border-bottom: 1px solid hsl(var(--line)); font-size: 0.8rem; font-weight: 600; z-index: 60; }
-.bt-wf-title { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--title-font, inherit); text-shadow: var(--tb-text-shadow, none); }
+  background: var(--tb-bg, hsl(var(--surface))); color: var(--tb-fg, inherit); border-bottom: 1px solid hsl(var(--line)); font-size: 0.8rem; font-weight: var(--tb-weight, 600); z-index: 60; }
+.bt-wf-title { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--title-font, inherit); font-weight: var(--tb-weight, 600); text-shadow: var(--tb-text-shadow, none); }
 .bt-wf-btns { display: flex; gap: 0.25rem; align-items: center; order: var(--wf-order, 1); -webkit-app-region: no-drag; }
 /* Minimise and maximise hover with a neutral wash of the bar's own text colour; only Close turns red (or what the style's Close looks like). Never the close button's colours on the others. */
 .bt-wf-btn { display: grid; place-items: center; width: 2rem; height: 1.6rem; border-radius: var(--wf-r, 6px); background: var(--wf-bg, transparent); border: var(--wf-border, 0); color: inherit; box-shadow: var(--wf-shadow, none); transition: background 0.12s; }

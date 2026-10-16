@@ -64,6 +64,8 @@ The defaults are the first block of `engine/base.css`; a style sets only what di
 
 `btn-*` `ghost-*` buttons · `in-*` fields · `card-*` · `win-*` `tb-*` `close-*` `body-bg` `backdrop` dialogs · `menu-*` `pop-shadow` menus · `side-*` `top-*` `player-*` `nav-*` `row-*` `bar-border` chrome and lists · `panel-*` · `chk-*` checkboxes and radios · `rng-*` sliders · `dur` `ease` motion · `ctl-r` `card-r` `win-r` `menu-r` `nav-r` `chip-r` `in-r` shape · `font` `title-font` type.
 
+**Window titles have one weight: `--tb-weight`.** It is the font weight of a dialog's title bar (`.bt-titlebar h2`) **and** of the drawn window border (`.bt-wf` / `.bt-wf-title`, the desktop app's custom frame), so the two never disagree inside one style (an authentic style keeps its own: 400 in Windows 7 and Breeze, 700 in Windows XP and 98, 900 in Fortnite, 300 in Zune). A style changes it only through the token. Do **not** set `font-weight` directly on `.bt-titlebar h2` or `.bt-wf-title`, and watch broader rules such as `[data-ui="x"] :is(h1, h2) { font-weight: ... }`: they override the token for the dialog and the frame silently stops matching. `node examples/verify-title-weights.mjs` checks every style in a real browser (it failed 29 of 33 styles before the frame followed the token).
+
 Motion variables: `--dialog-anim`, `--menu-anim` (opening), `--player-in` `--player-out` `--player-ms` (the player bar entering and leaving; the app sets `data-leaving` on the way out), `--pop-out` `--pop-ms` (the exit of pop-ups), `--page-in`, `--vote-ms`.
 
 ## Effects

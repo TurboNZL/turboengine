@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { desktop, type DiscordInfo } from '../lib/settings.ts';
+import { desktop, type DiscordInfo, type MigrationInfo } from '../lib/settings.ts';
 import { appVersion, nativeUpdates, type UpdateState } from '../lib/native.ts';
 import { Section } from './Section.tsx';
 
@@ -126,5 +126,42 @@ export function GraphicsLine() {
         </p>
       </div>}
     </div>
+  );
+}
+
+/**
+ * Settings > This app: the app used to be called TurboMusic, and its settings folder still is until it is moved. The button asks the
+ * app to rename that folder (the app restarts to do it, because it cannot rename a folder it has open). Shown only when there is
+ * something to move, or a result to read; otherwise nothing.
+ */
+export function MigrateCard() {
+  const d = desktop();
+  const [info, setInfo] = useState<MigrationInfo | null>(null);
+  const [busy, setBusy] = useState(false);
+  const load = () => void d?.migration?.info().then(setInfo).catch(() => undefined);
+  useEffect(load, []); // eslint-disable-line react-hooks/exhaustive-deps
+  if (!d?.migration || !info?.supported) return null;
+  const { plan, last } = info;
+  if (!plan?.needed && !plan?.blocked && !last) return null;
+  const when = last ? new Date(last.at).toLocaleString() : '';
+  return (
+    <Section title="Move to the TurboMusic folder">
+      {last?.ok && <div className="space-y-2 text-sm">
+        <p className="text-good">Moved on {when}.</p>
+        <ul className="list-disc space-y-0.5 pl-5 text-xs text-muted">{last.done.map((l) => <li key={l} className="break-all">{l}</li>)}</ul>
+        <button className="btn" onClick={() => void d.migration!.dismiss().then(load)}>OK</button>
+      </div>}
+      {last && !last.ok && <p className="text-sm text-warn">The last attempt on {when} did not work and was undone, so nothing changed: {last.error}</p>}
+      {plan?.blocked && <p className="text-sm text-warn">{plan.blocked}</p>}
+      {plan?.needed && <>
+        <p className="text-sm text-muted">The app is called TurboMusic now, but your settings, library choice and window data still sit in a folder with the old name. This renames that folder. Nothing is copied or deleted, and if a step fails the old folder is put back. The app restarts to do it.</p>
+        <ul className="space-y-1 text-xs">
+          <li><span className="text-muted">Rename </span><code className="break-all">{plan.from}</code><span className="text-muted"> to </span><code className="break-all">{plan.to}</code></li>
+          {plan.repoint.map((r) => <li key={r.file + r.key}><span className="text-muted">Point {r.key} at </span><code className="break-all">{r.to}</code></li>)}
+          {plan.untouched.map((u) => <li key={u.file + u.key} className="text-muted">Leave {u.key} where it is: <code className="break-all">{u.value}</code></li>)}
+        </ul>
+        <div><button className="btn btn-accent" disabled={busy} onClick={() => { setBusy(true); void d.migration!.run().finally(() => { setBusy(false); load(); }); }}>Move now…</button></div>
+      </>}
+    </Section>
   );
 }

@@ -1,5 +1,5 @@
 {
-  "appId": "app.musiccurator.server.linux",
+  "appId": "app.turbomusic.server.linux",
   "productName": "TurboMusic Server",
   "directories": {
     "output": "release/server-linux",
@@ -12,9 +12,9 @@
   ],
   "extraMetadata": {
     "main": "dist/headless.mjs",
-    "name": "music-curator-server",
+    "name": "turbomusic-server",
     "description": "TurboMusic server, headless: the library server as a service or a command, no window",
-    "curatorEdition": "server"
+    "turbomusicEdition": "server"
   },
   "extraResources": [
     {
@@ -40,12 +40,12 @@
     ],
     "category": "Network",
     "icon": "build/icon.png",
-    "executableName": "music-curator-server",
-    "maintainer": "TurboMusic <noreply@musiccurator.app>",
+    "executableName": "turbomusic-server",
+    "maintainer": "TurboMusic <noreply@turbomusic.app>",
     "synopsis": "Personal music library and ranking"
   },
   "deb": {
-    "packageName": "music-curator-server",
+    "packageName": "turbomusic-server",
     "artifactName": "turbomusic-server-${version}-linux-${arch}.${ext}",
     "afterInstall": "build/server-postinst.sh",
     "afterRemove": "build/server-postrm.sh",

@@ -1,4 +1,4 @@
-package app.musiccurator.android.update
+package app.turbomusic.android.update
 
 import org.json.JSONArray
 

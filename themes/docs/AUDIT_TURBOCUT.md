@@ -30,7 +30,7 @@ Findings 1 to 3 are all about **using a hook for something it is not**, or **lea
 
 The five tabs on the right (Clip, Keys, Media, Captions, Project) are plain buttons with the browser's own 2 px border and square corners, stuck together; the selected one is only blue text. In TurboMusic the equivalent control (its Settings tabs) is a calm underline strip: muted text, the selected tab in full colour with an accent underline.
 
-![TurboMusic Settings: the reference](img/ref-curator-settings.png)
+![TurboMusic Settings: the reference](img/ref-turbomusic-settings.png)
 
 Why it happens: TurboCut sets `class="bt-tab"` on each button. In `base.css` the only rule for it is `.bt-tab { color: muted }` and `[aria-current=page] { color: accent }`. The styles never draw a border or background for it because it was only ever meant for the icon+label cells of the phone bar. So the browser's default button border shows, in every style.
 

@@ -45,18 +45,18 @@ jobs:
         with: { version: 10 }
       - uses: actions/setup-node@v4
         with: { node-version: 22, cache: pnpm }
-      - run: pnpm install --ignore-scripts --filter @curator/web --filter @curator/core --filter @curator/server --filter @curator/electron
+      - run: pnpm install --ignore-scripts --filter @turbomusic/web --filter @turbomusic/core --filter @turbomusic/server --filter @turbomusic/electron
       - name: Set the version from the tag
         shell: bash
         run: cd apps/electron && npm pkg set version="$(echo '${{ needs.release.outputs.tag }}' | sed 's/^v//')"
-      - run: pnpm --filter @curator/electron dist:publish
+      - run: pnpm --filter @turbomusic/electron dist:publish
         env: { GH_TOKEN: '${{ secrets.GITHUB_TOKEN }}' }
       - name: Build and publish the app-only edition (Windows installer; Linux .deb and .AppImage). Its own update feed (channel app)
-        run: pnpm --filter @curator/electron dist:app:publish
+        run: pnpm --filter @turbomusic/electron dist:app:publish
         env: { GH_TOKEN: '${{ secrets.GITHUB_TOKEN }}' }
       - name: Build and publish the headless server edition (Linux .deb as a systemd service, and .AppImage)
         if: runner.os == 'Linux'
-        run: pnpm --filter @curator/electron dist:server:linux:publish
+        run: pnpm --filter @turbomusic/electron dist:server:linux:publish
         env: { GH_TOKEN: '${{ secrets.GITHUB_TOKEN }}' }
 
   windows-server:
@@ -68,12 +68,12 @@ jobs:
         with: { version: 10 }
       - uses: actions/setup-node@v4
         with: { node-version: 22, cache: pnpm }
-      - run: pnpm install --ignore-scripts --filter @curator/web --filter @curator/core --filter @curator/server --filter @curator/electron
+      - run: pnpm install --ignore-scripts --filter @turbomusic/web --filter @turbomusic/core --filter @turbomusic/server --filter @turbomusic/electron
       - name: Set the version from the tag
         shell: bash
         run: cd apps/electron && npm pkg set version="$(echo '${{ needs.release.outputs.tag }}' | sed 's/^v//')"
       - name: Build and publish the Windows server installer (its own update feed, server.yml)
-        run: pnpm --filter @curator/electron dist:server:publish
+        run: pnpm --filter @turbomusic/electron dist:server:publish
         env: { GH_TOKEN: '${{ secrets.GITHUB_TOKEN }}' }
 
   android:
@@ -89,8 +89,8 @@ jobs:
         with: { distribution: temurin, java-version: 17 }
       - uses: gradle/actions/setup-gradle@v4
         with: { gradle-version: '8.9' }
-      - run: pnpm install --ignore-scripts --filter @curator/web --filter @curator/core
-      - run: pnpm --filter @curator/web build
+      - run: pnpm install --ignore-scripts --filter @turbomusic/web --filter @turbomusic/core
+      - run: pnpm --filter @turbomusic/web build
       - name: Build the APK
         run: |
           TAG='${{ needs.release.outputs.tag }}'
@@ -110,8 +110,8 @@ jobs:
         with: { version: 10 }
       - uses: actions/setup-node@v4
         with: { node-version: 22, cache: pnpm }
-      - run: pnpm install --ignore-scripts --filter @curator/web --filter @curator/core --filter @curator/server --filter @curator/electron
-      - run: pnpm --filter @curator/web build
+      - run: pnpm install --ignore-scripts --filter @turbomusic/web --filter @turbomusic/core --filter @turbomusic/server --filter @turbomusic/electron
+      - run: pnpm --filter @turbomusic/web build
       - name: Bundle the headless server and the web client
         run: |
           node apps/electron/scripts/build.mjs
@@ -119,6 +119,8 @@ jobs:
           cp apps/electron/dist/headless.mjs bundle/
           cp -r apps/web/dist/. bundle/web/
           TAG='${{ needs.release.outputs.tag }}'
-          tar -czf "turbomusic-server-${TAG#v}-termux.tar.gz" -C bundle .
-          gh release upload "$TAG" "turbomusic-server-${TAG#v}-termux.tar.gz" --clobber
+          # one bundle, two names: the Termux module and the self-contained server install (scripts/install-server.sh and the app's "Update server") both read it
+          tar -czf "turbomusic-server-${TAG#v}-node.tar.gz" -C bundle .
+          cp "turbomusic-server-${TAG#v}-node.tar.gz" "turbomusic-server-${TAG#v}-termux.tar.gz"
+          gh release upload "$TAG" "turbomusic-server-${TAG#v}-node.tar.gz" "turbomusic-server-${TAG#v}-termux.tar.gz" --clobber
         env: { GH_TOKEN: '${{ secrets.GITHUB_TOKEN }}' }

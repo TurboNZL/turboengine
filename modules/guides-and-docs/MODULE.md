@@ -2,7 +2,7 @@
 
 `docs/guides` = user guides bundled into Settings > Guides; `docs/development` = developer notes; `PROJECT_BRIEF.md` and `CLAUDE.md` at the root.
 
-Recommended for every app. Reference files are in `files/` (the paths are the paths in the app); source: `TurboNZL/turbomusic` at `ea3f5ea`, where they run.
+Recommended for every app. Reference files are in `files/` (the paths are the paths in the app); source: `TurboNZL/turbomusic` at `62934e8`, where they run.
 
 ## Layout
 ```

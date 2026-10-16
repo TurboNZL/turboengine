@@ -1,7 +1,7 @@
 import { contextBridge, ipcRenderer } from 'electron';
 
 /** The wizard's only way to the main process. Every call is a named request; nothing else of Node or Electron is reachable from the page. */
-contextBridge.exposeInMainWorld('curatorSetup', {
+contextBridge.exposeInMainWorld('turbomusicSetup', {
   state: () => ipcRenderer.invoke('setup:state') as Promise<unknown>,
   chooseFolder: (title: string) => ipcRenderer.invoke('setup:choose-folder', title) as Promise<string | null>,
   freeSpace: (path: string) => ipcRenderer.invoke('setup:free-space', path) as Promise<number | null>,

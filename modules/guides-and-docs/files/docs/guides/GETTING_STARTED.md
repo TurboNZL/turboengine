@@ -23,7 +23,7 @@ Any computer that stays on can be the server: a **Windows PC** ([WINDOWS_SERVER.
 1. Plug the drive in. Find its name and mount it: `lsblk -f` shows it; if it already appears under `/media/...` or `/mnt/...` you can use that folder. (Making the mount permanent: [DEPLOY_PI.md](DEPLOY_PI.md) section 1.)
 2. On the Pi (a terminal, or `ssh` from your computer), run one command, with the folder on the drive where the library should live:
    ```
-   curl -fsSL https://raw.githubusercontent.com/TurboNZL/turbomusic/main/scripts/install-pi.sh | sudo bash -s -- --data-dir /mnt/music/curator
+   curl -fsSL https://raw.githubusercontent.com/TurboNZL/turbomusic/main/scripts/install-pi.sh | sudo bash -s -- --data-dir /mnt/music/turbomusic
    ```
    It installs everything it needs (Node, ffmpeg, yt-dlp, the app), starts the server, and prints the address and the token. It takes a few minutes. Run it again at any time to repair or update; add `--dry-run` first to see exactly what it would do.
 3. Open the printed address (for example `http://raspberrypi.local:47813`) in a browser. The first screen asks for the **token** the installer printed (it is also in `<your folder>/token`). Paste it, and you are in.
@@ -47,6 +47,6 @@ Check the server's health any time in Settings → Server → **Server health** 
 | YouTube import says yt-dlp or ffmpeg was not found | Install them on the **server** (the computer that runs it) or, for the desktop app, on the computer. Settings → Test connection shows what is found. |
 | Downloads fail with `HTTP Error 403` | yt-dlp is too old: `sudo yt-dlp -U` (the installer also updates it weekly). Then press *Download missing audio* again. |
 | "Sign in to confirm you're not a bot" | [YTDLP_COOKIES.md](YTDLP_COOKIES.md). |
-| The server will not start | On a Raspberry Pi or Linux server: `journalctl -u curator -n 50`, and [DEPLOY_PI.md](DEPLOY_PI.md) → Troubleshooting. |
+| The server will not start | On a Raspberry Pi or Linux server: `journalctl -u turbomusic -n 50`, and [DEPLOY_PI.md](DEPLOY_PI.md) → Troubleshooting. |
 
 All guides are also inside the app: **Settings → Guides**.

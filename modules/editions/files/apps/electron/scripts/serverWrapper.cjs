@@ -9,13 +9,13 @@ const SCRIPT = `#!/bin/sh
 # TurboMusic Server: runs the bundled server as plain Node. See --help.
 DIR="$(dirname "$(readlink -f "$0")")"
 export ELECTRON_RUN_AS_NODE=1
-export CURATOR_WEB_DIR="\${CURATOR_WEB_DIR:-$DIR/resources/web}"
-exec "$DIR/music-curator-server.bin" "$DIR/resources/app/dist/headless.mjs" "$@"
+export TURBOMUSIC_WEB_DIR="\${TURBOMUSIC_WEB_DIR:-$DIR/resources/web}"
+exec "$DIR/turbomusic-server.bin" "$DIR/resources/app/dist/headless.mjs" "$@"
 `;
 
 exports.default = async function afterPack(context) {
   if (context.electronPlatformName !== 'linux') return;
-  const exe = join(context.appOutDir, context.packager.executableName || 'music-curator-server');
+  const exe = join(context.appOutDir, context.packager.executableName || 'turbomusic-server');
   renameSync(exe, `${exe}.bin`);
   writeFileSync(exe, SCRIPT);
   chmodSync(exe, 0o755);

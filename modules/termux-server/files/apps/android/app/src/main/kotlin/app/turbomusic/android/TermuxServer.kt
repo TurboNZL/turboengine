@@ -1,4 +1,4 @@
-package app.musiccurator.android
+package app.turbomusic.android
 
 import android.app.Activity
 import android.app.PendingIntent
@@ -37,7 +37,7 @@ object TermuxScripts {
 }
 
 /**
- * The server module of the Android app (beta): the Curator server running in Termux, driven from the app so the user never types a command
+ * The server module of the Android app (beta): the TurboMusic server running in Termux, driven from the app so the user never types a command
  * except one pasted line, once, which lets other apps start commands in Termux (Termux's own safety setting, `allow-external-apps`, can only
  * be switched on from inside Termux). After that the app installs Node, ffmpeg and yt-dlp there, downloads the server bundle from the project's
  * releases (`*-termux.tar.gz`), starts and stops it, and removes it again.

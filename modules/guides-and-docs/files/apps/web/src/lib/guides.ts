@@ -10,7 +10,7 @@ export interface Guide { name: string; title: string; group: 'Start' | 'Apps' | 
 const TITLE: Record<string, [string, Guide['group']]> = {
   GETTING_STARTED: ['Getting started', 'Start'], README: ['About TurboMusic', 'Start'],
   DESKTOP_APP: ['Desktop app', 'Apps'], ANDROID_APP: ['Android app', 'Apps'], CONNECT: ['Play on a device', 'Apps'], DISCORD: ['Discord status', 'Apps'], SPOTIFY: ['Spotify', 'Apps'],
-  WINDOWS_SERVER: ['Server on Windows', 'Servers'], DEPLOY_PI: ['Server on Linux or a Raspberry Pi', 'Servers'], UPDATING: ['Updating a Linux server', 'Servers'], YTDLP_COOKIES: ['YouTube downloads and cookies', 'Servers'],
+  WINDOWS_SERVER: ['Server on Windows', 'Servers'], MIGRATE_SERVER: ['Move your server to the one-folder install', 'Servers'], DEPLOY_PI: ['Server on Linux or a Raspberry Pi', 'Servers'], UPDATING: ['Updating a Linux server', 'Servers'], YTDLP_COOKIES: ['YouTube downloads and cookies', 'Servers'],
 };
 const ORDER = Object.keys(TITLE);
 
