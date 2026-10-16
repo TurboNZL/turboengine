@@ -2,15 +2,24 @@
   "name": "device-pairing",
   "title": "Device pairing code",
   "optional": true,
-  "summary": "A code that carries server address, access token and access-service credentials to a new device (`CUR1-<base64url>`).",
+  "summary": "A code that carries server address, access token and Cloudflare Access service-token headers to a new device (`CUR1-<base64url>`): codec, the Pair-a-device panel, the link handler, the header helper, and an Android decoder.",
   "source": {
     "repo": "TurboNZL/turbomusic",
-    "ref": "ea3f5eaff467673231c721e33ffa773a93719ed2"
+    "ref": "743571861b2d4e5c0f05e652ac0e06944c62d5f2",
+    "also": "generalised with TurboNZL/turbokeep (the codec factory, the PairDevice component, the Android decoder)"
   },
   "requires": [
     "settings-shell"
   ],
   "files": [
-    "apps/web/src/lib/pairCode.ts"
+    "apps/web/src/lib/pairCode.ts",
+    "apps/web/src/lib/accessHeaders.ts",
+    "apps/web/src/lib/applyPairLink.ts",
+    "apps/web/src/components/PairDevice.tsx",
+    "apps/web/test/pairCode.test.ts"
+  ],
+  "examples": [
+    "apps/android/app/src/main/kotlin/app/example/android/PairCode.kt",
+    "apps/android/app/src/test/kotlin/app/example/android/PairCodeTest.kt"
   ]
 }
