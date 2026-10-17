@@ -2,6 +2,8 @@
 
 A code that carries server address, access token and the Cloudflare Access service token (the two `CF-Access-Client-*` headers) to a new device (`CUR1-<base64url>`), so a phone is set up with one paste instead of three typed fields.
 
+See [`docs/CLOUDFLARE.md`](../../docs/CLOUDFLARE.md) section 5 for the checklist that makes a code carry the service token (the missing id/secret is what sends a paired device to the Cloudflare login page).
+
 Optional. Reference files are in `files/` (the paths are the paths in the app). Source: `TurboNZL/turbomusic` at `7435718` (the codec, the panel, the `?pair=` handler); generalised and extended in `TurboNZL/turbokeep` (a codec per app, the panel as a component, the header helper, the Android decoder).
 
 **Requires:** `settings-shell`. Works best with `cloudflare-access` (what each client does with the two headers once it has them).

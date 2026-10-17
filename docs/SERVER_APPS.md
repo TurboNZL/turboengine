@@ -36,6 +36,7 @@ Files, from the `server-install-update` module: `scripts/install-pi.sh`, `script
 - `install-pi.sh [--data-dir PATH] [--port N] [--user NAME] [--branch B] [--dry-run] [--yes]` creates the service user, installs Node, clones the app into the user's home, builds the web client, writes the systemd unit (`Restart=on-failure`, the data folder, `<APP>_PORT`) and prints the address and token. **`--port` is how a user avoids a clash.** Put the data on the external drive, not the SD card.
 - `update.sh --live` (no sudo) pulls, installs and builds; the server then exits so systemd restarts it on the new code. The Update button is offered only to the owner, on a git checkout under systemd (or with `<APP>_UPDATE=1`).
 - Packaged option: `.deb` (creates the service user and unit) or an AppImage; updated by installing the newer file.
+- Tunnel and Access: full steps in [`CLOUDFLARE.md`](CLOUDFLARE.md).
 - Tunnel: `cloudflared` on the host, public hostname to `http://localhost:<app port>`.
 
 ## 4. Way B in detail: Docker (TurboKeep)

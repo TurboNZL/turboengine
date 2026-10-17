@@ -2,6 +2,8 @@
 
 A server behind Cloudflare Access wants two headers on every request; this makes web, desktop and Android send them, including for <audio>, <img> and event streams that cannot.
 
+**Start with [`docs/CLOUDFLARE.md`](../../docs/CLOUDFLARE.md)**: the Cloudflare-side setup (service token, Service Auth policy, CORS) and the per-client checklist. This file is only the client code.
+
 Optional. Reference files are in `files/` (the paths are the paths in the app); source: `TurboNZL/turbomusic` at `62934e8`.
 
 A server behind Cloudflare Access (typically through a Cloudflare tunnel) rejects any request without the service token's two headers, `CF-Access-Client-Id` and `CF-Access-Client-Secret`. Plain `fetch` can send them. `<audio>`, `<img>` and `EventSource` cannot, so each client has its own answer. **If an app runs its own server, this module is mandatory** (see `self-hosted-server`).

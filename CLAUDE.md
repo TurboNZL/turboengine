@@ -38,6 +38,9 @@ Every app with an Electron desktop build updates a Linux `.deb` the same way (do
 ## Mandatory sets
 An app that runs its own server takes `self-hosted-server`: `cloudflare-access` + `server-install-update` + `updaters` + `release-pipeline`. Every app with a desktop or Android build takes `updaters` and `release-pipeline`. A **web-only** app served by its own server takes `docker-self-host` + `release-pipeline` instead (see `self-hosted-server`).
 
+## Cloudflare
+`docs/CLOUDFLARE.md` is the full Cloudflare Tunnel + Access setup (service token, the **Service Auth** policy, CORS, what each client must send, a symptom table, curl checks). Read it before touching any app that talks to a server behind Access. Two rules apps keep breaking: the policy action must be Service Auth (Allow means the portal login), and **every pairing code and every code path that applies one must carry the service token id and secret**.
+
 ## Server apps and ports
 `docs/SERVER_APPS.md` is the standard for building and hosting a server app (native service the TurboMusic way, or Docker the TurboKeep way). `docs/PORTS.md` is the **port registry**: port numbers must be unique on a machine, never default to 8080 or another common port, take the next free number from 47800-47999 when creating a server app and add its row in the same commit, and make the port a setting (`<APP>_PORT`).
 

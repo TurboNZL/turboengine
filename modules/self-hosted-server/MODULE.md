@@ -6,7 +6,7 @@ Recommended for every app. Reference files are in `files/` (the paths are the pa
 
 **Requires:** `cloudflare-access`, `server-install-update`, `updaters`, `release-pipeline`.
 
-Read [`docs/SERVER_APPS.md`](../../docs/SERVER_APPS.md) (the two hosting ways and the contract) and [`docs/PORTS.md`](../../docs/PORTS.md) (every server needs its own port) first.
+Read [`docs/CLOUDFLARE.md`](../../docs/CLOUDFLARE.md) (tunnel, service token, Service Auth policy, what every client must send), [`docs/SERVER_APPS.md`](../../docs/SERVER_APPS.md) (the two hosting ways and the contract) and [`docs/PORTS.md`](../../docs/PORTS.md) (every server needs its own port) first.
 
 A bundle, not code. If an app runs **its own server** (a library, a project store, anything the apps talk to), these modules are not optional:
 
