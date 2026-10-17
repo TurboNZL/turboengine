@@ -2,7 +2,7 @@
 
 One framework-free file that lists the installed font families, so a font box can offer them and a document or caption that names a font can tell whether this device has it. Needed by TurboCut (caption and text fonts) and TurboDocs (the font picker); any app with a font box should use it instead of a typed list.
 
-Optional. Source: `TurboNZL/turbocut`, file `src/app/systemFonts.ts` (runs there, with `test/systemFonts.test.ts`). The file has no imports.
+Optional. Used by TurboCut (caption and text fonts) and TurboDocs (the font boxes of Docs, Sheets and Slides). Source: `TurboNZL/turbocut`, file `src/app/systemFonts.ts` (runs there, with `test/systemFonts.test.ts`). The file has no imports.
 
 ## What it does
 `detectSystemFonts()` returns `{ fonts: [{ family, styles[] }], source, note? }` and never throws.
@@ -32,3 +32,10 @@ Optional. Source: `TurboNZL/turbocut`, file `src/app/systemFonts.ts` (runs there
 
 ## Files
 - `src/app/systemFonts.ts` (the module), `test/systemFonts.test.ts` (vitest, no DOM needed: the browser calls are injected).
+
+## TurboDocs' font box (2026-10-17)
+TurboDocs took the file unchanged (`apps/web/src/lib/systemFonts.ts`, with the test) and built one font box on it, `components/FontBox.tsx`, used by three editors. What it does, if another app wants it:
+- The documents' usual fonts first (a fixed list with metric-compatible stand-ins: Calibri, Cambria, Arial, Times New Roman...), then "Installed on this computer" from `detectedFonts()`, filtered by a search box, 40 at a time with "Show more", each name drawn in its own font. Pressing Enter on a name that is in no list uses it anyway.
+- A font a document names but this device lacks (`fontInstalled` / the detected list says so) is shown with a ⚠ and a tooltip, because the editor draws a stand-in while the file keeps the real name.
+- In Electron it needs nothing: the window's origin (`http://127.0.0.1:<port>`) is a secure context, the call returned the installed faces with no prompt and no gesture (checked in Electron 44 under Xvfb: hundreds of families). In a plain browser the box offers "Find installed fonts" (the click is the gesture Chrome wants).
+- React: `useSyncExternalStore((f) => onFontsDetected(f), detectedFonts)` re-draws the box when the list arrives.
