@@ -1,0 +1,15 @@
+{
+  "name": "prebuilt-release",
+  "title": "Build on the pull request, publish the same files on merge",
+  "optional": true,
+  "summary": "A pull request builds every app as soon as it is opened; the push to main publishes those files instead of building again when the source tree and the next version still match. No pre-releases.",
+  "source": {
+    "repo": "TurboNZL/turbocut",
+    "ref": "claude/youthful-allen-coco9v"
+  },
+  "files": [
+    ".github/workflows/build.yml",
+    "scripts/ci/reuse-build.mjs",
+    "test/reuseBuild.test.ts"
+  ]
+}

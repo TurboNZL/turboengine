@@ -43,3 +43,6 @@ A `.deb` install cannot replace itself the way an AppImage or the Windows instal
 - `apps/android/app/src/main/kotlin/app/turbomusic/android/update/Releases.kt`
 - `apps/web/src/lib/native.ts`
 - `apps/web/src/components/AppSettings.tsx`
+
+## Capacitor apps (no Kotlin project)
+`files/apps/android-capacitor/ApkUpdaterPlugin.java` is the same updater as a Capacitor plugin (from TurboCut): the page finds the newest release asset, `download({url})` saves the `.apk` to the cache following GitHub's redirect, emitting `progress` events, and `install()` opens Android's installer through a `FileProvider` (or the "install unknown apps" page the first time, resolving `{needsPermission: true}`). Register it in `MainActivity` with `registerPlugin(ApkUpdaterPlugin.class)` before `super.onCreate`, add `REQUEST_INSTALL_PACKAGES` to the manifest, and keep a `fileprovider` entry with a `cache-path`. Open the GitHub release page in a browser only as a fallback. Not compiled in the sandbox: the first CI build is the check.
