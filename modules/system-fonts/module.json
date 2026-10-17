@@ -1,0 +1,14 @@
+{
+  "name": "system-fonts",
+  "title": "System fonts: list the fonts installed on this computer",
+  "optional": true,
+  "summary": "Finds every installed font family without asking for a file: Chromium's Local Font Access API (Electron, Chrome, Edge) with a well-known-names fallback for Firefox, Safari and the Android WebView. Framework-free, one file, never throws.",
+  "source": {
+    "repo": "TurboNZL/turbocut",
+    "ref": "claude/youthful-allen-coco9v"
+  },
+  "files": [
+    "src/app/systemFonts.ts",
+    "test/systemFonts.test.ts"
+  ]
+}
