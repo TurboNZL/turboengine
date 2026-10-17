@@ -14,6 +14,7 @@ The theme package is `themes/` of this repository (name `turbothemes`; the old s
 4. Device settings: `theme`, `ui`, `layout`, `glass`, `wallpaper*`, `themeUpdates`, `themesToken`. `'auto'` for theme/ui = match this device.
 
 ## Gotchas
+- **Light / Dark switch, not an All/Light/Dark filter** (TurboMusic's `ColourThemeSection`): Dark first; it shows only the chosen mode and flips the selected theme to its twin (`counterpartOf`, or `pair` in `listThemes()`). Themes in one mode only have no twin. Each app adds its own two palettes (dark + light, paired) in `themes/<app>/` of the engine: `themes/docs/AUTHORING.md`.
 - Utilities beat the themes' component rules (same layer): markup a style must control carries only the hook class.
 - **Do not preview a look by restyling the real page on hover** (`picker.preview` / the stock tiles variant do). Hover moves the mock page (`PreviewApp` in `AppearanceCard.tsx`), the page changes on click. Colour chips go in a multi-column grid (`TILE_GRID`), not one per line. Rules and the stock element's known issues: `themes/docs/PICKER.md`, section 2a.
 - Multi-line text boxes get a pill radius from some styles (turbothemes#1): keep the local `textarea.input` rule at the end of `index.css` until the engine fixes it.

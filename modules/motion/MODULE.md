@@ -23,6 +23,9 @@ Optional. Reference files are in `files/` (the paths are the paths in the app); 
 - `Divider` is invisible until hovered (green), unless told it is "lit" (grey): TurboKeep lights it when the open note is not under the tag the list shows. Drag with pointer capture; the arrow keys move it too. It reports the pointer's x and the column's box; the app turns that into a width.
 - `AutoText` uses CSS `field-sizing: content` where the browser has it and measures otherwise, restoring the scroll position it disturbs.
 
+## Without React (TurboCut)
+The class vocabulary is plain CSS, so a vanilla app uses `motion.css` alone: `TurboNZL/turbocut` has it as `src/app/motion.css` (plus a `tk-fade` for dialog backdrops) and applies the classes by hand: dialog and menu `tk-pop`, tab body and a different selection `tk-swap`, a folded section `tk-expand`. To replay an animation on an element that already has the class: `el.classList.remove(c); void el.offsetWidth; el.classList.add(c)`. Gotcha: a `ResizeObserver` callback that rebuilds DOM and so changes the observed element's own height logs "ResizeObserver loop completed with undelivered notifications"; compare the width and rebuild in `requestAnimationFrame`.
+
 ## Files
 - `apps/web/src/motion.css`, `apps/web/src/item-motion.css` (import both from `index.css`)
 - `apps/web/src/lib/arrivals.ts`, `lib/fresh.ts`, `lib/focus.ts`

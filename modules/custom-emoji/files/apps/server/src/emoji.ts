@@ -9,7 +9,14 @@ const MAX_EMOJI = 300, MAX_EMOJI_BYTES = 120_000;
 const isPng = (b: Uint8Array) => b.length > 8 && b[0] === 0x89 && b[1] === 0x50 && b[2] === 0x4e && b[3] === 0x47;
 const isWebp = (b: Uint8Array) => b.length > 12 && b[0] === 0x52 && b[1] === 0x49 && b[2] === 0x46 && b[3] === 0x46 && b[8] === 0x57 && b[9] === 0x45 && b[10] === 0x42 && b[11] === 0x50;
 
-export const listEmoji = (db: DB, userId: number): EmojiRow[] => all(db, 'select id, name from custom_emoji where user_id = ? order by created_at', userId).map((r) => ({ id: r.id as string, name: r.name as string }));
+/** An imported picture nothing uses (here: no tag shows it; change the `not exists` to whatever refers to a picture in your app) is deleted. One imported a moment ago is kept for a while: it is made before it is chosen. Without a user, every account's. */
+export const EMOJI_GRACE_MS = 10 * 60_000;
+export function pruneEmoji(db: DB, userId?: number, graceMs = EMOJI_GRACE_MS) {
+  const before = new Date(Date.now() - graceMs).toISOString();
+  run(db, `delete from custom_emoji where created_at < ? ${userId === undefined ? '' : 'and user_id = ?'} and not exists (select 1 from tags t where t.user_id = custom_emoji.user_id and t.emoji = ':' || custom_emoji.id || ':')`, ...(userId === undefined ? [before] : [before, userId]));
+}
+
+export const listEmoji = (db: DB, userId: number): EmojiRow[] => (pruneEmoji(db, userId), all(db, 'select id, name from custom_emoji where user_id = ? order by created_at', userId).map((r) => ({ id: r.id as string, name: r.name as string })));
 
 /** The page has already shrunk the picture to emoji size; this only checks it is a small PNG or WebP and keeps it. */
 export function addEmoji(db: DB, userId: number, name: unknown, data: Uint8Array, id?: string): EmojiRow {

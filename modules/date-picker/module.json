@@ -1,0 +1,15 @@
+{
+  "name": "date-picker",
+  "title": "Date picker: a calendar drawn by the UI style",
+  "optional": true,
+  "summary": "A date field that opens a calendar popover (a `bt-menu bt-popover` in a portal) instead of the operating system's native date picker, which no theme can touch. Keyboard-driven, week starts where the device says, Today and Clear.",
+  "source": {
+    "repo": "TurboNZL/turbokeep",
+    "ref": "claude/zealous-newton-w3w78y"
+  },
+  "files": [
+    "apps/web/src/components/DatePicker.tsx",
+    "apps/web/src/lib/presence.ts",
+    "apps/web/src/lib/cn.ts"
+  ]
+}
