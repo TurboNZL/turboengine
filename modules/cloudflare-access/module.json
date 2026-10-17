@@ -11,6 +11,8 @@
     "apps/web/src/lib/accessMedia.ts",
     "apps/web/src/lib/sse.ts",
     "apps/electron/src/accessHeaders.ts",
-    "apps/android/app/src/main/kotlin/app/turbomusic/android/AccessProxy.kt"
+    "apps/android/app/src/main/kotlin/app/turbomusic/android/AccessProxy.kt",
+    "apps/web/src/lib/rangePreview.ts",
+    "apps/web/src/lib/imageCache.ts"
   ]
 }

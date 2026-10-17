@@ -133,6 +133,7 @@ Checklist for an app's pairing code and screen:
 | `CORS ... multiple values '*, *'` | a proxy added `Access-Control-Allow-Origin` next to the server's | replace, 4.3 |
 | Everything worked, now everything is the login page | the service token expired, or its secret was rotated and the grace period ended | 2.2; re-pair |
 | Works on Wi-Fi at home (LAN address), fails outside | the device was given the LAN address | edit the address in the panel before making the code |
+| Android: covers slow on every screen, a seek/preview starts late or at the wrong place, though the speed test is fast | media served through the native proxy is neither cached nor seekable for Chromium | `modules/cloudflare-access/MODULE.md` "Media through the Android proxy" |
 | Songs only start after several seconds | media is fetched whole and turned into a blob because headers are not injected | 3 (rule 2) |
 | `curl` works with headers but the browser asks to log in | expected: a browser tab cannot send headers | 2.5 or a longer session duration |
 

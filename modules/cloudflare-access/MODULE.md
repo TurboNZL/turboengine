@@ -40,7 +40,15 @@ MediaLibrarySession.Builder(this, player, callback).setBitmapLoader(artLoader).b
 - The pairing code (`device-pairing`) carries address, token and the service token's id and secret; the Settings fields only save on "Save", so build the code from the typed values, not the saved ones.
 - Never run against real Cloudflare when written; the Android parts were not compiled in the session that wrote them.
 
+## Media through the Android proxy (learned 2026-10-17, TurboMusic)
+`AccessProxy` makes headers work, but what it hands the WebView is not a normal network answer: Chromium does **not cache it** (every cover was fetched again on each screen, ~1 s for a grid) and does **not get a sized, seekable stream** (a 15 s preview that seeks to the middle waited ~9 s and then played the end). The owner's speed test showed the tunnel itself was fast (first 64 KB of a song 111 ms), so this is the proxy path, not Cloudflare. The page-side answers, both only in the Android app:
+- `rangePreview.ts`: fetch the middle of an MP3 with two `Range` requests and play the blob from 0 (other formats keep the stream path).
+- `imageCache.ts`: keep images in Cache Storage by hash, show blob URLs.
+The real cure for anything long-running is the native player; use these two for short, seek-heavy things. Not run on a device when written; the mid-file MP3 slice was played in desktop Chromium.
+
 ## Files
+- `apps/web/src/lib/rangePreview.ts`
+- `apps/web/src/lib/imageCache.ts`
 - `apps/web/src/lib/accessMedia.ts`
 - `apps/web/src/lib/sse.ts`
 - `apps/electron/src/accessHeaders.ts`
