@@ -5,7 +5,7 @@
   "summary": "Import a picture (even a 4k one), the browser shrinks it to 96 px PNG, the server keeps it and serves it with a year-long cache header; a searchable emoji picker that focuses its search box and manages them.",
   "source": {
     "repo": "TurboNZL/turbokeep",
-    "ref": "claude/notes-ui-ux-improvements-lc6qs1"
+    "ref": "claude/zealous-newton-w3w78y"
   },
   "files": [
     "apps/server/src/emoji.ts",

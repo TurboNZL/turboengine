@@ -26,6 +26,9 @@ Copy `templates/*`, pick modules (`release-pipeline`, `updaters`, `appearance`, 
 3. Update `module.json` `source.ref`, add the gotcha to `MODULE.md`, bump nothing else.
 4. Commit with a message that names the app and the module.
 
+## Pull requests
+`.github/workflows/auto-pr.yml` opens a pull request for every branch pushed to this repo (not `main`), unless that branch already has an open one or has nothing main lacks, so merging is the only step left. It needs *Settings > Actions > General > Allow GitHub Actions to create and approve pull requests*. Apps get the same file from `release-pipeline`.
+
 ## Cloud-session note
 A session only sees repositories attached to it. When working on an app that is pinned to this repo, attach it read-only (`add_repo`) to copy from it.
 

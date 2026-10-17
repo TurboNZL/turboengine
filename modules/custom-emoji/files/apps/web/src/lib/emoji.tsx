@@ -14,7 +14,7 @@ export function Emoji({ value, className }: { value: string; className?: string 
 export const EMOJI_PX = 96;
 
 /**
- * Shrinks any picture (a 4k photo included) to an EMOJI_PX square PNG, with room kept round it so the whole picture shows, and returns it as base64.
+ * Shrinks any picture (a 4k photo included) to an EMOJI_PX square PNG and returns it as base64. The edges of the longer side are cropped away so the result is a full square (no empty bands).
  * The browser scales it while decoding when it can, so a big image never has to be held at full size.
  */
 export async function resizeToEmoji(file: Blob): Promise<string> {
@@ -26,12 +26,12 @@ export async function resizeToEmoji(file: Blob): Promise<string> {
   }
   const w = 'naturalWidth' in bmp ? bmp.naturalWidth : bmp.width, h = 'naturalHeight' in bmp ? bmp.naturalHeight : bmp.height;
   if (!w || !h) throw new Error('That picture has no size');
-  const scale = Math.min(EMOJI_PX / w, EMOJI_PX / h), dw = Math.max(1, Math.round(w * scale)), dh = Math.max(1, Math.round(h * scale));
+  const side = Math.min(w, h), sx = (w - side) / 2, sy = (h - side) / 2; // the centre square: the longer sides are cut off
   const canvas = document.createElement('canvas');
   canvas.width = canvas.height = EMOJI_PX;
   const ctx = canvas.getContext('2d')!;
   ctx.imageSmoothingQuality = 'high';
-  ctx.drawImage(bmp, (EMOJI_PX - dw) / 2, (EMOJI_PX - dh) / 2, dw, dh);
+  ctx.drawImage(bmp, sx, sy, side, side, 0, 0, EMOJI_PX, EMOJI_PX);
   if ('close' in bmp) bmp.close();
   const blob = await new Promise<Blob | null>((r) => canvas.toBlob(r, 'image/png'));
   if (!blob) throw new Error('Could not make the picture');

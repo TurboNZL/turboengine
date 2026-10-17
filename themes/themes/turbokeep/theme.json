@@ -1,0 +1,30 @@
+{
+  "id": "turbokeep",
+  "label": "TurboKeep",
+  "palettes": [
+    {
+      "id": "turbokeep",
+      "label": "TurboKeep Dark",
+      "mode": "dark",
+      "bg": [36, 22, 7],
+      "primary": [39, 100, 56],
+      "motif": "hills",
+      "group": "own",
+      "pair": "turbokeep-light",
+      "note": "TurboKeep's own look, dark: the logo's amber on warm near-black",
+      "order": 3
+    },
+    {
+      "id": "turbokeep-light",
+      "label": "TurboKeep Light",
+      "mode": "light",
+      "bg": [40, 45, 96],
+      "primary": [35, 95, 44],
+      "motif": "hills",
+      "group": "own",
+      "pair": "turbokeep",
+      "note": "TurboKeep's own look, light",
+      "order": 23
+    }
+  ]
+}
