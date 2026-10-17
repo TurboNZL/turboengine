@@ -10,6 +10,7 @@
       "primary": [217, 91, 55],
       "motif": "grid",
       "group": "colour",
+      "pair": "daylight",
       "order": 50
     }
   ]

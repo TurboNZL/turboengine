@@ -41,6 +41,8 @@ export interface PaletteSpec {
   /** Where the colours come from. Documentation only. */
   source?: string;
   group?: PaletteGroup;
+  /** The same look in the other mode (a dark palette names its light twin and the other way round). Pickers use it for their Light / Dark switch. */
+  pair?: ThemeId;
   order?: number;
 }
 

@@ -84,6 +84,12 @@ export async function buildThemes({ minify = true, dir: base = src } = {}) {
   }
   // cross references
   const ids = new Set(palettes.map((p) => p.id));
+  for (const p of palettes) if (p.pair) {
+    const twin = palettes.find((q) => q.id === p.pair);
+    if (!twin) errors.push(`palette "${p.id}" names the pair "${p.pair}", which does not exist`);
+    else if (twin.mode === p.mode) errors.push(`palette "${p.id}" and its pair "${p.pair}" are both ${p.mode}: a pair is one light and one dark`);
+    else if (twin.pair && twin.pair !== p.id) errors.push(`palette "${p.id}" pairs with "${p.pair}", which pairs with "${twin.pair}"`);
+  }
   for (const s of styles) for (const id of Object.values(s.matching ?? {})) if (!ids.has(id)) errors.push(`style "${s.id}" lists the palette "${id}", which does not exist`);
   const styleIds = new Set(styles.map((s) => s.id));
   if (!ids.has(config.defaults.theme)) errors.push(`themes/config.json: default palette "${config.defaults.theme}" does not exist`);

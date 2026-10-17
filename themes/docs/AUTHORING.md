@@ -34,6 +34,17 @@ In `themes/<id>/theme.json`, under `"palettes"`:
 - `group`: `colour`, `platform` (copies an OS palette), `inspired` (a game or app), `own` (see below).
 - `source` is a free-text note on where the colours come from.
 - `note` is shown next to the palette in pickers (used by `own` palettes).
+- `pair` names the same look in the other mode (see "Light and dark" below).
+
+### Light and dark
+
+A palette is either dark or light (`mode`). Two palettes can be **twins**: the dark one names the light one in `pair` and the other way round. Pickers use twins for one **Light / Dark switch** instead of listing every theme twice: the switch shows only palettes of the chosen mode (Dark is the default), and flipping it also flips the theme that is selected to its twin. A look that exists in one mode only simply has no twin and shows up under its own mode; that is fine.
+
+Twins come from two places, in this order: a palette's own `pair`, then the two palettes a style lists in `matching` (`{ "light": "win11", "dark": "win11-dark" }`). So the platform palettes are twins already without any extra field. The build refuses a `pair` that does not exist, is in the same mode, or points at a palette that pairs with something else. Pickers read it through `listThemes()` (`pair` on each entry) and `counterpartOf(id)`.
+
+### Every app can have its own two palettes
+
+Each app may add **two colour themes of its own, one light and one dark, as a pair** in the engine: a folder `themes/<app>/theme.json` with the two palettes, `"group": "own"` and each naming the other in `pair`. TurboMusic's is `themes/turbomusic/` (the logo's purple on near-black, and its light twin). Take the app's emblem colour as `primary`, keep `bg` close to neutral with a hint of the same hue, name them "<App> Dark" and "<App> Light", and give a short `note`. Two palettes is the limit on purpose: an app's own look should be a clear default pair, not a collection (everything else belongs to all apps). Not carried into the open pack (`themes-open`) unless `make.py` lists it.
 
 The own palettes (`default`, `classic`, `light`) set `"own": true` and take their variables from the folder's `palette.css` (`[data-theme='classic'] { --bg: ...; --radius: 8px; }`), which is how a palette can also change density and corner radius.
 
