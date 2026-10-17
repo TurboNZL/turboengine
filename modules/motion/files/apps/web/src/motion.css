@@ -1,7 +1,14 @@
 /* Imported by the app's index.css. See MODULE.md. */
 /* ---- one motion language for the whole app (also in the engine's `motion` module) ----
    arrive: something new slots into a list (a tag, an item that came in from the server); swap: a list was replaced (another tag, tab or page);
-   slide-in: a panel (the editor) comes in from the side; pop: a window opens; expand: an item opens up in place; arming: a click is waiting to see if it is a double click */
+   page: a page (tab) slides in from the side it sits on in the navigation (lib/pageDirection.ts); slide-in: a panel (the editor) comes in from the side; pop: a window opens; expand: an item opens up in place; arming: a click is waiting to see if it is a double click */
+/* `backwards`, never `both`/`forwards`: a finished animation that still fills keeps a containing block for `position: fixed` children (a floating bar on a phone stuck to the page after a tab switch) */
+.tk-page { animation: tk-fade 160ms ease-out backwards; }
+.tk-page-fwd { animation: tk-in-r 280ms cubic-bezier(0.22, 0.8, 0.3, 1) backwards; }
+.tk-page-back { animation: tk-in-l 280ms cubic-bezier(0.22, 0.8, 0.3, 1) backwards; }
+@keyframes tk-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes tk-in-r { from { opacity: 0; transform: translateX(36px); } to { opacity: 1; transform: none; } }
+@keyframes tk-in-l { from { opacity: 0; transform: translateX(-36px); } to { opacity: 1; transform: none; } }
 .tk-arrive { animation: tk-arrive-sm 380ms cubic-bezier(0.2, 0.85, 0.3, 1) backwards; }
 @keyframes tk-arrive-sm { from { opacity: 0; transform: translateX(-10px) scale(0.98); max-height: 0; } 40% { max-height: 4rem; } to { opacity: 1; transform: none; max-height: 8rem; } }
 .tk-swap { animation: tk-swap 240ms cubic-bezier(0.2, 0.85, 0.3, 1) backwards; }
@@ -17,5 +24,5 @@
 
 
 @media (prefers-reduced-motion: reduce) {
-  .tk-arrive, .tk-swap, .tk-slide-in, .tk-pop, .tk-expand, .tk-item[data-new], .tk-item[data-new] .tk-card { animation-duration: 1ms !important; }
+  .tk-page, .tk-page-fwd, .tk-page-back, .tk-arrive, .tk-swap, .tk-slide-in, .tk-pop, .tk-expand, .tk-item[data-new], .tk-item[data-new] .tk-card { animation-duration: 1ms !important; }
 }
