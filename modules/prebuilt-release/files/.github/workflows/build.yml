@@ -1,0 +1,247 @@
+name: Build
+
+# Builds the Android APK and the Windows and Linux apps. Versions are Year.Month.Update (2026.10.3): the update number
+# counts up within the month and is picked here. Every release is tagged v<version> and is a normal release: there are no
+# pre-releases. The apps check this list to offer updates.
+#
+# Two ways in:
+#  - a pull request builds everything as soon as it is opened or updated and keeps the files as workflow artifacts
+#    (nothing is published);
+#  - a push to main publishes a release. If the commit came from a merged pull request whose build is still there, has the
+#    identical source tree and was stamped with the version that is next now, those files are published as they are and
+#    nothing is built (scripts/ci/reuse-build.mjs). Anything else builds again.
+
+on:
+  pull_request:
+    paths-ignore: ['docs/**', '*.md']
+  push:
+    branches: [main]
+    paths-ignore: ['docs/**', '*.md']
+  workflow_dispatch:
+
+# Pull requests build one at a time per branch (a newer push replaces the older build). Releases are one at a time for the
+# whole repository, never cancelled mid-release: two runs would pick the same next version and the second would fail.
+concurrency:
+  group: build-${{ github.event_name == 'pull_request' && github.ref || 'release' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  version:
+    name: Pick version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.pick.outputs.version }}
+      code: ${{ steps.pick.outputs.code }}
+      reuse: ${{ steps.reuse.outputs.run }}
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - id: pick
+        run: |
+          Y=$(date -u +%Y)
+          M=$(date -u +%-m)
+          LAST=$(gh release list --repo "$GITHUB_REPOSITORY" --limit 200 --json tagName \
+            --jq "[.[].tagName | select(startswith(\"v$Y.$M.\")) | ltrimstr(\"v$Y.$M.\") | tonumber] | max // 0")
+          N=$((LAST + 1))
+          echo "version=$Y.$M.$N" >> "$GITHUB_OUTPUT"
+          # Android needs an integer that always grows: YY * 1,000,000 + month * 10,000 + update
+          echo "code=$(( (Y - 2000) * 1000000 + M * 10000 + N ))" >> "$GITHUB_OUTPUT"
+          echo "Version $Y.$M.$N"
+      - id: reuse
+        name: Can a pull request build be published as it is?
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = "push" ]; then
+            node scripts/ci/reuse-build.mjs --sha "$GITHUB_SHA" --version "${{ steps.pick.outputs.version }}" --workflow build.yml >> "$GITHUB_OUTPUT"
+          else
+            echo "run=" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Record what this build is
+        if: github.event_name == 'pull_request'
+        run: |
+          mkdir meta
+          printf '{"version":"%s","sha":"%s","tree":"%s"}' "${{ steps.pick.outputs.version }}" "$(git rev-parse HEAD)" "$(git rev-parse 'HEAD^{tree}')" > meta/meta.json
+      - uses: actions/upload-artifact@v4
+        if: github.event_name == 'pull_request'
+        with:
+          name: build-meta
+          path: meta/meta.json
+          retention-days: 30
+
+  android:
+    needs: version
+    if: needs.version.outputs.reuse == ''
+    name: Android APK
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: 'platform-tools platforms;android-36 build-tools;36.0.0'
+      - uses: gradle/actions/setup-gradle@v4
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Stamp the version
+        run: npm pkg set version=${{ needs.version.outputs.version }}
+      - name: Build the web app and copy it into the Android project
+        run: |
+          pnpm build
+          pnpm exec cap sync android
+      - name: Build APK
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon -PtcVersionCode=${{ needs.version.outputs.code }} -PtcVersionName=${{ needs.version.outputs.version }}
+      - run: cp android/app/build/outputs/apk/debug/app-debug.apk turbocut-${{ needs.version.outputs.version }}-android.apk
+      # Artifacts are only the hand-over to the release job; people download from the Release.
+      - uses: actions/upload-artifact@v4
+        with:
+          name: build-android
+          path: turbocut-${{ needs.version.outputs.version }}-android.apk
+          if-no-files-found: error
+          retention-days: ${{ github.event_name == 'pull_request' && 30 || 1 }}
+
+  desktop:
+    needs: version
+    if: needs.version.outputs.reuse == ''
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            name: Windows
+            id: windows
+            files: |
+              release/turbocut-*.exe
+              release/latest.yml
+          - os: ubuntu-latest
+            name: Linux
+            id: linux
+            files: |
+              release/turbocut-*-linux-*.AppImage
+              release/turbocut-*-linux-*.deb
+              release/latest-linux.yml
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      # No --ignore-scripts here: Electron downloads its binary in a post-install step (allowed in package.json).
+      - run: pnpm install --frozen-lockfile
+      - name: Stamp the version
+        run: npm pkg set version=${{ needs.version.outputs.version }}
+      - run: pnpm build
+      - run: pnpm exec electron-builder --publish never
+      - uses: actions/upload-artifact@v4
+        with:
+          name: build-${{ matrix.id }}
+          path: ${{ matrix.files }}
+          if-no-files-found: error
+          retention-days: ${{ github.event_name == 'pull_request' && 30 || 1 }}
+
+  web:
+    needs: version
+    if: needs.version.outputs.reuse == ''
+    name: Web bundle
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Stamp the version
+        run: npm pkg set version=${{ needs.version.outputs.version }}
+      - run: pnpm build
+      - name: Bundle the app with its server
+        run: |
+          mkdir -p bundle/turbocut-web
+          cp -r dist bundle/turbocut-web/app
+          cp scripts/serve.mjs bundle/turbocut-web/serve.mjs
+          printf 'TurboCut web bundle\n\nInstall Node.js 20 or newer, then in this folder run:\n\n  node serve.mjs --https\n\nOpen the address it prints on any device on your network and accept the certificate warning once.\nWithout --https only the computer running it can export video (browsers require a secure page).\n' > bundle/turbocut-web/README.txt
+          (cd bundle && zip -qr ../turbocut-${{ needs.version.outputs.version }}-web.zip turbocut-web)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: build-web
+          path: turbocut-${{ needs.version.outputs.version }}-web.zip
+          if-no-files-found: error
+          retention-days: ${{ github.event_name == 'pull_request' && 30 || 1 }}
+
+  release:
+    name: Publish release
+    needs: [version, android, desktop, web]
+    # Runs when the builds succeeded, or were skipped because a pull request's files are reused. Never for a pull request.
+    if: ${{ !cancelled() && !failure() && github.event_name != 'pull_request' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Get the files (built now)
+        if: needs.version.outputs.reuse == ''
+        uses: actions/download-artifact@v4
+        with:
+          pattern: build-*
+          merge-multiple: true
+          path: files
+      - name: Get the files (built by the pull request)
+        if: needs.version.outputs.reuse != ''
+        run: |
+          mkdir files
+          gh run download "${{ needs.version.outputs.reuse }}" --repo "$GITHUB_REPOSITORY" -D files-all
+          find files-all -type f ! -name meta.json -exec mv {} files/ \;
+      - name: List what will be published
+        run: ls -lh files
+      - name: Create the release
+        run: |
+          VERSION="${{ needs.version.outputs.version }}"
+          SHORT="${GITHUB_SHA::7}"
+          if [ -n "${{ needs.version.outputs.reuse }}" ]; then HOW="Published from the build the pull request already made (run ${{ needs.version.outputs.reuse }})."; else HOW="Built from this commit."; fi
+          gh release create "v$VERSION" files/* \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$GITHUB_SHA" \
+            --title "TurboCut $VERSION" \
+            --notes "Commit $SHORT. $HOW
+
+          - **Android:** the \`-android.apk\`. Open it on the phone and allow installing from that source once, or update from inside the app. Later versions install over earlier ones.
+          - **Windows:** \`-windows-setup.exe\` installs it (and then updates itself); \`-windows-portable.exe\` runs without installing. Windows warns about an unknown publisher because the build is not code-signed.
+          - **Linux:** \`.AppImage\` (\`chmod +x\` it, then run it; it updates itself) or the \`.deb\` (\`sudo apt install ./file.deb\`).
+          - **Your own web server:** unzip the \`-web.zip\` and run \`node serve.mjs --https\` (Node.js 20+). Open the address it prints on any device on your network.
+          - \`latest.yml\` and \`latest-linux.yml\` are what the desktop app reads to find updates."
+      - name: Keep only the five newest releases
+        run: |
+          gh release list --repo "$GITHUB_REPOSITORY" --limit 100 --json tagName,createdAt \
+            --jq 'map(select(.tagName | test("^(v[0-9]|build-)"))) | sort_by(.createdAt) | reverse | .[5:] | .[].tagName' \
+            | xargs -r -I{} gh release delete {} --repo "$GITHUB_REPOSITORY" --cleanup-tag --yes

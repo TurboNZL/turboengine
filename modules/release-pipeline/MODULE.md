@@ -10,6 +10,8 @@ Recommended for every app. Reference files are in `files/` (the paths are the pa
 - `release.yml`: a push to main (docs-only changes ignored; "Run workflow" releases on demand) works out the next tag `vYYYY.M.N` (year, month, a counter that restarts each month), creates the release (`gh release create --target $GITHUB_SHA`, which also creates the tag), then builds and attaches the assets in parallel jobs.
 - A merged PR cannot take new work: the next change goes on a fresh branch from main (the AI should restart its branch from main).
 
+- To skip the second build, add `prebuilt-release`: PRs build everything, the merge publishes those files when the tree and version still match, and branches never make pre-releases.
+
 ## Before the first release (see `templates/NEW_APP_CHECKLIST.md`)
 The repository needs a default `main` branch, GitHub Actions enabled, workflow permission **Read and write** with **Allow GitHub Actions to create and approve pull requests**, and (if Claude is limited to selected repositories) the repo added to the Claude connection. Remind the user of each; the pipeline fails silently or with a 403 without them.
 
