@@ -9,7 +9,7 @@ Optional. Reference files are in `files/` (the paths are the paths in the app); 
 | Class | Use it when |
 |---|---|
 | `.tk-arrive` | something NEW slots into a list: a tag, an item that came in from the server after the page drew from its cached copy, a new item you just made |
-| `.tk-page` + `-fwd` / `-back` | the user switched tab/page in the main navigation: the new page slides in from the side it sits on (right if it is further along in the nav, left if before). `const dir = usePageDirection(activeIndex)`, then `<div key={section} className={cn('tk-page', dir)}>`. Key by the SECTION (`/albums`), not the whole path, so opening a detail inside a section does not slide. |
+| `.tk-page` + `-fwd` / `-back` | the user switched tab/page in the main navigation: the new page slides in from the side it sits on (right if it is further along in the nav, left if before). `const dir = usePageDirection(activeIndex)`, then `<div key={section} className={cn('tk-page', dir)}>`. Key by the SECTION (`/albums`), or key by the path and pass it as `usePageDirection(i, pathname)`: either way a detail opened inside a section does not slide. |
 | `.tk-swap` | a list was replaced by another (another tag, tab, page): wrap the list in `<div key={filterKey} className="tk-swap">`, but not for the first list drawn |
 | `.tk-slide-in` | a panel comes in from the side (the editor beside the list): `key` it by the thing shown |
 | `.tk-pop` | a window opens (put it on the `.bt-window` of the dialog) |
