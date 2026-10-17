@@ -119,3 +119,35 @@ describe('a theme author\'s mistakes are caught by the build', () => {
     expect(msg).toMatch(/missing\.png/);
   });
 });
+
+describe('light / dark pairs', async () => {
+  const { buildPairs } = await import('../engine/src/catalog.ts');
+  const pairs = buildPairs(catalog.palettes, catalog.styles);
+  const mode = new Map(catalog.palettes.map((p) => [p.id, p.mode]));
+
+  it('are symmetric and always one light with one dark', () => {
+    for (const [a, b] of pairs) { expect(pairs.get(b), `${a} <-> ${b}`).toBe(a); expect(mode.get(a)).not.toBe(mode.get(b)); }
+  });
+  it('take an explicit pair first, then the palettes a style lists as matching', () => {
+    expect(pairs.get('turbomusic')).toBe('turbomusic-light');
+    expect(pairs.get('dark')).toBe('daylight');
+    expect(pairs.get('default')).toBe('light'); // from the Standard v2 style's matching
+    expect(pairs.get('breeze')).toBe('breeze-dark');
+  });
+  it('leaves a look that exists in one mode only without a twin', () => {
+    expect(pairs.has('nord')).toBe(false);
+    expect(pairs.has('classic')).toBe(false);
+  });
+  it('is refused by the build when a pair is missing or in the same mode', async () => {
+    const edit = (to: string) => (d: string) => {
+      const f = path.join(d, 'themes/turbomusic/theme.json');
+      const j = JSON.parse(fs.readFileSync(f, 'utf8'));
+      j.palettes[0].pair = to;
+      fs.writeFileSync(f, JSON.stringify(j));
+    };
+    const missing = await (async () => { const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'turbothemes-')); fs.cpSync(path.join(root, 'themes'), path.join(dir, 'themes'), { recursive: true }); edit('nope')(dir); try { await buildThemes({ minify: false, dir }); return null; } catch (e) { return (e as Error).message; } finally { fs.rmSync(dir, { recursive: true, force: true }); } })();
+    expect(missing).toMatch(/does not exist/);
+    const same = await (async () => { const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'turbothemes-')); fs.cpSync(path.join(root, 'themes'), path.join(dir, 'themes'), { recursive: true }); edit('dracula')(dir); try { await buildThemes({ minify: false, dir }); return null; } catch (e) { return (e as Error).message; } finally { fs.rmSync(dir, { recursive: true, force: true }); } })();
+    expect(same).toMatch(/both dark|pairs with/);
+  });
+});

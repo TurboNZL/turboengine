@@ -2,7 +2,7 @@ import { API_VERSION, type Catalog, type Choice, type Palette, type PaletteSpec,
 import { buildPalette } from './palette.ts';
 
 /** The catalog the engine is working with: the built-in snapshot at first, a downloaded one after an update. */
-interface State { catalog: Catalog; palettes: Palette[]; byId: Map<string, Palette>; styles: Map<string, StyleDef> }
+interface State { catalog: Catalog; palettes: Palette[]; byId: Map<string, Palette>; styles: Map<string, StyleDef>; pairs: Map<ThemeId, ThemeId> }
 
 let state: State | null = null;
 let revision = 0;
@@ -38,9 +38,25 @@ export function validateCatalog(c: unknown): string[] {
   return bad;
 }
 
+/**
+ * Which palette is the light/dark twin of which. A palette's own `pair` wins; otherwise the two palettes a style lists as "matching"
+ * (one light, one dark, different) are twins. Always symmetric, always one light and one dark, and a palette has at most one twin.
+ */
+export function buildPairs(palettes: PaletteSpec[], styles: StyleDef[]): Map<ThemeId, ThemeId> {
+  const mode = new Map(palettes.map((p) => [p.id, p.mode]));
+  const out = new Map<ThemeId, ThemeId>();
+  const join = (a: ThemeId, b: ThemeId) => {
+    if (a === b || out.has(a) || out.has(b) || !mode.has(a) || !mode.has(b) || mode.get(a) === mode.get(b)) return;
+    out.set(a, b); out.set(b, a);
+  };
+  for (const p of palettes) if (p.pair) join(p.id, p.pair);
+  for (const s of sorted(styles)) if (s.matching?.dark) join(s.matching.light, s.matching.dark);
+  return out;
+}
+
 export function setCatalog(catalog: Catalog) {
   const palettes = sorted(catalog.palettes).map((p: PaletteSpec) => buildPalette(p));
-  state = { catalog, palettes, byId: new Map(palettes.map((p) => [p.id, p])), styles: new Map(catalog.styles.map((s) => [s.id, s])) };
+  state = { catalog, palettes, byId: new Map(palettes.map((p) => [p.id, p])), styles: new Map(catalog.styles.map((s) => [s.id, s])), pairs: buildPairs(catalog.palettes, catalog.styles) };
   revision++;
   listeners.forEach((fn) => fn());
 }
@@ -59,11 +75,11 @@ export const listPalettes = (): Palette[] => need().palettes;
 export const getPalette = (id: ThemeId): Palette | undefined => need().byId.get(id);
 
 /** Every choice for the colour picker, special entries first: [{id:"auto"}, {id:"system"}, ...palettes]. */
-export function listThemes(): { id: string; label: string; dark: boolean | null; note?: string; group?: string }[] {
+export function listThemes(): { id: string; label: string; dark: boolean | null; note?: string; group?: string; pair?: ThemeId }[] {
   const s = need();
   return [
     ...s.catalog.config.choices.theme.map((c: Choice) => ({ id: c.id, label: c.label, dark: null, note: c.note })),
-    ...s.palettes.map((p) => ({ id: p.id, label: p.label, dark: p.dark, note: p.note, group: p.group })),
+    ...s.palettes.map((p) => ({ id: p.id, label: p.label, dark: p.dark, note: p.note, group: p.group, pair: s.pairs.get(p.id) })),
   ];
 }
 
@@ -72,6 +88,9 @@ export function listStyles(): (StyleDef | (Choice & { matching?: undefined }))[]
   const s = need();
   return [...s.catalog.config.choices.ui.map((c) => ({ id: c.id, label: c.label, description: c.description ?? '', font: c.font ?? 'system-ui' })), ...sorted(s.catalog.styles)];
 }
+
+/** The light twin of a dark palette, the dark twin of a light one; undefined when it has none (some looks exist in one mode only). */
+export const counterpartOf = (id: ThemeId): ThemeId | undefined => need().pairs.get(id);
 
 export const getStyle = (id: string): StyleDef | undefined => need().styles.get(id);
 

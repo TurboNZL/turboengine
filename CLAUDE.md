@@ -32,6 +32,8 @@ A session only sees repositories attached to it. When working on an app that is 
 ## Themes (`themes/`)
 The theme engine and all themes live here (package `turbothemes`; the old repository is retired). Read `themes/CLAUDE.md` before touching them. Rules that differ from the rest of the repo: this is a real **package** (apps install it, they do not copy it), `themes/dist` is committed by CI (`.github/workflows/themes-build.yml`) and downloaded by running apps, and the engine half almost never changes while themes do. Themes are the default for every app; opting out is a documented option (`modules/appearance`), never the template's default.
 
+**Each app may add one light and one dark palette of its own** (a pair, `themes/<app>/`, see `themes/docs/AUTHORING.md` "Every app can have its own two palettes"). Pickers show a Light / Dark switch rather than listing every theme twice; a theme with only one mode is fine.
+
 ## Desktop updates
 Every app with an Electron desktop build updates a Linux `.deb` the same way (download with electron-updater, install through pkexec, then a sudo terminal, then `systemd-run --user` under `no_new_privs`, success only when `dpkg-query` shows the new version). The rules and both implementations (TypeScript class, vanilla CommonJS in `modules/updaters/variants/vanilla-electron/`) are in `modules/updaters/MODULE.md`.
 

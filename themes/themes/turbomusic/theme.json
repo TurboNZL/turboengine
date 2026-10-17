@@ -1,0 +1,30 @@
+{
+  "id": "turbomusic",
+  "label": "TurboMusic",
+  "palettes": [
+    {
+      "id": "turbomusic",
+      "label": "TurboMusic Dark",
+      "mode": "dark",
+      "bg": [270, 20, 7],
+      "primary": [271, 91, 65],
+      "motif": "waves",
+      "group": "own",
+      "pair": "turbomusic-light",
+      "note": "TurboMusic's own look, dark: the logo's purple note on near-black",
+      "order": 2
+    },
+    {
+      "id": "turbomusic-light",
+      "label": "TurboMusic Light",
+      "mode": "light",
+      "bg": [270, 30, 97],
+      "primary": [271, 81, 53],
+      "motif": "waves",
+      "group": "own",
+      "pair": "turbomusic",
+      "note": "TurboMusic's own look, light",
+      "order": 22
+    }
+  ]
+}
