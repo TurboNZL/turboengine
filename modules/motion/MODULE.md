@@ -30,3 +30,6 @@ The class vocabulary is plain CSS, so a vanilla app uses `motion.css` alone: `Tu
 - `apps/web/src/motion.css`, `apps/web/src/item-motion.css` (import both from `index.css`)
 - `apps/web/src/lib/arrivals.ts`, `lib/fresh.ts`, `lib/focus.ts`
 - `apps/web/src/components/AutoText.tsx`, `components/Divider.tsx`
+
+## TurboDocs' use (2026-10-17)
+TurboDocs (Electron + React) took `motion.css` and `lib/arrivals.ts` unchanged and applied the rule by what happens: a page change keys `<main>` by the route and gets `tk-swap`; every dialog, menu, submenu and popover gets `tk-pop` (dialogs are portalled, so the "fill-forward" gotcha above does not bite); the document-tabs panel is `tk-slide-in`; notices that appear (restore backup, warnings) are `tk-expand`; recent files and new slides use `useArrivals` + `tk-arrive`; switching slides is `tk-swap` keyed by the slide. One class it had to add itself: `tk-fade` for a dialog's backdrop and for the slide show (`index.css`, two lines). An app-level "Animations" switch sets `data-motion="off"` on `<html>` and one CSS rule removes every `tk-*` animation; `prefers-reduced-motion` already does the same. Not used there: `item-motion.css`, `Divider`, `AutoText`, `focus.ts`, `fresh.ts`.

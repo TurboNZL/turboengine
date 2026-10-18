@@ -37,7 +37,7 @@ describe('the headless picker', () => {
     const groups = picker.themes();
     expect(groups.map((g) => g.id)).toEqual(['device', 'own', 'colour', 'inspired', 'platform']);
     expect(groups[0].items.map((i) => i.id)).toEqual(['auto', 'system']);
-    expect(groups[1].items.map((i) => i.id)).toEqual(['default', 'turbomusic', 'turbokeep', 'classic', 'light', 'turbomusic-light', 'turbokeep-light']);
+    expect(groups[1].items.map((i) => i.id)).toEqual(['default', 'turbomusic', 'turbokeep', 'turbodocs', 'classic', 'light', 'turbomusic-light', 'turbokeep-light', 'turbodocs-light']);
     const nord = groups.flatMap((g) => g.items).find((i) => i.id === 'nord')!;
     expect(nord.colors?.bg).toMatch(/^hsl\(/);
     expect(picker.themes('light').flatMap((g) => g.items).every((i) => i.dark !== true)).toBe(true);
