@@ -13,6 +13,7 @@
     "apps/web/src/lib/arrivals.ts",
     "apps/web/src/lib/fresh.ts",
     "apps/web/src/lib/focus.ts",
+    "apps/web/src/lib/pageDirection.ts",
     "apps/web/src/components/AutoText.tsx",
     "apps/web/src/components/Divider.tsx"
   ]
