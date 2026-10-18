@@ -1,0 +1,30 @@
+{
+  "id": "turbopantry",
+  "label": "TurboPantry",
+  "palettes": [
+    {
+      "id": "turbopantry",
+      "label": "TurboPantry Dark",
+      "mode": "dark",
+      "bg": [165, 24, 7],
+      "primary": [155, 70, 55],
+      "motif": "hills",
+      "group": "own",
+      "pair": "turbopantry-light",
+      "note": "TurboPantry's own look, dark: the jar's mint green on deep green-black",
+      "order": 4
+    },
+    {
+      "id": "turbopantry-light",
+      "label": "TurboPantry Light",
+      "mode": "light",
+      "bg": [150, 35, 96],
+      "primary": [158, 72, 32],
+      "motif": "hills",
+      "group": "own",
+      "pair": "turbopantry",
+      "note": "TurboPantry's own look, light",
+      "order": 24
+    }
+  ]
+}
