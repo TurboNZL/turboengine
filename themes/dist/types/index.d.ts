@@ -70,7 +70,7 @@ export declare const getEngine: () => TurboThemes;
 export { applyAppearance, watchSystemTheme } from './apply.ts';
 export { githubSource, urlSource, type Source, type GithubSourceOptions } from './source.ts';
 export { checkForUpdates, type UpdateResult, type UpdateStatus } from './updater.ts';
-export { getRevision, subscribe, getCatalog, getPalette, getStyle, listPalettes, listStyles, listThemes, isTheme, isUiStyle } from './catalog.ts';
+export { getRevision, subscribe, getCatalog, getPalette, getStyle, listPalettes, listStyles, listThemes, counterpartOf, isTheme, isUiStyle } from './catalog.ts';
 export { resolveTheme, themeStyle, applyTheme } from './theme.ts';
 export { detectLook, deviceLook, effectiveTheme, effectiveUi, setHostInfo } from './device.ts';
 export { themeWallpaper, applyWallpaper, getCustomImage, saveCustomWallpaper, clearCustomWallpaper } from './wallpaper.ts';

@@ -1,0 +1,30 @@
+{
+  "id": "turbodocs",
+  "label": "TurboDocs",
+  "palettes": [
+    {
+      "id": "turbodocs",
+      "label": "TurboDocs Dark",
+      "mode": "dark",
+      "bg": [180, 18, 8],
+      "primary": [170, 72, 46],
+      "motif": "grid",
+      "group": "own",
+      "pair": "turbodocs-light",
+      "note": "TurboDocs' own look, dark: the logo's teal on a near-black with a hint of the same hue",
+      "order": 4
+    },
+    {
+      "id": "turbodocs-light",
+      "label": "TurboDocs Light",
+      "mode": "light",
+      "bg": [170, 30, 96],
+      "primary": [173, 80, 28],
+      "motif": "grid",
+      "group": "own",
+      "pair": "turbodocs",
+      "note": "TurboDocs' own look, light: a deeper teal on paper white, dark enough for text and buttons",
+      "order": 24
+    }
+  ]
+}

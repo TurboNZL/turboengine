@@ -18,7 +18,8 @@
 | 47900 | TurboPantry server | `TURBOPANTRY_PORT` (installer `--port`) | |
 | 47901 | TurboKeep | `TURBOKEEP_PORT` (compose `.env`, or the same variable without Docker) | 8080 inside its container only. |
 | 47902 | TurboCut web server | `--port` of `scripts/serve.mjs` | **Reserved.** Today `serve.mjs` still defaults to 8080: move the default here when convenient. |
-| 47903 to 47999 | next apps | | Take the next one, add the row. |
+| 47903 | TurboCut device sharing (desktop app) | `TURBOCUT_SHARE_PORT` (both) | **TCP** (the transfer listener) and **UDP** (broadcast to find other TurboCut apps), only while sharing is on. Not a server app: nothing to install. See `modules/device-share`. |
+| 47904 to 47999 | next apps | | Take the next one, add the row. |
 
 Tunnels and reverse proxies use these numbers in their config, so a change of port is a change in three places (the app's setting, the tunnel's service URL, any firewall rule): say so in the app's tunnel guide.
 

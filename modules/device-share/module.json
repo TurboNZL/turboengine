@@ -1,0 +1,15 @@
+{
+  "name": "device-share",
+  "title": "Device share: find other copies of an app on the network and send a project",
+  "optional": true,
+  "summary": "UDP broadcast discovery and HTTP transfer between desktop apps on one network, with an Accept for every transfer. Local addresses only, nothing stored before Accept, size cap per transfer, safe file names. Electron main-process module plus the page side.",
+  "source": {
+    "repo": "TurboNZL/turbocut",
+    "ref": "3a95e69"
+  },
+  "files": [
+    "electron/share.cjs",
+    "src/app/share.ts",
+    "test/share.test.ts"
+  ]
+}
