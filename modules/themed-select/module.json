@@ -1,0 +1,13 @@
+{
+  "name": "themed-select",
+  "title": "Themed select: a drop-down drawn by the UI style (vanilla)",
+  "optional": true,
+  "summary": "Upgrades every `select.input` in place into a button and a `bt-menu` list (keyboard, search above 12 options, check on the chosen row). The native select stays, hidden, as the source of truth, so existing code keeps working. The vanilla twin of TurboKeep's `Select.tsx`.",
+  "source": {
+    "repo": "TurboNZL/turbocut",
+    "ref": "3a95e69"
+  },
+  "files": [
+    "src/app/themedSelect.ts"
+  ]
+}

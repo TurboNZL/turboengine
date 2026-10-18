@@ -1,0 +1,14 @@
+{
+  "name": "recent-projects",
+  "title": "Recent projects: a list of what you worked on, kept on the device",
+  "optional": true,
+  "summary": "A copy of the edit (never the media) per project name in IndexedDB, kept on save, open and a few seconds after edits; newest first, at most 12; `ago()` for the list.",
+  "source": {
+    "repo": "TurboNZL/turbocut",
+    "ref": "3a95e69"
+  },
+  "files": [
+    "src/app/recent.ts",
+    "test/recent.test.ts"
+  ]
+}

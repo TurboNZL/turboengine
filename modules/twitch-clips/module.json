@@ -1,0 +1,16 @@
+{
+  "name": "twitch-clips",
+  "title": "Twitch clips: paste a link, get the landscape MP4",
+  "optional": true,
+  "summary": "Resolve a Twitch clip link to its best landscape rendition (persisted query on gql.twitch.tv, yt-dlp's client id and hash) and download it with progress. A page version and a main-process twin, plus the dialog.",
+  "source": {
+    "repo": "TurboNZL/turbocut",
+    "ref": "3a95e69"
+  },
+  "files": [
+    "src/twitch/clip.ts",
+    "electron/twitch.cjs",
+    "src/app/twitchDialog.ts",
+    "test/twitch.test.ts"
+  ]
+}
