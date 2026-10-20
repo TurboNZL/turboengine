@@ -134,6 +134,8 @@ The clean fix is a `.bt-tabs` / `.bt-pagetab` hook in `base.css` plus a variable
 
 ### 2.4 Menus, drop-downs, popovers
 
+**Never ship a native `<select>`.** The operating system draws its list, so no UI style can restyle it (Liquid Glass showed a plain grey list, and the engine's own picker made this mistake until 2026-10-20). Give the field `class="input"` and call `enhanceSelects()` once (it is exported by the engine; the picker does it for you): every `select.input`, now and later, is hidden behind a button that opens a `.bt-menu` list the look draws, with keyboard, a search box above 12 rows, a check on the chosen row and `<optgroup>` labels as headings. The `<select>` stays in the page as the source of truth, so `.value`, `change` listeners and rebuilt options keep working. React apps use TurboKeep's `Select.tsx` (same behaviour); `examples/verify-looks.mjs` fails on any visible native select.
+
 Anything that floats goes **in a portal at the end of `<body>`**, wears `bt-menu`, items have `role="menuitem"` (or `role="option"`), and the open animation comes from `var(--menu-anim)`. Position it with `fixed`, and measure it with `offsetWidth`/`offsetHeight`: the opening animation scales the box, so `getBoundingClientRect` reports it too small and the menu is clamped wrongly (TurboMusic learned this the hard way). Native `<select>` is acceptable for simple forms (the `.input` class styles it); TurboMusic replaced it with a themed `Select.tsx` where the list itself had to look like the style.
 
 To animate **out**, keep the element mounted for the style's exit time and set `data-leaving`. TurboMusic's `usePresence` (`lib/presence.ts`) reads `--pop-ms`/`--player-ms` from `<html>` with `getComputedStyle`. Without it menus still work; they just vanish instantly in the styles that animate them.
@@ -194,7 +196,8 @@ A good minimum set of looks to look at by eye: `default` (the baseline), `macos`
 6. Icons are SVG in `currentColor`.
 7. A picker (or the tag) is reachable from Settings, plus "Check for newer themes".
 8. `examples/verify-looks.mjs` passes and the screenshots were read at 1440 and 390 px.
-9. Nothing in the app sets `data-theme`, `data-ui`, `data-mode`, `data-glass` or `data-wallpaper`: those are the engine's.
+9. No native `<select>`: every drop-down is a themed one (`enhanceSelects()`, or `Select.tsx`). `verify-looks` fails on a visible native select.
+10. Nothing in the app sets `data-theme`, `data-ui`, `data-mode`, `data-glass` or `data-wallpaper`: those are the engine's.
 
 ## 7. Where the reference code is
 

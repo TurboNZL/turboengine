@@ -215,3 +215,23 @@ input[type='checkbox']:disabled, input[type='radio']:disabled { opacity: 0.45; c
 @keyframes bt-none { from { opacity: 1; } to { opacity: 1; } }
 @keyframes bt-sheet { from { opacity: 0; transform: translateY(-22px) scale(0.985); } to { opacity: 1; transform: none; } }
 @keyframes bt-ripple { to { transform: scale(1); opacity: 0; } }
+
+/* ---- themed drop-downs (engine/src/select.ts): `enhanceSelects()` swaps every `select.input` for a button and a `.bt-menu` list. Never ship a native <select>:
+   the operating system draws its list and no look can restyle it. The native select stays, visually hidden (not display:none), as the source of truth. */
+select.ts-native { position: absolute !important; width: 1px; height: 1px; opacity: 0; pointer-events: none; overflow: hidden; clip-path: inset(50%); }
+.themed-select { color: hsl(var(--fg)); font-weight: 400; display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; text-align: left; width: 100%; cursor: pointer; }
+.themed-select .ts-label { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.themed-select .ico { flex: none; color: hsl(var(--muted)); transition: transform 140ms ease; }
+.themed-select[aria-expanded='true'] .ico { transform: rotate(180deg); }
+.themed-select.sm { width: auto; }
+.themed-select-menu { position: fixed; z-index: 70; display: flex; flex-direction: column; overflow: hidden; padding: 4px; outline: none; color: hsl(var(--fg)); }
+.themed-select-menu.ts-in-picker { z-index: 2147483001; }
+.ts-searchbox { padding: 2px 2px 6px; }
+.ts-list { overflow-y: auto; min-height: 0; flex: 1; }
+.ts-option { display: flex; align-items: center; gap: 0.5rem; width: 100%; padding: 0.4rem 0.7rem; border: 0; border-radius: calc(var(--radius, 6px) * 0.7); background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.ts-option .ts-text { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ts-option .ico { flex: none; color: hsl(var(--accent)); }
+.ts-option[aria-selected='true'] { font-weight: 600; }
+.ts-option:disabled { opacity: 0.4; cursor: not-allowed; }
+.ts-heading { padding: 0.5rem 0.7rem 0.2rem; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: hsl(var(--muted)); }
+.ts-none { padding: 0.5rem 0.7rem; }

@@ -108,3 +108,6 @@ Until these are fixed in `engine/src/picker-element.ts`, prefer the drop-down va
 ```ts
 themes.onAppearance((a) => saveSettings({ theme: a.theme, ui: a.ui, glass: a.glass, wallpaper: a.wallpaper }));
 ```
+
+## 5. The drop-downs are themed, never native (2026-10-20)
+`<turbo-themes-picker>` used to build plain `<select class="input">` elements, so choosing a colour or UI style opened the operating system's list, which no look can restyle (it looked wrong in Liquid Glass, and every site that used the tag inherited it). It now calls `enhanceSelects()` (`engine/src/select.ts`) on itself after each render: the select stays, hidden, as the source of truth, and a button opens a `.bt-menu` list with the palette groups as headings. The list lives on `<body>`, outside the element, so the element's click-away handler ignores clicks in `.themed-select-menu.ts-in-picker` (without that, choosing a row closed the floating panel). If you draw your own picker on the headless controller, use `enhanceSelects()` for any drop-down too.

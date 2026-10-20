@@ -33,6 +33,7 @@ With Tailwind, `turbothemes/tailwind` turns these into `bg-surface`, `text-muted
 | `.bt-range` (`.bt-range-v`, `.bt-hit`) | sliders (`--p: 40%` is the filled part), the box a slider can be grabbed in |
 | `.bt-window` `.bt-titlebar` `.bt-close` `.bt-body` `.bt-footer` `.bt-backdrop` | a dialog |
 | `.bt-menu` + `role="menuitem"` / `role="option"` | pop-up menus and drop-downs |
+| `select.input` + `enhanceSelects()` | a drop-down: the select is hidden behind a button and a `.bt-menu` list (`.themed-select`, `.ts-*`). **Never leave a native `<select>` visible**: the OS draws its list and no look can restyle it |
 | `.bt-side` `.bt-top` `.bt-player` `.bt-tabbar` | the side bar, top bar, player bar, phone tab bar |
 | `.bt-nav` `.bt-tab` with `aria-current="page"` | navigation entries |
 | `.bt-row` `.bt-row-current` | list rows |

@@ -1,6 +1,7 @@
 import { getEngine } from './index.ts';
 import type { Picker } from './picker.ts';
 import type { Appearance } from './types.ts';
+import { enhanceSelects } from './select.ts';
 
 /**
  * <turbo-themes-picker>: a ready-made settings control. One tag, no framework, wears the look it is choosing (it uses the hook classes).
@@ -21,7 +22,7 @@ const CSS = `
 turbo-themes-picker { display: block; color: hsl(var(--fg)); font-size: 0.875rem; line-height: 1.35; }
 turbo-themes-picker .tt-panel { display: grid; gap: 1rem; padding: 1rem; box-sizing: border-box; max-width: 100%; }
 turbo-themes-picker .tt-sec { display: grid; gap: 0.4rem; min-width: 0; justify-items: start; }
-turbo-themes-picker .tt-sec > select, turbo-themes-picker .tt-sec > .tt-tiles, turbo-themes-picker .tt-sec > .tt-group, turbo-themes-picker .tt-sec > label, turbo-themes-picker .tt-sec > .tt-hint, turbo-themes-picker .tt-sec > .tt-row { justify-self: stretch; }
+turbo-themes-picker .tt-sec > select, turbo-themes-picker .tt-sec > .themed-select, turbo-themes-picker .tt-sec > .tt-tiles, turbo-themes-picker .tt-sec > .tt-group, turbo-themes-picker .tt-sec > label, turbo-themes-picker .tt-sec > .tt-hint, turbo-themes-picker .tt-sec > .tt-row { justify-self: stretch; }
 turbo-themes-picker .tt-sec > h3 { margin: 0; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: hsl(var(--muted)); }
 turbo-themes-picker .tt-row { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
 turbo-themes-picker .tt-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr)); gap: 0.35rem; }
@@ -37,7 +38,7 @@ turbo-themes-picker .tt-sw > i { flex: 1; }
 turbo-themes-picker .tt-hint { margin: 0; color: hsl(var(--muted)); font-size: 0.8rem; }
 turbo-themes-picker label { display: grid; gap: 0.2rem; }
 turbo-themes-picker label.tt-inline { display: flex; align-items: center; gap: 0.5rem; }
-turbo-themes-picker select.input { max-width: 100%; }
+turbo-themes-picker select.input, turbo-themes-picker .themed-select { max-width: 100%; }
 turbo-themes-picker input[type="range"] { width: 100%; }
 turbo-themes-picker .tt-float { position: fixed; right: 1rem; bottom: 1rem; z-index: 2147483000; display: grid; justify-items: end; gap: 0.5rem; }
 turbo-themes-picker .tt-float .tt-pop { width: min(26rem, calc(100vw - 2rem)); max-height: min(34rem, calc(100vh - 6rem)); overflow: auto; }
@@ -76,7 +77,8 @@ export class TurboThemesPicker extends Base {
       if (this.busy || (this.seen && this.seen.app === st.appearance && this.seen.rev === st.revision)) return;
       this.render();
     }));
-    const close = (e: Event) => { if (this.open && this.hasAttribute('floating') && !this.contains(e.target as Node)) { this.open = false; this.render(); } };
+    // a themed drop-down's list lives on <body> (select.ts), outside this element, but it belongs to the picker: choosing a row must not count as clicking away
+    const close = (e: Event) => { if (this.open && this.hasAttribute('floating') && !this.contains(e.target as Node) && !(e.target as Element).closest?.('.themed-select-menu.ts-in-picker')) { this.open = false; this.render(); } };
     document.addEventListener('pointerdown', close, true);
     this.off.push(() => document.removeEventListener('pointerdown', close, true));
     this.render();
@@ -101,13 +103,14 @@ export class TurboThemesPicker extends Base {
     this.seen = { app: st.appearance, rev: st.revision };
     const body = this.panel();
     this.replaceChildren();
-    if (!this.hasAttribute('floating')) { this.append(body); return; }
+    if (!this.hasAttribute('floating')) { this.append(body); enhanceSelects(this); return; }
     const pop = el('div', { class: 'card tt-pop' }, body);
     pop.hidden = !this.open;
     const btn = el('button', { class: 'btn', type: 'button', textContent: this.getAttribute('label') ?? 'Themes' });
     btn.setAttribute('aria-expanded', String(this.open));
     btn.addEventListener('click', () => { this.open = !this.open; this.render(); });
     this.append(el('div', { class: 'tt-float' }, pop, btn));
+    enhanceSelects(this); // the drop-downs are drawn by the look, never by the operating system (select.ts)
   }
 
   private panel(): HTMLElement {
