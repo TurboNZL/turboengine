@@ -39,17 +39,20 @@ for (const [ui, theme] of looks) for (const w of widths) {
     const native = [...document.querySelectorAll('button')].filter((b) => vis(b) && ['outset', 'inset'].includes(getComputedStyle(b).borderTopStyle)).map((b) => `${b.className || 'button'} "${(b.textContent || b.ariaLabel || '').trim().slice(0, 18)}"`);
     // a <select> the operating system draws: its list cannot be restyled by any look (Liquid Glass showed a plain grey one). enhanceSelects() hides the real select (class ts-native) behind a themed button
     const nativeSelects = [...document.querySelectorAll('select')].filter((s) => vis(s) && getComputedStyle(s).opacity !== '0' && !s.classList.contains('ts-native')).map((s) => s.getAttribute('aria-label') || s.className || 'select');
+    // a button the user can press but whose cursor stays an arrow: nothing says it is clickable
+    const noPointer = [...document.querySelectorAll('button:not(:disabled), a.btn, .btn:not(:disabled)')].filter((b) => vis(b) && getComputedStyle(b).cursor !== 'pointer').map((b) => `${b.className || 'button'} "${(b.textContent || b.ariaLabel || '').trim().slice(0, 18)}"`);
     // a title bar whose close button dropped under the title: the bar is not a flex row, or the title is not an <h2>
     const wrapped = [...document.querySelectorAll('.bt-titlebar')].filter((t) => { const c = t.querySelector('.bt-close'), h = t.firstElementChild; return c && h && c.getBoundingClientRect().top >= h.getBoundingClientRect().bottom - 1; }).length;
     const noH2 = [...document.querySelectorAll('.bt-titlebar')].filter((t) => !t.querySelector('h2')).length;
     const panelsLoose = [...document.querySelectorAll('.bt-panel-title')].filter((t) => !t.closest('.bt-panel')).length;
-    return { dataset: `${root.dataset.ui}/${root.dataset.theme}/${root.dataset.mode}`, overflow: sw, native, nativeSelects, wrapped, noH2, panelsLoose };
+    return { dataset: `${root.dataset.ui}/${root.dataset.theme}/${root.dataset.mode}`, overflow: sw, native, nativeSelects, noPointer, wrapped, noH2, panelsLoose };
   });
   await page.screenshot({ path: `${out}/${ui}-${theme}-${w}.png` });
   const problems = [];
   if (r.overflow > 1) problems.push(`sideways overflow ${r.overflow}px`);
   if (r.native.length) problems.push(`native-looking buttons: ${[...new Set(r.native)].slice(0, 6).join(', ')}`);
   if (r.nativeSelects.length) problems.push(`native <select> drop-downs (the OS draws their list; call enhanceSelects() and give them class "input"): ${[...new Set(r.nativeSelects)].slice(0, 6).join(', ')}`);
+  if (r.noPointer.length) problems.push(`buttons whose cursor is not a pointer (nothing says they can be pressed): ${[...new Set(r.noPointer)].slice(0, 6).join(', ')}`);
   if (r.wrapped) problems.push(`${r.wrapped} title bar(s) with the close button on a second line`);
   if (r.noH2) problems.push(`${r.noH2} .bt-titlebar without an <h2> (the style's title font and size do not reach it)`);
   if (r.panelsLoose) problems.push(`${r.panelsLoose} .bt-panel-title outside a .card.bt-panel`);

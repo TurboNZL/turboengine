@@ -79,6 +79,9 @@ textarea.input { border-radius: min(var(--in-r, var(--ctl-r)), 1.25rem); padding
 .bt-body { background: var(--body-bg); }
 .bt-footer { border-top: var(--bar-border); }
 .bt-menu { border-radius: var(--menu-r); background: var(--menu-bg); border: var(--menu-border); box-shadow: var(--pop-shadow); animation: var(--menu-anim); }
+/* a button, a nav entry or a menu row says it can be pressed: native buttons show an arrow unless told (Tailwind's reset did this for the React apps, a plain page gets nothing) */
+.btn:not(:disabled):not([aria-disabled='true']), .bt-nav, .bt-tab, .bt-toplink, .chip:is(button, a), [role='menuitem']:not(:disabled), [role='option']:not(:disabled), [role='tab'], summary { cursor: pointer; }
+.btn:disabled, .btn[aria-disabled='true'] { cursor: not-allowed; }
 [role='option'] { transition: background-color var(--dur) var(--ease); }
 [role='option']:hover:not(:disabled), [role='option'].bt-select-hi { background: var(--menu-hi-bg); color: var(--menu-hi-fg); outline: none; }
 [role='menuitem'] { transition: background-color var(--dur) var(--ease); }
