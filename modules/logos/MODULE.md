@@ -34,6 +34,7 @@ An emblem is `branding/emblems/<name>.json`: `{ "box": 100, "d": "M..L..Z..." }`
 |---|---|---|
 | TurboMusic | `note` | null (engine red, the first app) |
 | TurboCut | `cut` (a play triangle split by a slanted blade, two polygons) | `#14c8d8` (cyan) |
+| TurboBudget | `bars` (three rising bars with chamfered tops, three polygons; from `TurboNZL/turbobudget`) | `#2f7bff` (blue) |
 
 Pick the next app's hue away from red and from these.
 
@@ -55,6 +56,7 @@ Pick the next app's hue away from red and from these.
 - `scripts/logo/lib.mjs` (the mark, tones, emblem placement, SVG / mono / Android output; pure functions)
 - `scripts/logo/emblems/note.json` (the beamed note)
 - `scripts/logo/emblems/cut.json` (TurboCut's split play triangle; from `TurboNZL/turbocut`)
+- `scripts/logo/emblems/bars.json` (TurboBudget's three rising bars; from `TurboNZL/turbobudget`)
 - example config: `branding/logo.json` (per app, so not compared by `engine-diff`)
 
 ## Gotcha: the installed PWA's taskbar icon showed the coloured symbol (TurboKeep, 2026-10-17; TurboPantry has the same problem)

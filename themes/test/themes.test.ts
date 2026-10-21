@@ -153,3 +153,12 @@ describe('light / dark pairs', async () => {
     expect(same).toMatch(/both dark|pairs with/);
   });
 });
+
+describe('base.css', () => {
+  it('gives pressable hook classes a pointer cursor, and a disabled button a not-allowed one', async () => {
+    const { readFileSync } = await import('node:fs');
+    const css = readFileSync(new URL('../engine/base.css', import.meta.url), 'utf8');
+    expect(css).toMatch(/\.btn:not\(:disabled\)[^{]*\{ cursor: pointer; \}/);
+    expect(css).toMatch(/\.btn:disabled[^{]*\{ cursor: not-allowed; \}/);
+  });
+});

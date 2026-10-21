@@ -145,6 +145,7 @@ export { themeWallpaper, applyWallpaper, getCustomImage, saveCustomWallpaper, cl
 export { ensureFonts } from './fonts.ts';
 export { createPicker, type Picker, type PickerOptions, type PickerState, type ThemeOption, type ThemeGroup } from './picker.ts';
 export { definePicker } from './picker-element.ts';
+export { enhanceSelect, enhanceSelects } from './select.ts';
 export { hex, readableOn, toHsl, toTriplet } from './color.ts';
 export { buildPalette, tokens, TOKEN_NAMES } from './palette.ts';
 export { API_VERSION } from './types.ts';

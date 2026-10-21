@@ -36,6 +36,8 @@ var TurboThemes = (() => {
     deviceLook: () => deviceLook,
     effectiveTheme: () => effectiveTheme,
     effectiveUi: () => effectiveUi,
+    enhanceSelect: () => enhanceSelect,
+    enhanceSelects: () => enhanceSelects,
     ensureFonts: () => ensureFonts,
     getCatalog: () => getCatalog,
     getCustomImage: () => getCustomImage,
@@ -381,14 +383,14 @@ var TurboThemes = (() => {
     source = from;
     setCatalog(b.catalog);
     if (typeof document === "undefined") return;
-    let el2 = document.getElementById(STYLE_ID);
-    if (!el2) {
-      el2 = document.createElement("style");
-      el2.id = STYLE_ID;
-      document.head.appendChild(el2);
+    let el3 = document.getElementById(STYLE_ID);
+    if (!el3) {
+      el3 = document.createElement("style");
+      el3.id = STYLE_ID;
+      document.head.appendChild(el3);
     }
-    el2.dataset.hash = b.manifest.hash;
-    el2.textContent = b.css;
+    el3.dataset.hash = b.manifest.hash;
+    el3.textContent = b.css;
   }
   var currentBundle = () => current2;
   var bundleSource = () => source;
@@ -778,55 +780,55 @@ var TurboThemes = (() => {
     if (!unique) cache.set(key, lens);
     return lens;
   }
-  var isLiquidScope = (el2) => el2.closest("[data-ui]")?.dataset.ui === "liquid";
-  function cornerRadius(el2) {
-    const cs = getComputedStyle(el2);
-    const v = el2.matches(".bt-menu") ? "--menu-r" : el2.matches(".bt-window") ? "--win-r" : null;
+  var isLiquidScope = (el3) => el3.closest("[data-ui]")?.dataset.ui === "liquid";
+  function cornerRadius(el3) {
+    const cs = getComputedStyle(el3);
+    const v = el3.matches(".bt-menu") ? "--menu-r" : el3.matches(".bt-window") ? "--win-r" : null;
     const settled = v ? parseFloat(cs.getPropertyValue(v)) : NaN;
     return Number.isFinite(settled) ? settled : parseFloat(cs.borderTopLeftRadius) || 0;
   }
-  function apply(el2, settled = false) {
-    const w = el2.offsetWidth, h = el2.offsetHeight;
-    if (w < 4 || h < 4 || !isLiquidScope(el2)) return;
-    const radius = Math.min(cornerRadius(el2), w / 2, h / 2);
+  function apply(el3, settled = false) {
+    const w = el3.offsetWidth, h = el3.offsetHeight;
+    if (w < 4 || h < 4 || !isLiquidScope(el3)) return;
+    const radius = Math.min(cornerRadius(el3), w / 2, h / 2);
     const dpr = window.devicePixelRatio || 1;
-    const unique = el2.matches(MATERIALIZE);
+    const unique = el3.matches(MATERIALIZE);
     const q = (n) => Math.max(4, Math.round(n / 4) * 4);
     const key = unique ? `${w}x${h}r${Math.round(radius)}` : `${q(w)}x${q(h)}r${Math.round(radius)}@${dpr}`;
-    const prev = applied.get(el2);
+    const prev = applied.get(el3);
     if (prev?.key === key) {
-      clearTimeout(rebuild.get(el2));
-      rebuild.delete(el2);
+      clearTimeout(rebuild.get(el3));
+      rebuild.delete(el3);
       return;
     }
     if (prev && unique && !settled) {
-      clearTimeout(rebuild.get(el2));
-      rebuild.set(el2, window.setTimeout(() => {
-        rebuild.delete(el2);
-        if (el2.isConnected) apply(el2, true);
+      clearTimeout(rebuild.get(el3));
+      rebuild.set(el3, window.setTimeout(() => {
+        rebuild.delete(el3);
+        if (el3.isConnected) apply(el3, true);
       }, 140));
       return;
     }
     const g = { w: unique ? w : q(w), h: unique ? h : q(h), r: radius };
     const lens = !unique && cache.get(key) || buildFilter(key, g, dpr, unique);
     if (prev && unique) prev.lens.node.remove();
-    applied.set(el2, { key, lens });
-    el2.style.setProperty("--lg-spec", `url("${lens.spec}")`);
+    applied.set(el3, { key, lens });
+    el3.style.setProperty("--lg-spec", `url("${lens.spec}")`);
     if (!supportsLens()) return;
     const first = !prev;
-    const entering = first && unique && el2.matches(".bt-window") ? Promise.allSettled(el2.getAnimations().map((a) => a.finished)) : Promise.resolve();
+    const entering = first && unique && el3.matches(".bt-window") ? Promise.allSettled(el3.getAnimations().map((a) => a.finished)) : Promise.resolve();
     void Promise.all([lens.ready, entering]).then(() => {
-      if (applied.get(el2)?.lens !== lens || !el2.isConnected) return;
-      el2.style.setProperty("--lg-filter", `url(#${lens.id})`);
-      if (first && unique) materialize(el2, lens);
+      if (applied.get(el3)?.lens !== lens || !el3.isConnected) return;
+      el3.style.setProperty("--lg-filter", `url(#${lens.id})`);
+      if (first && unique) materialize(el3, lens);
     });
   }
   var STEPS = [0.28, 0.58, 0.8, 0.93, 1];
-  function materialize(el2, lens, ms = 300) {
+  function materialize(el3, lens, ms = 300) {
     if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
     const set = (k) => lens.bases.forEach(({ el: d, base }) => d.setAttribute("scale", String(base * k)));
     set(0);
-    STEPS.forEach((k, i) => animations.set(el2, window.setTimeout(() => {
+    STEPS.forEach((k, i) => animations.set(el3, window.setTimeout(() => {
       if (lens.node.isConnected) set(k);
     }, (i + 1) / STEPS.length * ms)));
   }
@@ -834,20 +836,20 @@ var TurboThemes = (() => {
     scanQueued = false;
     if (!active) return;
     const found = new Set(document.querySelectorAll(TARGETS));
-    for (const el2 of found) {
-      if (!tracked.has(el2)) {
-        tracked.add(el2);
-        ro?.observe(el2);
+    for (const el3 of found) {
+      if (!tracked.has(el3)) {
+        tracked.add(el3);
+        ro?.observe(el3);
       }
-      apply(el2);
+      apply(el3);
     }
-    for (const el2 of [...tracked]) {
-      if (!el2.isConnected) {
-        tracked.delete(el2);
-        ro?.unobserve(el2);
-        const a = applied.get(el2);
+    for (const el3 of [...tracked]) {
+      if (!el3.isConnected) {
+        tracked.delete(el3);
+        ro?.unobserve(el3);
+        const a = applied.get(el3);
         if (a && a.lens.id.startsWith("lg-u")) a.lens.node.remove();
-        applied.delete(el2);
+        applied.delete(el3);
       }
     }
   }
@@ -899,10 +901,10 @@ var TurboThemes = (() => {
       window.removeEventListener("blur", recede);
       window.removeEventListener("focus", restore);
       restore();
-      for (const el2 of tracked) {
-        el2.style.removeProperty("--lg-filter");
-        el2.style.removeProperty("--lg-spec");
-        applied.delete(el2);
+      for (const el3 of tracked) {
+        el3.style.removeProperty("--lg-filter");
+        el3.style.removeProperty("--lg-spec");
+        applied.delete(el3);
       }
       tracked.clear();
       cache.clear();
@@ -1166,6 +1168,217 @@ var TurboThemes = (() => {
     return self;
   }
 
+  // engine/src/select.ts
+  var SEARCH_FROM = 12;
+  var SVG = "http://www.w3.org/2000/svg";
+  function icon(d) {
+    const s = document.createElementNS(SVG, "svg");
+    s.setAttribute("viewBox", "0 0 24 24");
+    s.setAttribute("width", "14");
+    s.setAttribute("height", "14");
+    s.setAttribute("class", "ico");
+    s.setAttribute("fill", "none");
+    s.setAttribute("stroke", "currentColor");
+    s.setAttribute("stroke-width", "2.2");
+    s.setAttribute("stroke-linecap", "round");
+    s.setAttribute("stroke-linejoin", "round");
+    s.setAttribute("aria-hidden", "true");
+    const p = document.createElementNS(SVG, "path");
+    p.setAttribute("d", d);
+    s.append(p);
+    return s;
+  }
+  var chevron = () => icon("m6 9 6 6 6-6");
+  var check = () => icon("M20 6 9 17l-5-5");
+  function el(tag, props = {}, ...kids) {
+    const n = document.createElement(tag);
+    for (const [k, v] of Object.entries(props)) {
+      if (v === void 0 || v === false) continue;
+      if (v === true) n.setAttribute(k, "");
+      else n.setAttribute(k, v);
+    }
+    for (const k of kids) if (k) n.append(k);
+    return n;
+  }
+  function rows(sel) {
+    const out = [];
+    const add = (o) => {
+      if (!o.hidden) out.push({ value: o.value, label: o.textContent ?? o.value, disabled: o.disabled });
+    };
+    for (const c of Array.from(sel.children)) {
+      if (c instanceof HTMLOptGroupElement) {
+        out.push({ value: "", label: c.label, disabled: true, heading: true });
+        Array.from(c.children).forEach((o) => add(o));
+      } else if (c instanceof HTMLOptionElement) add(c);
+    }
+    return out;
+  }
+  function enhanceSelect(sel) {
+    if (sel.dataset.themed || sel.multiple || sel.size > 1) return;
+    sel.dataset.themed = "1";
+    const label = el("span", { class: "ts-label" });
+    const btn = el("button", { type: "button", class: `${sel.className} bt-select themed-select`.trim(), "aria-haspopup": "listbox", "aria-expanded": "false" }, label, chevron());
+    sel.classList.add("ts-native");
+    sel.tabIndex = -1;
+    sel.setAttribute("aria-hidden", "true");
+    sel.after(btn);
+    const sync = () => {
+      const opt2 = sel.options[sel.selectedIndex];
+      label.textContent = opt2?.textContent ?? "";
+      label.classList.toggle("hint", !opt2);
+      btn.disabled = sel.disabled;
+      btn.hidden = sel.hidden;
+      const name = sel.getAttribute("aria-label");
+      if (name) btn.setAttribute("aria-label", name);
+      btn.className = `${sel.className.replace("ts-native", "")} bt-select themed-select`.replace(/\s+/g, " ").trim();
+    };
+    const valueProp = Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, "value");
+    Object.defineProperty(sel, "value", { configurable: true, get: () => valueProp.get.call(sel), set: (v) => {
+      valueProp.set.call(sel, v);
+      sync();
+    } });
+    const indexProp = Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, "selectedIndex");
+    Object.defineProperty(sel, "selectedIndex", { configurable: true, get: () => indexProp.get.call(sel), set: (v) => {
+      indexProp.set.call(sel, v);
+      sync();
+    } });
+    new MutationObserver(sync).observe(sel, { childList: true, subtree: true, attributes: true, characterData: true });
+    sel.addEventListener("change", sync);
+    sync();
+    let menu = null;
+    let list = [];
+    let shown = [];
+    let hi = 0;
+    let query = "";
+    let search = null;
+    const choosable = () => shown.map((r, i) => r.heading || r.disabled ? -1 : i).filter((i) => i >= 0);
+    const close = (refocus = false) => {
+      menu?.remove();
+      menu = null;
+      btn.setAttribute("aria-expanded", "false");
+      window.removeEventListener("pointerdown", away, true);
+      window.removeEventListener("resize", place);
+      window.removeEventListener("scroll", place, true);
+      if (refocus) btn.focus();
+    };
+    const away = (e) => {
+      if (!menu?.contains(e.target) && !btn.contains(e.target)) close();
+    };
+    const choose = (r) => {
+      if (!r || r.disabled || r.heading) return;
+      if (sel.value !== r.value) {
+        sel.value = r.value;
+        sel.dispatchEvent(new Event("input", { bubbles: true }));
+        sel.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+      close(true);
+    };
+    function place() {
+      if (!menu) return;
+      const r = btn.getBoundingClientRect();
+      const dock = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--dock-h")) || 0;
+      const below = window.innerHeight - dock - r.bottom - 12;
+      const above = r.top - 12;
+      const up = below < 200 && above > below;
+      const w = Math.max(r.width, 176);
+      menu.style.minWidth = `${w}px`;
+      menu.style.maxHeight = `${Math.max(140, Math.min(340, up ? above : below))}px`;
+      menu.style.left = `${Math.max(8, Math.min(r.left, window.innerWidth - w - 8))}px`;
+      menu.style.top = up ? `${Math.max(8, r.top - menu.offsetHeight - 6)}px` : `${r.bottom + 6}px`;
+    }
+    const mark = (i, scroll = true) => {
+      const ok = choosable();
+      if (!ok.length) return;
+      hi = ok.includes(i) ? i : ok.reduce((best, c) => Math.abs(c - i) < Math.abs(best - i) ? c : best, ok[0]);
+      const kids = Array.from(menu?.querySelector(".ts-list")?.children ?? []);
+      kids.forEach((n, k) => n.classList.toggle("bt-select-hi", k === hi && n.classList.contains("ts-option")));
+      if (scroll) kids[hi]?.scrollIntoView({ block: "nearest" });
+    };
+    const draw = () => {
+      if (!menu) return;
+      const q = query.trim().toLowerCase();
+      shown = q ? list.filter((r) => !r.heading && r.label.toLowerCase().includes(q)) : list;
+      const body = menu.querySelector(".ts-list");
+      body.replaceChildren(
+        ...shown.length ? shown.map((r, i) => {
+          if (r.heading) return el("div", { class: "ts-heading", role: "presentation" }, document.createTextNode(r.label));
+          const chosen = r.value === sel.value;
+          const row = el("button", { type: "button", class: "ts-option", role: "option", "aria-selected": String(chosen), disabled: r.disabled }, el("span", { class: "ts-text" }, document.createTextNode(r.label)), chosen ? check() : null);
+          row.addEventListener("pointerenter", () => mark(i, false));
+          row.addEventListener("click", () => choose(r));
+          return row;
+        }) : [el("div", { class: "ts-none hint" }, document.createTextNode("Nothing matches"))]
+      );
+      mark(Math.max(0, shown.findIndex((r) => !r.heading && r.value === sel.value)));
+      place();
+    };
+    const key = (e) => {
+      const ok = choosable(), at = ok.indexOf(hi);
+      if (e.key === "Escape") {
+        e.preventDefault();
+        e.stopPropagation();
+        close(true);
+      } else if (e.key === "ArrowDown") {
+        e.preventDefault();
+        mark(ok[Math.min(ok.length - 1, at + 1)] ?? hi);
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        mark(ok[Math.max(0, at - 1)] ?? hi);
+      } else if (e.key === "Home") {
+        e.preventDefault();
+        mark(ok[0] ?? 0);
+      } else if (e.key === "End") {
+        e.preventDefault();
+        mark(ok[ok.length - 1] ?? 0);
+      } else if (e.key === "Enter" || e.key === " " && !search) {
+        e.preventDefault();
+        choose(shown[hi]);
+      } else if (e.key === "Tab") close();
+      else if (!search && e.key.length === 1 && !e.ctrlKey && !e.metaKey) {
+        const k = e.key.toLowerCase();
+        const next = ok.find((i) => i > hi && shown[i].label.toLowerCase().startsWith(k));
+        const any = next ?? ok.find((i) => shown[i].label.toLowerCase().startsWith(k));
+        if (any !== void 0) mark(any);
+      }
+    };
+    const open = () => {
+      if (menu || btn.disabled) return;
+      list = rows(sel);
+      query = "";
+      search = list.filter((r) => !r.heading).length > SEARCH_FROM ? el("input", { class: "input ts-search", type: "text", placeholder: "Search\u2026", "aria-label": "Search the list", autocomplete: "off", spellcheck: "false" }) : null;
+      menu = el("div", { class: `bt-menu themed-select-menu tk-pop${sel.closest("turbo-themes-picker") ? " ts-in-picker" : ""}`, role: "listbox", "aria-label": sel.getAttribute("aria-label") ?? void 0 }, search ? el("div", { class: "ts-searchbox" }, search) : null, el("div", { class: "ts-list" }));
+      menu.addEventListener("keydown", key);
+      search?.addEventListener("input", () => {
+        query = search.value;
+        draw();
+      });
+      document.body.append(menu);
+      btn.setAttribute("aria-expanded", "true");
+      draw();
+      window.addEventListener("pointerdown", away, true);
+      window.addEventListener("resize", place);
+      window.addEventListener("scroll", place, true);
+      menu.tabIndex = -1;
+      (search ?? menu).focus({ preventScroll: true });
+    };
+    btn.addEventListener("click", () => menu ? close() : open());
+    btn.addEventListener("keydown", (e) => {
+      if (!menu && (e.key === "ArrowDown" || e.key === "ArrowUp")) {
+        e.preventDefault();
+        open();
+      }
+    });
+    sel.focus = () => btn.focus();
+  }
+  function enhanceSelects(root2 = document) {
+    const all = () => root2.querySelectorAll("select.input:not([data-themed])").forEach(enhanceSelect);
+    all();
+    const r = root2;
+    if (r.__selectWatch) return;
+    r.__selectWatch = true;
+    new MutationObserver(all).observe(root2 === document ? document.documentElement : root2, { childList: true, subtree: true });
+  }
+
   // engine/src/picker-element.ts
   var SECTIONS = ["theme", "ui", "wallpaper", "updates"];
   var STYLE_ID2 = "turbothemes-picker-css";
@@ -1173,7 +1386,7 @@ var TurboThemes = (() => {
 turbo-themes-picker { display: block; color: hsl(var(--fg)); font-size: 0.875rem; line-height: 1.35; }
 turbo-themes-picker .tt-panel { display: grid; gap: 1rem; padding: 1rem; box-sizing: border-box; max-width: 100%; }
 turbo-themes-picker .tt-sec { display: grid; gap: 0.4rem; min-width: 0; justify-items: start; }
-turbo-themes-picker .tt-sec > select, turbo-themes-picker .tt-sec > .tt-tiles, turbo-themes-picker .tt-sec > .tt-group, turbo-themes-picker .tt-sec > label, turbo-themes-picker .tt-sec > .tt-hint, turbo-themes-picker .tt-sec > .tt-row { justify-self: stretch; }
+turbo-themes-picker .tt-sec > select, turbo-themes-picker .tt-sec > .themed-select, turbo-themes-picker .tt-sec > .tt-tiles, turbo-themes-picker .tt-sec > .tt-group, turbo-themes-picker .tt-sec > label, turbo-themes-picker .tt-sec > .tt-hint, turbo-themes-picker .tt-sec > .tt-row { justify-self: stretch; }
 turbo-themes-picker .tt-sec > h3 { margin: 0; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: hsl(var(--muted)); }
 turbo-themes-picker .tt-row { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
 turbo-themes-picker .tt-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr)); gap: 0.35rem; }
@@ -1189,7 +1402,7 @@ turbo-themes-picker .tt-sw > i { flex: 1; }
 turbo-themes-picker .tt-hint { margin: 0; color: hsl(var(--muted)); font-size: 0.8rem; }
 turbo-themes-picker label { display: grid; gap: 0.2rem; }
 turbo-themes-picker label.tt-inline { display: flex; align-items: center; gap: 0.5rem; }
-turbo-themes-picker select.input { max-width: 100%; }
+turbo-themes-picker select.input, turbo-themes-picker .themed-select { max-width: 100%; }
 turbo-themes-picker input[type="range"] { width: 100%; }
 turbo-themes-picker .tt-float { position: fixed; right: 1rem; bottom: 1rem; z-index: 2147483000; display: grid; justify-items: end; gap: 0.5rem; }
 turbo-themes-picker .tt-float .tt-pop { width: min(26rem, calc(100vw - 2rem)); max-height: min(34rem, calc(100vh - 6rem)); overflow: auto; }
@@ -1202,7 +1415,7 @@ turbo-themes-picker .tt-float .tt-pop[hidden] { display: none; }
     o.selected = selected;
     return o;
   };
-  var el = (tag, props = {}, ...kids) => {
+  var el2 = (tag, props = {}, ...kids) => {
     const { class: cls, ...rest } = props;
     const n = document.createElement(tag);
     if (cls) n.className = cls;
@@ -1221,7 +1434,7 @@ turbo-themes-picker .tt-float .tt-pop[hidden] { display: none; }
     seen = null;
     connectedCallback() {
       if (!document.getElementById(STYLE_ID2)) {
-        const s = el("style");
+        const s = el2("style");
         s.id = STYLE_ID2;
         s.textContent = CSS2;
         document.head.appendChild(s);
@@ -1233,7 +1446,7 @@ turbo-themes-picker .tt-float .tt-pop[hidden] { display: none; }
         this.render();
       }));
       const close = (e) => {
-        if (this.open && this.hasAttribute("floating") && !this.contains(e.target)) {
+        if (this.open && this.hasAttribute("floating") && !this.contains(e.target) && !e.target.closest?.(".themed-select-menu.ts-in-picker")) {
           this.open = false;
           this.render();
         }
@@ -1268,20 +1481,22 @@ turbo-themes-picker .tt-float .tt-pop[hidden] { display: none; }
       this.replaceChildren();
       if (!this.hasAttribute("floating")) {
         this.append(body);
+        enhanceSelects(this);
         return;
       }
-      const pop = el("div", { class: "card tt-pop" }, body);
+      const pop = el2("div", { class: "card tt-pop" }, body);
       pop.hidden = !this.open;
-      const btn = el("button", { class: "btn", type: "button", textContent: this.getAttribute("label") ?? "Themes" });
+      const btn = el2("button", { class: "btn", type: "button", textContent: this.getAttribute("label") ?? "Themes" });
       btn.setAttribute("aria-expanded", String(this.open));
       btn.addEventListener("click", () => {
         this.open = !this.open;
         this.render();
       });
-      this.append(el("div", { class: "tt-float" }, pop, btn));
+      this.append(el2("div", { class: "tt-float" }, pop, btn));
+      enhanceSelects(this);
     }
     panel() {
-      const root2 = el("div", { class: "tt-panel" });
+      const root2 = el2("div", { class: "tt-panel" });
       for (const s of this.sections()) {
         const sec = { theme: () => this.themeSection(), ui: () => this.styleSection(), wallpaper: () => this.wallpaperSection(), updates: () => this.updatesSection() }[s]();
         if (sec) root2.append(sec);
@@ -1289,12 +1504,12 @@ turbo-themes-picker .tt-float .tt-pop[hidden] { display: none; }
       return root2;
     }
     section(title, ...kids) {
-      const s = el("div", { class: "tt-sec" }, el("h3", { textContent: title }));
+      const s = el2("div", { class: "tt-sec" }, el2("h3", { textContent: title }));
       for (const k of kids) if (k) s.append(k);
       return s;
     }
     select(label, items, value, onChange) {
-      const sel = el("select", { class: "input" });
+      const sel = el2("select", { class: "input" });
       for (const i of items) sel.append(opt(i.label, i.id, i.id === value));
       sel.value = value;
       sel.setAttribute("aria-label", label);
@@ -1305,9 +1520,9 @@ turbo-themes-picker .tt-float .tt-pop[hidden] { display: none; }
       const p = this.picker, cur = p.getState().appearance;
       const groups = p.themes();
       if (this.getAttribute("variant") !== "tiles") {
-        const sel = el("select", { class: "input" });
+        const sel = el2("select", { class: "input" });
         for (const g of groups) {
-          const og = el("optgroup");
+          const og = el2("optgroup");
           og.label = g.label;
           for (const t of g.items) og.append(opt(t.label, t.id, t.id === cur.theme));
           sel.append(og);
@@ -1317,32 +1532,32 @@ turbo-themes-picker .tt-float .tt-pop[hidden] { display: none; }
         sel.addEventListener("change", () => this.changed({ theme: sel.value }));
         return this.section("Colours", sel, this.matchingButton());
       }
-      const wrap = el("div", { class: "tt-sec" });
+      const wrap = el2("div", { class: "tt-sec" });
       wrap.addEventListener("mouseleave", () => p.preview(null));
       for (const g of groups) {
-        const grid = el("div", { class: "tt-tiles", role: "radiogroup" });
+        const grid = el2("div", { class: "tt-tiles", role: "radiogroup" });
         grid.setAttribute("aria-label", g.label);
         for (const t of g.items) {
-          const tile = el("button", { class: "tt-tile", type: "button", title: t.note ? `${t.label}: ${t.note}` : t.label });
+          const tile = el2("button", { class: "tt-tile", type: "button", title: t.note ? `${t.label}: ${t.note}` : t.label });
           tile.setAttribute("role", "radio");
           tile.setAttribute("aria-checked", String(t.id === cur.theme));
           if (t.colors) {
-            const sw = el("span", { class: "tt-sw" });
+            const sw = el2("span", { class: "tt-sw" });
             for (const c of [t.colors.bg, t.colors.surface, t.colors.accent, t.colors.text]) {
-              const i = el("i");
+              const i = el2("i");
               i.style.background = c;
               sw.append(i);
             }
             tile.append(sw);
           }
-          tile.append(el("span", { class: "tt-name", textContent: t.label }));
+          tile.append(el2("span", { class: "tt-name", textContent: t.label }));
           tile.addEventListener("click", () => this.changed({ theme: t.id }));
           tile.addEventListener("mouseenter", () => p.preview({ theme: t.id }));
           tile.addEventListener("focus", () => p.preview({ theme: t.id }));
           tile.addEventListener("blur", () => p.preview(null));
           grid.append(tile);
         }
-        wrap.append(el("div", { class: "tt-group" }, el("h4", { textContent: g.label }), grid));
+        wrap.append(el2("div", { class: "tt-group" }, el2("h4", { textContent: g.label }), grid));
       }
       return this.section("Colours", wrap, this.matchingButton());
     }
@@ -1350,7 +1565,7 @@ turbo-themes-picker .tt-float .tt-pop[hidden] { display: none; }
       const m = this.picker.matchingTheme();
       if (!m || m === this.picker.getState().appearance.theme) return null;
       const label = this.picker.themes().flatMap((g) => g.items).find((t) => t.id === m)?.label ?? m;
-      const b = el("button", { class: "btn", type: "button", textContent: `Use matching colours (${label})` });
+      const b = el2("button", { class: "btn", type: "button", textContent: `Use matching colours (${label})` });
       b.addEventListener("click", () => {
         this.picker.useMatchingTheme();
         this.dispatchEvent(new CustomEvent("tt-change", { detail: this.picker.getState().appearance, bubbles: true }));
@@ -1361,7 +1576,7 @@ turbo-themes-picker .tt-float .tt-pop[hidden] { display: none; }
     }
     styleSection() {
       const p = this.picker, cur = p.getState().appearance, styles = p.styles();
-      const hint = el("p", { class: "tt-hint" });
+      const hint = el2("p", { class: "tt-hint" });
       const describe = (id) => {
         const s = styles.find((x) => x.id === id);
         hint.textContent = s ? `${s.description}${s.isAuto ? ` On this device that is ${p.device().name}.` : ""}` : "";
@@ -1369,14 +1584,14 @@ turbo-themes-picker .tt-float .tt-pop[hidden] { display: none; }
       describe(cur.ui);
       let control;
       if (this.getAttribute("variant") === "tiles") {
-        const grid = el("div", { class: "tt-tiles", role: "radiogroup" });
+        const grid = el2("div", { class: "tt-tiles", role: "radiogroup" });
         grid.setAttribute("aria-label", "UI style");
         grid.addEventListener("mouseleave", () => {
           p.preview(null);
           describe(cur.ui);
         });
         for (const s of styles) {
-          const tile = el("button", { class: "tt-tile", type: "button", title: s.description }, el("span", { class: "tt-name", textContent: s.label }));
+          const tile = el2("button", { class: "tt-tile", type: "button", title: s.description }, el2("span", { class: "tt-name", textContent: s.label }));
           tile.setAttribute("role", "radio");
           tile.setAttribute("aria-checked", String(s.id === cur.ui));
           tile.addEventListener("click", () => this.changed({ ui: s.id }));
@@ -1402,9 +1617,9 @@ turbo-themes-picker .tt-float .tt-pop[hidden] { display: none; }
       return this.section("UI style", control, hint, glass);
     }
     glassRow(v) {
-      const row = el("div", { class: "tt-row" }, el("span", { textContent: "Glass" }));
+      const row = el2("div", { class: "tt-row" }, el2("span", { textContent: "Glass" }));
       for (const g of ["regular", "clear"]) {
-        const b = el("button", { class: "btn", type: "button", textContent: g });
+        const b = el2("button", { class: "btn", type: "button", textContent: g });
         b.setAttribute("aria-pressed", String(v === g));
         b.addEventListener("click", () => this.changed({ glass: g }));
         row.append(b);
@@ -1413,17 +1628,17 @@ turbo-themes-picker .tt-float .tt-pop[hidden] { display: none; }
     }
     wallpaperSection() {
       const p = this.picker, a = p.getState().appearance;
-      const on = el("input", { type: "checkbox", checked: !!a.wallpaper });
+      const on = el2("input", { type: "checkbox", checked: !!a.wallpaper });
       on.addEventListener("change", () => this.changed({ wallpaper: on.checked }));
-      const check = el("label", { class: "tt-inline" }, on, "Show a wallpaper");
-      const dark = el("input", { type: "range", min: "0", max: "90", value: String(Math.round((a.wallpaperDarkness ?? 0.3) * 100)) });
+      const check2 = el2("label", { class: "tt-inline" }, on, "Show a wallpaper");
+      const dark = el2("input", { type: "range", min: "0", max: "90", value: String(Math.round((a.wallpaperDarkness ?? 0.3) * 100)) });
       dark.setAttribute("aria-label", "Wallpaper darkness");
       dark.addEventListener("input", () => {
         this.busy = true;
         this.changed({ wallpaperDarkness: Number(dark.value) / 100 });
         this.busy = false;
       });
-      const file = el("input", { type: "file", accept: "image/*", hidden: true });
+      const file = el2("input", { type: "file", accept: "image/*", hidden: true });
       file.addEventListener("change", async () => {
         const f = file.files?.[0];
         if (!f) return;
@@ -1435,21 +1650,21 @@ turbo-themes-picker .tt-float .tt-pop[hidden] { display: none; }
           this.render();
         }
       });
-      const load = el("label", { class: "btn" }, p.wallpaper.hasCustom() ? "Choose another picture" : "Use my own picture", file);
-      const row = el("div", { class: "tt-row" }, load);
+      const load = el2("label", { class: "btn" }, p.wallpaper.hasCustom() ? "Choose another picture" : "Use my own picture", file);
+      const row = el2("div", { class: "tt-row" }, load);
       if (p.wallpaper.hasCustom()) {
-        const own = el("button", { class: "btn", type: "button", textContent: a.wallpaperCustom ? "Use the theme wallpaper" : "Use my picture" });
+        const own = el2("button", { class: "btn", type: "button", textContent: a.wallpaperCustom ? "Use the theme wallpaper" : "Use my picture" });
         own.addEventListener("click", () => this.changed({ wallpaperCustom: !a.wallpaperCustom }));
-        const rm = el("button", { class: "btn", type: "button", textContent: "Remove my picture" });
+        const rm = el2("button", { class: "btn", type: "button", textContent: "Remove my picture" });
         rm.addEventListener("click", () => p.wallpaper.clearCustom());
         row.append(own, rm);
       }
-      return this.section("Wallpaper", check, a.wallpaper ? el("label", {}, "Darkness", dark) : null, a.wallpaper ? row : null, this.message ? el("p", { class: "tt-hint", textContent: this.message }) : null);
+      return this.section("Wallpaper", check2, a.wallpaper ? el2("label", {}, "Darkness", dark) : null, a.wallpaper ? row : null, this.message ? el2("p", { class: "tt-hint", textContent: this.message }) : null);
     }
     updatesSection() {
       const p = this.picker, v = p.version();
-      const status = el("span", { class: "tt-hint", textContent: `${v.origin === "downloaded" ? "Downloaded" : "Built-in"} themes ${v.hash}` });
-      const btn = el("button", { class: "btn", type: "button", textContent: "Check for newer themes" });
+      const status = el2("span", { class: "tt-hint", textContent: `${v.origin === "downloaded" ? "Downloaded" : "Built-in"} themes ${v.hash}` });
+      const btn = el2("button", { class: "btn", type: "button", textContent: "Check for newer themes" });
       btn.addEventListener("click", async () => {
         btn.disabled = true;
         status.textContent = "Checking\u2026";
@@ -1457,7 +1672,7 @@ turbo-themes-picker .tt-float .tt-pop[hidden] { display: none; }
         status.textContent = r.message;
         btn.disabled = false;
       });
-      return this.section("Themes", el("div", { class: "tt-row" }, btn, status));
+      return this.section("Themes", el2("div", { class: "tt-row" }, btn, status));
     }
   };
   function definePicker() {

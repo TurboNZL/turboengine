@@ -2,6 +2,8 @@
 
 A native `<select>` opens the operating system's own list; no look can restyle it (Liquid Glass showed a plain grey one). `themedSelect.ts` replaces the list, not the element: `enhanceSelects()` finds every `select.input` (now, and as new ones appear), hides the native select and puts a button in its place that opens a `bt-menu` list. The `<select>` remains the one source of truth, so code that reads `.value`, sets `.value`, rebuilds the `<option>`s or listens for `change` keeps working untouched. React apps use TurboKeep's `Select.tsx` instead (same behaviour).
 
+**Since 2026-10-20 the engine carries this itself:** `turbothemes` exports `enhanceSelects()` (`themes/engine/src/select.ts`, with the CSS in `base.css`, optgroup headings included) and `<turbo-themes-picker>` uses it. An app that already runs the engine just calls `enhanceSelects()` and deletes its copy; this module remains for TurboCut's pinned copy and for anything that cannot take the engine.
+
 Optional. Source: `TurboNZL/turbocut`, file `src/app/themedSelect.ts` (runs there); it imports `h` from `dom.ts` and `icon` (chevron, check) from `icons.ts`: use your own element helper and icons.
 
 ## Use it
