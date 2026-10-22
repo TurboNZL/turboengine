@@ -35,8 +35,9 @@ An emblem is `branding/emblems/<name>.json`: `{ "box": 100, "d": "M..L..Z..." }`
 | TurboMusic | `note` | null (engine red, the first app) |
 | TurboCut | `cut` (a play triangle split by a slanted blade, two polygons) | `#14c8d8` (cyan) |
 | TurboBudget | `bars` (three rising bars with chamfered tops, three polygons; from `TurboNZL/turbobudget`) | `#2f7bff` (blue) |
+| TurboBox | `box` (a slanted lid over a box body, two polygons; from `TurboNZL/turbobox`) | `#a6e22e` (lime) |
 
-Pick the next app's hue away from red and from these.
+Pick the next app's hue away from red and from these. The apps' palettes in `themes/` also use purple (TurboMusic), amber (TurboKeep), teal (TurboDocs) and mint (TurboPantry): lime was chosen for TurboBox because it is at least 40 degrees from each of them and from the red rim.
 
 ## Gotchas
 - **Capacitor's default Android icon resources collide with the generated ones.** Delete `values/ic_launcher_background.xml`, `drawable/ic_launcher_background.xml`, `drawable-v24/ic_launcher_foreground.xml` and every `mipmap-*/ic_launcher_foreground.png`, and point `mipmap-anydpi-v26/ic_launcher*.xml` at `@drawable/ic_launcher_foreground` (the generator writes that and `values/colors.xml`). Otherwise the build fails on a duplicate `ic_launcher_background` or keeps showing the old foreground (`drawable-v24` wins on API 24+). List the legacy `mipmap-*/ic_launcher.png` and `ic_launcher_round.png` sizes (48, 72, 96, 144, 192) in `out.png` so pre-26 devices match.
@@ -57,6 +58,7 @@ Pick the next app's hue away from red and from these.
 - `scripts/logo/emblems/note.json` (the beamed note)
 - `scripts/logo/emblems/cut.json` (TurboCut's split play triangle; from `TurboNZL/turbocut`)
 - `scripts/logo/emblems/bars.json` (TurboBudget's three rising bars; from `TurboNZL/turbobudget`)
+- `scripts/logo/emblems/box.json` (TurboBox's lidded box; from `TurboNZL/turbobox`)
 - example config: `branding/logo.json` (per app, so not compared by `engine-diff`)
 
 ## Gotcha: the installed PWA's taskbar icon showed the coloured symbol (TurboKeep, 2026-10-17; TurboPantry has the same problem)

@@ -1,0 +1,30 @@
+{
+  "id": "turbobox",
+  "label": "TurboBox",
+  "palettes": [
+    {
+      "id": "turbobox",
+      "label": "TurboBox Dark",
+      "mode": "dark",
+      "bg": [80, 16, 7],
+      "primary": [79, 72, 52],
+      "motif": "grid",
+      "group": "own",
+      "pair": "turbobox-light",
+      "note": "TurboBox's own look, dark: the box's lime on near-black",
+      "order": 5
+    },
+    {
+      "id": "turbobox-light",
+      "label": "TurboBox Light",
+      "mode": "light",
+      "bg": [80, 35, 96],
+      "primary": [82, 78, 28],
+      "motif": "grid",
+      "group": "own",
+      "pair": "turbobox",
+      "note": "TurboBox's own look, light",
+      "order": 25
+    }
+  ]
+}
