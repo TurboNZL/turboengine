@@ -5,6 +5,8 @@ Read this first, then `PROJECT_BRIEF.md`. This file is the running state and dec
 ## Engine
 This app is pinned to TurboNZL/turboengine (see `.turboengine.json`; `docs/development/ENGINE.md` says which modules and where they live). The engine is a **reference, not a dependency**: its modules are working code copied into apps. Before building something that every app would want (updates, release naming, the theme picker, window chrome, settings layout, guides), look in the engine's `modules/` first and copy from it rather than inventing a new one. If you improve a module here, say so in the session log so it can be ported back to the engine.
 
+**Check for engine changes** at the start of a session, and before changing a release workflow: attach the engine read-only (`add_repo` `TurboNZL/turboengine`), run `node scripts/engine-diff.mjs <this app> --show`, and tell the user what is new or missing (including mandatory modules the app does not pin). Do not port it unasked; upgrading is a deliberate act (update `engine.ref` when it is done).
+
 ## User preferences (how to work with them)
 - Don't waste their usage. Fact-check and double-check yourself; use web search liberally.
 - They write casually; reply in normal capitalised prose.
