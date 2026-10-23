@@ -2,7 +2,7 @@
 
 A pull request builds every app (APK, installers, web bundle) as soon as it is opened or updated. When it is merged, the push to `main` publishes **those same files** if nothing that matters has changed, so nobody waits for a second build of something that already exists. Every release is a normal release; branches never make pre-releases.
 
-Optional. Works with `release-pipeline` naming (`v<year>.<month>.<n>`, lowercase assets). Reference files are in `files/`; source: `TurboNZL/turbocut` (`.github/workflows/build.yml`), where it was written. The decision logic is a small tested script, the workflow only calls it.
+**Mandatory** for every app, together with `release-pipeline` (new apps take it from the start; pinned apps adopt it on their next release-workflow upgrade). Works with `release-pipeline` naming (`v<year>.<month>.<n>`, lowercase assets). Reference files are in `files/`; source: `TurboNZL/turbocut` (`.github/workflows/build.yml`), where it was written. The decision logic is a small tested script, the workflow only calls it.
 
 ## How it decides (`scripts/ci/reuse-build.mjs`)
 A build is reused only when all four hold; any doubt, or any failed lookup, means "build again":
