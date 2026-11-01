@@ -6,6 +6,11 @@
 //  press Accept does it hand out a one-time transfer id. The project, each media file and each font then arrive as separate
 //  PUT /part/<transfer>/<kind> requests, streamed to a folder of their own, and POST /done/<transfer> closes it. Nothing is written
 //  before Accept, only addresses on the local network are answered, and every transfer is capped at the size that was offered.
+//  Pulling (a phone cannot listen, so it asks): the sender puts a "shelf" up instead: the same parts, kept in a folder of their own, behind a
+//  link, http://<address>:<port>/shelf/<token>, where the token is 128 random bits (nobody guesses it, so there is nothing to type or lock).
+//  A device given the link fetches GET /shelf/<token>/manifest and then each GET /shelf/<token>/part/<n>, and closes it with
+//  POST /shelf/<token>/done. The link is the consent: the person on the sending computer chose to put the shelf up and hands the link
+//  over. A shelf closes when it is done, closed, or an hour old (closing the window that made it does not close it: send and forget).
 //  The port (47903, see the engine's docs/PORTS.md) is used for both TCP and UDP; TURBOCUT_SHARE_PORT changes it.
 const crypto = require('node:crypto');
 const dgram = require('node:dgram');
@@ -21,6 +26,9 @@ const EXPIRE_MS = 10_000;
 const OFFER_WAIT_MS = 60_000;
 const KINDS = new Set(['project', 'preset', 'media', 'font']);
 const MAX_JSON = 64 * 1024;
+const SHELF_MS = 60 * 60_000;
+const TOKEN = /^[A-Za-z0-9_-]{22}$/;
+const CORS = { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', 'Access-Control-Allow-Headers': '*', 'Access-Control-Allow-Private-Network': 'true', 'Access-Control-Max-Age': '600' };
 
 /** Addresses that mean "on this network": loopback, link-local and the private ranges. */
 function isLocalAddress(ip) {
@@ -50,6 +58,14 @@ function broadcastAddresses(interfaces = os.networkInterfaces()) {
     }
   }
   return [...out];
+}
+
+/** This computer's addresses on private networks, the ones another device can reach it on (home networks first). */
+function lanAddresses(interfaces = os.networkInterfaces()) {
+  const out = [];
+  for (const list of Object.values(interfaces)) for (const i of list || []) if (i.family === 'IPv4' && !i.internal && isLocalAddress(i.address)) out.push(i.address);
+  const rank = (a) => (a.startsWith('192.168.') ? 0 : a.startsWith('10.') ? 1 : 2);
+  return out.sort((a, b) => rank(a) - rank(b));
 }
 
 const readJson = (req, limit = MAX_JSON) =>
@@ -90,6 +106,7 @@ class Share extends EventEmitter {
     this.peers = new Map();
     this.pending = new Map(); // offers waiting for the person
     this.transfers = new Map(); // accepted, uploading
+    this.shelves = new Map(); // token -> shelf put up for a device that fetches it
     this.server = null;
     this.udp = null;
     this.timers = [];
@@ -180,6 +197,7 @@ class Share extends EventEmitter {
     this.server = null;
     this.peers.clear();
     for (const [id, p] of this.pending) (clearTimeout(p.timer), p.resolve(false), this.pending.delete(id));
+    for (const sh of [...this.shelves.values()]) this.shelfClose(sh.id);
   }
 
   /** Delete received projects older than a day. */
@@ -213,6 +231,7 @@ class Share extends EventEmitter {
       if (!isLocalAddress(req.socket.remoteAddress)) return reply(403, { error: 'local network only' });
       const url = new URL(req.url, 'http://x');
       const parts = url.pathname.split('/').filter(Boolean);
+      if (parts[0] === 'shelf') return this.onShelf(req, res, reply, parts, url);
       if (req.method === 'GET' && parts[0] === 'hello') return reply(200, { app: 'turbocut', id: this.id, name: this.name, version: this.version });
       if (req.method === 'POST' && parts[0] === 'offer') return await this.onOffer(req, reply);
       if (req.method === 'PUT' && parts[0] === 'part' && parts.length === 3) return await this.onPart(req, reply, parts[1], parts[2], url.searchParams.get('name'));
@@ -229,7 +248,7 @@ class Share extends EventEmitter {
     if (!Number.isFinite(bytes) || bytes < 0 || bytes > 64 * 1024 ** 3) return reply(400, { error: 'bad size' });
     const offerId = crypto.randomUUID();
     const from = { id: String(o.from?.id || ''), name: String(o.from?.name || 'Another TurboCut').slice(0, 60) };
-    const summary = { project: String(o.project || 'Untitled').slice(0, 80), media: Math.max(0, Number(o.media) | 0), fonts: Math.max(0, Number(o.fonts) | 0), bytes };
+    const summary = { project: String(o.project || 'Untitled').slice(0, 80), media: Math.max(0, Number(o.media) | 0), fonts: Math.max(0, Number(o.fonts) | 0), links: Math.max(0, Number(o.links) | 0), bytes };
     const accepted = await new Promise((resolve) => {
       const timer = setTimeout(() => (this.pending.delete(offerId), resolve(false)), OFFER_WAIT_MS);
       this.pending.set(offerId, { resolve, timer });
@@ -287,12 +306,109 @@ class Share extends EventEmitter {
     reply(200, { ok: true });
   }
 
+  // ---------------------------------------------------------------- a shelf: parts kept for a device that fetches them
+  /** Put a shelf up. `summary`: { project, media, fonts, links, bytes }. Returns `{ id, token }`; add parts with `shelfPart`, then call `shelfReady`. */
+  shelfOpen(summary) {
+    const token = crypto.randomBytes(16).toString('base64url');
+    const id = crypto.randomBytes(8).toString('hex');
+    const dir = path.join(this.dir, `shelf-${id}`);
+    fs.mkdirSync(dir, { recursive: true });
+    const shelf = { id, token, dir, summary, items: [], ready: false, sent: 0, total: 0, state: 'preparing', timer: setTimeout(() => this.shelfClose(id, 'expired'), SHELF_MS) };
+    shelf.timer.unref?.();
+    this.shelves.set(token, shelf);
+    return { id, token };
+  }
+
+  shelfById(id) {
+    for (const sh of this.shelves.values()) if (sh.id === id) return sh;
+    return null;
+  }
+
+  /** Start one part of a shelf, with the same `{ write, end, abort }` as `openPart`. */
+  shelfPart(id, kind, name) {
+    const sh = this.shelfById(id);
+    if (!sh || !KINDS.has(kind)) throw new Error('That shelf is closed.');
+    const n = sh.items.length;
+    const file = `${String(n).padStart(3, '0')}-${kind}-${safeName(name, kind)}`;
+    const item = { n, kind, name: safeName(name, kind), file, size: 0, done: false };
+    sh.items.push(item);
+    const out = fs.createWriteStream(path.join(sh.dir, file));
+    return {
+      write: (chunk) =>
+        new Promise((resolve, reject) =>
+          out.write(chunk, (e) => {
+            if (e) return reject(e);
+            item.size += chunk.length;
+            resolve();
+          }),
+        ),
+      end: () =>
+        new Promise((resolve, reject) => {
+          out.once('error', reject);
+          out.end(() => ((item.done = true), (sh.total += item.size), resolve()));
+        }),
+      abort: () => out.destroy(),
+    };
+  }
+
+  shelfReady(id) {
+    const sh = this.shelfById(id);
+    if (!sh) throw new Error('That shelf is closed.');
+    if (!sh.items.some((i) => i.kind === 'project' && i.done)) throw new Error('The project itself is not on the shelf.');
+    sh.ready = true;
+    sh.state = 'waiting';
+    this.emit('shelf', { id, state: 'waiting', sent: 0, total: sh.total });
+    const addresses = lanAddresses();
+    return { token: sh.token, port: this.port, addresses, links: addresses.map((a) => `http://${a}:${this.port}/shelf/${sh.token}`) };
+  }
+
+  shelfClose(id, why = 'closed') {
+    const sh = this.shelfById(id);
+    if (!sh) return;
+    clearTimeout(sh.timer);
+    this.shelves.delete(sh.token);
+    fs.rmSync(sh.dir, { recursive: true, force: true });
+    if (sh.state !== 'done') this.emit('shelf', { id, state: why, sent: sh.sent, total: sh.total });
+  }
+
+  async onShelf(req, res, reply, parts, url) {
+    for (const [k, v] of Object.entries(CORS)) res.setHeader(k, v);
+    if (req.method === 'OPTIONS') return (res.writeHead(204), res.end());
+    const sh = TOKEN.test(parts[1] || '') ? this.shelves.get(parts[1]) : undefined;
+    if (!sh || !sh.ready) return reply(sh ? 425 : 404, { error: sh ? 'Still being prepared.' : 'No such link.' });
+    if (req.method === 'GET' && parts[2] === 'manifest' && parts.length === 3) {
+      return reply(200, { app: 'turbocut', v: 2, from: { id: this.id, name: this.name }, summary: sh.summary, items: sh.items.map(({ n, kind, name, size }) => ({ n, kind, name, size })) });
+    }
+    if (req.method === 'GET' && parts[2] === 'part' && parts.length === 4) {
+      const item = sh.items[Number(parts[3])];
+      if (!item || !item.done) return reply(404, { error: 'No such part.' });
+      res.writeHead(200, { 'Content-Type': 'application/octet-stream', 'Content-Length': item.size });
+      const stream = fs.createReadStream(path.join(sh.dir, item.file));
+      let last = 0;
+      stream.on('data', (c) => {
+        sh.sent += c.length;
+        sh.state = 'sending';
+        if (Date.now() - last > 250) (last = Date.now()), this.emit('shelf', { id: sh.id, state: 'sending', sent: sh.sent, total: sh.total });
+      });
+      stream.on('error', () => res.destroy());
+      stream.pipe(res);
+      return;
+    }
+    if (req.method === 'POST' && parts[2] === 'done' && parts.length === 3) {
+      sh.state = 'done';
+      this.emit('shelf', { id: sh.id, state: 'done', sent: sh.total, total: sh.total });
+      this.shelfClose(sh.id);
+      return reply(200, { ok: true });
+    }
+    reply(404, { error: 'not found' });
+  }
+
   // ---------------------------------------------------------------- sending
   /** Ask a device to take a project. Resolves with what the parts must be sent to. Throws a sentence for the person. */
   async offer(deviceId, summary) {
     const dev = this.peers.get(deviceId);
     if (!dev) throw new Error('That device is no longer on the network.');
-    const body = JSON.stringify({ from: { id: this.id, name: this.name }, project: summary.project, media: summary.media, fonts: summary.fonts, bytes: summary.bytes });
+    const body = JSON.stringify({ from: { id: this.id, name: this.name }, project: summary.project, media: summary.media, fonts: summary.fonts, links: summary.links || 0, bytes: summary.bytes });
     const r = await this.request(dev, 'POST', '/offer', body, OFFER_WAIT_MS + 5000);
     if (!r.accepted) throw new Error(`${dev.name} did not accept it.`);
     return { dev, transfer: r.transfer };
@@ -343,4 +459,4 @@ class Share extends EventEmitter {
   }
 }
 
-module.exports = { Share, isLocalAddress, safeName, broadcastAddresses, DEFAULT_PORT };
+module.exports = { Share, isLocalAddress, safeName, broadcastAddresses, lanAddresses, DEFAULT_PORT };

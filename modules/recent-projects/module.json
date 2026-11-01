@@ -1,14 +1,18 @@
 {
   "name": "recent-projects",
-  "title": "Recent projects: a list of what you worked on, kept on the device",
+  "title": "Project files and a recent list of them",
   "optional": true,
-  "summary": "A copy of the edit (never the media) per project name in IndexedDB, kept on save, open and a few seconds after edits; newest first, at most 12; `ago()` for the list.",
+  "summary": "A project is a file the person chose a place for: Save asks once (system dialog on desktop, file handle in a browser, Documents on Android), later saves and autosave write back to it; the home screen lists references to those files, never a copy of an edit. Desktop also remembers where each media file is.",
   "source": {
     "repo": "TurboNZL/turbocut",
-    "ref": "3a95e69"
+    "ref": "claude/cool-ptolemy-zltsem (TurboNZL/turbocut)"
   },
   "files": [
     "src/app/recent.ts",
-    "test/recent.test.ts"
+    "src/app/projectFiles.ts",
+    "src/app/mediaPaths.ts",
+    "electron/projectFiles.cjs",
+    "test/recent.test.ts",
+    "test/projectFiles.test.ts"
   ]
 }
