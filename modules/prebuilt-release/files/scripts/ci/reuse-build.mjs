@@ -2,7 +2,8 @@
 //
 // A build is reusable when ALL of these hold:
 //   1. the commit on main came from a merged pull request;
-//   2. that pull request's last commit has a successful run of the build workflow (event pull_request);
+//   2. that pull request's last commit has a successful run of the build workflow (event pull_request by default; `--event push` for
+//      workflows that build on every branch push, see MODULE.md "Pull requests opened by a workflow");
 //   3. the source tree is identical (git tree hash of the PR head == tree of the commit on main). This is true for a
 //      squash or a merge commit when main had not moved since the PR was last updated; anything else changes the tree;
 //   4. the version the PR build was stamped with is still the next free one (otherwise the files carry the wrong version).
@@ -17,13 +18,13 @@ import { execFileSync } from 'node:child_process';
  *           sh: (cmd: string, args: string[]) => string, readMeta: (runId: string) => { version?: string } | null }} o
  * @returns {{ run: string | null, why: string }}
  */
-export function findReusableRun({ sha, version, workflow, repo, sh, readMeta }) {
+export function findReusableRun({ sha, version, workflow, repo, event = 'pull_request', sh, readMeta }) {
   try {
     const prs = JSON.parse(sh('gh', ['api', `repos/${repo}/commits/${sha}/pulls`]));
     const pr = prs.find((p) => p.merged_at && p.merge_commit_sha === sha) ?? prs.find((p) => p.merged_at);
     if (!pr) return { run: null, why: 'the commit did not come from a merged pull request' };
     const head = pr.head.sha;
-    const runs = JSON.parse(sh('gh', ['run', 'list', '--repo', repo, '--workflow', workflow, '--commit', head, '--event', 'pull_request', '--status', 'success', '--json', 'databaseId', '--limit', '1']));
+    const runs = JSON.parse(sh('gh', ['run', 'list', '--repo', repo, '--workflow', workflow, '--commit', head, '--event', event, '--status', 'success', '--json', 'databaseId', '--limit', '1']));
     if (!runs.length) return { run: null, why: `no successful pull request build for ${head.slice(0, 7)}` };
     // A squash or rebase merge leaves the PR's commits out of main's history; GitHub still serves them by hash.
     try { sh('git', ['fetch', '--no-tags', '--depth=1', 'origin', head]); } catch { /* the tree lookup below decides */ }
@@ -51,6 +52,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     sha: arg('sha'),
     version: arg('version'),
     workflow: arg('workflow') ?? 'build.yml',
+    event: arg('event') ?? 'pull_request',
     repo,
     sh,
     readMeta: (id) => {

@@ -18,6 +18,9 @@ A build is reused only when all four hold; any doubt, or any failed lookup, mean
 - Concurrency: PR builds cancel older builds of the same branch; releases queue and are never cancelled mid-way.
 - Permissions needed: `actions: read` (download another run's artifacts), `contents: write` on `release` only.
 
+## Pull requests opened by a workflow (TurboMusic, 2026-10-27)
+GitHub does not start workflows for events caused by the workflow token. An app whose pull requests are opened by `auto-pr.yml` (release-pipeline) therefore never gets a `pull_request` run for the first push of a branch: only later pushes (`synchronize`) build, so most merges found "no successful pull request build". TurboMusic builds on **`push` to every branch** instead (no `pull_request` trigger, so nothing builds twice), records `build-meta` on every branch push, and calls the script with `--event push`. The shape is otherwise the same; only the trigger and that argument differ. The release job is limited to `github.ref == 'refs/heads/main'`.
+
 ## Gotchas
 - Artifact retention is the limit: a PR merged after the artifacts expired (30 days) simply rebuilds.
 - Docs-only PRs are skipped by `paths-ignore`, so they have no build and (correctly) publish nothing.
