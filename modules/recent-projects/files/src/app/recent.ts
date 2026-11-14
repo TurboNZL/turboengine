@@ -1,18 +1,19 @@
 import { projectDuration } from '../core/timeline.ts';
-import { parseProject, serializeProject } from '../core/projectFile.ts';
 import type { Project } from '../core/types.ts';
+import { refWhere, type ProjectRef } from './projectFiles.ts';
 
 /**
- * Recent projects for the home screen. A project file holds the edit and never the media, so a copy of the edit is small:
- * it is kept in this device's own database (IndexedDB) under the project's name, and opening one asks for the media again
- * exactly like opening a file does. Filled when a project is saved, opened or edited (a few seconds after the last change), so
- * work that was never saved to a file is still one tap away.
+ * Recent projects for the home screen: the project FILES the person saved or opened, as references (a path, or a browser file handle),
+ * with a little detail to show. The edit itself is never copied into TurboCut's own storage: a project exists where the person put it,
+ * and opening one reads that file. A file that has moved or been deleted says so when opened.
  */
 export interface RecentEntry {
-  /** The key: the project name, compared without case. */
+  /** The key: the file path, or an id for a browser handle. */
   key: string;
   name: string;
-  /** When it was last kept (milliseconds). */
+  /** Where it lives, for the list: a path or a file name. */
+  where: string;
+  /** When it was last saved or opened (milliseconds). */
   at: number;
   width: number;
   height: number;
@@ -30,18 +31,17 @@ export const MAX_RECENT = 12;
 interface Row {
   key: string;
   meta: RecentEntry;
-  json: string;
+  ref: ProjectRef;
 }
 
-export const recentKey = (name: string): string => name.trim().toLowerCase() || 'untitled';
-
-/** True when a project holds anything worth keeping (an empty project is not listed). */
+/** True when a project holds anything worth saving (an empty project is not listed). */
 export const hasContent = (p: Project): boolean => Object.keys(p.assets).length > 0 || p.tracks.some((t) => t.clips.length > 0) || p.captions.length > 0;
 
-export function describeProject(p: Project, at = Date.now()): RecentEntry {
+export function describeProject(p: Project, key: string, where: string, at = Date.now()): RecentEntry {
   return {
-    key: recentKey(p.name),
+    key,
     name: p.name,
+    where,
     at,
     width: p.width,
     height: p.height,
@@ -58,8 +58,13 @@ export const newestFirst = (rows: RecentEntry[]): RecentEntry[] => [...rows].sor
 function open(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
     if (typeof indexedDB === 'undefined') return reject(new Error('no storage'));
-    const req = indexedDB.open(DB, 1);
-    req.onupgradeneeded = () => req.result.createObjectStore(STORE, { keyPath: 'key' });
+    // Version 2: the list used to hold a COPY of every project's edit (a cache that reopened old work by name). Those copies are dropped.
+    const req = indexedDB.open(DB, 2);
+    req.onupgradeneeded = () => {
+      const db = req.result;
+      if (db.objectStoreNames.contains(STORE)) db.deleteObjectStore(STORE);
+      db.createObjectStore(STORE, { keyPath: 'key' });
+    };
     req.onsuccess = () => resolve(req.result);
     req.onerror = () => reject(req.error);
   });
@@ -80,37 +85,44 @@ async function tx<T>(mode: IDBTransactionMode, run: (s: IDBObjectStore) => IDBRe
   }
 }
 
+const rows = (): Promise<Row[]> => tx<Row[]>('readonly', (s) => s.getAll());
+
 export async function listRecent(): Promise<RecentEntry[]> {
   try {
-    const rows = await tx<Row[]>('readonly', (s) => s.getAll());
-    return newestFirst(rows.map((r) => r.meta));
+    return newestFirst((await rows()).map((r) => r.meta));
   } catch {
     return []; // storage blocked: the list is just empty
   }
 }
 
-/** Keep (or replace) the copy for this project. Never throws: a blocked or full database only means the list stays as it was. */
-export async function rememberProject(p: Project): Promise<void> {
-  if (!hasContent(p)) return;
+/** The key an existing entry for the same file has, if any (a path compares as text, a handle with `isSameEntry`). */
+async function existingKey(all: Row[], ref: ProjectRef): Promise<string | undefined> {
+  for (const r of all) {
+    if (r.ref.kind !== ref.kind) continue;
+    if (ref.kind === 'path' && r.ref.kind === 'path' && r.ref.path === ref.path) return r.key;
+    if (ref.kind === 'handle' && r.ref.kind === 'handle' && (await r.ref.handle.isSameEntry(ref.handle).catch(() => false))) return r.key;
+  }
+  return undefined;
+}
+
+/** Note that this project lives in this file. Never throws: a blocked or full database only means the list stays as it was. */
+export async function rememberFile(p: Project, ref: ProjectRef | null): Promise<void> {
+  if (!ref) return;
   try {
-    const meta = describeProject(p);
-    await tx('readwrite', (s) => s.put({ key: meta.key, meta, json: serializeProject(p) } satisfies Row));
-    const all = await listRecentRaw();
-    for (const old of all.slice(MAX_RECENT)) await tx('readwrite', (s) => s.delete(old.key));
+    const all = await rows();
+    const key = (await existingKey(all, ref)) ?? (ref.kind === 'path' ? ref.path : `h-${crypto.randomUUID()}`);
+    const meta = describeProject(p, key, refWhere(ref));
+    await tx('readwrite', (s) => s.put({ key, meta, ref } satisfies Row));
+    const kept = newestFirst([...all.filter((r) => r.key !== key).map((r) => r.meta), meta]);
+    for (const old of all.filter((r) => r.key !== key && !kept.some((k) => k.key === r.key))) await tx('readwrite', (s) => s.delete(old.key));
   } catch {
     /* ignore */
   }
 }
 
-async function listRecentRaw(): Promise<RecentEntry[]> {
-  const rows = await tx<Row[]>('readonly', (s) => s.getAll());
-  return rows.map((r) => r.meta).sort((a, b) => b.at - a.at);
-}
-
-export async function loadRecent(key: string): Promise<Project | null> {
+export async function recentRef(key: string): Promise<ProjectRef | null> {
   try {
-    const row = await tx<Row | undefined>('readonly', (s) => s.get(key));
-    return row ? parseProject(row.json) : null;
+    return (await tx<Row | undefined>('readonly', (s) => s.get(key)))?.ref ?? null;
   } catch {
     return null;
   }

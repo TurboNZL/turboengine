@@ -21,6 +21,7 @@ A template, not a requirement. Apps made with the engine tend to end up with a *
 `.bt-frame` (the row that holds the side bar and the page) gets the padding and gap; `.bt-side` the radius, a full border and a soft shadow. (Want the page in a rounded panel as well? Give `.bt-pane` a `background: var(--card-bg)` and a radius in your app.) Size comes from theme variables when a style sets them: `--side-r` (side bar radius, else `1.6 x --radius`), `--float-gap` (default 12px), `--bar-border`, `--side-shadow`.
 
 ## Gotchas
+- **Two floating rails** (learned in TurboPantry, 2026-11): `floating-rail` (side pill) and `floating-dock` (bottom pill, every screen size; the shell hides the side bar and shows the tab bar for it). A badge on a nav item (a count on Shopping) must be `position: absolute` over the icon's corner (`.bt-badge`, rules at the end of `layouts.css`): an inline badge widens the item and moves the other icons when it appears.
 - Utility classes beat the layouts (same layer): `rounded-*`, `border-*` or `shadow-*` on the side bar defeats the floating look. Put only the hook class on it.
 - A rounded panel needs `overflow: hidden` or the highlighted link's square corners poke out; the rule is there.
 - **Liquid Glass already floats its bars** with its own radius and lens; the floating rules skip it (`:not([data-ui="liquid"])`). Any other look that draws its own floating bars should be excluded the same way.

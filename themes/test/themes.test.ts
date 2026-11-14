@@ -132,6 +132,7 @@ describe('light / dark pairs', async () => {
     expect(pairs.get('turbomusic')).toBe('turbomusic-light');
     expect(pairs.get('turbokeep')).toBe('turbokeep-light');
     expect(pairs.get('turbodocs')).toBe('turbodocs-light');
+    expect(pairs.get('turbocut')).toBe('turbocut-light');
     expect(pairs.get('dark')).toBe('daylight');
     expect(pairs.get('default')).toBe('light'); // from the Standard v2 style's matching
     expect(pairs.get('breeze')).toBe('breeze-dark');

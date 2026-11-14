@@ -2,7 +2,7 @@
 
 A pull request builds every app (APK, installers, web bundle) as soon as it is opened or updated. When it is merged, the push to `main` publishes **those same files** if nothing that matters has changed, so nobody waits for a second build of something that already exists. Every release is a normal release; branches never make pre-releases.
 
-Optional. Works with `release-pipeline` naming (`v<year>.<month>.<n>`, lowercase assets). Reference files are in `files/`; source: `TurboNZL/turbocut` (`.github/workflows/build.yml`), where it was written. The decision logic is a small tested script, the workflow only calls it.
+**Mandatory** for every app, together with `release-pipeline` (new apps take it from the start; pinned apps adopt it on their next release-workflow upgrade). Works with `release-pipeline` naming (`v<year>.<month>.<n>`, lowercase assets). Reference files are in `files/`; source: `TurboNZL/turbocut` (`.github/workflows/build.yml`), where it was written. The decision logic is a small tested script, the workflow only calls it.
 
 ## How it decides (`scripts/ci/reuse-build.mjs`)
 A build is reused only when all four hold; any doubt, or any failed lookup, means "build again":
@@ -17,6 +17,9 @@ A build is reused only when all four hold; any doubt, or any failed lookup, mean
 - `release` job: never on a PR; runs when builds succeeded **or were skipped**; downloads either its own artifacts or `gh run download <reuse>`; `gh release create`.
 - Concurrency: PR builds cancel older builds of the same branch; releases queue and are never cancelled mid-way.
 - Permissions needed: `actions: read` (download another run's artifacts), `contents: write` on `release` only.
+
+## Pull requests opened by a workflow (TurboMusic, 2026-10-27)
+GitHub does not start workflows for events caused by the workflow token. An app whose pull requests are opened by `auto-pr.yml` (release-pipeline) therefore never gets a `pull_request` run for the first push of a branch: only later pushes (`synchronize`) build, so most merges found "no successful pull request build". TurboMusic builds on **`push` to every branch** instead (no `pull_request` trigger, so nothing builds twice), records `build-meta` on every branch push, and calls the script with `--event push`. The shape is otherwise the same; only the trigger and that argument differ. The release job is limited to `github.ref == 'refs/heads/main'`.
 
 ## Gotchas
 - Artifact retention is the limit: a PR merged after the artifacts expired (30 days) simply rebuilds.

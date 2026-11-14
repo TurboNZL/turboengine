@@ -135,3 +135,69 @@ describe('sending a project', () => {
     await expect(send(a, b, [{ kind: 'media', name: 'x.mp4', data: Buffer.from('x') }])).rejects.toThrow(/project itself did not arrive/);
   });
 });
+
+describe('a shelf, fetched by a device that cannot listen (a phone)', () => {
+  async function shelf(a: any, parts: { kind: string; name: string; data: Buffer }[]) {
+    const { id, token } = a.shelfOpen({ project: 'My short', media: 1, fonts: 0, links: 1, bytes: parts.reduce((n, p) => n + p.data.length, 0) });
+    for (const p of parts) {
+      const w = a.shelfPart(id, p.kind, p.name);
+      for (let i = 0; i < p.data.length; i += 4096) await w.write(p.data.subarray(i, i + 4096));
+      await w.end();
+    }
+    return { id, token, ready: () => a.shelfReady(id) };
+  }
+  const get = (a: any, p: string, init?: RequestInit) => fetch(`http://127.0.0.1:${a.port}${p}`, init);
+
+  it('hands out the manifest and each part for the right link, with cross-origin headers, and closes when done', async () => {
+    const a = await device('Desktop');
+    const media = Buffer.alloc(300_000, 7);
+    const sh = await shelf(a, [{ kind: 'project', name: 'project.turbocut', data: Buffer.from('{"p":1}') }, { kind: 'media', name: '../clip.mp4', data: media }]);
+    expect((await get(a, `/shelf/${sh.token}/manifest`)).status).toBe(425); // not ready yet
+    const info = sh.ready();
+    expect(info.token).toBe(sh.token);
+    expect(sh.token).toMatch(/^[A-Za-z0-9_-]{22}$/);
+    expect(info.links.every((l: string) => l.endsWith(`:${a.port}/shelf/${sh.token}`))).toBe(true);
+    const seen: any[] = [];
+    a.on('shelf', (e: any) => seen.push(e));
+    const m = await get(a, `/shelf/${sh.token}/manifest`);
+    expect(m.headers.get('access-control-allow-origin')).toBe('*');
+    const man = await m.json();
+    expect(man.from.name).toBe('Desktop');
+    expect(man.summary).toMatchObject({ project: 'My short', links: 1 });
+    expect(man.items.map((i: any) => [i.kind, i.name, i.size])).toEqual([['project', 'project.turbocut', 7], ['media', 'clip.mp4', 300_000]]);
+    expect(Buffer.from(await (await get(a, `/shelf/${sh.token}/part/0`)).arrayBuffer()).toString()).toBe('{"p":1}');
+    expect(Buffer.from(await (await get(a, `/shelf/${sh.token}/part/1`)).arrayBuffer()).equals(media)).toBe(true);
+    expect((await get(a, `/shelf/${sh.token}/part/9`)).status).toBe(404);
+    const pre = await get(a, `/shelf/${sh.token}/manifest`, { method: 'OPTIONS' });
+    expect(pre.status).toBe(204);
+    expect(pre.headers.get('access-control-allow-private-network')).toBe('true');
+    expect((await get(a, `/shelf/${sh.token}/done`, { method: 'POST' })).status).toBe(200);
+    expect(seen.at(-1).state).toBe('done');
+    expect((await get(a, `/shelf/${sh.token}/manifest`)).status).toBe(404);
+    expect(readdirSync(a.dir).filter((d: string) => d.startsWith('shelf-'))).toEqual([]);
+  });
+
+  it('refuses a wrong or malformed token without locking the real one', async () => {
+    const a = await device('Desktop');
+    const sh = await shelf(a, [{ kind: 'project', name: 'p', data: Buffer.from('x') }]);
+    sh.ready();
+    const wrong = sh.token.replace(/^./, sh.token[0] === 'A' ? 'B' : 'A');
+    for (let i = 0; i < 30; i++) expect((await get(a, `/shelf/${wrong}/manifest`)).status).toBe(404);
+    expect((await get(a, `/shelf/123456/manifest`)).status).toBe(404);
+    expect((await get(a, `/shelf/${sh.token}/manifest`)).status).toBe(200); // many wrong guesses lock nothing: the token cannot be guessed
+  });
+
+  it('will not be ready without the project, and can be closed from the sending side', async () => {
+    const a = await device('Desktop');
+    const sh = await shelf(a, [{ kind: 'media', name: 'm.mp4', data: Buffer.from('x') }]);
+    expect(() => sh.ready()).toThrow(/project itself/);
+    a.shelfClose(sh.id);
+    expect(() => a.shelfPart(sh.id, 'media', 'x')).toThrow(/closed/);
+  });
+
+  it('lists this computer\'s private addresses, home networks first', () => {
+    const { lanAddresses } = createRequire(import.meta.url)('../electron/share.cjs');
+    const nic = (address: string, internal = false) => [{ family: 'IPv4', address, internal }];
+    expect(lanAddresses({ a: nic('172.17.0.1'), b: nic('192.168.1.20'), c: nic('127.0.0.1', true), d: nic('8.8.8.8'), e: nic('10.0.0.4') })).toEqual(['192.168.1.20', '10.0.0.4', '172.17.0.1']);
+  });
+});

@@ -20,6 +20,15 @@ function world(over: { prs?: unknown[]; runs?: unknown[]; trees?: Record<string,
 }
 
 describe('findReusableRun', () => {
+  it('looks for the run of the event the workflow builds on (push for apps whose pull requests are opened by a workflow)', () => {
+    const seen: string[][] = [];
+    const w = world();
+    const sh = (cmd: string, args: string[]) => { if (cmd === 'gh' && args[0] === 'run') seen.push(args); return w.sh(cmd, args); };
+    expect(findReusableRun({ ...w, sh, event: 'push' }).run).toBe('42');
+    expect(seen[0]![seen[0]!.indexOf('--event') + 1]).toBe('push');
+    findReusableRun({ ...w, sh });
+    expect(seen[1]![seen[1]!.indexOf('--event') + 1]).toBe('pull_request');
+  });
   it('reuses a pull request build of the same tree and version', () => {
     expect(findReusableRun(world()).run).toBe('42');
   });

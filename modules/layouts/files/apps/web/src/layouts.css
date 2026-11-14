@@ -39,3 +39,15 @@
 @media (min-width: 768px) {
   [data-layout="dock"] .bt-tabbar { display: flex; }
 }
+
+/* ---- the count on a nav item (e.g. a badge on Shopping): over the corner of its icon in every layout, so showing or hiding it never moves or resizes anything (position:absolute, never inline) ---- */
+.bt-side .bt-nav .bt-badge { right: 0.6rem; top: 50%; transform: translateY(-50%); }
+[data-layout$="rail"] .bt-side .bt-nav .bt-badge { right: 0.35rem; top: 0.2rem; transform: none; }
+.bt-toplink .bt-badge { right: -0.45rem; top: -0.45rem; }
+.bt-tab .bt-badge { right: 24%; top: 0.15rem; }
+
+/* ---- floating-dock: the bottom bar is a rounded pill that floats over the page, on every size (the app's shell shows the tab bar for this layout and not the side bar) ---- */
+[data-layout="floating-dock"] .bt-tabbar { display: flex; position: fixed; left: 50%; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 30; width: max-content; max-width: calc(100% - 24px);
+  border: var(--bar-border); border-radius: 9999px; padding: 0.15rem 0.6rem; box-shadow: 0 10px 30px -12px rgb(0 0 0 / 0.45); overflow: hidden; }
+[data-layout="floating-dock"] .bt-tabbar .bt-tab { min-width: 4.5rem; border-radius: 9999px; }
+[data-layout="floating-dock"] .bt-content { padding-bottom: 5.5rem; }

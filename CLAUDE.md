@@ -16,7 +16,7 @@ The first app was called Music Curator and is now **TurboMusic** (`TurboNZL/turb
 On 2026-10-13 `window-frame`, `android-shell` and `settings-shell` were split. An app pinned to the old module keeps working (its files are still in the engine, in the new module); add the new module name to `.turboengine.json` or `engine-diff` will no longer list those files: `gpu-modes`, `discord-presence` and `cloudflare-access` (from `window-frame`), `termux-server` and `cloudflare-access` (from `android-shell`), `device-pairing` (from `settings-shell`).
 
 ## Starting an app
-Copy `templates/*`, pick modules (`release-pipeline`, `updaters`, `appearance`, `guides-and-docs`, `logos` are for everyone; the rest are optional), copy their `files/`, follow each `MODULE.md`, fill in `.turboengine.json` with the engine commit you used, and write the "Engine" section of the app's `CLAUDE.md` (the template has it).
+Copy `templates/*`, pick modules (`release-pipeline`, `prebuilt-release`, `updaters`, `appearance`, `guides-and-docs`, `logos` are for everyone; the rest are optional), copy their `files/`, follow each `MODULE.md`, fill in `.turboengine.json` with the engine commit you used, and write the "Engine" section of the app's `CLAUDE.md` (the template has it).
 
 **Always follow `templates/NEW_APP_CHECKLIST.md`.** A new program must get a default `main` branch, an MIT `LICENSE` and a `README.md`, and the AI must remind the user to enable GitHub Actions, turn on workflow write permission with "Allow GitHub Actions to create and approve pull requests", and (if Claude's GitHub access is limited to selected repositories) add the new repository to the Claude connection.
 
@@ -28,6 +28,9 @@ Copy `templates/*`, pick modules (`release-pipeline`, `updaters`, `appearance`, 
 
 ## Pull requests
 `.github/workflows/auto-pr.yml` opens a pull request for every branch pushed to this repo (not `main`), unless that branch already has an open one or has nothing main lacks, so merging is the only step left. It needs *Settings > Actions > General > Allow GitHub Actions to create and approve pull requests*. Apps get the same file from `release-pipeline`.
+
+## Keeping apps in step
+Nothing pushes engine changes to apps. Each app's `CLAUDE.md` (from `templates/CLAUDE.md`) tells its session to run `engine-diff` at session start and report; `engine-diff` also lists mandatory modules the app does not pin. Apps created before that line existed need telling once, or a copy of the line added to their `CLAUDE.md`. When you make a module mandatory, say so here and in `templates/`, since that is the only place new rules reach new apps.
 
 ## Cloud-session note
 A session only sees repositories attached to it. When working on an app that is pinned to this repo, attach it read-only (`add_repo`) to copy from it.
@@ -42,6 +45,9 @@ Every app with an Electron desktop build updates a Linux `.deb` the same way (do
 
 ## Mandatory sets
 An app that runs its own server takes `self-hosted-server`: `cloudflare-access` + `server-install-update` + `updaters` + `release-pipeline`. Every app with a desktop or Android build takes `updaters` and `release-pipeline`. A **web-only** app served by its own server takes `docker-self-host` + `release-pipeline` instead (see `self-hosted-server`).
+
+## Prebuilt release
+Every app takes `prebuilt-release` with `release-pipeline`: the pull request builds, the merge publishes those same files (the user merges within minutes, so a second build is wasted). It replaces the build-on-merge `release.yml` with `build.yml` (see its `MODULE.md`). It is mandatory for new apps and for any app that upgrades its release workflow; an already-pinned app keeps working as it is until it adopts it deliberately (principle 2). It always falls back to building, so a doubt never blocks a release.
 
 ## Cloudflare
 `docs/CLOUDFLARE.md` is the full Cloudflare Tunnel + Access setup (service token, the **Service Auth** policy, CORS, what each client must send, a symptom table, curl checks). Read it before touching any app that talks to a server behind Access. Two rules apps keep breaking: the policy action must be Service Auth (Allow means the portal login), and **every pairing code and every code path that applies one must carry the service token id and secret**.

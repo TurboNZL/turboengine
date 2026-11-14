@@ -1,13 +1,17 @@
-# Recent projects
+# Project files and recent projects
 
-`src/app/recent.ts`: `rememberProject(p)`, `listRecent()`, `loadRecent(key)`, `forgetRecent(key)`, plus the pure helpers `describeProject`, `newestFirst`, `ago`, `hasContent` (tested in `test/recent.test.ts`).
+A project is a **file** the person chose a place for, not a cache. Optional. Source: `TurboNZL/turbocut` (runs there, tested in headless Chromium with a fake shell API and in real Electron).
 
-Optional. Source: `TurboNZL/turbocut`, where it runs. It imports `projectDuration` (core timeline) and `parseProject`/`serializeProject` (project file): adapt to the app's own project format.
+- `src/app/projectFiles.ts`: `ProjectRef` (a path through the Electron shell, a File System Access handle, or a path under Documents/TurboCut on Android), `saveAs`, `writeRef`, `readRef`, `openDialog`. A browser without handles downloads a copy.
+- `electron/projectFiles.cjs`: the save/open dialogs, atomic write (temporary file then rename), only `.turbocut`/`.json` absolute paths, `media:stat`; main.cjs also needs a `/media/<encoded path>` branch in its protocol handler (existing media files only), a `will-prevent-unload` message box, and preload bridges `project` and `media` (`webUtils.getPathForFile`).
+- `src/app/mediaPaths.ts`: remembers `Asset.path` (desktop only) so opening a project finds its media by itself.
+- `src/app/recent.ts`: `rememberFile(project, ref)`, `listRecent()`, `recentRef(key)`, `forgetRecent(key)`, `ago()`. IndexedDB version 2 drops the old version-1 rows, which held a copy of every edit.
 
-## Using it
-Call `rememberProject` when the person saves, opens a project, starts a new one over work, on `pagehide`, and 4 s after the last change (debounced). Show `listRecent()` on the home screen; opening one goes through the same path as opening a file (asking for the media again when the project does not carry it).
+## Rules
+Save asks where the first time and writes back after; autosave only writes to an existing file; unsaved work is asked about (Save, Discard, Cancel; Escape cancels) before New, Open and closing; a "new project" shape on the home screen is a new project.
 
 ## Gotchas
-- Keyed by project name (case-insensitive): two projects with the same name share one slot. That is what people expect from "the project called X"; an app with real project ids should key by id.
-- An empty project is never stored. Storage can be blocked or full: every call swallows the error and the list is simply empty.
-- Only the edit is stored, so a recent project needs its media found again, like a file.
+- `beforeunload` blocks closing silently in Electron: answer `will-prevent-unload` with a message box.
+- Handles clone into IndexedDB, but a test double with functions does not: fake the shell API instead.
+- A project file may contain any path: serve only existing files with a media extension.
+- Android's Documents write and real-Chrome handles are untested.
