@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { addClip, createClip, createProject } from '../src/core/timeline.ts';
-import { ago, describeProject, hasContent, newestFirst, recentKey, MAX_RECENT } from '../src/app/recent.ts';
+import { ago, describeProject, hasContent, newestFirst, MAX_RECENT } from '../src/app/recent.ts';
 import { fontFamiliesUsed } from '../src/app/share.ts';
 
 describe('recent projects', () => {
@@ -15,17 +15,12 @@ describe('recent projects', () => {
     const p = createProject({ name: 'My short', fps: 30, width: 1920, height: 1080 });
     p.assets.a1 = { id: 'a1', name: 'x.mp4', ref: 'x.mp4', hasVideo: true, hasAudio: false, duration: 150, width: 1920, height: 1080 } as any;
     addClip(p, p.tracks[0]!.id, createClip('a1', 0, 150));
-    const d = describeProject(p, 1234);
-    expect(d).toMatchObject({ key: 'my short', name: 'My short', at: 1234, width: 1920, height: 1080, fps: 30, seconds: 5, clips: 1, media: 1 });
-  });
-
-  it('names match without regard to case, and a blank name is "untitled"', () => {
-    expect(recentKey('  My Short ')).toBe('my short');
-    expect(recentKey('   ')).toBe('untitled');
+    const d = describeProject(p, '/home/me/My short.turbocut', '/home/me/My short.turbocut', 1234);
+    expect(d).toMatchObject({ key: '/home/me/My short.turbocut', where: '/home/me/My short.turbocut', name: 'My short', at: 1234, width: 1920, height: 1080, fps: 30, seconds: 5, clips: 1, media: 1 });
   });
 
   it('lists the newest first and keeps at most twelve', () => {
-    const rows = Array.from({ length: 20 }, (_, i) => ({ key: `k${i}`, name: `k${i}`, at: i, width: 1, height: 1, fps: 30, seconds: 1, clips: 0, media: 0 }));
+    const rows = Array.from({ length: 20 }, (_, i) => ({ key: `k${i}`, name: `k${i}`, where: `k${i}`, at: i, width: 1, height: 1, fps: 30, seconds: 1, clips: 0, media: 0 }));
     const out = newestFirst(rows);
     expect(out).toHaveLength(MAX_RECENT);
     expect(out[0]!.key).toBe('k19');

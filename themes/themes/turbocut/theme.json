@@ -1,0 +1,30 @@
+{
+  "id": "turbocut",
+  "label": "TurboCut",
+  "palettes": [
+    {
+      "id": "turbocut",
+      "label": "TurboCut Dark",
+      "mode": "dark",
+      "bg": [200, 22, 8],
+      "primary": [185, 83, 46],
+      "motif": "grid",
+      "group": "own",
+      "pair": "turbocut-light",
+      "note": "TurboCut's own look, dark: the logo's cyan on a near-black with a hint of blue",
+      "order": 5
+    },
+    {
+      "id": "turbocut-light",
+      "label": "TurboCut Light",
+      "mode": "light",
+      "bg": [195, 30, 96],
+      "primary": [187, 90, 29],
+      "motif": "grid",
+      "group": "own",
+      "pair": "turbocut",
+      "note": "TurboCut's own look, light: a deeper cyan on paper white, dark enough for text and buttons",
+      "order": 25
+    }
+  ]
+}
