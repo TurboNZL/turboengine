@@ -13,7 +13,8 @@
     "scripts/logo/lib.mjs",
     "scripts/logo/emblems/note.json",
     "scripts/logo/emblems/cut.json",
-    "scripts/logo/emblems/bars.json"
+    "scripts/logo/emblems/bars.json",
+    "scripts/logo/emblems/box.json"
   ],
   "examples": [
     "branding/logo.json"
