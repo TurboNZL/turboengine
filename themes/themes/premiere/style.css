@@ -15,7 +15,7 @@
   --btn-accent-bg: hsl(var(--accent)); --btn-accent-border: 1px solid color-mix(in srgb, hsl(var(--accent)) 70%, black); --btn-accent-hover-bg: color-mix(in srgb, hsl(var(--accent)) 88%, white); --btn-accent-hover-shadow: none;
   --ghost-hover-bg: color-mix(in srgb, hsl(var(--fg)) 10%, transparent);
   --in-bg: hsl(var(--bg)); --in-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 18%, transparent); --in-hover-border: color-mix(in srgb, hsl(var(--fg)) 34%, transparent);
-  --in-focus-border: hsl(var(--accent)); --in-focus-shadow: 0 0 0 1px hsl(var(--accent));
+  --in-focus-border: hsl(var(--accent)); --in-focus-shadow: none;
   --card-bg: hsl(var(--surface)); --card-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 10%, transparent);
   --win-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 20%, transparent); --win-shadow: 0 8px 28px rgb(0 0 0 / 0.55); --dialog-anim: bt-fade 110ms ease-out;
   --tb-bg: hsl(var(--bg)); --tb-fg: hsl(var(--fg)); --tb-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 12%, transparent); --tb-pad: 0.45rem 0.8rem; --tb-size: 0.9rem; --tb-weight: 600;
