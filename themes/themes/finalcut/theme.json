@@ -1,0 +1,37 @@
+{
+  "id": "finalcut",
+  "label": "Editor: Final Cut",
+  "style": {
+    "description": "A Final Cut-style editor: graphite panels, 4 px corners, quiet toolbars with no button frames until hover, and a soft blue selection.",
+    "font": "-apple-system",
+    "matching": {
+      "light": "finalcut",
+      "dark": "finalcut"
+    },
+    "order": 730
+  },
+  "palettes": [
+    {
+      "id": "finalcut",
+      "label": "Final Cut",
+      "bg": "#1e1e1e",
+      "primary": "#4d90f5",
+      "onPrimary": "#ffffff",
+      "fg": "#e6e6e6",
+      "mutedFg": "#98989d",
+      "overrides": {
+        "card": "#2a2a2c",
+        "secondary": "#363638",
+        "muted": "#363638",
+        "accent": "#2b4570",
+        "border": "#3d3d40",
+        "input": "#3d3d40"
+      },
+      "mode": "dark",
+      "motif": "grid",
+      "group": "inspired",
+      "order": 730,
+      "source": "Approximate colours of the editor named in the label, picked by eye. Not affiliated with it."
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "id": "kdenlive",
+  "label": "Editor: Kdenlive",
+  "style": {
+    "description": "A Kdenlive-style editor: Breeze Dark greys, a dense 13 px interface, 3 px corners, flat toolbars, small-caps panel headings and a bright blue accent on selections.",
+    "font": "Noto Sans",
+    "matching": {
+      "light": "kdenlive",
+      "dark": "kdenlive"
+    },
+    "order": 700,
+    "fonts": [
+      {
+        "package": "noto-sans",
+        "weights": [
+          400,
+          500,
+          600
+        ]
+      }
+    ]
+  },
+  "palettes": [
+    {
+      "id": "kdenlive",
+      "label": "Kdenlive",
+      "bg": "#31363b",
+      "primary": "#3daee9",
+      "onPrimary": "#1b1e20",
+      "fg": "#eff0f1",
+      "mutedFg": "#a1a9b1",
+      "overrides": {
+        "card": "#232629",
+        "secondary": "#3b4045",
+        "muted": "#3b4045",
+        "accent": "#2f5e7a",
+        "border": "#4d5359",
+        "input": "#4d5359"
+      },
+      "mode": "dark",
+      "motif": "grid",
+      "group": "inspired",
+      "order": 700,
+      "source": "Approximate colours of the editor named in the label, picked by eye. Not affiliated with it."
+    }
+  ]
+}

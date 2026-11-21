@@ -1,0 +1,39 @@
+/* ================== Editor: Premiere ================== */
+/*
+ * A Premiere-style editor: near-black panels on a dark grey frame, 2 px corners, a dense 13 px interface, uppercase panel headings and a blue selection colour.
+ * Everything is derived from the palette, so any colour theme can be tried with it. Built for video editors (dense panels, flat bars),
+ * but it is an ordinary style and works in every app.
+ */
+[data-ui="premiere"] {
+  --chk-size: 0.95rem; --chk-r: 2px; --chk-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 40%, transparent); --chk-bg: hsl(var(--bg)); --chk-on-border: hsl(var(--accent)); --chk-focus: 0 0 0 2px color-mix(in srgb, hsl(var(--accent)) 40%, transparent);
+  --radius: 2px; --ctl-r: 2px; --card-r: 2px; --win-r: 3px; --menu-r: 2px; --nav-r: 2px; --chip-r: 2px;
+  --font: "Adobe Clean", "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --dur: 90ms; --ease: ease-out;
+  --btn-bg: color-mix(in srgb, hsl(var(--surface)) 82%, hsl(var(--fg))); --btn-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 16%, transparent); --btn-weight: 400;
+  --btn-hover-bg: color-mix(in srgb, hsl(var(--surface)) 80%, hsl(var(--fg))); --btn-hover-border: color-mix(in srgb, hsl(var(--fg)) 28%, transparent); --btn-hover-shadow: none;
+  --btn-active-shadow: inset 0 1px 2px rgb(0 0 0 / 0.35);
+  --btn-accent-bg: hsl(var(--accent)); --btn-accent-border: 1px solid color-mix(in srgb, hsl(var(--accent)) 70%, black); --btn-accent-hover-bg: color-mix(in srgb, hsl(var(--accent)) 88%, white); --btn-accent-hover-shadow: none;
+  --ghost-hover-bg: color-mix(in srgb, hsl(var(--fg)) 10%, transparent);
+  --in-bg: hsl(var(--bg)); --in-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 18%, transparent); --in-hover-border: color-mix(in srgb, hsl(var(--fg)) 34%, transparent);
+  --in-focus-border: hsl(var(--accent)); --in-focus-shadow: 0 0 0 1px hsl(var(--accent));
+  --card-bg: hsl(var(--surface)); --card-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 10%, transparent);
+  --win-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 20%, transparent); --win-shadow: 0 8px 28px rgb(0 0 0 / 0.55); --dialog-anim: bt-fade 110ms ease-out;
+  --tb-bg: hsl(var(--bg)); --tb-fg: hsl(var(--fg)); --tb-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 12%, transparent); --tb-pad: 0.45rem 0.8rem; --tb-size: 0.9rem; --tb-weight: 600;
+  --close-fg: hsl(var(--muted)); --close-r: 2px; --close-hover-bg: #c42b1c; --close-hover-fg: #fff;
+  --bar-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 12%, transparent);
+  --menu-border: 1px solid color-mix(in srgb, hsl(var(--fg)) 20%, transparent); --pop-shadow: 0 6px 18px rgb(0 0 0 / 0.5); --menu-anim: bt-fade 90ms ease-out;
+  --menu-hi-bg: hsl(var(--accent)); --menu-hi-fg: hsl(var(--accent-fg));
+  /* the frame (top bar, toolbars, side bar) is the darker page colour; panels and dialogs sit on the lighter surface */
+  --side-bg: hsl(var(--surface)); --top-bg: hsl(var(--bg)); --player-bg: hsl(var(--bg));
+  --nav-hover-bg: color-mix(in srgb, hsl(var(--fg)) 8%, transparent); --nav-active-bg: color-mix(in srgb, hsl(var(--accent)) 30%, transparent); --nav-active-fg: hsl(var(--fg)); --nav-active-shadow: inset 2px 0 0 hsl(var(--accent));
+  --row-hover: color-mix(in srgb, hsl(var(--fg)) 7%, transparent); --row-current: color-mix(in srgb, hsl(var(--accent)) 30%, transparent);
+  --rng-appearance: none; --rng-h: 0.22rem; --rng-r: 2px; --rng-track: color-mix(in srgb, hsl(var(--fg)) 22%, transparent);
+  --rng-tw: 0.8rem; --rng-th: 0.8rem; --rng-thumb: hsl(var(--fg)); --rng-tb: 0; --rng-ts: 0 0 0 1px rgb(0 0 0 / 0.4);
+}
+html[data-ui="premiere"] { font-size: 13px; }
+[data-ui="premiere"] .bt-shell { backdrop-filter: none; -webkit-backdrop-filter: none; }
+[data-ui="premiere"] :is(h1, h2) { font-weight: 600; }
+[data-ui="premiere"] .bt-panel-title { text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.72rem; font-weight: 600; color: hsl(var(--muted)); }
+[data-ui="premiere"] .card { box-shadow: none; }
+[data-ui="premiere"] :is(.btn, .input, .bt-nav, .bt-tab, .chip):focus-visible { outline: 2px solid hsl(var(--accent)); outline-offset: 1px; }
+[data-ui="premiere"] { --player-in: bt-fade 120ms ease-out both; --player-out: bt-fade-out 100ms ease-out both; --player-ms: 100ms; --pop-out: bt-fade-out 90ms ease-out both; --pop-ms: 90ms; --page-in: bt-fade 90ms linear backwards; }

@@ -1,0 +1,47 @@
+{
+  "id": "premiere",
+  "label": "Editor: Premiere",
+  "style": {
+    "description": "A Premiere-style editor: near-black panels on a dark grey frame, 2 px corners, a dense 13 px interface, uppercase panel headings and a blue selection colour.",
+    "font": "Adobe Clean",
+    "matching": {
+      "light": "premiere",
+      "dark": "premiere"
+    },
+    "order": 710,
+    "fonts": [
+      {
+        "package": "source-sans-3",
+        "weights": [
+          400,
+          600,
+          700
+        ]
+      }
+    ]
+  },
+  "palettes": [
+    {
+      "id": "premiere",
+      "label": "Premiere",
+      "bg": "#1b1b1b",
+      "primary": "#2d8ceb",
+      "onPrimary": "#ffffff",
+      "fg": "#d9d9d9",
+      "mutedFg": "#8e8e8e",
+      "overrides": {
+        "card": "#232323",
+        "secondary": "#2c2c2c",
+        "muted": "#2c2c2c",
+        "accent": "#2a4a6e",
+        "border": "#3a3a3a",
+        "input": "#3a3a3a"
+      },
+      "mode": "dark",
+      "motif": "grid",
+      "group": "inspired",
+      "order": 710,
+      "source": "Approximate colours of the editor named in the label, picked by eye. Not affiliated with it."
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "id": "davinci",
+  "label": "Editor: DaVinci",
+  "style": {
+    "description": "A DaVinci-style editor: charcoal panels with a slight blue cast, thin separators, 3 px corners, quiet grey buttons and a warm red-orange accent for what is selected.",
+    "font": "Open Sans",
+    "matching": {
+      "light": "davinci",
+      "dark": "davinci"
+    },
+    "order": 720,
+    "fonts": [
+      {
+        "package": "open-sans",
+        "weights": [
+          400,
+          600,
+          700
+        ]
+      }
+    ]
+  },
+  "palettes": [
+    {
+      "id": "davinci",
+      "label": "DaVinci",
+      "bg": "#1f1f23",
+      "primary": "#e5533d",
+      "onPrimary": "#ffffff",
+      "fg": "#cfcfd4",
+      "mutedFg": "#85858e",
+      "overrides": {
+        "card": "#28282e",
+        "secondary": "#33333a",
+        "muted": "#33333a",
+        "accent": "#5a2f2b",
+        "border": "#3c3c44",
+        "input": "#3c3c44"
+      },
+      "mode": "dark",
+      "motif": "grid",
+      "group": "inspired",
+      "order": 720,
+      "source": "Approximate colours of the editor named in the label, picked by eye. Not affiliated with it."
+    }
+  ]
+}
