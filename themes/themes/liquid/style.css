@@ -106,8 +106,9 @@ html[data-ui="liquid"][data-mode="light"]:not([data-wallpaper="on"]) body {
 :is(html, div)[data-ui="liquid"] .bt-backdrop { animation: bt-fade 300ms ease-out both; }
 /* just a dim: a screen-sized blur was the costliest part of opening a dialog */
 :is(html, div)[data-ui="liquid"] .bt-menu { padding: 6px; background: var(--lg-spec, none) center / 100% 100% no-repeat, var(--lg-sheen), var(--lg-fill-strong); }
-:is(html, div)[data-ui="liquid"] .bt-menu [role="menuitem"] { width: 100%; border-radius: calc(var(--menu-r) - 8px); padding-inline: 0.8rem; }
-:is(html, div)[data-ui="liquid"] .bt-menu [role="menuitem"]:hover:not(:disabled), :is(html, div)[data-ui="liquid"] .bt-menu [role="menuitem"]:focus-visible {
+:is(html, div)[data-ui="liquid"] .bt-menu :is([role="menuitem"], [role="option"]) { width: 100%; border-radius: calc(var(--menu-r) - 8px); padding-inline: 0.8rem; }
+/* dropdown lists (the Select component) highlight like the menus: a soft pill, not the flat grey rectangle of the generic rule */
+:is(html, div)[data-ui="liquid"] .bt-menu :is([role="menuitem"]:hover:not(:disabled), [role="menuitem"]:focus-visible, [role="option"]:hover:not(:disabled), [role="option"].bt-select-hi) {
   background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), var(--lg-press), var(--lg-hover) 70%); color: inherit;
   box-shadow: inset 0 0 0 0.5px rgb(255 255 255 / 0.18);
 }
