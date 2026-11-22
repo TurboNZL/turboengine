@@ -155,7 +155,7 @@ html[data-ui="liquid"][data-mode="light"]:not([data-wallpaper="on"]) body {
 :is(html, div)[data-ui="liquid"] .bt-side.bt-shell { position: relative; z-index: 6; }
 :is(html, div)[data-ui="liquid"] .bt-top .input {
   border-radius: 9999px; border: 0; padding-block: 0.55rem;
-  background: var(--lg-spec, none) center / 100% 100% no-repeat, var(--lg-sheen), var(--lg-fill);
+  background: var(--lg-sheen), var(--lg-fill);
   -webkit-backdrop-filter: none; backdrop-filter: none; /* the top bar floats over the scrolling page: no per-frame blur here */
   box-shadow: var(--lg-shadow), var(--lg-rim);
 }
@@ -163,7 +163,8 @@ html[data-ui="liquid"][data-mode="light"]:not([data-wallpaper="on"]) body {
 /* ---- controls: tinted glass when primary, glass on hover when plain ---- */
 :is(html, div)[data-ui="liquid"] .btn, :is(html, div)[data-ui="liquid"] .btn:hover, :is(html, div)[data-ui="liquid"] .btn:active {
   --lg-btn-fill: var(--lg-fill);
-  background: var(--lg-spec, none) center / 100% 100% no-repeat, var(--lg-sheen), var(--lg-btn-fill);
+  /* no `--lg-spec` layer here: a button is not a tracked shape, so the variable it sees is the one it inherits from the panel or dialog around it (a 700 px tall rim image), which drew the panel's straight left edge across wide buttons */
+  background: var(--lg-sheen), var(--lg-btn-fill);
   border: 0; color: inherit; text-shadow: none;
   -webkit-backdrop-filter: none; backdrop-filter: none; /* every button used to blur what is behind it: too slow with many on a page */
   box-shadow: 0 3px 12px rgb(0 0 0 / 0.16), var(--lg-rim);
