@@ -820,7 +820,7 @@ var TurboThemes = (() => {
     void Promise.all([lens.ready, entering]).then(() => {
       if (applied.get(el3)?.lens !== lens || !el3.isConnected) return;
       el3.style.setProperty("--lg-filter", `url(#${lens.id})`);
-      if (first && unique) materialize(el3, lens);
+      if (first && unique && el3.matches(".bt-window")) materialize(el3, lens);
     });
   }
   var STEPS = [0.28, 0.58, 0.8, 0.93, 1];
