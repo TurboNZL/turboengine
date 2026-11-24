@@ -284,7 +284,8 @@ function apply(el: HTMLElement, settled = false) {
   void Promise.all([lens.ready, entering]).then(() => {
     if (applied.get(el)?.lens !== lens || !el.isConnected) return;
     el.style.setProperty('--lg-filter', `url(#${lens.id})`);
-    if (first && unique) materialize(el, lens);
+    // dialogs ease the lens in; a menu or flyout is small and short-lived, so it gets the full lens at once (easing it in showed a plain shape that then changed after the entrance animation)
+    if (first && unique && el.matches('.bt-window')) materialize(el, lens);
   });
 }
 
